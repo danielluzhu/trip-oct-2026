@@ -1,0 +1,25 @@
+{
+  "ideas": [
+    {
+      "id": "readme-1",
+      "day": "General",
+      "text": "Nature stuff",
+      "author": "README",
+      "createdAt": 1
+    },
+    {
+      "id": "readme-2",
+      "day": "General",
+      "text": "Movie night — Oldboy, Brokeback Mountain, or Internal Affairs",
+      "author": "README",
+      "createdAt": 2
+    },
+    {
+      "id": "readme-3",
+      "day": "General",
+      "text": "Let's all learn to fish or lasso or something",
+      "author": "README",
+      "createdAt": 3
+    }
+  ]
+}
