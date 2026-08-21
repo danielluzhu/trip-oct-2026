@@ -296,7 +296,54 @@ const sharedStyle = /* css */ `
     font-weight: 600;
     cursor: pointer;
   }
+  a.add-idea-link {
+    display: inline-block;
+    padding: .55rem 1.1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--accent);
+    font-size: .88rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.add-idea-link:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
 `;
+
+// Static mode renders the site to flat files for GitHub Pages, where there is no
+// server to accept idea submissions. Nav becomes relative links and the add-idea
+// form becomes a pre-filled GitHub issue.
+const STATIC = process.env.STATIC === "1";
+const REPO = "danielluzhu/trip-oct-2026";
+
+function href(path: "/" | "/itinerary") {
+  if (!STATIC) return path;
+  return path === "/" ? "./index.html" : "./itinerary.html";
+}
+
+function addIdeaBlock(day: string) {
+  if (!STATIC) {
+    return `<form class="add-idea" method="POST" action="/itinerary/add">
+      <input type="hidden" name="day" value="${escapeHtml(day)}">
+      <input type="text" name="text" placeholder="Add an idea (activity, restaurant, etc.)" required maxlength="280">
+      <input type="text" name="author" placeholder="Your name (optional)" maxlength="40">
+      <button type="submit">Add</button>
+    </form>`;
+  }
+
+  const params = new URLSearchParams({
+    labels: "idea",
+    title: `Idea: ${day}`,
+    body: `**Day:** ${day}\n\n**Idea:**\n<!-- what do you want to do? -->\n`,
+  });
+  return `<a class="add-idea-link" href="https://github.com/${REPO}/issues/new?${escapeHtml(
+    params.toString(),
+  )}" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>`;
+}
 
 function layout(activeNav: "home" | "itinerary", title: string, body: string) {
   return /* html */ `<!doctype html>
@@ -313,8 +360,8 @@ function layout(activeNav: "home" | "itinerary", title: string, body: string) {
   <p>${trip.dates} &middot; ${trip.groupSize} people</p>
 </header>
 <nav>
-  <a href="/" class="${activeNav === "home" ? "active" : ""}">Compare locations</a>
-  <a href="/itinerary" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
+  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Compare locations</a>
+  <a href="${href("/itinerary")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
 </nav>
 <main>
 ${body}
@@ -407,12 +454,7 @@ async function itineraryPage() {
           : `<li class="idea-empty">No ideas yet &mdash; add the first one below.</li>`
       }
     </ul>
-    <form class="add-idea" method="POST" action="/itinerary/add">
-      <input type="hidden" name="day" value="${escapeHtml(day)}">
-      <input type="text" name="text" placeholder="Add an idea (activity, restaurant, etc.)" required maxlength="280">
-      <input type="text" name="author" placeholder="Your name (optional)" maxlength="40">
-      <button type="submit">Add</button>
-    </form>
+    ${addIdeaBlock(day)}
   </section>`;
   }).join("\n");
 
@@ -431,17 +473,16 @@ async function itineraryPage() {
           : `<li class="idea-empty">No ideas yet &mdash; add the first one below.</li>`
       }
     </ul>
-    <form class="add-idea" method="POST" action="/itinerary/add">
-      <input type="hidden" name="day" value="General">
-      <input type="text" name="text" placeholder="Add an idea" required maxlength="280">
-      <input type="text" name="author" placeholder="Your name (optional)" maxlength="40">
-      <button type="submit">Add</button>
-    </form>
+    ${addIdeaBlock("General")}
   </section>`;
 
   return layout("itinerary", `Itinerary — ${trip.title}`, generalBlock + "\n" + dayBlocks);
 }
 
+export { homePage, itineraryPage };
+
+// Only start the server when run directly, so build.ts can import the renderers.
+if (import.meta.main) {
 const port = Number(process.env.PORT) || 3000;
 
 Bun.serve({
@@ -486,3 +527,4 @@ Bun.serve({
 });
 
 console.log(`Trip site running at http://localhost:${port}`);
+}

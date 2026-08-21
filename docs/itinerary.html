@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Itinerary — HOMELESS?</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f7f6f3;
+    --card: #ffffff;
+    --text: #1c1b1a;
+    --muted: #6b6863;
+    --border: #e4e1da;
+    --accent: #b5551f;
+    --accent-soft: #f2e3d5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161513;
+      --card: #201f1c;
+      --text: #ece9e3;
+      --muted: #a39d92;
+      --border: #322f2a;
+      --accent: #e08a4e;
+      --accent-soft: #3a2a1c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    padding: 2.5rem 1.5rem 1rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 .4rem;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+  header p {
+    margin: .2rem 0;
+    color: var(--muted);
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding: 1rem 1.5rem 0;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .85rem;
+    padding: .4rem .9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+  nav a.active {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    overflow-x: auto;
+  }
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: .6rem;
+    margin: 0 0 1.1rem;
+  }
+  .photos figure { margin: 0; }
+  .photos img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    background: var(--border);
+  }
+  .photos figcaption {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: .3rem;
+    text-align: center;
+  }
+  .card h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    font-size: 1.3rem;
+  }
+  .rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 .3rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 600;
+  }
+  .group-total {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .card .subtitle {
+    color: var(--muted);
+    font-size: .9rem;
+    margin: .15rem 0 1rem;
+  }
+  .section-label {
+    text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin: 1rem 0 .35rem;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+  }
+  table td {
+    padding: .25rem 0;
+    vertical-align: top;
+  }
+  table td:first-child {
+    color: var(--muted);
+    white-space: nowrap;
+    padding-right: .75rem;
+    width: 1%;
+  }
+  ul.sites {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: .88rem;
+  }
+  ul.sites li { margin: .2rem 0; }
+  .verdict {
+    margin-top: 1rem;
+    padding: .7rem .8rem;
+    background: var(--accent-soft);
+    border-radius: 10px;
+    font-size: .85rem;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .8rem;
+    padding-bottom: 2rem;
+  }
+  .ideas-list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .idea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .6rem .8rem;
+    font-size: .9rem;
+  }
+  .idea .idea-meta {
+    color: var(--muted);
+    font-size: .75rem;
+    margin-top: .2rem;
+  }
+  .idea-empty {
+    color: var(--muted);
+    font-size: .85rem;
+    font-style: italic;
+  }
+  form.add-idea {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+  form.add-idea input[type="text"] {
+    flex: 1 1 160px;
+    padding: .55rem .7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: .88rem;
+  }
+  form.add-idea input[name="text"] { flex: 3 1 240px; }
+  form.add-idea button {
+    padding: .55rem 1.1rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  a.add-idea-link {
+    display: inline-block;
+    padding: .55rem 1.1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--accent);
+    font-size: .88rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.add-idea-link:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>HOMELESS?</h1>
+  <p>Fri Oct 16 - Sun Oct 19, 2026 (flexible, 3-5 days) &middot; 5-10 people</p>
+</header>
+<nav>
+  <a href="./index.html" class="">Compare locations</a>
+  <a href="./itinerary.html" class="active">Itinerary &amp; ideas</a>
+</nav>
+<main>
+
+  <section class="card">
+    <h2>General ideas</h2>
+    <div class="subtitle">Gear, logistics, group buys &mdash; anything not tied to a specific day</div>
+    <ul class="ideas-list">
+      <li class="idea">
+        Nature stuff
+        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
+      </li>
+      <li class="idea">
+        Movie night — Oldboy, Brokeback Mountain, or Internal Affairs
+        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
+      </li>
+      <li class="idea">
+        Let&#39;s all learn to fish or lasso or something
+        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
+      </li>
+    </ul>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+General&amp;body=**Day%3A**+General%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  </section>
+
+  <section class="card">
+    <h2>Day 1 · Fri 10/16 (Arrival)</h2>
+    <ul class="ideas-list">
+      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
+    </ul>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+1+%C2%B7+Fri+10%2F16+%28Arrival%29&amp;body=**Day%3A**+Day+1+%C2%B7+Fri+10%2F16+%28Arrival%29%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  </section>
+
+  <section class="card">
+    <h2>Day 2 · Sat 10/17</h2>
+    <ul class="ideas-list">
+      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
+    </ul>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+2+%C2%B7+Sat+10%2F17&amp;body=**Day%3A**+Day+2+%C2%B7+Sat+10%2F17%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  </section>
+
+  <section class="card">
+    <h2>Day 3 · Sun 10/18</h2>
+    <ul class="ideas-list">
+      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
+    </ul>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+3+%C2%B7+Sun+10%2F18&amp;body=**Day%3A**+Day+3+%C2%B7+Sun+10%2F18%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  </section>
+
+  <section class="card">
+    <h2>Day 4 · Mon 10/19 (Departure)</h2>
+    <ul class="ideas-list">
+      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
+    </ul>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+4+%C2%B7+Mon+10%2F19+%28Departure%29&amp;body=**Day%3A**+Day+4+%C2%B7+Mon+10%2F19+%28Departure%29%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  </section>
+</main>
+<footer>Generated from live research &middot; 2026</footer>
+</body>
+</html>
