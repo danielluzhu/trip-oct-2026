@@ -1,0 +1,166 @@
+{
+  "trip": {
+    "title": "HOMELESS?",
+    "groupSize": "5-10",
+    "dates": "Fri Oct 16 - Sun Oct 19, 2026 (flexible, 3-5 days)",
+    "origins": ["NYC (LGA/JFK/EWR)", "SF Bay Area (SFO/SJC/OAK)", "Seattle (SEA)"]
+  },
+  "locations": [
+    {
+      "name": "Vermont",
+      "subtitle": "Stowe / Killington / Mad River Valley",
+      "weather": {
+        "high": "12-16°C",
+        "low": "4-6°C",
+        "precip": "3-8 rainy days",
+        "notes": "Foliage past-peak up north, still vibrant in central/southern VT"
+      },
+      "flights": {
+        "nyc": { "low": 230, "high": 260, "note": "" },
+        "sf": { "low": 350, "high": 550, "note": "" },
+        "seattle": { "low": 400, "high": 550, "note": "" }
+      },
+      "airbnb": {
+        "nightly": "$400-700",
+        "totalRange": "$1,400-2,600 (3-4 nights)",
+        "perPerson": "$175-350 (8 people)"
+      },
+      "topSites": [
+        "Route 100 foliage drive",
+        "Camel's Hump hike",
+        "Burlington beer trail",
+        "The Alchemist brewery (Stowe)",
+        "Ben & Jerry's factory tour",
+        "Kingdom Trails mountain biking",
+        "Stowe & Woodstock villages"
+      ],
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/CamelsHumpVT2012.jpg?width=800",
+          "caption": "Camel's Hump"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Vermont%20fall%20foliage%20hogback%20mountain.JPG?width=800",
+          "caption": "Fall foliage, Hogback Mountain"
+        }
+      ],
+      "verdict": "Best classic-foliage trip, but priciest flights for SF/Seattle crew"
+    },
+    {
+      "name": "Wyoming",
+      "subtitle": "Jackson Hole / Grand Teton",
+      "weather": {
+        "high": "10-14°C",
+        "low": "-7 to -3°C",
+        "precip": "~13 days w/ snow, up to 30cm possible",
+        "notes": "Coldest option, chance of a snow squall"
+      },
+      "flights": {
+        "nyc": { "low": 300, "high": 450, "note": "" },
+        "sf": { "low": 300, "high": 400, "note": "" },
+        "seattle": { "low": 200, "high": 260, "note": "" }
+      },
+      "airbnb": {
+        "nightly": "$400-700",
+        "totalRange": "$1,400-2,800 (3-4 nights)",
+        "perPerson": "$175-350 (8 people)"
+      },
+      "topSites": [
+        "Grand Teton NP (Jenny Lake, Cascade Canyon)",
+        "Snake River scenic float",
+        "Yellowstone day trip",
+        "Elk rut viewing, National Elk Refuge",
+        "Jackson Hole Mountain Resort tram",
+        "Downtown Jackson bars/steakhouses",
+        "Horseback riding / ATV tours"
+      ],
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Middle%20Teton%20Grand%20Teton%20NP1.jpg?width=800",
+          "caption": "Middle Teton, Grand Teton NP"
+        }
+      ],
+      "verdict": "Best scenery & national park access, coldest, pricier from NYC"
+    },
+    {
+      "name": "Montana",
+      "subtitle": "Bozeman / Big Sky / Glacier",
+      "weather": {
+        "high": "10-14°C",
+        "low": "-2 to 0°C",
+        "precip": "~25-30% daily chance",
+        "notes": "Logan Pass (Glacier) likely closed for the season by these dates"
+      },
+      "flights": {
+        "nyc": { "low": 220, "high": 350, "note": "" },
+        "sf": { "low": 200, "high": 350, "note": "" },
+        "seattle": { "low": 230, "high": 280, "note": "" }
+      },
+      "airbnb": {
+        "nightly": "$350-1,000",
+        "totalRange": "$1,200-2,800 (3-4 nights)",
+        "perPerson": "$150-350 (8 people)"
+      },
+      "topSites": [
+        "Gallatin Canyon whitewater rafting",
+        "Fly fishing Gallatin/Madison/Yellowstone Rivers",
+        "Hyalite Canyon hikes",
+        "Glacier NP lower sections (Sun Point, St. Mary)",
+        "Bozeman brewery/distillery scene",
+        "Yellowstone day trip",
+        "Big Sky Resort lift rides"
+      ],
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/St%20Mary%20Lake%20at%20Sun%20Point.jpg?width=800",
+          "caption": "St. Mary Lake, Glacier NP"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800",
+          "caption": "Going-to-the-Sun Road"
+        }
+      ],
+      "verdict": "Best fishing/rafting + breweries, good all-around pricing, but marquee Glacier road closed"
+    },
+    {
+      "name": "North Carolina",
+      "subtitle": "Asheville / Blue Ridge Mountains",
+      "weather": {
+        "high": "19-21°C",
+        "low": "8°C",
+        "precip": "9-10 rainy days",
+        "notes": "Warmest by far, peak foliage, humid"
+      },
+      "flights": {
+        "nyc": { "low": 180, "high": 360, "note": "AVL fare shown; cheaper via CLT" },
+        "sf": { "low": 280, "high": 400, "note": "" },
+        "seattle": { "low": 270, "high": 390, "note": "" }
+      },
+      "airbnb": {
+        "nightly": "$350-900",
+        "totalRange": "$1,400-3,000 (3-4 nights)",
+        "perPerson": "$150-350 (8 people)"
+      },
+      "topSites": [
+        "Blue Ridge Parkway scenic drive",
+        "Waterfall hikes (Looking Glass, Linville)",
+        "South Slope brewery crawl, Asheville",
+        "Mt. Pisgah / Craggy Gardens hikes",
+        "Chimney Rock State Park",
+        "French Broad River rafting/tubing",
+        "DuPont State Forest"
+      ],
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Looking%20Glass%20Falls%202012.jpg?width=800",
+          "caption": "Looking Glass Falls"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Appalachian%20Mountains%20along%20Blue%20Ridge%20Parkway%2C%20North%20Carolina.JPG?width=800",
+          "caption": "Blue Ridge Parkway"
+        }
+      ],
+      "verdict": "Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs"
+    }
+  ]
+}
