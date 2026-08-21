@@ -1,4 +1,4 @@
-I am planning a boys trip for 5-10 of my close homies. We have finalized a time, but need to decide on a spot. 
+I am planning a boys trip for 5-10. We have finalized a time, but need to decide on a spot. 
 
 Dates: 
 3-5ish day trip (can be flexible), 10/16 (F) - 10/19 (Sun)
