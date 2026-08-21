@@ -1,3 +1,5 @@
+**🌲 [View the trip site →](https://danielluzhu.github.io/trip-oct-2026/)** &middot; [Suggest an idea](https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea)
+
 I am planning a boys trip for 5-10. We have finalized a time, but need to decide on a spot. 
 
 Dates: 
