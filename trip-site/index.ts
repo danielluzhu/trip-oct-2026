@@ -428,6 +428,42 @@ const sharedStyle = /* css */ `
     padding-left: .6rem;
     border-left: 2px solid var(--border);
   }
+  ol.timeline {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0 0 0 1.1rem;
+    border-left: 2px solid var(--border);
+  }
+  ol.timeline li {
+    position: relative;
+    padding: 0 0 1.1rem .9rem;
+  }
+  ol.timeline li::before {
+    content: "";
+    position: absolute;
+    left: -1.42rem;
+    top: .42rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  ol.timeline .when {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  ol.timeline .what { margin-top: .1rem; }
+  ol.timeline .detail { font-size: .86rem; color: var(--muted); margin-top: .15rem; }
+  ol.timeline .cost {
+    font-size: .74rem;
+    background: rgba(127,127,127,.14);
+    border-radius: 6px;
+    padding: .1rem .4rem;
+    white-space: nowrap;
+  }
 `;
 
 // Static mode renders the site to flat files for GitHub Pages, where there is no
@@ -583,6 +619,23 @@ function ideaItemHtml(idea: Idea) {
       </li>`;
 }
 
+const plan = (data as any).plan;
+
+function planBlocks(d: any) {
+  return `
+    <ol class="timeline">
+      ${d.blocks
+        .map(
+          (b: any) => `<li>
+        <span class="when">${escapeHtml(b.when)}</span>
+        <div class="what"><strong>${escapeHtml(b.what)}</strong>${b.cost ? ` <span class="cost">${escapeHtml(b.cost)}</span>` : ""}</div>
+        <div class="detail">${escapeHtml(b.detail)}</div>
+      </li>`,
+        )
+        .join("\n      ")}
+    </ol>`;
+}
+
 async function itineraryPage() {
   const ideas = await loadIdeas();
 
@@ -590,9 +643,13 @@ async function itineraryPage() {
     const dayIdeas = ideas
       .filter((idea) => idea.day === day)
       .sort((a, b) => a.createdAt - b.createdAt);
+    const d = plan.days.find((x: any) => x.day === day);
     return `
   <section class="card">
     <h2>${day}</h2>
+    ${d ? `<div class="subtitle">${escapeHtml(d.headline)}</div>` : ""}
+    ${d ? planBlocks(d) : ""}
+    <div class="section-label">Ideas from the group</div>
     <ul class="ideas-list">
       ${
         dayIdeas.length
@@ -622,7 +679,27 @@ async function itineraryPage() {
     ${addIdeaBlock("General")}
   </section>`;
 
-  return layout("itinerary", `Itinerary — ${trip.title}`, generalBlock + "\n" + dayBlocks);
+  const header = `
+  <section class="card">
+    <div class="pick-badge">The plan</div>
+    <h2>${escapeHtml(plan.title)}</h2>
+    <div class="subtitle">Based in ${escapeHtml(plan.base)} &middot; ${trip.dates}</div>
+    <p class="area-vibe">${escapeHtml(plan.intro)}</p>
+    <table>
+      ${plan.facts.map((f: any) => `<tr><td>${escapeHtml(f[0])}</td><td>${escapeHtml(f[1])}</td></tr>`).join("\n      ")}
+    </table>
+    <div class="section-label">Book before you go</div>
+    <ul class="sites">
+      ${plan.bookAhead.map((b: string) => `<li>${escapeHtml(b)}</li>`).join("\n      ")}
+    </ul>
+    <div class="caveat">${escapeHtml(plan.caveat)}</div>
+  </section>`;
+
+  return layout(
+    "itinerary",
+    `Itinerary — ${trip.title}`,
+    header + "\n" + dayBlocks + "\n" + generalBlock,
+  );
 }
 
 // ---------------------------------------------------------------- housing

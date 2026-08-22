@@ -406,7 +406,7 @@
     "flightNote": "Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range.",
     "feePct": 0.15,
     "carNote": "BZN is roughly 2.4x Denver for car rental. Minivans are the single most overpriced class here ($148/day vs $109 for a full-size SUV) — take two SUVs instead. One 7-seat SUV will not fit 8 people plus luggage. The majors will not guarantee AWD: you book a class, not a drivetrain, so call the counter. Add ~30% for Montana's 4% vehicle tax, airport concession and license fees.",
-    "foodNote": "Bozeman has no sales tax on groceries or restaurant meals — menu price is the price. But restaurants run 25-50% above US average while groceries are near par, so cooking is the real saving. Expect 20% auto-gratuity on parties of 8 (Plonk states this explicitly). Costco at 2505 Catron St is 10 min from the airport — natural arrival-day provisioning stop.",
+    "foodNote": "Bozeman has no sales tax on groceries or restaurant meals — menu price is the price. Restaurants run 25-50% above US average while groceries sit near par, so cooking is the real saving. Costco at 2505 Catron St is 10 min from the airport. For a party of 8, Little Star Diner and Yellowstone Valley Grill are the only two places that book 8-10 online; everywhere else wants a phone call.",
     "cleaningFee": 325,
     "carFeePct": 0.3
   },
@@ -452,5 +452,209 @@
     ],
     "caveat": "BZN's Summer 2026 schedule (published 2/13/2026) is marked subject to change, and the EWR route's 10/24 end date sits only 5 days past the return. Reconfirm on united.com before booking.",
     "source": "https://bozemanairport.com/flights"
+  },
+  "plan": {
+    "title": "Three nights in Paradise Valley",
+    "base": "Paradise Valley / Livingston",
+    "intro": "Bozeman is the hub, but Paradise Valley is the base: best-value housing, 30-45 minutes from Livingston's restaurants, an hour from Yellowstone's north gate. The shape is deliberately loose — one big fishing day, one big park day, and two travel days that don't try to do much. On the lasso plan: it's essentially a dead end in October. Every guest ranch that teaches roping runs summer-only, and the Gardiner and Paradise Valley outfitters send their whole horse string to hunting camps from September. Horseback riding is very much on.",
+    "facts": [
+      [
+        "Base",
+        "Paradise Valley / Livingston"
+      ],
+      [
+        "Weather",
+        "54°F day, 34°F night, ~19% chance of a wet day"
+      ],
+      [
+        "To Yellowstone north gate",
+        "65 min to Gardiner, 65 more to Lamar"
+      ],
+      [
+        "To Bozeman / BZN",
+        "33 min from Livingston"
+      ],
+      [
+        "Movie",
+        "Brokeback Mountain — the only one of the three set in this landscape"
+      ],
+      [
+        "Your weekend",
+        "MSU plays away Oct 17 and rifle season opens Oct 24, so no crowds either way"
+      ]
+    ],
+    "bookAhead": [
+      "Chico Hot Springs, (406) 333-4933 — one call books the pool, dinner for 8, and the horses.",
+      "Four fishing boats — Sweetwater in Livingston (406) 222-9393, or Angler's West in Emigrant (406) 333-4401. Call, don't book online.",
+      "Fishing licences at ols.fwp.mt.gov — $31.50 each for a day. There is no 3-day non-resident option.",
+      "Two SUVs at BZN. Large SUVs are thin here and no agency will guarantee AWD — book early and call the counter.",
+      "Yellowstone entrance passes online, to skip the gate queue at dawn.",
+      "Museum of the Rockies and the Hyalite road status — both unconfirmed below, both one phone call."
+    ],
+    "caveat": "Everything with a price attached was verified against the operator's own site or live booking inventory in Aug 2026. Anything marked with a warning could not be confirmed — those are phone calls, not guesses. Prices are per the operator's posted 2026 rates and exclude tips.",
+    "days": [
+      {
+        "day": "Day 1 · Fri 10/16 (Arrival)",
+        "headline": "Land, provision, soak. Nothing ambitious — people are arriving from three time zones.",
+        "blocks": [
+          {
+            "when": "Midday",
+            "what": "Land at BZN, collect two SUVs",
+            "detail": "One 7-seat SUV will not fit 8 people plus luggage, and two vehicles lets the group split later in the weekend. No agency guarantees a drivetrain, so call the counter about AWD.",
+            "cost": "~$1,370 for 4 days, all in"
+          },
+          {
+            "when": "~1 PM",
+            "what": "Costco run, 2505 Catron St",
+            "detail": "Ten minutes from the terminal and on your way out of town. Load up on breakfasts, lunches, beer and snacks — Montana charges no sales tax on groceries, while Bozeman restaurants run 25-50% above the US average.",
+            "cost": ""
+          },
+          {
+            "when": "~2:30 PM",
+            "what": "Drive south to the house",
+            "detail": "About 50 minutes via I-90 and US-89 through Paradise Valley. Fuel up before you leave the Gallatin Valley.",
+            "cost": ""
+          },
+          {
+            "when": "Optional, 12:30-1 PM",
+            "what": "Horseback at the Chico barn",
+            "detail": "Rockin' HK runs 1-hour rides at 10:00 and 13:00 and 2-hour rides at 09:30 and 12:30, and their live booking calendar shows all four of your days open. Ages 8+, with firm weight limits (250 lb at 6ft, 175 lb at 5'5\"). Only works if you land early — otherwise make it Saturday's alternative for anyone skipping the boats.",
+            "cost": "$145 pp / hr, $215 for two"
+          },
+          {
+            "when": "Late afternoon",
+            "what": "Soak at Chico Hot Springs, Pray MT",
+            "detail": "About 35 minutes from Livingston. ⚠️ Day-use pool price, hours and whether non-guests need a reservation are all unconfirmed — call (406) 333-4933. That same call books dinner and the horses.",
+            "cost": "price unconfirmed"
+          },
+          {
+            "when": "5-9 PM",
+            "what": "Dinner, Chico Historic Dining Room",
+            "detail": "Open daily, including Sunday and Monday — which matters, because most of the region isn't. Online booking caps at 6, so a party of 8 has to phone (406) 333-4933.",
+            "cost": ""
+          },
+          {
+            "when": "After dinner",
+            "what": "Movie night: Brokeback Mountain",
+            "detail": "Of your three, it's the only one set in this landscape — Wyoming ranch country, a couple of hours south. Old Boy and Internal Affairs are both better films and both belong to a different trip.",
+            "cost": ""
+          }
+        ]
+      },
+      {
+        "day": "Day 2 · Sat 10/17",
+        "headline": "The fishing day, and the only one where the whole group has dawn to dark free.",
+        "blocks": [
+          {
+            "when": "Before you leave home",
+            "what": "Buy licences online",
+            "detail": "Non-resident: $10 conservation licence + $7.50 AIS pass + $14 for a one-day base = $31.50 each. There is no 3-day non-resident licence; the next tier is 5 days at $73.50. Buy at ols.fwp.mt.gov rather than burning a morning in a shop.",
+            "cost": "$31.50 pp"
+          },
+          {
+            "when": "8 AM",
+            "what": "Guided float — four boats",
+            "detail": "Sweetwater Fly Shop in Livingston posts $700 per boat for a full day: two anglers, lunch, flies and loaner rods included. Montana Angler is $740, The River's Edge $675. Booking four boats on an October Saturday should be easy, but call rather than book online.",
+            "cost": "~$2,800 + 15-20% tips"
+          },
+          {
+            "when": "Cheaper alternative",
+            "what": "Paradise Valley spring creeks",
+            "detail": "DePuy and Armstrong both drop to $50 per rod per day on Oct 15 — your dates land just inside the cheap window. Flat, clear, walk-in wading with no boat needed. Eight rods is $400 for the day. The wading is easy but the fishing is technically demanding, so pair it with a guide.",
+            "cost": "$50/rod/day"
+          },
+          {
+            "when": "Worth knowing",
+            "what": "October is a big-fish month, not a many-fish month",
+            "detail": "The fall brown trout run is on and the crowds are gone. But Montana Angler's own guidance is that catch rates are no better than other seasons — which is a real tradeoff for a group of first-timers, who generally have more fun with numbers than with trophy hunting. Ask the shop directly whether beginners will do better on a float or on the creeks.",
+            "cost": ""
+          },
+          {
+            "when": "Evening",
+            "what": "Dinner in Livingston",
+            "detail": "Rib & Chop House has event space that's free to reserve, (406) 222-9200. Yellowstone Valley Grill books parties up to 10 straight through online and has a private wine cave — ⚠️ but one listing suggests it runs only April through October, so confirm on (406) 333-4162. 2nd Street Bistro is open Saturday, closed Sunday and Monday.",
+            "cost": ""
+          }
+        ]
+      },
+      {
+        "day": "Day 3 · Sun 10/18",
+        "headline": "Yellowstone. Early, long, and the one day worth setting an alarm for.",
+        "blocks": [
+          {
+            "when": "5:00-5:30 AM",
+            "what": "Leave for Lamar Valley",
+            "detail": "Livingston to Gardiner is 65 minutes, Gardiner to Lamar another 65. You want to be parked in Lamar at first light, because that's when wolves move.",
+            "cost": ""
+          },
+          {
+            "when": "At the gate",
+            "what": "Entrance fee",
+            "detail": "$35 per vehicle for seven days, so $70 for two — cheaper than a single $80 America the Beautiful pass. ⚠️ Anyone in the group who isn't a US resident pays a $100 surcharge unless they hold an annual pass, which flips that maths entirely. No vehicle reservation is needed.",
+            "cost": "$70"
+          },
+          {
+            "when": "Dawn",
+            "what": "Lamar Valley — wolves, and bison",
+            "detail": "NPS calls the northern range one of the best places in the world to watch wolves; the park holds between 83 and 123. Bring or rent a spotting scope — they're watched at long distance and binoculars alone will disappoint. Bison are abundant here year-round, though the rut is July and August, not now.",
+            "cost": ""
+          },
+          {
+            "when": "Heads up",
+            "what": "Lamar is an out-and-back",
+            "detail": "Dunraven Pass, between Canyon and Tower, closed Oct 12 — so you can't loop back that way. Beartooth Highway and the Chief Joseph Byway closed the same day, which makes Cooke City a dead end. The Gardiner-to-Cooke City road itself is open year-round.",
+            "cost": ""
+          },
+          {
+            "when": "On the way",
+            "what": "Fuel in Gardiner, not Mammoth",
+            "detail": "The Mammoth gas station shut for the season on Oct 4, and Roosevelt Lodge has been closed since Sept 7, so there are no services at Tower. Also budget for up to 15-minute delays at the Gardner River High Bridge just southeast of Mammoth — that construction runs 24 hours a day into late October, and it sits directly on your route.",
+            "cost": ""
+          },
+          {
+            "when": "Late afternoon",
+            "what": "Mammoth Hot Springs on the way out",
+            "detail": "The terraces, the Albright Visitor Center (open year-round) and elk on the lawns. The rut runs early September to mid-October, so you're catching the tail end — bulls will still be around, but peak bugling is probably over. Don't build the day around it.",
+            "cost": ""
+          },
+          {
+            "when": "Evening",
+            "what": "Dinner — Sunday narrows the field",
+            "detail": "Little Star Diner in Bozeman books parties up to 10 online and serves daily 5-9 PM, Sundays included. Chico's dining room is the other reliable Sunday option. 2nd Street Bistro is closed.",
+            "cost": ""
+          }
+        ]
+      },
+      {
+        "day": "Day 4 · Mon 10/19 (Departure)",
+        "headline": "Pack, one last thing in Bozeman, fly home. Keep it loose.",
+        "blocks": [
+          {
+            "when": "Morning",
+            "what": "Out of the house, north to Bozeman",
+            "detail": "Roughly 50-65 minutes. Leave buffer: Bozeman Pass is a designated chain-up area and nights sit below freezing, so morning black ice is a genuine possibility.",
+            "cost": ""
+          },
+          {
+            "when": "If there's time",
+            "what": "Museum of the Rockies",
+            "detail": "⚠️ Unverified — I could not confirm admission price, October hours, or whether the T. rex hall is open rather than under renovation. Call before driving over. If it's a bust, Bozeman Spirits on Main runs distillery tours, though they publish no price.",
+            "cost": "unconfirmed"
+          },
+          {
+            "when": "The other option",
+            "what": "Hyalite Canyon — but check first",
+            "detail": "⚠️ Hyalite Canyon Road has a seasonal fall vehicle closure and mid-October is plausibly inside it. If the gate is shut, Palisade Falls is off the table. Custer Gallatin National Forest, Bozeman Ranger District: (406) 522-2520.",
+            "cost": ""
+          },
+          {
+            "when": "Last meal",
+            "what": "Lunch before the airport",
+            "detail": "Montana Ale Works doesn't open until 4 PM, so it's out. Backcountry Burger Bar does burgers at $11-16. Bar 3 BBQ is walk-in rather than reservations, so it's a gamble with eight.",
+            "cost": ""
+          }
+        ]
+      }
+    ]
   }
 }

@@ -357,6 +357,42 @@
     padding-left: .6rem;
     border-left: 2px solid var(--border);
   }
+  ol.timeline {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0 0 0 1.1rem;
+    border-left: 2px solid var(--border);
+  }
+  ol.timeline li {
+    position: relative;
+    padding: 0 0 1.1rem .9rem;
+  }
+  ol.timeline li::before {
+    content: "";
+    position: absolute;
+    left: -1.42rem;
+    top: .42rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  ol.timeline .when {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  ol.timeline .what { margin-top: .1rem; }
+  ol.timeline .detail { font-size: .86rem; color: var(--muted); margin-top: .15rem; }
+  ol.timeline .cost {
+    font-size: .74rem;
+    background: rgba(127,127,127,.14);
+    border-radius: 6px;
+    padding: .1rem .4rem;
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body>
