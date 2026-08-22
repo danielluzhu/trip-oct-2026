@@ -443,7 +443,7 @@
       <label>Nights <input type="number" id="nights" min="1" max="10" value="3"></label>
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
     </div>
-    <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly 18% on top &mdash; included below.</div>
+    <div class="calc-note">Service fee + cleaning (~15%) and Montana lodging tax (8%, or 12% in Big Sky &amp; West Yellowstone) are added automatically.</div>
     <div class="calc-note">Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range.</div>
 
     <div class="section-label">Rental cars</div>
@@ -458,6 +458,7 @@
       <label>Days <input type="number" id="car-days" min="1" max="10" value="4"></label>
     </div>
     <div class="calc-note">Gas &amp; a Yellowstone day trip: <span id="gas-note"></span></div>
+    <div class="caveat">BZN is the most expensive airport in the US for car rental (~$156/day average across classes). The majors will not guarantee AWD — you book a class, not a drivetrain. If snow matters, use a local outfit that guarantees 4WD.</div>
 
     <div class="section-label">Food &amp; drink</div>
     <div class="calc-grid">
@@ -469,6 +470,7 @@
         </select>
       </label>
     </div>
+    <div class="caveat">Bozeman has no sales tax and no resort tax, so groceries and restaurant meals are taxed at 0% (Big Sky and West Yellowstone add 4%). Costco at 2505 Catron St is on the airport side — natural arrival-day provisioning stop. Bar 3 BBQ does group platters for 7-10 at ~$166.</div>
   </section>
 
   <section class="card" id="results">
@@ -483,7 +485,7 @@
 
   <script>
   (function () {
-    var CFG = {"nights":3,"areas":[{"name":"Bozeman / Gallatin Valley","nightly":550},{"name":"Big Sky","nightly":600},{"name":"Livingston / Paradise Valley","nightly":525},{"name":"Ennis / Madison Valley","nightly":425},{"name":"Gardiner / West Yellowstone","nightly":450}],"flights":{"nyc":{"low":407,"typical":503,"high":632},"sf":{"low":328,"typical":426,"high":567},"sea":{"low":209,"typical":310,"high":388}},"car":{"suv":95,"minivan":85,"gasPerCar":120},"food":{"cook":45,"mixed":80,"restaurants":130}};
+    var CFG = {"nights":3,"areas":[{"name":"Bozeman / Gallatin Valley","nightly":475,"taxPct":0.08},{"name":"Big Sky","nightly":525,"taxPct":0.12},{"name":"Livingston / Paradise Valley","nightly":500,"taxPct":0.08},{"name":"Ennis / Madison Valley","nightly":560,"taxPct":0.08},{"name":"Gardiner / West Yellowstone","nightly":535,"taxPct":0.12}],"feePct":0.15,"flights":{"nyc":{"low":407,"typical":503,"high":632},"sf":{"low":328,"typical":426,"high":567},"sea":{"low":209,"typical":310,"high":388}},"car":{"suv":119,"minivan":85,"gasPerCar":120},"food":{"cook":25,"mixed":58,"restaurants":108}};
     var $ = function (id) { return document.getElementById(id); };
     var money = function (n) {
       return "$" + Math.round(n).toLocaleString();
@@ -533,8 +535,11 @@
 
       var nights = Number($("nights").value) || 1;
       var nightly = Number($("nightly").value) || 0;
-      var lodgingBase = nightly * nights;
-      var lodging = lodgingBase * (1 + 0.18);
+      var area = CFG.areas[Number($("area").value)] || CFG.areas[0];
+      // Service + cleaning is roughly flat; lodging tax is 8% but 12% in the
+      // two resort-tax towns, so it has to come from the selected area.
+      var addOn = CFG.feePct + area.taxPct;
+      var lodging = nightly * nights * (1 + addOn);
 
       var cars = Number($("cars").value) || 0;
       var carDays = Number($("car-days").value) || 1;
@@ -548,7 +553,8 @@
 
       var rows = [
         ["Flights", flights, people + " fares, " + lvl],
-        ["Housing", lodging, money(nightly) + " × " + nights + " nights + fees/tax"],
+        ["Housing", lodging, money(nightly) + " × " + nights + " nights + " +
+          Math.round(addOn * 100) + "% fees/tax"],
         ["Rental cars", carRental + gas, cars + " × " + carDays + " days + gas"],
         ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
       ];

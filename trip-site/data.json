@@ -114,10 +114,10 @@
       "name": "Montana",
       "subtitle": "Bozeman / Big Sky / Paradise Valley",
       "weather": {
-        "high": "10-14°C",
-        "low": "-2 to 0°C",
-        "precip": "~25-30% daily chance",
-        "notes": "Shoulder season — summer crowds gone, ski season not started. Snow is possible."
+        "high": "56-57°F (13-14°C)",
+        "low": "28-29°F (-2 to -1°C)",
+        "precip": "1.1 in over ~9 wet days — October is relatively dry",
+        "notes": "Every night is near freezing and ~6 in of snow is the October normal. Big Sky runs 7-8°F colder."
       },
       "flights": {
         "nyc": {
@@ -235,8 +235,8 @@
         "drive": "0-20 min",
         "vibe": "Walk to Main Street breweries and roll to the airport in 15 minutes. Least scenic, most convenient, and the easiest place to find a big house that actually sleeps 10.",
         "nightly": {
-          "low": 350,
-          "typical": 550,
+          "low": 300,
+          "typical": 475,
           "high": 900
         },
         "bbox": {
@@ -248,15 +248,16 @@
         "photo": {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/101%20E%20Main%20-%20Bozeman%20Montana%20-%202013-07-09.jpg?width=800",
           "caption": "Downtown Bozeman"
-        }
+        },
+        "taxPct": 0.08
       },
       {
         "name": "Big Sky",
         "drive": "~1 hr south",
-        "vibe": "Lone Peak scenery and proper ski-town cabins. Mid-October is dead season here — lifts are closed and rates are at their annual floor, which is either a bargain or a ghost town depending on your mood.",
+        "vibe": "Lone Peak scenery and proper ski-town cabins at the annual price floor — ski rates don't start until Nov 24. The catch: summer resort operations shut around Sept 13, so mid-October is a dead zone with many restaurants and lifts closed.",
         "nightly": {
           "low": 300,
-          "typical": 600,
+          "typical": 525,
           "high": 1200
         },
         "bbox": {
@@ -268,16 +269,17 @@
         "photo": {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lone%20Peak%2C%20Big%20Sky%2C%20Montana.jpg?width=800",
           "caption": "Lone Peak, Big Sky"
-        }
+        },
+        "taxPct": 0.12
       },
       {
         "name": "Livingston / Paradise Valley",
         "drive": "30-60 min east",
         "vibe": "The postcard option: Emigrant Peak over the Yellowstone River, blue-ribbon fly water out the back door, and the closest good base for a north-gate Yellowstone day.",
         "nightly": {
-          "low": 300,
-          "typical": 525,
-          "high": 950
+          "low": 350,
+          "typical": 500,
+          "high": 1400
         },
         "bbox": {
           "neLat": 45.7,
@@ -288,16 +290,17 @@
         "photo": {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
           "caption": "Emigrant Peak, Paradise Valley"
-        }
+        },
+        "taxPct": 0.08
       },
       {
         "name": "Ennis / Madison Valley",
         "drive": "~1 hr west",
-        "vibe": "Fishing-first and genuinely quiet. The Madison is the draw; the town is one street. Cheapest per bedroom of the five, with the least to do if it rains.",
+        "vibe": "Fishing-first and genuinely quiet. The Madison is the draw; the town is one street. Priced like the others despite being smallest — the 4BR fishing lodges hold their rates.",
         "nightly": {
-          "low": 250,
-          "typical": 425,
-          "high": 800
+          "low": 300,
+          "typical": 560,
+          "high": 1120
         },
         "bbox": {
           "neLat": 45.55,
@@ -308,16 +311,17 @@
         "photo": {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gallatinriverwinter.jpg?width=800",
           "caption": "Gallatin River"
-        }
+        },
+        "taxPct": 0.08
       },
       {
         "name": "Gardiner / West Yellowstone",
         "drive": "1.5-2 hrs south",
         "vibe": "Right at Yellowstone's gates — worth it only if the park is the whole point. Furthest from the airport and the thinnest restaurant scene, but you're in Lamar Valley at sunrise.",
         "nightly": {
-          "low": 250,
-          "typical": 450,
-          "high": 850
+          "low": 300,
+          "typical": 535,
+          "high": 900
         },
         "bbox": {
           "neLat": 45.1,
@@ -328,19 +332,22 @@
         "photo": {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison%20%26%20storm%2C%20Lamar%20Valley%20%2832984063043%29.jpg?width=800",
           "caption": "Lamar Valley, Yellowstone"
-        }
+        },
+        "taxPct": 0.12
       }
     ],
     "notes": [
-      "Mid-October is shoulder season — between summer and ski — so this is the cheapest the area gets outside of April.",
-      "Snow is possible by mid-October at these elevations. Get a place with a plowed driveway and don't book anything up a forest road.",
-      "Anything sleeping 10 usually means 4-5 bedrooms; Airbnb's guest filter counts sofa beds, so check the actual bed list.",
-      "Book two vehicles rather than one — nothing at BZN seats 10, and the group will want to split up anyway.",
-      "Yellowstone's north entrance (Gardiner) stays open to cars year-round; most interior roads close to cars in early November."
-    ]
+      "Mid-October is genuinely shoulder season: Bozeman market ADR runs ~$305 vs $325 in September, and hotels sit 40-50% under July peaks.",
+      "MSU Bobcats play away on Oct 17, so no home-game lodging spike. The following weekend (Oct 24, Weber State) is a home game and would cost more.",
+      "Montana charges 8% lodging tax statewide; Big Sky and West Yellowstone add a 4% resort tax on top (12% total). Bozeman, Livingston and Ennis are 8%.",
+      "Big Sky is the cheapest headline rate but half-shuttered in mid-October — lifts closed, many restaurants dark. Cheap for a reason.",
+      "Anything sleeping 10 usually means 4-5 bedrooms; Airbnb's guest count includes sofa beds, so read the actual bed list.",
+      "Snow is normal by mid-October (6 inches is the October average) and every night is near freezing. Get a plowed driveway; skip anything up a forest road.",
+      "Yellowstone's interior roads stay open to cars until early November, so the park is still drivable on these dates. Beartooth Highway usually closes mid-October."
+    ],
+    "sourceNote": "Nightly bands are published property-manager rates and aggregator data read Aug 2026, plus 2025-26 market ADR — not live quotes for these dates. Airbnb and the big OTAs block automated date-locked pricing, so exact numbers must come from the search links above."
   },
   "costs": {
-    "lodgingFeePct": 0.18,
     "flights": {
       "nyc": {
         "low": 407,
@@ -359,16 +366,19 @@
       }
     },
     "car": {
-      "suv": 95,
+      "suv": 119,
       "minivan": 85,
       "gasPerCar": 120
     },
     "food": {
-      "cook": 45,
-      "mixed": 80,
-      "restaurants": 130
+      "cook": 25,
+      "mixed": 58,
+      "restaurants": 108
     },
-    "flightNote": "Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range."
+    "flightNote": "Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range.",
+    "feePct": 0.15,
+    "carNote": "BZN is the most expensive airport in the US for car rental (~$156/day average across classes). The majors will not guarantee AWD — you book a class, not a drivetrain. If snow matters, use a local outfit that guarantees 4WD.",
+    "foodNote": "Bozeman has no sales tax and no resort tax, so groceries and restaurant meals are taxed at 0% (Big Sky and West Yellowstone add 4%). Costco at 2505 Catron St is on the airport side — natural arrival-day provisioning stop. Bar 3 BBQ does group platters for 7-10 at ~$166."
   },
   "flights": {
     "headline": "Only ONE nonstop survives from NYC on these dates.",
