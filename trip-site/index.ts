@@ -312,6 +312,96 @@ const sharedStyle = /* css */ `
     color: #fff;
     border-color: var(--accent);
   }
+  .pick-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    margin-bottom: .6rem;
+  }
+  .muted-cell { color: var(--muted); font-size: .8rem; }
+  a.cta {
+    display: block;
+    text-align: center;
+    padding: .85rem 1.2rem;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 1rem 0 .6rem;
+  }
+  a.cta:hover { filter: brightness(1.1); }
+  .filter-note, .calc-note {
+    font-size: .8rem;
+    color: var(--muted);
+    margin: .5rem 0;
+  }
+  .caveat {
+    font-size: .82rem;
+    color: var(--muted);
+    border-left: 3px solid var(--border);
+    padding: .6rem .9rem;
+    margin-top: 1rem;
+    background: rgba(127,127,127,.06);
+    border-radius: 0 8px 8px 0;
+  }
+  .caveat code { font-size: .78rem; }
+  .areas { display: flex; flex-direction: column; gap: 1.2rem; }
+  .area {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .area img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .area h3 { margin: 0 0 .2rem; font-size: 1.05rem; }
+  .area-vibe { font-size: .87rem; color: var(--muted); margin: .5rem 0; }
+  @media (max-width: 560px) {
+    .area { grid-template-columns: 1fr; }
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .7rem;
+    margin: .3rem 0 .2rem;
+  }
+  .calc-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+  .calc-grid input, .calc-grid select {
+    padding: .5rem .6rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .9rem;
+  }
+  .total-row {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .total-label { display: block; font-size: .78rem; color: var(--muted); }
+  .total-big { font-size: 1.9rem; font-weight: 700; }
+  .total-big.accent { color: var(--accent); }
 `;
 
 // Static mode renders the site to flat files for GitHub Pages, where there is no
@@ -320,9 +410,12 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-function href(path: "/" | "/itinerary") {
+type Route = "/" | "/housing" | "/costs" | "/itinerary";
+type Nav = "home" | "housing" | "costs" | "itinerary";
+
+function href(path: Route) {
   if (!STATIC) return path;
-  return path === "/" ? "./index.html" : "./itinerary.html";
+  return path === "/" ? "./index.html" : `.${path}.html`;
 }
 
 function addIdeaBlock(day: string) {
@@ -345,7 +438,7 @@ function addIdeaBlock(day: string) {
   )}" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>`;
 }
 
-function layout(activeNav: "home" | "itinerary", title: string, body: string) {
+function layout(activeNav: Nav, title: string, body: string) {
   return /* html */ `<!doctype html>
 <html lang="en">
 <head>
@@ -360,7 +453,9 @@ function layout(activeNav: "home" | "itinerary", title: string, body: string) {
   <p>${trip.dates} &middot; ${trip.groupSize} people</p>
 </header>
 <nav>
-  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Compare locations</a>
+  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Montana</a>
+  <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
+  <a href="${href("/costs")}" class="${activeNav === "costs" ? "active" : ""}">Cost calculator</a>
   <a href="${href("/itinerary")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
 </nav>
 <main>
@@ -371,12 +466,37 @@ ${body}
 </html>`;
 }
 
+const PICK = "Montana";
+
 function homePage() {
-  const body = locations
-    .map(
-      (loc, i) => `
+  const picked = locations.find((l) => l.name === PICK)!;
+  const alsoRan = locations.filter((l) => l.name !== PICK);
+
+  const runnerUps = `
   <section class="card">
-    <h2><span class="rank">${i + 1}</span> ${loc.name}</h2>
+    <h2>Also considered</h2>
+    <div class="subtitle">The other three on the short list, for the record</div>
+    <table>
+      <tr><th>Where</th><th>Group airfare</th><th>Cabin/night</th><th>Why not</th></tr>
+      ${alsoRan
+        .map(
+          (loc) => `<tr>
+        <td><strong>${loc.name}</strong><br><span class="muted-cell">${loc.subtitle}</span></td>
+        <td>${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)}</td>
+        <td>${loc.airbnb.nightly}</td>
+        <td>${loc.verdict}</td>
+      </tr>`,
+        )
+        .join("\n      ")}
+    </table>
+  </section>`;
+
+  const body = [picked]
+    .map(
+      (loc) => `
+  <section class="card">
+    <div class="pick-badge">Where we're going</div>
+    <h2>${loc.name}</h2>
     <div class="subtitle">${loc.subtitle}</div>
 
     <div class="photos">
@@ -421,7 +541,7 @@ function homePage() {
   </section>`
     )
     .join("\n");
-  return layout("home", trip.title, body);
+  return layout("home", trip.title, body + "\n" + runnerUps);
 }
 
 function ideaItemHtml(idea: Idea) {
@@ -479,7 +599,299 @@ async function itineraryPage() {
   return layout("itinerary", `Itinerary — ${trip.title}`, generalBlock + "\n" + dayBlocks);
 }
 
-export { homePage, itineraryPage };
+// ---------------------------------------------------------------- housing
+
+const housing = (data as any).housing;
+const BOZEMAN = { lat: 45.677, lng: -111.0429 };
+
+// Airbnb blocks iframing (x-frame-options: SAMEORIGIN) and has no public search
+// API, so the best we can do is deep-link a search with every filter pre-applied.
+function airbnbSearch(o: {
+  adults: number;
+  minBedrooms: number;
+  bbox?: { neLat: number; neLng: number; swLat: number; swLng: number };
+  zoom?: number;
+}) {
+  const p = new URLSearchParams({
+    checkin: housing.checkin,
+    checkout: housing.checkout,
+    adults: String(o.adults),
+    min_bedrooms: String(o.minBedrooms),
+    "room_types[]": "Entire home/apt",
+  });
+  if (o.bbox) {
+    p.set("search_by_map", "true");
+    p.set("ne_lat", String(o.bbox.neLat));
+    p.set("ne_lng", String(o.bbox.neLng));
+    p.set("sw_lat", String(o.bbox.swLat));
+    p.set("sw_lng", String(o.bbox.swLng));
+    p.set("zoom", String(o.zoom ?? 8));
+  }
+  return `https://www.airbnb.com/s/Bozeman--Montana--United-States/homes?${p.toString()}`;
+}
+
+function housingPage() {
+  const wide = airbnbSearch({
+    adults: housing.defaultAdults,
+    minBedrooms: housing.minBedrooms,
+    bbox: housing.bbox,
+    zoom: 8,
+  });
+
+  const areaCards = housing.areas
+    .map((a: any) => {
+      const url = airbnbSearch({
+        adults: housing.defaultAdults,
+        minBedrooms: housing.minBedrooms,
+        bbox: a.bbox,
+        zoom: 10,
+      });
+      return `
+    <div class="area">
+      <img src="${a.photo.url}" alt="${escapeHtml(a.photo.caption)}" loading="lazy">
+      <div class="area-body">
+        <h3>${escapeHtml(a.name)}</h3>
+        <div class="subtitle">${escapeHtml(a.drive)} from Bozeman &middot; ${escapeHtml(a.photo.caption)}</div>
+        <p class="area-vibe">${escapeHtml(a.vibe)}</p>
+        <table>
+          <tr><td>Nightly (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
+          <tr><td>Typical</td><td><strong>${fmt(a.nightly.typical)}</strong>/night &rarr; ${fmt(a.nightly.typical * housing.nights)} for ${housing.nights} nights</td></tr>
+          <tr><td>Per person (8)</td><td>${fmt((a.nightly.typical * housing.nights) / 8)}</td></tr>
+        </table>
+        <a class="add-idea-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Search ${escapeHtml(a.name)} on Airbnb &rarr;</a>
+      </div>
+    </div>`;
+    })
+    .join("\n");
+
+  const body = `
+  <section class="card">
+    <div class="pick-badge">Housing</div>
+    <h2>Cabins within ~2 hours of Bozeman</h2>
+    <div class="subtitle">${housing.checkin} &rarr; ${housing.checkout} &middot; ${housing.nights} nights &middot; sleeps ${trip.groupSize}</div>
+    <p class="area-vibe">${escapeHtml(housing.intro)}</p>
+    <a class="cta" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
+    <div class="filter-note">
+      Filters baked into that link: <strong>${housing.checkin} to ${housing.checkout}</strong>,
+      <strong>${housing.defaultAdults} guests</strong>, <strong>${housing.minBedrooms}+ bedrooms</strong>,
+      entire place only, map bounded to roughly a 2-hour drive of Bozeman.
+      Add the <em>Cabin</em> property-type filter in Airbnb's own panel to narrow further.
+    </div>
+    <div class="caveat">
+      <strong>Why this is a link and not an embed:</strong> Airbnb sends
+      <code>x-frame-options: SAMEORIGIN</code>, so its pages cannot be displayed inside
+      another site &mdash; an iframe renders blank. There is also no public Airbnb search API,
+      so live prices and listing photos can't be pulled in automatically. The prices below are
+      researched ranges for this area and season, not live listing data, and the photos are
+      the areas themselves (Wikimedia Commons), not listing photos.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Where to base</h2>
+    <div class="subtitle">Sorted by drive time from Bozeman &mdash; each links to its own bounded search</div>
+    <div class="areas">
+${areaCards}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Booking notes</h2>
+    <ul class="sites">
+      ${housing.notes.map((n: string) => `<li>${escapeHtml(n)}</li>`).join("\n      ")}
+    </ul>
+    <a class="add-idea-link" href="${escapeHtml(housing.vrbo)}" target="_blank" rel="noopener">Same dates on VRBO &rarr;</a>
+  </section>`;
+
+  return layout("housing", `Housing — ${trip.title}`, body);
+}
+
+// ---------------------------------------------------------------- costs
+
+const costs = (data as any).costs;
+
+function costsPage() {
+  // Everything the calculator needs, handed to the client as one blob so the
+  // page stays a single self-contained file (no fetch — Pages is static).
+  const cfg = JSON.stringify({
+    nights: housing.nights,
+    areas: housing.areas.map((a: any) => ({ name: a.name, nightly: a.nightly.typical })),
+    flights: costs.flights,
+    car: costs.car,
+    food: costs.food,
+  });
+
+  const body = `
+  <section class="card">
+    <div class="pick-badge">Cost calculator</div>
+    <h2>What this actually costs</h2>
+    <div class="subtitle">Flights + housing + car + food. Change anything; totals update live.</div>
+
+    <div class="section-label">Who's coming</div>
+    <div class="calc-grid">
+      <label>From NYC <input type="number" id="n-nyc" min="0" max="10" value="3"></label>
+      <label>From SF <input type="number" id="n-sf" min="0" max="10" value="2"></label>
+      <label>From Seattle <input type="number" id="n-sea" min="0" max="10" value="1"></label>
+      <label>Already in MT <input type="number" id="n-local" min="0" max="10" value="0"></label>
+    </div>
+    <div class="calc-note" id="party-note"></div>
+
+    <div class="section-label">Flights</div>
+    <div class="calc-grid">
+      <label>Fare level
+        <select id="fare-level">
+          <option value="low">Cheap (book early)</option>
+          <option value="typical" selected>Typical</option>
+          <option value="high">Expensive (last minute)</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="section-label">Housing</div>
+    <div class="calc-grid">
+      <label>Area <select id="area"></select></label>
+      <label>Nights <input type="number" id="nights" min="1" max="10" value="${housing.nights}"></label>
+      <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
+    </div>
+    <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly ${Math.round(costs.lodgingFeePct * 100)}% on top &mdash; included below.</div>
+
+    <div class="section-label">Rental cars</div>
+    <div class="calc-grid">
+      <label>Vehicles <input type="number" id="cars" min="0" max="4" value="2"></label>
+      <label>Type
+        <select id="car-type">
+          <option value="suv">Large SUV (seats 7)</option>
+          <option value="minivan">Minivan (seats 7)</option>
+        </select>
+      </label>
+      <label>Days <input type="number" id="car-days" min="1" max="10" value="${housing.nights + 1}"></label>
+    </div>
+    <div class="calc-note">Gas &amp; a Yellowstone day trip: <span id="gas-note"></span></div>
+
+    <div class="section-label">Food &amp; drink</div>
+    <div class="calc-grid">
+      <label>Style
+        <select id="food-style">
+          <option value="cook">Mostly cooking at the cabin</option>
+          <option value="mixed" selected>Mix of cooking and going out</option>
+          <option value="restaurants">Mostly restaurants &amp; bars</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="card" id="results">
+    <h2>Total</h2>
+    <table id="breakdown"></table>
+    <div class="total-row">
+      <div><span class="total-label">Group total</span><span class="total-big" id="grand">&mdash;</span></div>
+      <div><span class="total-label">Per person</span><span class="total-big accent" id="perhead">&mdash;</span></div>
+    </div>
+    <div class="calc-note">Estimates from researched ranges for mid-October in the Bozeman area &mdash; not live quotes. Treat as a planning ballpark, not a bill.</div>
+  </section>
+
+  <script>
+  (function () {
+    var CFG = ${cfg};
+    var $ = function (id) { return document.getElementById(id); };
+    var money = function (n) {
+      return "$" + Math.round(n).toLocaleString();
+    };
+
+    var areaSel = $("area");
+    CFG.areas.forEach(function (a, i) {
+      var o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = a.name + " (" + money(a.nightly) + "/night)";
+      areaSel.appendChild(o);
+    });
+    $("nightly").value = CFG.areas[0].nightly;
+    areaSel.addEventListener("change", function () {
+      $("nightly").value = CFG.areas[Number(areaSel.value)].nightly;
+      calc();
+    });
+
+    function calc() {
+      var lvl = $("fare-level").value;
+      var party = {
+        nyc: Number($("n-nyc").value) || 0,
+        sf: Number($("n-sf").value) || 0,
+        sea: Number($("n-sea").value) || 0,
+        local: Number($("n-local").value) || 0
+      };
+      var people = party.nyc + party.sf + party.sea + party.local;
+
+      var note = $("party-note");
+      if (people === 0) {
+        note.textContent = "Add at least one person.";
+      } else {
+        note.textContent = people + " people" +
+          (people < 5 || people > 10 ? " — outside the 5-10 the cabins are sized for." : "");
+      }
+      if (people === 0) {
+        $("grand").textContent = "—";
+        $("perhead").textContent = "—";
+        $("breakdown").innerHTML = "";
+        return;
+      }
+
+      var flights =
+        party.nyc * CFG.flights.nyc[lvl] +
+        party.sf * CFG.flights.sf[lvl] +
+        party.sea * CFG.flights.sea[lvl];
+
+      var nights = Number($("nights").value) || 1;
+      var nightly = Number($("nightly").value) || 0;
+      var lodgingBase = nightly * nights;
+      var lodging = lodgingBase * (1 + ${costs.lodgingFeePct});
+
+      var cars = Number($("cars").value) || 0;
+      var carDays = Number($("car-days").value) || 1;
+      var carRate = CFG.car[$("car-type").value];
+      var carRental = cars * carDays * carRate;
+      var gas = cars * CFG.car.gasPerCar;
+      $("gas-note").textContent = money(CFG.car.gasPerCar) + " per vehicle";
+
+      var perDay = CFG.food[$("food-style").value];
+      var food = people * (nights + 1) * perDay;
+
+      var rows = [
+        ["Flights", flights, people + " fares, " + lvl],
+        ["Housing", lodging, money(nightly) + " × " + nights + " nights + fees/tax"],
+        ["Rental cars", carRental + gas, cars + " × " + carDays + " days + gas"],
+        ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
+      ];
+      var total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
+
+      $("breakdown").innerHTML =
+        "<tr><th>Category</th><th>Detail</th><th>Cost</th></tr>" +
+        rows.map(function (r) {
+          return "<tr><td><strong>" + r[0] + "</strong></td>" +
+                 "<td class='muted-cell'>" + r[2] + "</td>" +
+                 "<td>" + money(r[1]) + "</td></tr>";
+        }).join("") +
+        "<tr><td colspan='2'><strong>Per person</strong></td><td><strong>" +
+        money(total / people) + "</strong></td></tr>";
+
+      $("grand").textContent = money(total);
+      $("perhead").textContent = money(total / people);
+    }
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll("#results, .card input, .card select"),
+      function (el) {
+        el.addEventListener("input", calc);
+        el.addEventListener("change", calc);
+      }
+    );
+    calc();
+  })();
+  </script>`;
+
+  return layout("costs", `Costs — ${trip.title}`, body);
+}
+
+export { homePage, itineraryPage, housingPage, costsPage };
 
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
@@ -512,6 +924,18 @@ Bun.serve({
         await saveIdeas(ideas);
       }
       return Response.redirect("/itinerary", 303);
+    }
+
+    if (url.pathname === "/housing") {
+      return new Response(housingPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
+    if (url.pathname === "/costs") {
+      return new Response(costsPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
     }
 
     if (url.pathname === "/itinerary") {

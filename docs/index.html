@@ -241,6 +241,96 @@
     color: #fff;
     border-color: var(--accent);
   }
+  .pick-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    margin-bottom: .6rem;
+  }
+  .muted-cell { color: var(--muted); font-size: .8rem; }
+  a.cta {
+    display: block;
+    text-align: center;
+    padding: .85rem 1.2rem;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 1rem 0 .6rem;
+  }
+  a.cta:hover { filter: brightness(1.1); }
+  .filter-note, .calc-note {
+    font-size: .8rem;
+    color: var(--muted);
+    margin: .5rem 0;
+  }
+  .caveat {
+    font-size: .82rem;
+    color: var(--muted);
+    border-left: 3px solid var(--border);
+    padding: .6rem .9rem;
+    margin-top: 1rem;
+    background: rgba(127,127,127,.06);
+    border-radius: 0 8px 8px 0;
+  }
+  .caveat code { font-size: .78rem; }
+  .areas { display: flex; flex-direction: column; gap: 1.2rem; }
+  .area {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .area img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .area h3 { margin: 0 0 .2rem; font-size: 1.05rem; }
+  .area-vibe { font-size: .87rem; color: var(--muted); margin: .5rem 0; }
+  @media (max-width: 560px) {
+    .area { grid-template-columns: 1fr; }
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .7rem;
+    margin: .3rem 0 .2rem;
+  }
+  .calc-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+  .calc-grid input, .calc-grid select {
+    padding: .5rem .6rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .9rem;
+  }
+  .total-row {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .total-label { display: block; font-size: .78rem; color: var(--muted); }
+  .total-big { font-size: 1.9rem; font-weight: 700; }
+  .total-big.accent { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -249,23 +339,26 @@
   <p>Fri Oct 16 - Sun Oct 19, 2026 (flexible, 3-5 days) &middot; 5-10 people</p>
 </header>
 <nav>
-  <a href="./index.html" class="active">Compare locations</a>
+  <a href="./index.html" class="active">Montana</a>
+  <a href="./housing.html" class="">Housing</a>
+  <a href="./costs.html" class="">Cost calculator</a>
   <a href="./itinerary.html" class="">Itinerary &amp; ideas</a>
 </nav>
 <main>
 
   <section class="card">
-    <h2><span class="rank">1</span> Montana</h2>
-    <div class="subtitle">Bozeman / Big Sky / Glacier</div>
+    <div class="pick-badge">Where we're going</div>
+    <h2>Montana</h2>
+    <div class="subtitle">Bozeman / Big Sky / Paradise Valley</div>
 
     <div class="photos">
       <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/St%20Mary%20Lake%20at%20Sun%20Point.jpg?width=800" alt="St. Mary Lake, Glacier NP" loading="lazy">
-        <figcaption>St. Mary Lake, Glacier NP</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hyalite%20Reservoir%20%2852320603728%29.jpg?width=800" alt="Hyalite Reservoir, 30 min from Bozeman" loading="lazy">
+        <figcaption>Hyalite Reservoir, 30 min from Bozeman</figcaption>
       </figure>
       <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800" alt="Going-to-the-Sun Road" loading="lazy">
-        <figcaption>Going-to-the-Sun Road</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800" alt="Emigrant Peak, Paradise Valley" loading="lazy">
+        <figcaption>Emigrant Peak, Paradise Valley</figcaption>
       </figure>
     </div>
 
@@ -273,7 +366,7 @@
     <table>
       <tr><td>High / Low</td><td>10-14°C / -2 to 0°C</td></tr>
       <tr><td>Precip</td><td>~25-30% daily chance</td></tr>
-      <tr><td>Notes</td><td>Logan Pass (Glacier) likely closed for the season by these dates</td></tr>
+      <tr><td>Notes</td><td>Shoulder season — summer crowds gone, ski season not started. Snow is possible.</td></tr>
     </table>
 
     <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
@@ -293,165 +386,42 @@
 
     <div class="section-label">Top things to do</div>
     <ul class="sites">
-      <li>Gallatin Canyon whitewater rafting</li>
-      <li>Fly fishing Gallatin/Madison/Yellowstone Rivers</li>
-      <li>Hyalite Canyon hikes</li>
-      <li>Glacier NP lower sections (Sun Point, St. Mary)</li>
-      <li>Bozeman brewery/distillery scene</li>
-      <li>Yellowstone day trip</li>
-      <li>Big Sky Resort lift rides</li>
+      <li>Fly fishing the Gallatin, Madison & Yellowstone rivers</li>
+      <li>Hyalite Canyon hikes and the reservoir</li>
+      <li>Yellowstone north gate day trip (Gardiner → Lamar Valley)</li>
+      <li>Bozeman Main Street brewery & distillery crawl</li>
+      <li>Big Sky / Lone Peak scenic drive up the Gallatin Canyon</li>
+      <li>Chico Hot Springs soak in Paradise Valley</li>
+      <li>Museum of the Rockies (the T. rex is genuinely worth it)</li>
     </ul>
 
-    <div class="verdict">Best fishing/rafting + breweries, good all-around pricing, but marquee Glacier road closed</div>
+    <div class="verdict">Best fishing, best airport access, and mid-October is shoulder season — the cheapest the area gets. Snow is the wildcard.</div>
   </section>
 
   <section class="card">
-    <h2><span class="rank">2</span> North Carolina</h2>
-    <div class="subtitle">Asheville / Blue Ridge Mountains</div>
-
-    <div class="photos">
-      <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Looking%20Glass%20Falls%202012.jpg?width=800" alt="Looking Glass Falls" loading="lazy">
-        <figcaption>Looking Glass Falls</figcaption>
-      </figure>
-      <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Appalachian%20Mountains%20along%20Blue%20Ridge%20Parkway%2C%20North%20Carolina.JPG?width=800" alt="Blue Ridge Parkway" loading="lazy">
-        <figcaption>Blue Ridge Parkway</figcaption>
-      </figure>
-    </div>
-
-    <div class="section-label">Weather (mid-Oct)</div>
+    <h2>Also considered</h2>
+    <div class="subtitle">The other three on the short list, for the record</div>
     <table>
-      <tr><td>High / Low</td><td>19-21°C / 8°C</td></tr>
-      <tr><td>Precip</td><td>9-10 rainy days</td></tr>
-      <tr><td>Notes</td><td>Warmest by far, peak foliage, humid</td></tr>
+      <tr><th>Where</th><th>Group airfare</th><th>Cabin/night</th><th>Why not</th></tr>
+      <tr>
+        <td><strong>North Carolina</strong><br><span class="muted-cell">Asheville / Blue Ridge Mountains</span></td>
+        <td>$1,370-$2,270</td>
+        <td>$350-900</td>
+        <td>Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs</td>
+      </tr>
+      <tr>
+        <td><strong>Wyoming</strong><br><span class="muted-cell">Jackson Hole / Grand Teton</span></td>
+        <td>$1,700-$2,410</td>
+        <td>$400-700</td>
+        <td>Best scenery & national park access, coldest, pricier from NYC</td>
+      </tr>
+      <tr>
+        <td><strong>Vermont</strong><br><span class="muted-cell">Stowe / Killington / Mad River Valley</span></td>
+        <td>$1,790-$2,430</td>
+        <td>$400-700</td>
+        <td>Best classic-foliage trip, but priciest flights for SF/Seattle crew</td>
+      </tr>
     </table>
-
-    <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
-    <table>
-      <tr><td>NYC &times;3</td><td>$180-$360 pp &mdash; AVL fare shown; cheaper via CLT</td></tr>
-      <tr><td>SF &times;2</td><td>$280-$400 pp</td></tr>
-      <tr><td>Seattle &times;1</td><td>$270-$390 pp</td></tr>
-      <tr><td>Group total</td><td class="group-total">$1,370-$2,270 (~$1,820 at midpoint)</td></tr>
-    </table>
-
-    <div class="section-label">4BR Airbnb cabin</div>
-    <table>
-      <tr><td>Nightly</td><td>$350-900</td></tr>
-      <tr><td>Total</td><td>$1,400-3,000 (3-4 nights)</td></tr>
-      <tr><td>Per person</td><td>$150-350 (8 people)</td></tr>
-    </table>
-
-    <div class="section-label">Top things to do</div>
-    <ul class="sites">
-      <li>Blue Ridge Parkway scenic drive</li>
-      <li>Waterfall hikes (Looking Glass, Linville)</li>
-      <li>South Slope brewery crawl, Asheville</li>
-      <li>Mt. Pisgah / Craggy Gardens hikes</li>
-      <li>Chimney Rock State Park</li>
-      <li>French Broad River rafting/tubing</li>
-      <li>DuPont State Forest</li>
-    </ul>
-
-    <div class="verdict">Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs</div>
-  </section>
-
-  <section class="card">
-    <h2><span class="rank">3</span> Wyoming</h2>
-    <div class="subtitle">Jackson Hole / Grand Teton</div>
-
-    <div class="photos">
-      <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Middle%20Teton%20Grand%20Teton%20NP1.jpg?width=800" alt="Middle Teton, Grand Teton NP" loading="lazy">
-        <figcaption>Middle Teton, Grand Teton NP</figcaption>
-      </figure>
-    </div>
-
-    <div class="section-label">Weather (mid-Oct)</div>
-    <table>
-      <tr><td>High / Low</td><td>10-14°C / -7 to -3°C</td></tr>
-      <tr><td>Precip</td><td>~13 days w/ snow, up to 30cm possible</td></tr>
-      <tr><td>Notes</td><td>Coldest option, chance of a snow squall</td></tr>
-    </table>
-
-    <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
-    <table>
-      <tr><td>NYC &times;3</td><td>$300-$450 pp</td></tr>
-      <tr><td>SF &times;2</td><td>$300-$400 pp</td></tr>
-      <tr><td>Seattle &times;1</td><td>$200-$260 pp</td></tr>
-      <tr><td>Group total</td><td class="group-total">$1,700-$2,410 (~$2,055 at midpoint)</td></tr>
-    </table>
-
-    <div class="section-label">4BR Airbnb cabin</div>
-    <table>
-      <tr><td>Nightly</td><td>$400-700</td></tr>
-      <tr><td>Total</td><td>$1,400-2,800 (3-4 nights)</td></tr>
-      <tr><td>Per person</td><td>$175-350 (8 people)</td></tr>
-    </table>
-
-    <div class="section-label">Top things to do</div>
-    <ul class="sites">
-      <li>Grand Teton NP (Jenny Lake, Cascade Canyon)</li>
-      <li>Snake River scenic float</li>
-      <li>Yellowstone day trip</li>
-      <li>Elk rut viewing, National Elk Refuge</li>
-      <li>Jackson Hole Mountain Resort tram</li>
-      <li>Downtown Jackson bars/steakhouses</li>
-      <li>Horseback riding / ATV tours</li>
-    </ul>
-
-    <div class="verdict">Best scenery & national park access, coldest, pricier from NYC</div>
-  </section>
-
-  <section class="card">
-    <h2><span class="rank">4</span> Vermont</h2>
-    <div class="subtitle">Stowe / Killington / Mad River Valley</div>
-
-    <div class="photos">
-      <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/CamelsHumpVT2012.jpg?width=800" alt="Camel's Hump" loading="lazy">
-        <figcaption>Camel's Hump</figcaption>
-      </figure>
-      <figure>
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vermont%20fall%20foliage%20hogback%20mountain.JPG?width=800" alt="Fall foliage, Hogback Mountain" loading="lazy">
-        <figcaption>Fall foliage, Hogback Mountain</figcaption>
-      </figure>
-    </div>
-
-    <div class="section-label">Weather (mid-Oct)</div>
-    <table>
-      <tr><td>High / Low</td><td>12-16°C / 4-6°C</td></tr>
-      <tr><td>Precip</td><td>3-8 rainy days</td></tr>
-      <tr><td>Notes</td><td>Foliage past-peak up north, still vibrant in central/southern VT</td></tr>
-    </table>
-
-    <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
-    <table>
-      <tr><td>NYC &times;3</td><td>$230-$260 pp</td></tr>
-      <tr><td>SF &times;2</td><td>$350-$550 pp</td></tr>
-      <tr><td>Seattle &times;1</td><td>$400-$550 pp</td></tr>
-      <tr><td>Group total</td><td class="group-total">$1,790-$2,430 (~$2,110 at midpoint)</td></tr>
-    </table>
-
-    <div class="section-label">4BR Airbnb cabin</div>
-    <table>
-      <tr><td>Nightly</td><td>$400-700</td></tr>
-      <tr><td>Total</td><td>$1,400-2,600 (3-4 nights)</td></tr>
-      <tr><td>Per person</td><td>$175-350 (8 people)</td></tr>
-    </table>
-
-    <div class="section-label">Top things to do</div>
-    <ul class="sites">
-      <li>Route 100 foliage drive</li>
-      <li>Camel's Hump hike</li>
-      <li>Burlington beer trail</li>
-      <li>The Alchemist brewery (Stowe)</li>
-      <li>Ben & Jerry's factory tour</li>
-      <li>Kingdom Trails mountain biking</li>
-      <li>Stowe & Woodstock villages</li>
-    </ul>
-
-    <div class="verdict">Best classic-foliage trip, but priciest flights for SF/Seattle crew</div>
   </section>
 </main>
 <footer>Generated from live research &middot; 2026</footer>

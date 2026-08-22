@@ -3,7 +3,11 @@
     "title": "HOMELESS?",
     "groupSize": "5-10",
     "dates": "Fri Oct 16 - Sun Oct 19, 2026 (flexible, 3-5 days)",
-    "origins": ["NYC (LGA/JFK/EWR)", "SF Bay Area (SFO/SJC/OAK)", "Seattle (SEA)"]
+    "origins": [
+      "NYC (LGA/JFK/EWR)",
+      "SF Bay Area (SFO/SJC/OAK)",
+      "Seattle (SEA)"
+    ]
   },
   "locations": [
     {
@@ -16,9 +20,21 @@
         "notes": "Foliage past-peak up north, still vibrant in central/southern VT"
       },
       "flights": {
-        "nyc": { "low": 230, "high": 260, "note": "" },
-        "sf": { "low": 350, "high": 550, "note": "" },
-        "seattle": { "low": 400, "high": 550, "note": "" }
+        "nyc": {
+          "low": 230,
+          "high": 260,
+          "note": ""
+        },
+        "sf": {
+          "low": 350,
+          "high": 550,
+          "note": ""
+        },
+        "seattle": {
+          "low": 400,
+          "high": 550,
+          "note": ""
+        }
       },
       "airbnb": {
         "nightly": "$400-700",
@@ -56,9 +72,21 @@
         "notes": "Coldest option, chance of a snow squall"
       },
       "flights": {
-        "nyc": { "low": 300, "high": 450, "note": "" },
-        "sf": { "low": 300, "high": 400, "note": "" },
-        "seattle": { "low": 200, "high": 260, "note": "" }
+        "nyc": {
+          "low": 300,
+          "high": 450,
+          "note": ""
+        },
+        "sf": {
+          "low": 300,
+          "high": 400,
+          "note": ""
+        },
+        "seattle": {
+          "low": 200,
+          "high": 260,
+          "note": ""
+        }
       },
       "airbnb": {
         "nightly": "$400-700",
@@ -84,17 +112,29 @@
     },
     {
       "name": "Montana",
-      "subtitle": "Bozeman / Big Sky / Glacier",
+      "subtitle": "Bozeman / Big Sky / Paradise Valley",
       "weather": {
         "high": "10-14°C",
         "low": "-2 to 0°C",
         "precip": "~25-30% daily chance",
-        "notes": "Logan Pass (Glacier) likely closed for the season by these dates"
+        "notes": "Shoulder season — summer crowds gone, ski season not started. Snow is possible."
       },
       "flights": {
-        "nyc": { "low": 220, "high": 350, "note": "" },
-        "sf": { "low": 200, "high": 350, "note": "" },
-        "seattle": { "low": 230, "high": 280, "note": "" }
+        "nyc": {
+          "low": 220,
+          "high": 350,
+          "note": ""
+        },
+        "sf": {
+          "low": 200,
+          "high": 350,
+          "note": ""
+        },
+        "seattle": {
+          "low": 230,
+          "high": 280,
+          "note": ""
+        }
       },
       "airbnb": {
         "nightly": "$350-1,000",
@@ -102,25 +142,25 @@
         "perPerson": "$150-350 (8 people)"
       },
       "topSites": [
-        "Gallatin Canyon whitewater rafting",
-        "Fly fishing Gallatin/Madison/Yellowstone Rivers",
-        "Hyalite Canyon hikes",
-        "Glacier NP lower sections (Sun Point, St. Mary)",
-        "Bozeman brewery/distillery scene",
-        "Yellowstone day trip",
-        "Big Sky Resort lift rides"
+        "Fly fishing the Gallatin, Madison & Yellowstone rivers",
+        "Hyalite Canyon hikes and the reservoir",
+        "Yellowstone north gate day trip (Gardiner → Lamar Valley)",
+        "Bozeman Main Street brewery & distillery crawl",
+        "Big Sky / Lone Peak scenic drive up the Gallatin Canyon",
+        "Chico Hot Springs soak in Paradise Valley",
+        "Museum of the Rockies (the T. rex is genuinely worth it)"
       ],
       "photos": [
         {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/St%20Mary%20Lake%20at%20Sun%20Point.jpg?width=800",
-          "caption": "St. Mary Lake, Glacier NP"
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hyalite%20Reservoir%20%2852320603728%29.jpg?width=800",
+          "caption": "Hyalite Reservoir, 30 min from Bozeman"
         },
         {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800",
-          "caption": "Going-to-the-Sun Road"
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
+          "caption": "Emigrant Peak, Paradise Valley"
         }
       ],
-      "verdict": "Best fishing/rafting + breweries, good all-around pricing, but marquee Glacier road closed"
+      "verdict": "Best fishing, best airport access, and mid-October is shoulder season — the cheapest the area gets. Snow is the wildcard."
     },
     {
       "name": "North Carolina",
@@ -132,9 +172,21 @@
         "notes": "Warmest by far, peak foliage, humid"
       },
       "flights": {
-        "nyc": { "low": 180, "high": 360, "note": "AVL fare shown; cheaper via CLT" },
-        "sf": { "low": 280, "high": 400, "note": "" },
-        "seattle": { "low": 270, "high": 390, "note": "" }
+        "nyc": {
+          "low": 180,
+          "high": 360,
+          "note": "AVL fare shown; cheaper via CLT"
+        },
+        "sf": {
+          "low": 280,
+          "high": 400,
+          "note": ""
+        },
+        "seattle": {
+          "low": 270,
+          "high": 390,
+          "note": ""
+        }
       },
       "airbnb": {
         "nightly": "$350-900",
@@ -162,5 +214,159 @@
       ],
       "verdict": "Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs"
     }
-  ]
+  ],
+  "housing": {
+    "checkin": "2026-10-16",
+    "checkout": "2026-10-19",
+    "nights": 3,
+    "defaultAdults": 8,
+    "minBedrooms": 4,
+    "intro": "Bozeman is the hub: BZN airport, groceries, and the bars are all here, and everything below is inside a two-hour drive. Mid-October is shoulder season — after the summer crush, before Big Sky's ski rates kick in — which is the main reason the numbers work for a group this size.",
+    "bbox": {
+      "neLat": 46.6,
+      "neLng": -109.6,
+      "swLat": 44.5,
+      "swLng": -112.4
+    },
+    "vrbo": "https://www.vrbo.com/search?destination=Bozeman%2C%20Montana&startDate=2026-10-16&endDate=2026-10-19&adults=8",
+    "areas": [
+      {
+        "name": "Bozeman / Gallatin Valley",
+        "drive": "0-20 min",
+        "vibe": "Walk to Main Street breweries and roll to the airport in 15 minutes. Least scenic, most convenient, and the easiest place to find a big house that actually sleeps 10.",
+        "nightly": {
+          "low": 350,
+          "typical": 550,
+          "high": 900
+        },
+        "bbox": {
+          "neLat": 45.95,
+          "neLng": -110.75,
+          "swLat": 45.45,
+          "swLng": -111.45
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/101%20E%20Main%20-%20Bozeman%20Montana%20-%202013-07-09.jpg?width=800",
+          "caption": "Downtown Bozeman"
+        }
+      },
+      {
+        "name": "Big Sky",
+        "drive": "~1 hr south",
+        "vibe": "Lone Peak scenery and proper ski-town cabins. Mid-October is dead season here — lifts are closed and rates are at their annual floor, which is either a bargain or a ghost town depending on your mood.",
+        "nightly": {
+          "low": 300,
+          "typical": 600,
+          "high": 1200
+        },
+        "bbox": {
+          "neLat": 45.45,
+          "neLng": -111.2,
+          "swLat": 45.15,
+          "swLng": -111.6
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lone%20Peak%2C%20Big%20Sky%2C%20Montana.jpg?width=800",
+          "caption": "Lone Peak, Big Sky"
+        }
+      },
+      {
+        "name": "Livingston / Paradise Valley",
+        "drive": "30-60 min east",
+        "vibe": "The postcard option: Emigrant Peak over the Yellowstone River, blue-ribbon fly water out the back door, and the closest good base for a north-gate Yellowstone day.",
+        "nightly": {
+          "low": 300,
+          "typical": 525,
+          "high": 950
+        },
+        "bbox": {
+          "neLat": 45.7,
+          "neLng": -110.4,
+          "swLat": 45.35,
+          "swLng": -110.85
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
+          "caption": "Emigrant Peak, Paradise Valley"
+        }
+      },
+      {
+        "name": "Ennis / Madison Valley",
+        "drive": "~1 hr west",
+        "vibe": "Fishing-first and genuinely quiet. The Madison is the draw; the town is one street. Cheapest per bedroom of the five, with the least to do if it rains.",
+        "nightly": {
+          "low": 250,
+          "typical": 425,
+          "high": 800
+        },
+        "bbox": {
+          "neLat": 45.55,
+          "neLng": -111.55,
+          "swLat": 45.2,
+          "swLng": -111.9
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gallatinriverwinter.jpg?width=800",
+          "caption": "Gallatin River"
+        }
+      },
+      {
+        "name": "Gardiner / West Yellowstone",
+        "drive": "1.5-2 hrs south",
+        "vibe": "Right at Yellowstone's gates — worth it only if the park is the whole point. Furthest from the airport and the thinnest restaurant scene, but you're in Lamar Valley at sunrise.",
+        "nightly": {
+          "low": 250,
+          "typical": 450,
+          "high": 850
+        },
+        "bbox": {
+          "neLat": 45.1,
+          "neLng": -110.6,
+          "swLat": 44.6,
+          "swLng": -111.3
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison%20%26%20storm%2C%20Lamar%20Valley%20%2832984063043%29.jpg?width=800",
+          "caption": "Lamar Valley, Yellowstone"
+        }
+      }
+    ],
+    "notes": [
+      "Mid-October is shoulder season — between summer and ski — so this is the cheapest the area gets outside of April.",
+      "Snow is possible by mid-October at these elevations. Get a place with a plowed driveway and don't book anything up a forest road.",
+      "Anything sleeping 10 usually means 4-5 bedrooms; Airbnb's guest filter counts sofa beds, so check the actual bed list.",
+      "Book two vehicles rather than one — nothing at BZN seats 10, and the group will want to split up anyway.",
+      "Yellowstone's north entrance (Gardiner) stays open to cars year-round; most interior roads close to cars in early November."
+    ]
+  },
+  "costs": {
+    "lodgingFeePct": 0.18,
+    "flights": {
+      "nyc": {
+        "low": 280,
+        "typical": 420,
+        "high": 650
+      },
+      "sf": {
+        "low": 250,
+        "typical": 380,
+        "high": 600
+      },
+      "sea": {
+        "low": 200,
+        "typical": 300,
+        "high": 480
+      }
+    },
+    "car": {
+      "suv": 95,
+      "minivan": 85,
+      "gasPerCar": 120
+    },
+    "food": {
+      "cook": 45,
+      "mixed": 80,
+      "restaurants": 130
+    }
+  }
 }
