@@ -402,6 +402,25 @@ const sharedStyle = /* css */ `
   .total-label { display: block; font-size: .78rem; color: var(--muted); }
   .total-big { font-size: 1.9rem; font-weight: 700; }
   .total-big.accent { color: var(--accent); }
+  .alert {
+    background: rgba(200,120,20,.13);
+    border: 1px solid rgba(200,120,20,.35);
+    border-radius: 8px;
+    padding: .7rem .9rem;
+    font-size: .9rem;
+    margin-bottom: .9rem;
+  }
+  .pill {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: .12rem .5rem;
+    border-radius: 999px;
+  }
+  .pill.ok { background: rgba(40,150,90,.18); color: #2e9c66; }
+  .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
 `;
 
 // Static mode renders the site to flat files for GitHub Pages, where there is no
@@ -710,6 +729,32 @@ ${areaCards}
 
 const costs = (data as any).costs;
 
+const flightInfo = (data as any).flights;
+
+function flightsBlock() {
+  return `
+  <section class="card">
+    <h2>Getting there</h2>
+    <div class="alert"><strong>${escapeHtml(flightInfo.headline)}</strong></div>
+    <table>
+      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
+      ${flightInfo.rows
+        .map(
+          (r: any) => `<tr>
+        <td><strong>${escapeHtml(r.route)}</strong></td>
+        <td class="muted-cell">${escapeHtml(r.airline)}</td>
+        <td><span class="pill ${r.status}">${r.status === "ok" ? "nonstop" : "no nonstop"}</span><br>
+            <span class="muted-cell">${escapeHtml(r.detail)}</span></td>
+      </tr>`,
+        )
+        .join("\n      ")}
+    </table>
+    <div class="caveat">${escapeHtml(flightInfo.caveat)}
+      <a href="${escapeHtml(flightInfo.source)}" target="_blank" rel="noopener">BZN schedule &rarr;</a>
+    </div>
+  </section>`;
+}
+
 function costsPage() {
   // Everything the calculator needs, handed to the client as one blob so the
   // page stays a single self-contained file (no fetch — Pages is static).
@@ -754,6 +799,7 @@ function costsPage() {
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
     </div>
     <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly ${Math.round(costs.lodgingFeePct * 100)}% on top &mdash; included below.</div>
+    <div class="calc-note">${escapeHtml(costs.flightNote)}</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
@@ -888,7 +934,7 @@ function costsPage() {
   })();
   </script>`;
 
-  return layout("costs", `Costs — ${trip.title}`, body);
+  return layout("costs", `Costs — ${trip.title}`, flightsBlock() + "\n" + body);
 }
 
 export { homePage, itineraryPage, housingPage, costsPage };
