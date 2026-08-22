@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Itinerary — HOMELESS?</title>
+<title>Costs — HOMELESS?</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -341,62 +341,176 @@
 <nav>
   <a href="./index.html" class="">Montana</a>
   <a href="./housing.html" class="">Housing</a>
-  <a href="./costs.html" class="">Cost calculator</a>
-  <a href="./itinerary.html" class="active">Itinerary &amp; ideas</a>
+  <a href="./costs.html" class="active">Cost calculator</a>
+  <a href="./itinerary.html" class="">Itinerary &amp; ideas</a>
 </nav>
 <main>
 
   <section class="card">
-    <h2>General ideas</h2>
-    <div class="subtitle">Gear, logistics, group buys &mdash; anything not tied to a specific day</div>
-    <ul class="ideas-list">
-      <li class="idea">
-        Nature stuff
-        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
-      </li>
-      <li class="idea">
-        Movie night — Oldboy, Brokeback Mountain, or Internal Affairs
-        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
-      </li>
-      <li class="idea">
-        Let&#39;s all learn to fish or lasso or something
-        <div class="idea-meta">&mdash; README &middot; Jan 1, 12:00 AM</div>
-      </li>
-    </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+General&amp;body=**Day%3A**+General%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+    <div class="pick-badge">Cost calculator</div>
+    <h2>What this actually costs</h2>
+    <div class="subtitle">Flights + housing + car + food. Change anything; totals update live.</div>
+
+    <div class="section-label">Who's coming</div>
+    <div class="calc-grid">
+      <label>From NYC <input type="number" id="n-nyc" min="0" max="10" value="3"></label>
+      <label>From SF <input type="number" id="n-sf" min="0" max="10" value="2"></label>
+      <label>From Seattle <input type="number" id="n-sea" min="0" max="10" value="1"></label>
+      <label>Already in MT <input type="number" id="n-local" min="0" max="10" value="0"></label>
+    </div>
+    <div class="calc-note" id="party-note"></div>
+
+    <div class="section-label">Flights</div>
+    <div class="calc-grid">
+      <label>Fare level
+        <select id="fare-level">
+          <option value="low">Cheap (book early)</option>
+          <option value="typical" selected>Typical</option>
+          <option value="high">Expensive (last minute)</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="section-label">Housing</div>
+    <div class="calc-grid">
+      <label>Area <select id="area"></select></label>
+      <label>Nights <input type="number" id="nights" min="1" max="10" value="3"></label>
+      <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
+    </div>
+    <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly 18% on top &mdash; included below.</div>
+
+    <div class="section-label">Rental cars</div>
+    <div class="calc-grid">
+      <label>Vehicles <input type="number" id="cars" min="0" max="4" value="2"></label>
+      <label>Type
+        <select id="car-type">
+          <option value="suv">Large SUV (seats 7)</option>
+          <option value="minivan">Minivan (seats 7)</option>
+        </select>
+      </label>
+      <label>Days <input type="number" id="car-days" min="1" max="10" value="4"></label>
+    </div>
+    <div class="calc-note">Gas &amp; a Yellowstone day trip: <span id="gas-note"></span></div>
+
+    <div class="section-label">Food &amp; drink</div>
+    <div class="calc-grid">
+      <label>Style
+        <select id="food-style">
+          <option value="cook">Mostly cooking at the cabin</option>
+          <option value="mixed" selected>Mix of cooking and going out</option>
+          <option value="restaurants">Mostly restaurants &amp; bars</option>
+        </select>
+      </label>
+    </div>
   </section>
 
-  <section class="card">
-    <h2>Day 1 · Fri 10/16 (Arrival)</h2>
-    <ul class="ideas-list">
-      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
-    </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+1+%C2%B7+Fri+10%2F16+%28Arrival%29&amp;body=**Day%3A**+Day+1+%C2%B7+Fri+10%2F16+%28Arrival%29%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+  <section class="card" id="results">
+    <h2>Total</h2>
+    <table id="breakdown"></table>
+    <div class="total-row">
+      <div><span class="total-label">Group total</span><span class="total-big" id="grand">&mdash;</span></div>
+      <div><span class="total-label">Per person</span><span class="total-big accent" id="perhead">&mdash;</span></div>
+    </div>
+    <div class="calc-note">Estimates from researched ranges for mid-October in the Bozeman area &mdash; not live quotes. Treat as a planning ballpark, not a bill.</div>
   </section>
 
-  <section class="card">
-    <h2>Day 2 · Sat 10/17</h2>
-    <ul class="ideas-list">
-      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
-    </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+2+%C2%B7+Sat+10%2F17&amp;body=**Day%3A**+Day+2+%C2%B7+Sat+10%2F17%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
-  </section>
+  <script>
+  (function () {
+    var CFG = {"nights":3,"areas":[{"name":"Bozeman / Gallatin Valley","nightly":550},{"name":"Big Sky","nightly":600},{"name":"Livingston / Paradise Valley","nightly":525},{"name":"Ennis / Madison Valley","nightly":425},{"name":"Gardiner / West Yellowstone","nightly":450}],"flights":{"nyc":{"low":280,"typical":420,"high":650},"sf":{"low":250,"typical":380,"high":600},"sea":{"low":200,"typical":300,"high":480}},"car":{"suv":95,"minivan":85,"gasPerCar":120},"food":{"cook":45,"mixed":80,"restaurants":130}};
+    var $ = function (id) { return document.getElementById(id); };
+    var money = function (n) {
+      return "$" + Math.round(n).toLocaleString();
+    };
 
-  <section class="card">
-    <h2>Day 3 · Sun 10/18</h2>
-    <ul class="ideas-list">
-      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
-    </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+3+%C2%B7+Sun+10%2F18&amp;body=**Day%3A**+Day+3+%C2%B7+Sun+10%2F18%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
-  </section>
+    var areaSel = $("area");
+    CFG.areas.forEach(function (a, i) {
+      var o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = a.name + " (" + money(a.nightly) + "/night)";
+      areaSel.appendChild(o);
+    });
+    $("nightly").value = CFG.areas[0].nightly;
+    areaSel.addEventListener("change", function () {
+      $("nightly").value = CFG.areas[Number(areaSel.value)].nightly;
+      calc();
+    });
 
-  <section class="card">
-    <h2>Day 4 · Mon 10/19 (Departure)</h2>
-    <ul class="ideas-list">
-      <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
-    </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+4+%C2%B7+Mon+10%2F19+%28Departure%29&amp;body=**Day%3A**+Day+4+%C2%B7+Mon+10%2F19+%28Departure%29%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
-  </section>
+    function calc() {
+      var lvl = $("fare-level").value;
+      var party = {
+        nyc: Number($("n-nyc").value) || 0,
+        sf: Number($("n-sf").value) || 0,
+        sea: Number($("n-sea").value) || 0,
+        local: Number($("n-local").value) || 0
+      };
+      var people = party.nyc + party.sf + party.sea + party.local;
+
+      var note = $("party-note");
+      if (people === 0) {
+        note.textContent = "Add at least one person.";
+      } else {
+        note.textContent = people + " people" +
+          (people < 5 || people > 10 ? " — outside the 5-10 the cabins are sized for." : "");
+      }
+      if (people === 0) {
+        $("grand").textContent = "—";
+        $("perhead").textContent = "—";
+        $("breakdown").innerHTML = "";
+        return;
+      }
+
+      var flights =
+        party.nyc * CFG.flights.nyc[lvl] +
+        party.sf * CFG.flights.sf[lvl] +
+        party.sea * CFG.flights.sea[lvl];
+
+      var nights = Number($("nights").value) || 1;
+      var nightly = Number($("nightly").value) || 0;
+      var lodgingBase = nightly * nights;
+      var lodging = lodgingBase * (1 + 0.18);
+
+      var cars = Number($("cars").value) || 0;
+      var carDays = Number($("car-days").value) || 1;
+      var carRate = CFG.car[$("car-type").value];
+      var carRental = cars * carDays * carRate;
+      var gas = cars * CFG.car.gasPerCar;
+      $("gas-note").textContent = money(CFG.car.gasPerCar) + " per vehicle";
+
+      var perDay = CFG.food[$("food-style").value];
+      var food = people * (nights + 1) * perDay;
+
+      var rows = [
+        ["Flights", flights, people + " fares, " + lvl],
+        ["Housing", lodging, money(nightly) + " × " + nights + " nights + fees/tax"],
+        ["Rental cars", carRental + gas, cars + " × " + carDays + " days + gas"],
+        ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
+      ];
+      var total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
+
+      $("breakdown").innerHTML =
+        "<tr><th>Category</th><th>Detail</th><th>Cost</th></tr>" +
+        rows.map(function (r) {
+          return "<tr><td><strong>" + r[0] + "</strong></td>" +
+                 "<td class='muted-cell'>" + r[2] + "</td>" +
+                 "<td>" + money(r[1]) + "</td></tr>";
+        }).join("") +
+        "<tr><td colspan='2'><strong>Per person</strong></td><td><strong>" +
+        money(total / people) + "</strong></td></tr>";
+
+      $("grand").textContent = money(total);
+      $("perhead").textContent = money(total / people);
+    }
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll("#results, .card input, .card select"),
+      function (el) {
+        el.addEventListener("input", calc);
+        el.addEventListener("change", calc);
+      }
+    );
+    calc();
+  })();
+  </script>
 </main>
 <footer>Generated from live research &middot; 2026</footer>
 </body>
