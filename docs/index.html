@@ -331,6 +331,25 @@
   .total-label { display: block; font-size: .78rem; color: var(--muted); }
   .total-big { font-size: 1.9rem; font-weight: 700; }
   .total-big.accent { color: var(--accent); }
+  .alert {
+    background: rgba(200,120,20,.13);
+    border: 1px solid rgba(200,120,20,.35);
+    border-radius: 8px;
+    padding: .7rem .9rem;
+    font-size: .9rem;
+    margin-bottom: .9rem;
+  }
+  .pill {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: .12rem .5rem;
+    border-radius: 999px;
+  }
+  .pill.ok { background: rgba(40,150,90,.18); color: #2e9c66; }
+  .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
 </style>
 </head>
 <body>
@@ -371,10 +390,10 @@
 
     <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
     <table>
-      <tr><td>NYC &times;3</td><td>$220-$350 pp</td></tr>
-      <tr><td>SF &times;2</td><td>$200-$350 pp</td></tr>
-      <tr><td>Seattle &times;1</td><td>$230-$280 pp</td></tr>
-      <tr><td>Group total</td><td class="group-total">$1,290-$2,030 (~$1,660 at midpoint)</td></tr>
+      <tr><td>NYC &times;3</td><td>$407-$632 pp &mdash; EWR nonstop only — JFK/LGA nonstops end early Sept</td></tr>
+      <tr><td>SF &times;2</td><td>$328-$567 pp &mdash; SFO nonstop; no SJC/OAK service</td></tr>
+      <tr><td>Seattle &times;1</td><td>$209-$388 pp &mdash; Alaska + Delta nonstop, cheapest origin</td></tr>
+      <tr><td>Group total</td><td class="group-total">$2,086-$3,418 (~$2,752 at midpoint)</td></tr>
     </table>
 
     <div class="section-label">4BR Airbnb cabin</div>

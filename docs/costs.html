@@ -331,6 +331,25 @@
   .total-label { display: block; font-size: .78rem; color: var(--muted); }
   .total-big { font-size: 1.9rem; font-weight: 700; }
   .total-big.accent { color: var(--accent); }
+  .alert {
+    background: rgba(200,120,20,.13);
+    border: 1px solid rgba(200,120,20,.35);
+    border-radius: 8px;
+    padding: .7rem .9rem;
+    font-size: .9rem;
+    margin-bottom: .9rem;
+  }
+  .pill {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: .12rem .5rem;
+    border-radius: 999px;
+  }
+  .pill.ok { background: rgba(40,150,90,.18); color: #2e9c66; }
+  .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
 </style>
 </head>
 <body>
@@ -345,6 +364,53 @@
   <a href="./itinerary.html" class="">Itinerary &amp; ideas</a>
 </nav>
 <main>
+
+  <section class="card">
+    <h2>Getting there</h2>
+    <div class="alert"><strong>Only ONE nonstop survives from NYC on these dates.</strong></div>
+    <table>
+      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
+      <tr>
+        <td><strong>EWR → BZN</strong></td>
+        <td class="muted-cell">United, daily</td>
+        <td><span class="pill ok">nonstop</span><br>
+            <span class="muted-cell">Runs 5/21-10/24. Your Oct 19 return clears the seasonal cutoff by 5 days.</span></td>
+      </tr>
+      <tr>
+        <td><strong>JFK → BZN</strong></td>
+        <td class="muted-cell">JetBlue / Delta</td>
+        <td><span class="pill gone">no nonstop</span><br>
+            <span class="muted-cell">Nonstops end 9/8 and 9/5. October is connecting-only.</span></td>
+      </tr>
+      <tr>
+        <td><strong>LGA → BZN</strong></td>
+        <td class="muted-cell">American</td>
+        <td><span class="pill gone">no nonstop</span><br>
+            <span class="muted-cell">Saturday nonstop ends 9/5. October is connecting-only.</span></td>
+      </tr>
+      <tr>
+        <td><strong>SFO → BZN</strong></td>
+        <td class="muted-cell">United, daily</td>
+        <td><span class="pill ok">nonstop</span><br>
+            <span class="muted-cell">Year-round. (Alaska&#39;s SFO nonstop is summer-only, ends 8/18.)</span></td>
+      </tr>
+      <tr>
+        <td><strong>SEA → BZN</strong></td>
+        <td class="muted-cell">Alaska + Delta, daily</td>
+        <td><span class="pill ok">nonstop</span><br>
+            <span class="muted-cell">Year-round, ~38 weekly nonstops. Cheapest of the three origins.</span></td>
+      </tr>
+      <tr>
+        <td><strong>SJC / OAK</strong></td>
+        <td class="muted-cell">—</td>
+        <td><span class="pill gone">no nonstop</span><br>
+            <span class="muted-cell">No BZN service in any season. Bay Area crew should fly SFO.</span></td>
+      </tr>
+    </table>
+    <div class="caveat">BZN&#39;s Summer 2026 schedule (published 2/13/2026) is marked subject to change, and the EWR route&#39;s 10/24 end date sits only 5 days past the return. Reconfirm on united.com before booking.
+      <a href="https://bozemanairport.com/flights" target="_blank" rel="noopener">BZN schedule &rarr;</a>
+    </div>
+  </section>
 
   <section class="card">
     <div class="pick-badge">Cost calculator</div>
@@ -378,6 +444,7 @@
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
     </div>
     <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly 18% on top &mdash; included below.</div>
+    <div class="calc-note">Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range.</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
@@ -416,7 +483,7 @@
 
   <script>
   (function () {
-    var CFG = {"nights":3,"areas":[{"name":"Bozeman / Gallatin Valley","nightly":550},{"name":"Big Sky","nightly":600},{"name":"Livingston / Paradise Valley","nightly":525},{"name":"Ennis / Madison Valley","nightly":425},{"name":"Gardiner / West Yellowstone","nightly":450}],"flights":{"nyc":{"low":280,"typical":420,"high":650},"sf":{"low":250,"typical":380,"high":600},"sea":{"low":200,"typical":300,"high":480}},"car":{"suv":95,"minivan":85,"gasPerCar":120},"food":{"cook":45,"mixed":80,"restaurants":130}};
+    var CFG = {"nights":3,"areas":[{"name":"Bozeman / Gallatin Valley","nightly":550},{"name":"Big Sky","nightly":600},{"name":"Livingston / Paradise Valley","nightly":525},{"name":"Ennis / Madison Valley","nightly":425},{"name":"Gardiner / West Yellowstone","nightly":450}],"flights":{"nyc":{"low":407,"typical":503,"high":632},"sf":{"low":328,"typical":426,"high":567},"sea":{"low":209,"typical":310,"high":388}},"car":{"suv":95,"minivan":85,"gasPerCar":120},"food":{"cook":45,"mixed":80,"restaurants":130}};
     var $ = function (id) { return document.getElementById(id); };
     var money = function (n) {
       return "$" + Math.round(n).toLocaleString();

@@ -121,19 +121,19 @@
       },
       "flights": {
         "nyc": {
-          "low": 220,
-          "high": 350,
-          "note": ""
+          "low": 407,
+          "high": 632,
+          "note": "EWR nonstop only — JFK/LGA nonstops end early Sept"
         },
         "sf": {
-          "low": 200,
-          "high": 350,
-          "note": ""
+          "low": 328,
+          "high": 567,
+          "note": "SFO nonstop; no SJC/OAK service"
         },
         "seattle": {
-          "low": 230,
-          "high": 280,
-          "note": ""
+          "low": 209,
+          "high": 388,
+          "note": "Alaska + Delta nonstop, cheapest origin"
         }
       },
       "airbnb": {
@@ -343,19 +343,19 @@
     "lodgingFeePct": 0.18,
     "flights": {
       "nyc": {
-        "low": 280,
-        "typical": 420,
-        "high": 650
+        "low": 407,
+        "typical": 503,
+        "high": 632
       },
       "sf": {
-        "low": 250,
-        "typical": 380,
-        "high": 600
+        "low": 328,
+        "typical": 426,
+        "high": 567
       },
       "sea": {
-        "low": 200,
-        "typical": 300,
-        "high": 480
+        "low": 209,
+        "typical": 310,
+        "high": 388
       }
     },
     "car": {
@@ -367,6 +367,50 @@
       "cook": 45,
       "mixed": 80,
       "restaurants": 130
-    }
+    },
+    "flightNote": "Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range."
+  },
+  "flights": {
+    "headline": "Only ONE nonstop survives from NYC on these dates.",
+    "rows": [
+      {
+        "route": "EWR → BZN",
+        "airline": "United, daily",
+        "status": "ok",
+        "detail": "Runs 5/21-10/24. Your Oct 19 return clears the seasonal cutoff by 5 days."
+      },
+      {
+        "route": "JFK → BZN",
+        "airline": "JetBlue / Delta",
+        "status": "gone",
+        "detail": "Nonstops end 9/8 and 9/5. October is connecting-only."
+      },
+      {
+        "route": "LGA → BZN",
+        "airline": "American",
+        "status": "gone",
+        "detail": "Saturday nonstop ends 9/5. October is connecting-only."
+      },
+      {
+        "route": "SFO → BZN",
+        "airline": "United, daily",
+        "status": "ok",
+        "detail": "Year-round. (Alaska's SFO nonstop is summer-only, ends 8/18.)"
+      },
+      {
+        "route": "SEA → BZN",
+        "airline": "Alaska + Delta, daily",
+        "status": "ok",
+        "detail": "Year-round, ~38 weekly nonstops. Cheapest of the three origins."
+      },
+      {
+        "route": "SJC / OAK",
+        "airline": "—",
+        "status": "gone",
+        "detail": "No BZN service in any season. Bay Area crew should fly SFO."
+      }
+    ],
+    "caveat": "BZN's Summer 2026 schedule (published 2/13/2026) is marked subject to change, and the EWR route's 10/24 end date sits only 5 days past the return. Reconfirm on united.com before booking.",
+    "source": "https://bozemanairport.com/flights"
   }
 }
