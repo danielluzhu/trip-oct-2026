@@ -421,6 +421,13 @@ const sharedStyle = /* css */ `
   }
   .pill.ok { background: rgba(40,150,90,.18); color: #2e9c66; }
   .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
+  .quality {
+    font-size: .76rem;
+    color: var(--muted);
+    margin-top: .5rem;
+    padding-left: .6rem;
+    border-left: 2px solid var(--border);
+  }
 `;
 
 // Static mode renders the site to flat files for GitHub Pages, where there is no
@@ -649,6 +656,13 @@ function airbnbSearch(o: {
   return `https://www.airbnb.com/s/Bozeman--Montana--United-States/homes?${p.toString()}`;
 }
 
+// Cleaning is a flat charge per booking, not a percentage — on a 3-night stay it
+// dominates the add-on, which is why this can't be modelled as one blanket rate.
+function stayTotal(a: any, nights = housing.nights, nightly = a.nightly.typical) {
+  const sub = nightly * nights + costs.cleaningFee;
+  return sub * (1 + costs.feePct + a.taxPct);
+}
+
 function housingPage() {
   const wide = airbnbSearch({
     adults: housing.defaultAdults,
@@ -675,9 +689,10 @@ function housingPage() {
         <table>
           <tr><td>Nightly (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
           <tr><td>Typical</td><td><strong>${fmt(a.nightly.typical)}</strong>/night</td></tr>
-          <tr><td>${housing.nights} nights + ${Math.round((costs.feePct + a.taxPct) * 100)}% fees/tax</td><td>${fmt(a.nightly.typical * housing.nights * (1 + costs.feePct + a.taxPct))}</td></tr>
-          <tr><td>Per person (8)</td><td>${fmt((a.nightly.typical * housing.nights * (1 + costs.feePct + a.taxPct)) / 8)}</td></tr>
+          <tr><td>${housing.nights} nights all-in</td><td><strong>${fmt(stayTotal(a))}</strong> <span class="muted-cell">(+${Math.round((stayTotal(a) / (a.nightly.typical * housing.nights) - 1) * 100)}% in cleaning, fees &amp; tax)</span></td></tr>
+          <tr><td>Per person (8)</td><td>${fmt(stayTotal(a) / 8)}</td></tr>
         </table>
+        <div class="quality">Data quality: ${escapeHtml(a.quality)}</div>
         <a class="add-idea-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Search ${escapeHtml(a.name)} on Airbnb &rarr;</a>
       </div>
     </div>`;
@@ -766,6 +781,8 @@ function costsPage() {
       taxPct: a.taxPct,
     })),
     feePct: costs.feePct,
+    cleaningFee: costs.cleaningFee,
+    carFeePct: costs.carFeePct,
     flights: costs.flights,
     car: costs.car,
     food: costs.food,
@@ -803,7 +820,7 @@ function costsPage() {
       <label>Nights <input type="number" id="nights" min="1" max="10" value="${housing.nights}"></label>
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
     </div>
-    <div class="calc-note">Service fee + cleaning (~${Math.round(costs.feePct * 100)}%) and Montana lodging tax (8%, or 12% in Big Sky &amp; West Yellowstone) are added automatically.</div>
+    <div class="calc-note">A flat ${fmt(costs.cleaningFee)} cleaning fee, ~${Math.round(costs.feePct * 100)}% platform fee and Montana lodging tax (8%, or 12% in Big Sky &amp; West Yellowstone) are added automatically. On three nights that lands around +45-55%.</div>
     <div class="calc-note">${escapeHtml(costs.flightNote)}</div>
 
     <div class="section-label">Rental cars</div>
@@ -811,7 +828,8 @@ function costsPage() {
       <label>Vehicles <input type="number" id="cars" min="0" max="4" value="2"></label>
       <label>Type
         <select id="car-type">
-          <option value="suv">Large SUV (seats 7)</option>
+          <option value="suv">Full-size SUV (seats 7)</option>
+          <option value="midsize">Midsize SUV (seats 5)</option>
           <option value="minivan">Minivan (seats 7)</option>
         </select>
       </label>
@@ -896,15 +914,16 @@ function costsPage() {
       var nights = Number($("nights").value) || 1;
       var nightly = Number($("nightly").value) || 0;
       var area = CFG.areas[Number($("area").value)] || CFG.areas[0];
-      // Service + cleaning is roughly flat; lodging tax is 8% but 12% in the
-      // two resort-tax towns, so it has to come from the selected area.
-      var addOn = CFG.feePct + area.taxPct;
-      var lodging = nightly * nights * (1 + addOn);
+      // Cleaning is a flat per-booking charge, so it hits a 3-night stay far
+      // harder than a percentage would. Tax is 8%, or 12% in the resort towns.
+      var lodgingSub = nightly * nights + CFG.cleaningFee;
+      var lodging = lodgingSub * (1 + CFG.feePct + area.taxPct);
+      var lodgingUplift = Math.round((lodging / (nightly * nights) - 1) * 100);
 
       var cars = Number($("cars").value) || 0;
       var carDays = Number($("car-days").value) || 1;
       var carRate = CFG.car[$("car-type").value];
-      var carRental = cars * carDays * carRate;
+      var carRental = cars * carDays * carRate * (1 + CFG.carFeePct);
       var gas = cars * CFG.car.gasPerCar;
       $("gas-note").textContent = money(CFG.car.gasPerCar) + " per vehicle";
 
@@ -913,9 +932,9 @@ function costsPage() {
 
       var rows = [
         ["Flights", flights, people + " fares, " + lvl],
-        ["Housing", lodging, money(nightly) + " × " + nights + " nights + " +
-          Math.round(addOn * 100) + "% fees/tax"],
-        ["Rental cars", carRental + gas, cars + " × " + carDays + " days + gas"],
+        ["Housing", lodging, money(nightly) + " × " + nights + " nights, +" +
+          lodgingUplift + "% cleaning/fees/tax"],
+        ["Rental cars", carRental + gas, cars + " × " + carDays + " days, incl. tax & fees, + gas"],
         ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
       ];
       var total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
