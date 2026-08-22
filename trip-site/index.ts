@@ -674,8 +674,9 @@ function housingPage() {
         <p class="area-vibe">${escapeHtml(a.vibe)}</p>
         <table>
           <tr><td>Nightly (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
-          <tr><td>Typical</td><td><strong>${fmt(a.nightly.typical)}</strong>/night &rarr; ${fmt(a.nightly.typical * housing.nights)} for ${housing.nights} nights</td></tr>
-          <tr><td>Per person (8)</td><td>${fmt((a.nightly.typical * housing.nights) / 8)}</td></tr>
+          <tr><td>Typical</td><td><strong>${fmt(a.nightly.typical)}</strong>/night</td></tr>
+          <tr><td>${housing.nights} nights + ${Math.round((costs.feePct + a.taxPct) * 100)}% fees/tax</td><td>${fmt(a.nightly.typical * housing.nights * (1 + costs.feePct + a.taxPct))}</td></tr>
+          <tr><td>Per person (8)</td><td>${fmt((a.nightly.typical * housing.nights * (1 + costs.feePct + a.taxPct)) / 8)}</td></tr>
         </table>
         <a class="add-idea-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Search ${escapeHtml(a.name)} on Airbnb &rarr;</a>
       </div>
@@ -699,10 +700,9 @@ function housingPage() {
     <div class="caveat">
       <strong>Why this is a link and not an embed:</strong> Airbnb sends
       <code>x-frame-options: SAMEORIGIN</code>, so its pages cannot be displayed inside
-      another site &mdash; an iframe renders blank. There is also no public Airbnb search API,
-      so live prices and listing photos can't be pulled in automatically. The prices below are
-      researched ranges for this area and season, not live listing data, and the photos are
-      the areas themselves (Wikimedia Commons), not listing photos.
+      another site &mdash; an iframe renders blank. There is also no public Airbnb search API.
+      ${escapeHtml(housing.sourceNote)}
+      Photos are of the areas themselves (Wikimedia Commons), not listing photos.
     </div>
   </section>
 
@@ -760,7 +760,12 @@ function costsPage() {
   // page stays a single self-contained file (no fetch — Pages is static).
   const cfg = JSON.stringify({
     nights: housing.nights,
-    areas: housing.areas.map((a: any) => ({ name: a.name, nightly: a.nightly.typical })),
+    areas: housing.areas.map((a: any) => ({
+      name: a.name,
+      nightly: a.nightly.typical,
+      taxPct: a.taxPct,
+    })),
+    feePct: costs.feePct,
     flights: costs.flights,
     car: costs.car,
     food: costs.food,
@@ -798,7 +803,7 @@ function costsPage() {
       <label>Nights <input type="number" id="nights" min="1" max="10" value="${housing.nights}"></label>
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
     </div>
-    <div class="calc-note">Airbnb service fee + cleaning + MT lodging tax add roughly ${Math.round(costs.lodgingFeePct * 100)}% on top &mdash; included below.</div>
+    <div class="calc-note">Service fee + cleaning (~${Math.round(costs.feePct * 100)}%) and Montana lodging tax (8%, or 12% in Big Sky &amp; West Yellowstone) are added automatically.</div>
     <div class="calc-note">${escapeHtml(costs.flightNote)}</div>
 
     <div class="section-label">Rental cars</div>
@@ -813,6 +818,7 @@ function costsPage() {
       <label>Days <input type="number" id="car-days" min="1" max="10" value="${housing.nights + 1}"></label>
     </div>
     <div class="calc-note">Gas &amp; a Yellowstone day trip: <span id="gas-note"></span></div>
+    <div class="caveat">${escapeHtml(costs.carNote)}</div>
 
     <div class="section-label">Food &amp; drink</div>
     <div class="calc-grid">
@@ -824,6 +830,7 @@ function costsPage() {
         </select>
       </label>
     </div>
+    <div class="caveat">${escapeHtml(costs.foodNote)}</div>
   </section>
 
   <section class="card" id="results">
@@ -888,8 +895,11 @@ function costsPage() {
 
       var nights = Number($("nights").value) || 1;
       var nightly = Number($("nightly").value) || 0;
-      var lodgingBase = nightly * nights;
-      var lodging = lodgingBase * (1 + ${costs.lodgingFeePct});
+      var area = CFG.areas[Number($("area").value)] || CFG.areas[0];
+      // Service + cleaning is roughly flat; lodging tax is 8% but 12% in the
+      // two resort-tax towns, so it has to come from the selected area.
+      var addOn = CFG.feePct + area.taxPct;
+      var lodging = nightly * nights * (1 + addOn);
 
       var cars = Number($("cars").value) || 0;
       var carDays = Number($("car-days").value) || 1;
@@ -903,7 +913,8 @@ function costsPage() {
 
       var rows = [
         ["Flights", flights, people + " fares, " + lvl],
-        ["Housing", lodging, money(nightly) + " × " + nights + " nights + fees/tax"],
+        ["Housing", lodging, money(nightly) + " × " + nights + " nights + " +
+          Math.round(addOn * 100) + "% fees/tax"],
         ["Rental cars", carRental + gas, cars + " × " + carDays + " days + gas"],
         ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
       ];
