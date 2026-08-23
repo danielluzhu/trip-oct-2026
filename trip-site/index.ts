@@ -623,7 +623,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
   home: {
     file: "Sunrise over Gallatin Range Bozeman.jpg",
     credit: "Sunrise over the Gallatin Range",
-    heading: "Montana it is",
+    heading: "Homeless in Montana",
     tagline:
       "Three nights in Paradise Valley, an hour from Yellowstone's north gate, in the quietest week of the year.",
   },
