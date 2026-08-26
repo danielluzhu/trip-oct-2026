@@ -113,28 +113,28 @@
     },
     {
       "name": "Montana",
-      "subtitle": "Bozeman / Big Sky / Paradise Valley",
+      "subtitle": "Glacier National Park / Whitefish / Flathead Valley",
       "weather": {
         "high": "54°F (12°C)",
-        "low": "34°F (1°C)",
-        "precip": "~19% chance of a wet day",
-        "notes": "About a 1-in-6 chance of frozen precipitation on any given day. October averages 4.5in of snow; valley accumulation is possible but unlikely — snow and ice on the passes is the real risk."
+        "low": "29°F (-2°C)",
+        "precip": "1.1 in of snow is the October normal in the valley",
+        "notes": "November jumps to 8 in. Valley roads stay bare; the mountain roads are where the risk is."
       },
       "flights": {
         "nyc": {
-          "low": 407,
-          "high": 632,
-          "note": "EWR nonstop only — JFK/LGA nonstops end early Sept"
+          "low": 403,
+          "high": 816,
+          "note": "No nonstop — both NYC nonstops end in September"
         },
         "sf": {
-          "low": 328,
-          "high": 567,
-          "note": "SFO nonstop; no SJC/OAK service"
+          "low": 375,
+          "high": 690,
+          "note": "SFO nonstop is seasonal and may already be done"
         },
         "seattle": {
-          "low": 209,
-          "high": 388,
-          "note": "Alaska + Delta nonstop, cheapest origin"
+          "low": 277,
+          "high": 546,
+          "note": "Alaska nonstop year-round, 1h25 — much the easiest"
         }
       },
       "airbnb": {
@@ -143,25 +143,25 @@
         "perPerson": "$150-350 (8 people)"
       },
       "topSites": [
-        "Fly fishing the Gallatin, Madison & Yellowstone rivers",
-        "Hyalite Canyon hikes and the reservoir",
-        "Yellowstone north gate day trip (Gardiner → Lamar Valley)",
-        "Bozeman Main Street brewery & distillery crawl",
-        "Big Sky / Lone Peak scenic drive up the Gallatin Canyon",
-        "Chico Hot Springs soak in Paradise Valley",
-        "Museum of the Rockies (the T. rex is genuinely worth it)"
+        "Avalanche Lake and the Trail of the Cedars",
+        "Lake McDonald — and the golden eagle migration overhead",
+        "Middle Fork of the Flathead, floating and fishing into November",
+        "Western larch turning gold across the valley",
+        "Many Glacier — Grinnell Lake, Redrock Falls, Apikuni Falls",
+        "Whitefish town: breweries, distillery, and a real main street",
+        "National Bison Range, Red Sleep Mountain Drive (through Oct 31)"
       ],
       "photos": [
         {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hyalite%20Reservoir%20%2852320603728%29.jpg?width=800",
-          "caption": "Hyalite Reservoir, 30 min from Bozeman"
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Avalanche%20Lake%20-%20Glacier%20National%20Park%20%2852577916328%29.jpg?width=800",
+          "caption": "Avalanche Lake"
         },
         {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
-          "caption": "Emigrant Peak, Paradise Valley"
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800",
+          "caption": "Going-to-the-Sun Road"
         }
       ],
-      "verdict": "Best fishing, best airport access, and mid-October is shoulder season — the cheapest the area gets. Snow is the wildcard."
+      "verdict": "Cheapest week of the year to be here and you'll have it nearly to yourself — but Logan Pass very likely closes on or before your dates, and every in-park lodge and guided outfitter has already shut."
     },
     {
       "name": "North Carolina",
@@ -222,436 +222,389 @@
     "nights": 3,
     "defaultAdults": 8,
     "minBedrooms": 4,
-    "intro": "Bozeman is the hub: BZN airport, groceries, and the bars are all here, and everything below is inside a two-hour drive. Mid-October is shoulder season — after the summer crush, before Big Sky's ski rates kick in — which is the main reason the numbers work for a group this size.",
+    "intro": "Whitefish is the hub — 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street. Everything below is within about 40 minutes of the West Glacier gate. Mid-October is a genuine dead zone: the ski mountain closed Sept 20 and doesn't reopen until Dec 4, and park visitation drops to 18% of its July peak. That's why it's cheap, and also why you should check that your restaurant is open before you drive to it.",
     "bbox": {
-      "neLat": 46.6,
-      "neLng": -109.6,
-      "swLat": 44.5,
-      "swLng": -112.4
+      "neLat": 48.7,
+      "neLng": -113.8,
+      "swLat": 47.9,
+      "swLng": -114.6
     },
-    "vrbo": "https://www.vrbo.com/search?destination=Bozeman%2C%20Montana&startDate=2026-10-16&endDate=2026-10-19&adults=8",
+    "vrbo": "https://www.vrbo.com/search?destination=Whitefish%2C%20Montana&startDate=2026-10-16&endDate=2026-10-19&adults=8",
     "areas": [
       {
-        "name": "Bozeman / Gallatin Valley",
-        "drive": "0-20 min",
-        "vibe": "Walk to Main Street and roll to the airport in 15 minutes. Least scenic, most convenient, easiest place to find a house that genuinely sleeps 10.",
+        "name": "Whitefish",
+        "drive": "19 min to FCA, 39 to the park",
+        "vibe": "The one town with restaurants, bars and a walkable centre. Most expensive of the five, and the only one that charges resort tax — but the premium is inventory, not tax.",
+        "nightly": {
+          "low": 243,
+          "typical": 450,
+          "high": 844
+        },
+        "taxPct": 0.11,
+        "quality": "Good — eight 4-5BR properties with published floor rates ($243-389), plus market ADR. Floor rates may not be the October rate.",
+        "bbox": {
+          "neLat": 48.52,
+          "neLng": -114.22,
+          "swLat": 48.32,
+          "swLng": -114.45
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Aerial%20-%20Whitefish%20Lake%20%28MT%29%2001%20%2810322715514%29.jpg?width=800",
+          "caption": "Whitefish Lake"
+        }
+      },
+      {
+        "name": "Columbia Falls",
+        "drive": "17 min from Whitefish, 20 to the park",
+        "vibe": "The best-value large-group inventory in the valley and the closest real town to the West Glacier gate. Less to do at night, which matters less than you'd think in a week when nothing's open anyway.",
+        "nightly": {
+          "low": 216,
+          "typical": 375,
+          "high": 579
+        },
+        "taxPct": 0.08,
+        "quality": "Good — five 4-5BR properties with published floor rates ($216-534) plus two Vacasa homes at $377-579.",
+        "bbox": {
+          "neLat": 48.46,
+          "neLng": -114.05,
+          "swLat": 48.3,
+          "swLng": -114.28
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800",
+          "caption": "Going-to-the-Sun Road"
+        }
+      },
+      {
+        "name": "Kalispell",
+        "drive": "24 min from Whitefish, 45 to the park",
+        "vibe": "Cheapest beds and where the Costco is. Least charming of the five and furthest from the park, but if the group's priority is the number at the bottom of the calculator, it's here.",
         "nightly": {
           "low": 250,
+          "typical": 350,
+          "high": 550
+        },
+        "taxPct": 0.08,
+        "quality": "Weak — exactly one 4BR with a published rate ($366). No local manager publishes rates; one analytics source returned Great Falls data by mistake.",
+        "bbox": {
+          "neLat": 48.3,
+          "neLng": -114.18,
+          "swLat": 48.12,
+          "swLng": -114.42
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2832575575507%29.jpg?width=800",
+          "caption": "Flathead River"
+        }
+      },
+      {
+        "name": "West Glacier / Coram",
+        "drive": "At the park gate",
+        "vibe": "Wake up at the entrance. The catch is that this corridor is built for summer — the one resort with published rates ends its season Oct 15, the day before you'd arrive, and there's almost no bookable 4BR inventory.",
+        "nightly": {
+          "low": 300,
           "typical": 450,
+          "high": 700
+        },
+        "taxPct": 0.08,
+        "quality": "Thin — one 3BR resort ($450 off-season) whose rate calendar stops Oct 15, plus an area-level average. Verify anything here is even open.",
+        "bbox": {
+          "neLat": 48.55,
+          "neLng": -113.85,
+          "swLat": 48.33,
+          "swLng": -114.08
+        },
+        "photo": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20McDonald%2C%20Glacier%20National%20Park%2C%20Montana%20USA.jpg?width=800",
+          "caption": "Lake McDonald"
+        }
+      },
+      {
+        "name": "Bigfork",
+        "drive": "38 min from FCA, 55 to the park",
+        "vibe": "Flathead Lake, an arts-town main street, and a working theatre — the only one of the five with an actual evening option in October. Furthest from Glacier, closest to a rainy-day plan.",
+        "nightly": {
+          "low": 250,
+          "typical": 400,
           "high": 900
         },
         "taxPct": 0.08,
-        "quality": "Weakest number here (±20%) — no live quotes for 4BR houses. Call Mountain Home Montana or Stay Montana for real figures.",
+        "quality": "Weak — around ten large lakefront homes exist but every price sits behind a booking widget. Largest with a published rate is a 3BR at $434.",
         "bbox": {
-          "neLat": 45.95,
-          "neLng": -110.75,
-          "swLat": 45.45,
-          "swLng": -111.45
+          "neLat": 48.16,
+          "neLng": -113.95,
+          "swLat": 47.96,
+          "swLng": -114.16
         },
         "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/101%20E%20Main%20-%20Bozeman%20Montana%20-%202013-07-09.jpg?width=800",
-          "caption": "Downtown Bozeman"
-        }
-      },
-      {
-        "name": "Livingston / Paradise Valley",
-        "drive": "30-60 min east",
-        "vibe": "Emigrant Peak over the Yellowstone River, blue-ribbon fly water out the back door, closest good base for a north-gate Yellowstone day. Also the best value of the six.",
-        "nightly": {
-          "low": 285,
-          "typical": 390,
-          "high": 810
-        },
-        "taxPct": 0.08,
-        "quality": "Best data on the page — live bookable quotes for your exact dates across six 4-5BR properties, median $393/night.",
-        "bbox": {
-          "neLat": 45.7,
-          "neLng": -110.4,
-          "swLat": 45.35,
-          "swLng": -110.85
-        },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
-          "caption": "Emigrant Peak, Paradise Valley"
-        }
-      },
-      {
-        "name": "Ennis / Madison Valley",
-        "drive": "~1 hr west",
-        "vibe": "Fishing-first and genuinely quiet. The Madison is the draw; the town is one street. Note that most homes here post a flat year-round rate, so October saves you little.",
-        "nightly": {
-          "low": 300,
-          "typical": 500,
-          "high": 800
-        },
-        "taxPct": 0.08,
-        "quality": "Published operator rate tables for four 4BR properties. Only 15-22% below summer — most inventory doesn't discount at all.",
-        "bbox": {
-          "neLat": 45.55,
-          "neLng": -111.55,
-          "swLat": 45.2,
-          "swLng": -111.9
-        },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gallatinriverwinter.jpg?width=800",
-          "caption": "Gallatin River"
-        }
-      },
-      {
-        "name": "Big Sky",
-        "drive": "~1 hr south",
-        "vibe": "Lone Peak scenery and proper ski-town cabins, in the cheapest month of its own year. But summer operations ended Sept 13 and lifts don't spin again until Nov 25 — you'd be there in the dead zone.",
-        "nightly": {
-          "low": 400,
-          "typical": 800,
-          "high": 1800
-        },
-        "taxPct": 0.12,
-        "quality": "Dated operator rate tiers. October ADR ~$673 is Big Sky's annual low — but absolute prices are still the highest of the six.",
-        "bbox": {
-          "neLat": 45.45,
-          "neLng": -111.2,
-          "swLat": 45.15,
-          "swLng": -111.6
-        },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lone%20Peak%2C%20Big%20Sky%2C%20Montana.jpg?width=800",
-          "caption": "Lone Peak, Big Sky"
-        }
-      },
-      {
-        "name": "Gardiner",
-        "drive": "~1.5 hrs south",
-        "vibe": "Yellowstone's north gate, open to cars year-round, with Lamar Valley at sunrise. Tiny town, thin restaurant scene, longest haul from the airport.",
-        "nightly": {
-          "low": 250,
-          "typical": 375,
-          "high": 600
-        },
-        "taxPct": 0.08,
-        "quality": "Thin — three data points, one from a stale 2018 page. Treat as indicative only.",
-        "bbox": {
-          "neLat": 45.2,
-          "neLng": -110.5,
-          "swLat": 44.9,
-          "swLng": -110.9
-        },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison%20%26%20storm%2C%20Lamar%20Valley%20%2832984063043%29.jpg?width=800",
-          "caption": "Lamar Valley, Yellowstone"
-        }
-      },
-      {
-        "name": "West Yellowstone",
-        "drive": "~2 hrs south",
-        "vibe": "West gate, and the cheapest beds of the six. October is its cheapest month by a wide margin, but ~90% of in-park lodging has already shut, so the town is quiet.",
-        "nightly": {
-          "low": 200,
-          "typical": 320,
-          "high": 525
-        },
-        "taxPct": 0.12,
-        "quality": "Operator-published ranges from two inns. October averages ~$211/night town-wide.",
-        "bbox": {
-          "neLat": 44.85,
-          "neLng": -110.9,
-          "swLat": 44.55,
-          "swLng": -111.3
-        },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yellowstone%20National%20Park%20%28WY%2C%20USA%29%2C%20Old%20Faithful%20Geyser%20--%202022%20--%202599.jpg?width=800",
-          "caption": "Old Faithful, Yellowstone"
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2833641150388%29.jpg?width=800",
+          "caption": "Flathead Lake"
         }
       }
     ],
     "notes": [
-      "Your weekend sits in a genuine trough. MSU plays away Oct 17 (home games are Oct 24 and 31), and Montana's general rifle season opens Oct 24 — five days after you leave. One Paradise Valley property runs $527/night on Oct 9-12 and $345 on Oct 23-26; you're in between.",
-      "Fees are brutal on a short stay. Cleaning alone runs $240-680 per booking for large Montana properties, which on 3 nights is 15-30% of the nightly subtotal before the platform fee and tax land on top. Budget +40-55% over the headline rate.",
-      "Montana charges 8% lodging tax statewide. Big Sky and West Yellowstone add a 4% resort tax on top (12% total). Bozeman, Livingston, Ennis and Gardiner are 8%.",
-      "October discounts are not uniform. Paradise Valley runs ~57% under July on the same properties; Ennis barely moves because most homes post flat year-round rates.",
-      "Big Sky is the most expensive of the six in absolute terms despite being in its own cheapest month — and it's half-shuttered, with lifts closed from Sept 13 until Nov 25.",
-      "Anything sleeping 10 usually means 4-5 bedrooms; Airbnb's guest count includes sofa beds, so read the actual bed list.",
-      "Snow is normal by mid-October and nights sit near freezing. Get a plowed driveway and skip anything up a forest road."
+      "Mid-October is a true shoulder trough: Whitefish Mountain closed Sept 20 and reopens Dec 4, and Glacier's October visitation is 18% of its July peak — an 82% drop.",
+      "The one published seasonal table in the valley (Great Northern, Coram) shows off-season at 36-39% below peak. Expect a real rate discount nearer 35% than the 80% the occupancy collapse might suggest.",
+      "Montana charges 8% lodging tax statewide. Whitefish adds a 3% resort tax (11% total); Columbia Falls, Kalispell, Bigfork and West Glacier add nothing. On a 3-night stay that gap is about $45 — do not pick a town over it.",
+      "Cleaning runs $325+ per turnover for a 4BR in this market, and that's the cleaner's price to the host, so the guest-facing fee is usually higher. On three nights it's the single biggest add-on.",
+      "Book by phone. Vacay Whitefish (406-609-9595) has the deepest published 4-5BR inventory in both Whitefish and Columbia Falls; Stay Montana (888-871-7856) holds the big Bigfork lakefront homes.",
+      "Anything sleeping 10 usually means 4-5 bedrooms, and Airbnb's guest count includes sofa beds — read the actual bed list."
     ],
-    "sourceNote": "Bands come from operator rate calendars, live property-manager quotes and market ADR read Aug 2026. Only Paradise Valley has live quotes for your exact dates — Airbnb, Vrbo and the OTAs all block automated date-locked pricing, so every other figure is indicative. Each area below is labelled with how good its data is."
+    "sourceNote": "No public source publishes rates for Oct 16-19, 2026 anywhere in this valley — every booking engine is JavaScript-gated or blocks automated requests. The bands below are published floor rates, operator rate calendars and market averages read Aug 2026. Each area is labelled with how good its data actually is."
   },
   "costs": {
     "flights": {
       "nyc": {
-        "low": 407,
-        "typical": 503,
-        "high": 632
+        "low": 403,
+        "typical": 595,
+        "high": 816
       },
       "sf": {
-        "low": 328,
-        "typical": 426,
-        "high": 567
+        "low": 375,
+        "typical": 522,
+        "high": 690
       },
       "sea": {
-        "low": 209,
-        "typical": 310,
-        "high": 388
+        "low": 277,
+        "typical": 380,
+        "high": 546
       }
     },
     "car": {
-      "suv": 109,
-      "midsize": 105,
-      "minivan": 148,
-      "gasPerCar": 120
+      "suv": 132,
+      "midsize": 103,
+      "minivan": 150,
+      "gasPerCar": 100
     },
     "food": {
-      "cook": 40,
-      "mixed": 65,
-      "restaurants": 115
+      "cook": 25,
+      "mixed": 50,
+      "restaurants": 88
     },
-    "flightNote": "Fares are Kayak trailing-12-month route averages retrieved Aug 2026 — indicative, not quotes for these dates. Oct 16-19 is a Fri-Mon weekend ~2 months out, so expect the upper half of each range.",
+    "flightNote": "Kayak trailing-route averages read Aug 2026, not quotes. October is actually the cheapest month on the NYC-Kalispell route (~$403). FCA averages ~18% above Missoula and ~27% above Spokane on US DOT Q1 2026 fare data.",
     "feePct": 0.15,
-    "carNote": "BZN is roughly 2.4x Denver for car rental. Minivans are the single most overpriced class here ($148/day vs $109 for a full-size SUV) — take two SUVs instead. One 7-seat SUV will not fit 8 people plus luggage. The majors will not guarantee AWD: you book a class, not a drivetrain, so call the counter. Add ~30% for Montana's 4% vehicle tax, airport concession and license fees.",
-    "foodNote": "Bozeman has no sales tax on groceries or restaurant meals — menu price is the price. Restaurants run 25-50% above US average while groceries sit near par, so cooking is the real saving. Costco at 2505 Catron St is 10 min from the airport. For a party of 8, Little Star Diner and Yellowstone Valley Grill are the only two places that book 8-10 online; everywhere else wants a phone call.",
-    "cleaningFee": 325,
-    "carFeePct": 0.3
+    "carNote": "Seven agencies sit in the FCA terminal by baggage claim, and October is the easy end of the year for availability. Take AWD anyway — valley roads will be bare, but nightly lows are already below freezing and the mountain roads are where you'd want it. Add 4% Montana rental vehicle tax plus airport concession fees. For 8 you need two vehicles; a full-size SUV realistically seats 7 before luggage.",
+    "foodNote": "Montana has no general sales tax. Whitefish's 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it's now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.",
+    "cleaningFee": 350,
+    "carFeePct": 0.28
   },
   "flights": {
-    "headline": "Only ONE nonstop survives from NYC on these dates.",
+    "headline": "Only Seattle keeps a nonstop. Everyone else connects.",
     "rows": [
       {
-        "route": "EWR → BZN",
-        "airline": "United, daily",
+        "route": "SEA → FCA",
+        "airline": "Alaska, daily",
         "status": "ok",
-        "detail": "Runs 5/21-10/24. Your Oct 19 return clears the seasonal cutoff by 5 days."
+        "detail": "Year-round, 1h25, roughly 106 flights a month. Comfortably the easiest origin."
       },
       {
-        "route": "JFK → BZN",
-        "airline": "JetBlue / Delta",
+        "route": "EWR / LGA → FCA",
+        "airline": "United / American",
         "status": "gone",
-        "detail": "Nonstops end 9/8 and 9/5. October is connecting-only."
+        "detail": "Both NYC nonstops are seasonal and end in September. October is connecting-only, usually via Denver, Chicago or Minneapolis — about 7h50 door to door at best."
       },
       {
-        "route": "LGA → BZN",
-        "airline": "American",
-        "status": "gone",
-        "detail": "Saturday nonstop ends 9/5. October is connecting-only."
-      },
-      {
-        "route": "SFO → BZN",
-        "airline": "United, daily",
-        "status": "ok",
-        "detail": "Year-round. (Alaska's SFO nonstop is summer-only, ends 8/18.)"
-      },
-      {
-        "route": "SEA → BZN",
-        "airline": "Alaska + Delta, daily",
-        "status": "ok",
-        "detail": "Year-round, ~38 weekly nonstops. Cheapest of the three origins."
-      },
-      {
-        "route": "SJC / OAK",
+        "route": "JFK → FCA",
         "airline": "—",
         "status": "gone",
-        "detail": "No BZN service in any season. Bay Area crew should fly SFO."
+        "detail": "Has never had a nonstop in any season."
+      },
+      {
+        "route": "SFO → FCA",
+        "airline": "United, seasonal",
+        "status": "gone",
+        "detail": "Listed as ending sometime in October with no published date. Seasonal FCA routes typically finish around Columbus Day (Oct 12), which would put your Oct 16 outbound just past it. Check united.com before counting on it."
+      },
+      {
+        "route": "OAK / SJC → FCA",
+        "airline": "—",
+        "status": "gone",
+        "detail": "No service. Allegiant dropped Oakland entirely. The Bay Area crew flies SFO, or considers Missoula."
       }
     ],
-    "caveat": "BZN's Summer 2026 schedule (published 2/13/2026) is marked subject to change, and the EWR route's 10/24 end date sits only 5 days past the return. Reconfirm on united.com before booking.",
-    "source": "https://bozemanairport.com/flights"
+    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. If the SFO nonstop is dead, Missoula is a real hedge for the Bay Area three: cheaper fares, a year-round United SFO nonstop, and a 2h30 drive to Whitefish. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
+    "source": "https://www.flightconnections.com/flights-from-kalispell-fca"
   },
   "plan": {
-    "title": "Three nights in Paradise Valley",
-    "base": "Paradise Valley / Livingston",
-    "intro": "Bozeman is the hub, but Paradise Valley is the base: best-value housing, 30-45 minutes from Livingston's restaurants, an hour from Yellowstone's north gate. The shape is deliberately loose — one big fishing day, one big park day, and two travel days that don't try to do much. On the lasso plan: it's essentially a dead end in October. Every guest ranch that teaches roping runs summer-only, and the Gardiner and Paradise Valley outfitters send their whole horse string to hunting camps from September. Horseback riding is very much on.",
+    "title": "Three nights at the edge of Glacier",
+    "base": "Whitefish / Flathead Valley",
+    "intro": "This is a shoulder-season trip, and the plan is built that way. Assume Logan Pass is closed — NPS shuts the alpine road around the third Monday of October, which is your checkout day, and in 2025 it actually closed on Oct 14. Every in-park lodge and restaurant shut in September, and the guided outfitters cluster-end on Oct 15, the day before you land. What's left is genuinely good: the lower west side is open and empty, the larch are turning, golden eagles are migrating over Lake McDonald, and the Middle Fork fishes into November.",
     "facts": [
       [
         "Base",
-        "Paradise Valley / Livingston"
+        "Whitefish — 19 min to the airport, 39 to the park gate"
       ],
       [
         "Weather",
-        "54°F day, 34°F night, ~19% chance of a wet day"
+        "54°F day, 29°F night. 1.1in of snow is the October normal in the valley"
       ],
       [
-        "To Yellowstone north gate",
-        "65 min to Gardiner, 65 more to Lamar"
+        "Going-to-the-Sun Road",
+        "Assume the alpine section is closed. Text GNPROADS to 333111 for live status"
       ],
       [
-        "To Bozeman / BZN",
-        "33 min from Livingston"
+        "Park entry",
+        "$35 per vehicle, 7 days. No vehicle reservations required in 2026"
       ],
       [
         "Movie",
-        "Brokeback Mountain — the only one of the three set in this landscape"
+        "Brokeback Mountain — shot an hour north over the Alberta line"
       ],
       [
-        "Your weekend",
-        "MSU plays away Oct 17 and rifle season opens Oct 24, so no crowds either way"
+        "The catch",
+        "Nothing in the park is open for food. Bring lunch every day"
       ]
     ],
     "bookAhead": [
-      "Chico Hot Springs, (406) 333-4933 — one call books the pool, dinner for 8, and the horses.",
-      "Four fishing boats — Sweetwater in Livingston (406) 222-9393, or Angler's West in Emigrant (406) 333-4401. Call, don't book online.",
-      "Fishing licences at ols.fwp.mt.gov — $31.50 each for a day. There is no 3-day non-resident option.",
-      "Two SUVs at BZN. Large SUVs are thin here and no agency will guarantee AWD — book early and call the counter.",
-      "Yellowstone entrance passes online, to skip the gate queue at dawn.",
-      "Museum of the Rockies and the Hyalite road status — both unconfirmed below, both one phone call."
+      "Text GNPROADS to 333111 before you finalise anything — it's the live road-status line and it decides the shape of the weekend.",
+      "Middle Fork float trips: Great Northern Resort (800-735-7897) at $650 a full day, or Wild River Adventures. Two anglers per boat, so eight people is four boats.",
+      "Montana fishing licences at ols.fwp.mt.gov — about $32 each. Needed for the Middle Fork even though fishing inside the park isn't licensed.",
+      "Two AWD SUVs at FCA. Seven agencies are in the terminal, and October is the quiet end of the year.",
+      "Restaurant reservations, and confirm hours first — you're arriving in the gap between summer and ski season and things close without warning.",
+      "National Bison Range: call 406-644-2211 about an hour ahead if you want the Red Sleep Mountain Drive."
     ],
-    "caveat": "Everything with a price attached was verified against the operator's own site or live booking inventory in Aug 2026. Anything marked with a warning could not be confirmed — those are phone calls, not guesses. Prices are per the operator's posted 2026 rates and exclude tips.",
+    "caveat": "Everything with a price or a date was verified against NPS, the operator's own site, or published fare and rate data in Aug 2026. Road status is the one thing nobody can verify in advance — it turns on the weather in the week you travel.",
     "days": [
       {
         "day": "Day 1 · Fri 10/16 (Arrival)",
-        "headline": "Land, provision, soak. Nothing ambitious — people are arriving from three time zones.",
+        "headline": "Land, provision, and find out whether the pass is open.",
         "blocks": [
           {
             "when": "Midday",
-            "what": "Land at BZN, collect two SUVs",
-            "detail": "One 7-seat SUV will not fit 8 people plus luggage, and two vehicles lets the group split later in the weekend. No agency guarantees a drivetrain, so call the counter about AWD.",
-            "cost": "~$1,370 for 4 days, all in"
+            "what": "Land at FCA, collect two AWD SUVs",
+            "detail": "Glacier Park International is 19 minutes from Whitefish — far and away the easiest arrival of anywhere you considered. Seven rental agencies sit right by baggage claim.",
+            "cost": "~$1,350 for 4 days, all in"
+          },
+          {
+            "when": "First thing",
+            "what": "Text GNPROADS to 333111",
+            "detail": "Live Going-to-the-Sun Road status. If the alpine section is somehow still open, drive it tomorrow before the weather decides otherwise — that possibility expires the moment it snows.",
+            "cost": ""
           },
           {
             "when": "~1 PM",
-            "what": "Costco run, 2505 Catron St",
-            "detail": "Ten minutes from the terminal and on your way out of town. Load up on breakfasts, lunches, beer and snacks — Montana charges no sales tax on groceries, while Bozeman restaurants run 25-50% above the US average.",
+            "what": "Costco, 345 Cascade Loop, Kalispell",
+            "detail": "Note the address — the old US-93 warehouse closed in Nov 2025 and this is the new one, about 17 minutes from Whitefish. Nothing inside the park sells food in October, so you're packing lunches every day. Groceries are untaxed even in Whitefish.",
             "cost": ""
-          },
-          {
-            "when": "~2:30 PM",
-            "what": "Drive south to the house",
-            "detail": "About 50 minutes via I-90 and US-89 through Paradise Valley. Fuel up before you leave the Gallatin Valley.",
-            "cost": ""
-          },
-          {
-            "when": "Optional, 12:30-1 PM",
-            "what": "Horseback at the Chico barn",
-            "detail": "Rockin' HK runs 1-hour rides at 10:00 and 13:00 and 2-hour rides at 09:30 and 12:30, and their live booking calendar shows all four of your days open. Ages 8+, with firm weight limits (250 lb at 6ft, 175 lb at 5'5\"). Only works if you land early — otherwise make it Saturday's alternative for anyone skipping the boats.",
-            "cost": "$145 pp / hr, $215 for two"
           },
           {
             "when": "Late afternoon",
-            "what": "Soak at Chico Hot Springs, Pray MT",
-            "detail": "About 35 minutes from Livingston. ⚠️ Day-use pool price, hours and whether non-guests need a reservation are all unconfirmed — call (406) 333-4933. That same call books dinner and the horses.",
-            "cost": "price unconfirmed"
-          },
-          {
-            "when": "5-9 PM",
-            "what": "Dinner, Chico Historic Dining Room",
-            "detail": "Open daily, including Sunday and Monday — which matters, because most of the region isn't. Online booking caps at 6, so a party of 8 has to phone (406) 333-4933.",
+            "what": "Settle in, then walk out for dinner",
+            "detail": "Whitefish is the only town in the valley with a real main street. Craggy Range does burgers at $13.50-18.50; Tupelo Grille is the upscale end at $34-57 — but it auto-applies 20% gratuity to parties of six or more and won't split a bill more than four ways.",
             "cost": ""
           },
           {
             "when": "After dinner",
             "what": "Movie night: Brokeback Mountain",
-            "detail": "Of your three, it's the only one set in this landscape — Wyoming ranch country, a couple of hours south. Old Boy and Internal Affairs are both better films and both belong to a different trip.",
+            "detail": "Filmed just over the Alberta line, an hour or so north of where you're sitting. Old Boy and Internal Affairs are better films and belong to a different trip.",
             "cost": ""
           }
         ]
       },
       {
         "day": "Day 2 · Sat 10/17",
-        "headline": "The fishing day, and the only one where the whole group has dawn to dark free.",
+        "headline": "The park day. Lower west side, which is open no matter what the road does.",
         "blocks": [
           {
-            "when": "Before you leave home",
-            "what": "Buy licences online",
-            "detail": "Non-resident: $10 conservation licence + $7.50 AIS pass + $14 for a one-day base = $31.50 each. There is no 3-day non-resident licence; the next tier is 5 days at $73.50. Buy at ols.fwp.mt.gov rather than burning a morning in a shop.",
-            "cost": "$31.50 pp"
+            "when": "At the gate",
+            "what": "Entrance fee",
+            "detail": "$35 per vehicle for seven days, so $70 for two. No vehicle reservation is needed in 2026 — that system is gone, replaced by timed parking at Logan Pass which you probably won't reach anyway. The fee drops to $25 on Nov 1, just after you leave.",
+            "cost": "$70"
           },
           {
-            "when": "8 AM",
-            "what": "Guided float — four boats",
-            "detail": "Sweetwater Fly Shop in Livingston posts $700 per boat for a full day: two anglers, lunch, flies and loaner rods included. Montana Angler is $740, The River's Edge $675. Booking four boats on an October Saturday should be easy, but call rather than book online.",
-            "cost": "~$2,800 + 15-20% tips"
-          },
-          {
-            "when": "Cheaper alternative",
-            "what": "Paradise Valley spring creeks",
-            "detail": "DePuy and Armstrong both drop to $50 per rod per day on Oct 15 — your dates land just inside the cheap window. Flat, clear, walk-in wading with no boat needed. Eight rods is $400 for the day. The wading is easy but the fishing is technically demanding, so pair it with a guide.",
-            "cost": "$50/rod/day"
-          },
-          {
-            "when": "Worth knowing",
-            "what": "October is a big-fish month, not a many-fish month",
-            "detail": "The fall brown trout run is on and the crowds are gone. But Montana Angler's own guidance is that catch rates are no better than other seasons — which is a real tradeoff for a group of first-timers, who generally have more fun with numbers than with trophy hunting. Ask the shop directly whether beginners will do better on a float or on the creeks.",
+            "when": "Morning",
+            "what": "Trail of the Cedars, then Avalanche Lake",
+            "detail": "The signature short hike of the west side and the one everyone should do. Trail of the Cedars is a 0.7-mile accessible boardwalk loop; Avalanche Lake continues 2.3 miles one way for 500 feet of climb. In summer this trailhead is a zoo. In October it won't be.",
             "cost": ""
           },
           {
-            "when": "Evening",
-            "what": "Dinner in Livingston",
-            "detail": "Rib & Chop House has event space that's free to reserve, (406) 222-9200. Yellowstone Valley Grill books parties up to 10 straight through online and has a private wine cave — ⚠️ but one listing suggests it runs only April through October, so confirm on (406) 333-4162. 2nd Street Bistro is open Saturday, closed Sunday and Monday.",
+            "when": "Bring it with you",
+            "what": "There is no food in the park",
+            "detail": "Every in-park restaurant closed in September — Russell's on Sept 28, Ptarmigan on Sept 21, Two Dog Flats on Sept 13. NPS says the Apgar camp store 'may' be open. Do not count on it.",
+            "cost": ""
+          },
+          {
+            "when": "Afternoon",
+            "what": "Lake McDonald, and look up",
+            "detail": "NPS runs a Hawk Watch from late September through October and roughly 2,000 golden eagles pass Mount Brown in a season — observable from around Lake McDonald Lodge. It's the best-sourced wildlife opportunity of the trip, and nobody plans for it.",
+            "cost": ""
+          },
+          {
+            "when": "If the gate has moved",
+            "what": "Johns Lake Loop and Rocky Point",
+            "detail": "Both sit below the Lake McDonald Lodge gate, so they stay reachable wherever NPS puts the closure. Johns Lake is a 3-mile loop with 160 feet of climb; Rocky Point is 1.1 miles and nearly flat. Apgar Lookout is the harder option at 3.6 miles and 1,850 feet.",
+            "cost": ""
+          },
+          {
+            "when": "Optional detour",
+            "what": "Kalispell Farmers Market",
+            "detail": "Saturday 9:00-12:30, if anyone wants a slower morning before the park.",
             "cost": ""
           }
         ]
       },
       {
         "day": "Day 3 · Sun 10/18",
-        "headline": "Yellowstone. Early, long, and the one day worth setting an alarm for.",
+        "headline": "Fishing, or the long haul east. Pick one — you can't do both.",
         "blocks": [
           {
-            "when": "5:00-5:30 AM",
-            "what": "Leave for Lamar Valley",
-            "detail": "Livingston to Gardiner is 65 minutes, Gardiner to Lamar another 65. You want to be parked in Lamar at first light, because that's when wolves move.",
+            "when": "The main event",
+            "what": "Float the Middle Fork — four boats",
+            "detail": "Montana's western district season runs to Nov 30, so this is one of the very few guided things still operating. Great Northern Resort posts $650 for a full day and $490 for a half, two anglers per boat, which means four boats for eight of you. Wild River Adventures also runs into October.",
+            "cost": "~$2,600 + tips"
+          },
+          {
+            "when": "Before you go",
+            "what": "Licences, and a wrinkle",
+            "detail": "The park boundary on the Middle Fork is the high-water mark, so a guided float there does need a Montana licence even though fishing inside the park doesn't. About $32 each at ols.fwp.mt.gov.",
+            "cost": "$32 pp"
+          },
+          {
+            "when": "The alternative",
+            "what": "Many Glacier — but know what it costs you",
+            "detail": "It's the best of the east side: Grinnell Lake is 3.4 miles nearly flat, Redrock Falls 1.8, Apikuni Falls 1 mile for 700 feet. But with Logan Pass shut you go the long way round via US-2 and Marias Pass — 131 miles and about 2h50 each way. That's close to six hours in the truck for a day hike.",
             "cost": ""
           },
           {
-            "when": "At the gate",
-            "what": "Entrance fee",
-            "detail": "$35 per vehicle for seven days, so $70 for two — cheaper than a single $80 America the Beautiful pass. ⚠️ Anyone in the group who isn't a US resident pays a $100 surcharge unless they hold an annual pass, which flips that maths entirely. No vehicle reservation is needed.",
-            "cost": "$70"
-          },
-          {
-            "when": "Dawn",
-            "what": "Lamar Valley — wolves, and bison",
-            "detail": "NPS calls the northern range one of the best places in the world to watch wolves; the park holds between 83 and 123. Bring or rent a spotting scope — they're watched at long distance and binoculars alone will disappoint. Bison are abundant here year-round, though the rut is July and August, not now.",
-            "cost": ""
-          },
-          {
-            "when": "Heads up",
-            "what": "Lamar is an out-and-back",
-            "detail": "Dunraven Pass, between Canyon and Tower, closed Oct 12 — so you can't loop back that way. Beartooth Highway and the Chief Joseph Byway closed the same day, which makes Cooke City a dead end. The Gardiner-to-Cooke City road itself is open year-round.",
-            "cost": ""
-          },
-          {
-            "when": "On the way",
-            "what": "Fuel in Gardiner, not Mammoth",
-            "detail": "The Mammoth gas station shut for the season on Oct 4, and Roosevelt Lodge has been closed since Sept 7, so there are no services at Tower. Also budget for up to 15-minute delays at the Gardner River High Bridge just southeast of Mammoth — that construction runs 24 hours a day into late October, and it sits directly on your route.",
-            "cost": ""
-          },
-          {
-            "when": "Late afternoon",
-            "what": "Mammoth Hot Springs on the way out",
-            "detail": "The terraces, the Albright Visitor Center (open year-round) and elk on the lawns. The rut runs early September to mid-October, so you're catching the tail end — bulls will still be around, but peak bugling is probably over. Don't build the day around it.",
+            "when": "Also open",
+            "what": "National Bison Range",
+            "detail": "Red Sleep Mountain Drive runs through Oct 31 and is $35 for a van of 10 or more. They ask you to call 406-644-2211 about an hour ahead. Roughly the same direction as Missoula, so it pairs badly with Many Glacier and well with a slow day.",
             "cost": ""
           },
           {
             "when": "Evening",
-            "what": "Dinner — Sunday narrows the field",
-            "detail": "Little Star Diner in Bozeman books parties up to 10 online and serves daily 5-9 PM, Sundays included. Chico's dining room is the other reliable Sunday option. 2nd Street Bistro is closed.",
+            "what": "Something is actually on",
+            "detail": "'The Game's Afoot' runs Oct 16-25 at the Bigfork Center for the Performing Arts — a genuine rainy-day option for eight. The Vienna Boys Choir is in Kalispell at 7pm, which may or may not be the vibe.",
             "cost": ""
           }
         ]
       },
       {
         "day": "Day 4 · Mon 10/19 (Departure)",
-        "headline": "Pack, one last thing in Bozeman, fly home. Keep it loose.",
+        "headline": "The easiest departure of any option you looked at — the airport is 19 minutes away.",
         "blocks": [
           {
             "when": "Morning",
-            "what": "Out of the house, north to Bozeman",
-            "detail": "Roughly 50-65 minutes. Leave buffer: Bozeman Pass is a designated chain-up area and nights sit below freezing, so morning black ice is a genuine possibility.",
+            "what": "Breakfast in Whitefish, then out",
+            "detail": "FCA is 19 minutes from town, so there is no dawn scramble. Leave an hour and you're comfortable.",
+            "cost": ""
+          },
+          {
+            "when": "Today, in fact",
+            "what": "This is the day the road usually closes",
+            "detail": "The third Monday of October is NPS's stated target for shutting the alpine section. If it's still open this morning, you're witnessing the last hours of the season.",
             "cost": ""
           },
           {
             "when": "If there's time",
-            "what": "Museum of the Rockies",
-            "detail": "⚠️ Unverified — I could not confirm admission price, October hours, or whether the T. rex hall is open rather than under renovation. Call before driving over. If it's a bust, Bozeman Spirits on Main runs distillery tours, though they publish no price.",
-            "cost": "unconfirmed"
-          },
-          {
-            "when": "The other option",
-            "what": "Hyalite Canyon — but check first",
-            "detail": "⚠️ Hyalite Canyon Road has a seasonal fall vehicle closure and mid-October is plausibly inside it. If the gate is shut, Palisade Falls is off the table. Custer Gallatin National Forest, Bozeman Ranger District: (406) 522-2520.",
+            "what": "Whitefish town, or the lake",
+            "detail": "The main street is walkable and the distillery and breweries are in it. West-side park waters stay open to private boats through Oct 31 if anyone wants Lake McDonald one more time.",
             "cost": ""
           },
           {
-            "when": "Last meal",
-            "what": "Lunch before the airport",
-            "detail": "Montana Ale Works doesn't open until 4 PM, so it's out. Backcountry Burger Bar does burgers at $11-16. Bar 3 BBQ is walk-in rather than reservations, so it's a gamble with eight.",
+            "when": "Worth knowing",
+            "what": "The larch peak a week after you leave",
+            "detail": "Western larch turn gold across the valley in the second half of October, but the best sources put peak around Oct 20-31 — Kintla and Bowman closer to Oct 22-25. You'll catch maybe 60-85% of it. Bigfork's larch festival was Oct 10, which you also miss.",
             "cost": ""
           }
         ]

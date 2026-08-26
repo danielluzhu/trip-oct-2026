@@ -621,32 +621,32 @@ const img = (file: string, width: number) =>
 // One hero per page. All Wikimedia Commons, all verified to resolve.
 const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagline: string }> = {
   home: {
-    file: "Sunrise over Gallatin Range Bozeman.jpg",
-    credit: "Sunrise over the Gallatin Range",
+    file: "Lake McDonald Panorama - Montana - Glacier National Park (29788703722).jpg",
+    credit: "Lake McDonald panorama",
     heading: "Homeless in Montana",
     tagline:
-      "Three nights in Paradise Valley, an hour from Yellowstone's north gate, in the quietest week of the year.",
+      "Three nights in the Flathead Valley, at the gate of Glacier, in the last week before the mountain shuts for winter.",
   },
   housing: {
-    file: "Yellowstone River, flowing through Paradise Valley.jpg",
-    credit: "Yellowstone River, Paradise Valley",
+    file: "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
+    credit: "Whitefish Lake in autumn",
     heading: "Somewhere with a porch",
     tagline:
-      "Six places to base within two hours of Bozeman, what they actually cost once the fees land, and how good the numbers are.",
+      "Five places to base within an hour of the park entrance, what they cost once the fees land, and how good the numbers are.",
   },
   costs: {
-    file: "Bridger Mountains at dusk - Bozeman Montana - 2013-07-02.jpg",
-    credit: "Bridger Mountains at dusk",
+    file: "Sunrise at Swiftcurrent Lake as seen from the Many Glacier Hotel (48490111337).jpg",
+    credit: "Sunrise at Swiftcurrent Lake, Many Glacier",
     heading: "What it runs",
     tagline:
       "Flights, a cabin, two trucks and four days of eating — add it up before anyone books anything.",
   },
   itinerary: {
-    file: "Lamar Valley at Sunrise (3953332810).jpg",
-    credit: "Lamar Valley at sunrise",
+    file: "Wild Goose Island Overlook (54004237332).jpg",
+    credit: "Wild Goose Island, St. Mary Lake",
     heading: "The plan",
     tagline:
-      "One fishing day, one park day, and two travel days that don't try to do too much.",
+      "What you can actually do at Glacier in the third week of October, once the high country closes.",
   },
 };
 
@@ -866,7 +866,8 @@ async function itineraryPage() {
 // ---------------------------------------------------------------- housing
 
 const housing = (data as any).housing;
-const BOZEMAN = { lat: 45.677, lng: -111.0429 };
+// Airbnb's search path segment for the base town; areas below override the map box.
+const SEARCH_PLACE = "Whitefish--Montana--United-States";
 
 // Airbnb blocks iframing (x-frame-options: SAMEORIGIN) and has no public search
 // API, so the best we can do is deep-link a search with every filter pre-applied.
@@ -891,7 +892,7 @@ function airbnbSearch(o: {
     p.set("sw_lng", String(o.bbox.swLng));
     p.set("zoom", String(o.zoom ?? 8));
   }
-  return `https://www.airbnb.com/s/Bozeman--Montana--United-States/homes?${p.toString()}`;
+  return `https://www.airbnb.com/s/${SEARCH_PLACE}/homes?${p.toString()}`;
 }
 
 // Cleaning is a flat charge per booking, not a percentage — on a 3-night stay it
@@ -922,7 +923,7 @@ function housingPage() {
       <img src="${a.photo.url}" alt="${escapeHtml(a.photo.caption)}" loading="lazy">
       <div class="area-body">
         <h3>${escapeHtml(a.name)}</h3>
-        <div class="subtitle">${escapeHtml(a.drive)} from Bozeman &middot; ${escapeHtml(a.photo.caption)}</div>
+        <div class="subtitle">${escapeHtml(a.drive)} &middot; ${escapeHtml(a.photo.caption)}</div>
         <p class="area-vibe">${escapeHtml(a.vibe)}</p>
         <table>
           <tr><td>Nightly (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
@@ -940,14 +941,14 @@ function housingPage() {
   const body = `
   <section class="card">
     <div class="pick-badge">Housing</div>
-    <h2>Cabins within ~2 hours of Bozeman</h2>
+    <h2>Cabins near the park gate</h2>
     <div class="subtitle">${housing.checkin} &rarr; ${housing.checkout} &middot; ${housing.nights} nights &middot; sleeps ${trip.groupSize}</div>
     <p class="area-vibe">${escapeHtml(housing.intro)}</p>
     <a class="cta" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
     <div class="filter-note">
       Filters baked into that link: <strong>${housing.checkin} to ${housing.checkout}</strong>,
       <strong>${housing.defaultAdults} guests</strong>, <strong>${housing.minBedrooms}+ bedrooms</strong>,
-      entire place only, map bounded to roughly a 2-hour drive of Bozeman.
+      entire place only, map bounded to the Flathead Valley.
       Add the <em>Cabin</em> property-type filter in Airbnb's own panel to narrow further.
     </div>
     <div class="caveat">
@@ -961,7 +962,7 @@ function housingPage() {
 
   <section class="card">
     <h2>Where to base</h2>
-    <div class="subtitle">Sorted by drive time from Bozeman &mdash; each links to its own bounded search</div>
+    <div class="subtitle">Sorted by drive time to the West Glacier gate &mdash; each links to its own bounded search</div>
     <div class="areas">
 ${areaCards}
     </div>
@@ -1096,7 +1097,7 @@ function costsPage() {
       <div><span class="total-label">Group total</span><span class="total-big" id="grand">&mdash;</span></div>
       <div><span class="total-label">Per person</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
-    <div class="calc-note">Estimates from researched ranges for mid-October in the Bozeman area &mdash; not live quotes. Treat as a planning ballpark, not a bill.</div>
+    <div class="calc-note">Estimates from researched ranges for mid-October in the Flathead Valley &mdash; not live quotes. Treat as a planning ballpark, not a bill.</div>
   </section>
 
   <script>
