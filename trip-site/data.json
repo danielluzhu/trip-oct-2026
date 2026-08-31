@@ -24,17 +24,20 @@
         "nyc": {
           "low": 230,
           "high": 260,
-          "note": ""
+          "note": "Nonstop year-round — Delta (JFK/LGA), United (EWR), American (JFK). About 1h30.",
+          "stops": "nonstop"
         },
         "sf": {
           "low": 350,
           "high": 550,
-          "note": ""
+          "note": "No Bay Area nonstop, in any season. One stop via a hub; ~9h door to door.",
+          "stops": "connect"
         },
         "seattle": {
           "low": 400,
           "high": 550,
-          "note": ""
+          "note": "No nonstop. One stop, and the longest travel day of any option on the list.",
+          "stops": "connect"
         }
       },
       "airbnb": {
@@ -61,7 +64,8 @@
           "caption": "Fall foliage, Hogback Mountain"
         }
       ],
-      "verdict": "Best classic-foliage trip, but priciest flights for SF/Seattle crew"
+      "verdict": "Best classic-foliage trip, but priciest flights for SF/Seattle crew",
+      "airport": "BTV (Burlington)"
     },
     {
       "name": "Wyoming",
@@ -76,17 +80,20 @@
         "nyc": {
           "low": 300,
           "high": 450,
-          "note": ""
+          "note": "JFK (American) and EWR (United) nonstops both run Aug–Oct and die with the summer season — assume you connect via Denver or Salt Lake.",
+          "stops": "seasonal"
         },
         "sf": {
           "low": 300,
           "high": 400,
-          "note": ""
+          "note": "SFO nonstop (Alaska/United) is a summer route ending in October. If it's gone, connect via SLC or DEN.",
+          "stops": "seasonal"
         },
         "seattle": {
           "low": 200,
           "high": 260,
-          "note": ""
+          "note": "Alaska's SEA nonstop is seasonal (Aug–Oct) and only 3x a week even in season.",
+          "stops": "seasonal"
         }
       },
       "airbnb": {
@@ -109,7 +116,8 @@
           "caption": "Middle Teton, Grand Teton NP"
         }
       ],
-      "verdict": "Best scenery & national park access, coldest, pricier from NYC"
+      "verdict": "Best scenery & national park access, coldest, pricier from NYC",
+      "airport": "JAC (Jackson Hole)"
     },
     {
       "name": "Montana",
@@ -124,17 +132,20 @@
         "nyc": {
           "low": 403,
           "high": 816,
-          "note": "No nonstop — both NYC nonstops end in September"
+          "note": "No nonstop — both NYC nonstops end in September. Connect via Denver, Chicago or Minneapolis; ~7h50 at best.",
+          "stops": "connect"
         },
         "sf": {
           "low": 375,
           "high": 690,
-          "note": "SFO nonstop is seasonal and may already be done"
+          "note": "SFO nonstop is seasonal with no published end date and typically finishes around Oct 12 — plan on connecting.",
+          "stops": "seasonal"
         },
         "seattle": {
           "low": 277,
           "high": 546,
-          "note": "Alaska nonstop year-round, 1h25 — much the easiest"
+          "note": "Alaska nonstop year-round, 1h25, ~106 flights a month. Much the easiest.",
+          "stops": "nonstop"
         }
       },
       "airbnb": {
@@ -161,7 +172,8 @@
           "caption": "Going-to-the-Sun Road"
         }
       ],
-      "verdict": "Cheapest week of the year to be here and you'll have it nearly to yourself — but Logan Pass very likely closes on or before your dates, and every in-park lodge and guided outfitter has already shut."
+      "verdict": "Cheapest week of the year to be here and you'll have it nearly to yourself — but Logan Pass very likely closes on or before your dates, and every in-park lodge and guided outfitter has already shut.",
+      "airport": "FCA (Kalispell / Glacier Park Intl)"
     },
     {
       "name": "North Carolina",
@@ -176,17 +188,20 @@
         "nyc": {
           "low": 180,
           "high": 360,
-          "note": "AVL fare shown; cheaper via CLT"
+          "note": "Nonstop into AVL from LGA (Delta/American) and EWR (United/Allegiant), ~2h.",
+          "stops": "nonstop"
         },
         "sf": {
           "low": 280,
           "high": 400,
-          "note": ""
+          "note": "No Bay Area nonstop to AVL. Cheaper play: SFO→CLT nonstop on American, then the 2h drive.",
+          "stops": "connect"
         },
         "seattle": {
           "low": 270,
           "high": 390,
-          "note": ""
+          "note": "No nonstop to AVL. SEA→CLT nonstop on American plus the 2h drive is the sane routing.",
+          "stops": "connect"
         }
       },
       "airbnb": {
@@ -213,7 +228,64 @@
           "caption": "Blue Ridge Parkway"
         }
       ],
-      "verdict": "Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs"
+      "verdict": "Warmest, easiest & cheapest logistics; fly into CLT and drive ~2hrs",
+      "airport": "AVL (Asheville)"
+    },
+    {
+      "name": "Bozeman, MT",
+      "subtitle": "Big Sky / Paradise Valley / Yellowstone north gate",
+      "airport": "BZN (Bozeman Yellowstone Intl)",
+      "weather": {
+        "high": "54°F (12°C)",
+        "low": "34°F (1°C)",
+        "precip": "~19% chance of a wet day",
+        "notes": "About a 1-in-6 chance of frozen precipitation on any given day. October averages 4.5in of snow; valley accumulation is possible but unlikely — snow and ice on the passes is the real risk."
+      },
+      "flights": {
+        "nyc": {
+          "low": 407,
+          "high": 632,
+          "stops": "seasonal",
+          "note": "EWR (United) is the only NYC nonstop still flying in October, and it's seasonal — JFK and LGA nonstops both end in September."
+        },
+        "sf": {
+          "low": 328,
+          "high": 567,
+          "stops": "nonstop",
+          "note": "SFO nonstop year-round on Alaska and United. No OAK or SJC service."
+        },
+        "seattle": {
+          "low": 209,
+          "high": 388,
+          "stops": "nonstop",
+          "note": "Alaska and Delta nonstop, ~171 flights a month — the busiest and cheapest origin on this whole list."
+        }
+      },
+      "airbnb": {
+        "nightly": "$350-1,000",
+        "totalRange": "$1,200-2,800 (3-4 nights)",
+        "perPerson": "$150-350 (8 people)"
+      },
+      "topSites": [
+        "Fly fishing the Gallatin, Madison & Yellowstone rivers",
+        "Hyalite Canyon hikes and the reservoir",
+        "Yellowstone north gate day trip (Gardiner → Lamar Valley)",
+        "Bozeman Main Street brewery & distillery crawl",
+        "Big Sky / Lone Peak scenic drive up the Gallatin Canyon",
+        "Chico Hot Springs soak in Paradise Valley",
+        "Museum of the Rockies (the T. rex is genuinely worth it)"
+      ],
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hyalite%20Reservoir%20%2852320603728%29.jpg?width=800",
+          "caption": "Hyalite Reservoir, 30 min from Bozeman"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Emigrant%20Peak%2C%20Paradise%20Valley.jpg?width=800",
+          "caption": "Emigrant Peak, Paradise Valley"
+        }
+      ],
+      "verdict": "The other Montana, and the easier one to reach — two year-round West Coast nonstops and better fishing. You just trade Glacier for Yellowstone's back door."
     }
   ],
   "housing": {
@@ -610,5 +682,12 @@
         ]
       }
     ]
+  },
+  "flightStops": {
+    "nonstop": "Nonstop",
+    "seasonal": "Nonstop ends in Oct",
+    "connect": "Connecting only",
+    "note": "Nonstop status checked against published Aug 2026 schedules for Oct 16-19, 2026. Seasonal routes end without a published last day — confirm with the airline before booking.",
+    "source": "https://www.flightconnections.com/"
   }
 }

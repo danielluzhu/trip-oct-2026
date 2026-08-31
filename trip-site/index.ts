@@ -1,6 +1,7 @@
 import data from "./data.json";
 
 const trip = data.trip;
+const stopInfo = (data as any).flightStops;
 const IDEAS_PATH = `${import.meta.dir}/ideas.json`;
 
 const PARTY = { nyc: 3, sf: 2, seattle: 1 };
@@ -23,6 +24,26 @@ function money(range: { low: number; high: number }) {
 function midpoint(range: { low: number; high: number }) {
   return (range.low + range.high) / 2;
 }
+
+// Nonstop status per origin. "seasonal" means a nonstop exists in the schedule
+// but the route dies sometime in October, usually with no published last day.
+const STOP_LABELS: Record<string, string> = {
+  nonstop: "Nonstop",
+  seasonal: "Nonstop ends in Oct",
+  connect: "Connecting only",
+};
+
+function stopPill(leg: { stops?: string; note?: string }, withTitle = true) {
+  const kind = leg.stops ?? "connect";
+  const title = withTitle && leg.note ? ` title="${escapeHtml(leg.note)}"` : "";
+  return `<span class="pill ${kind}"${title}>${STOP_LABELS[kind] ?? kind}</span>`;
+}
+
+const ORIGINS = [
+  { key: "nyc", label: "NYC", seats: PARTY.nyc, airports: "LGA/JFK/EWR" },
+  { key: "sf", label: "SF Bay", seats: PARTY.sf, airports: "SFO/SJC/OAK" },
+  { key: "seattle", label: "Seattle", seats: PARTY.seattle, airports: "SEA" },
+] as const;
 
 function escapeHtml(s: string) {
   return s
@@ -446,6 +467,31 @@ const sharedStyle = /* css */ `
   }
   .pill.ok { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
   .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
+  .pill.nonstop { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
+  .pill.seasonal { background: rgba(196,140,40,.18); color: #b8842a; }
+  .pill.connect { background: rgba(190,60,60,.16); color: #c25555; }
+
+  /* ---------- city comparison ---------- */
+  .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
+  table.compare { min-width: 720px; }
+  table.compare td:first-child { color: var(--text); width: 22%; }
+  table.compare td { vertical-align: top; }
+  .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
+  .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
+  .routes { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
+  .routes details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .6rem .9rem;
+    background: var(--bg-alt);
+  }
+  .routes summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
+  .routes summary .muted-cell { font-weight: 400; }
+  .routes ul { margin: .7rem 0 .2rem; padding-left: 0; list-style: none; }
+  .routes li { font-size: .86rem; margin-bottom: .55rem; line-height: 1.5; }
+  .routes li .leg { font-weight: 700; margin-right: .35rem; }
+  .routes li .pill { margin-right: .4rem; }
 
   /* ---------- housing areas ---------- */
   .areas { display: flex; flex-direction: column; gap: 1.8rem; }
@@ -695,18 +741,64 @@ function homePage() {
   const picked = locations.find((l) => l.name === PICK)!;
   const alsoRan = locations.filter((l) => l.name !== PICK);
 
+  const compare = `
+  <section class="card">
+    <h2>Airfare, city by city</h2>
+    <div class="subtitle">Every option on the short list, split by where people are actually flying from &mdash; ${PARTY.nyc} from NYC, ${PARTY.sf} from SF, ${PARTY.seattle} from Seattle &mdash; with whether that leg is a nonstop or a connection</div>
+    <div class="table-scroll">
+    <table class="compare">
+      <tr>
+        <th>Where</th>
+        ${ORIGINS.map((o) => `<th>${o.label} &times;${o.seats}<br><span class="muted-cell">${o.airports}</span></th>`).join("\n        ")}
+        <th>Group airfare</th>
+        <th>Cabin/night</th>
+      </tr>
+      ${locations
+        .map(
+          (loc) => `<tr class="${loc.name === PICK ? "cmp-pick" : ""}">
+        <td>
+          <div class="cmp-name"><strong>${loc.name}</strong>${loc.name === PICK ? `<span class="pill ok">picked</span>` : ""}</div>
+          <span class="muted-cell">${(loc as any).airport ?? loc.subtitle}</span>
+        </td>
+        ${ORIGINS.map((o) => {
+          const leg = (loc.flights as any)[o.key];
+          return `<td><span class="fare">${money(leg)} pp</span>${stopPill(leg)}</td>`;
+        }).join("\n        ")}
+        <td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)}</td>
+        <td>${loc.airbnb.nightly}</td>
+      </tr>`,
+        )
+        .join("\n      ")}
+    </table>
+    </div>
+    <div class="routes">
+      ${locations
+        .map(
+          (loc) => `<details${loc.name === PICK ? " open" : ""}>
+        <summary>${loc.name} <span class="muted-cell">&mdash; ${(loc as any).airport ?? loc.subtitle}</span></summary>
+        <ul>
+          ${ORIGINS.map((o) => {
+            const leg = (loc.flights as any)[o.key];
+            return `<li><span class="leg">${o.label}</span>${stopPill(leg, false)} ${money(leg)} pp &mdash; ${escapeHtml(leg.note ?? "")}</li>`;
+          }).join("\n          ")}
+        </ul>
+      </details>`,
+        )
+        .join("\n      ")}
+    </div>
+    <div class="caveat">${escapeHtml(stopInfo.note)}</div>
+  </section>`;
+
   const runnerUps = `
   <section class="card">
     <h2>Also considered</h2>
-    <div class="subtitle">The other three on the short list, for the record</div>
+    <div class="subtitle">The other four on the short list, for the record</div>
     <table>
-      <tr><th>Where</th><th>Group airfare</th><th>Cabin/night</th><th>Why not</th></tr>
+      <tr><th>Where</th><th>Why not</th></tr>
       ${alsoRan
         .map(
           (loc) => `<tr>
         <td><strong>${loc.name}</strong><br><span class="muted-cell">${loc.subtitle}</span></td>
-        <td>${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)}</td>
-        <td>${loc.airbnb.nightly}</td>
         <td>${loc.verdict}</td>
       </tr>`,
         )
@@ -742,9 +834,10 @@ function homePage() {
 
     <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
     <table>
-      <tr><td>NYC &times;3</td><td>${money(loc.flights.nyc)} pp${loc.flights.nyc.note ? ` &mdash; ${loc.flights.nyc.note}` : ""}</td></tr>
-      <tr><td>SF &times;2</td><td>${money(loc.flights.sf)} pp${loc.flights.sf.note ? ` &mdash; ${loc.flights.sf.note}` : ""}</td></tr>
-      <tr><td>Seattle &times;1</td><td>${money(loc.flights.seattle)} pp${loc.flights.seattle.note ? ` &mdash; ${loc.flights.seattle.note}` : ""}</td></tr>
+      ${ORIGINS.map((o) => {
+        const leg = (loc.flights as any)[o.key];
+        return `<tr><td>${o.label} &times;${o.seats}</td><td>${money(leg)} pp &nbsp;${stopPill(leg, false)}${leg.note ? `<br><span class="muted-cell">${escapeHtml(leg.note)}</span>` : ""}</td></tr>`;
+      }).join("\n      ")}
       <tr><td>Group total</td><td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)} (~${fmt(loc.airfare.groupTotal)} at midpoint)</td></tr>
     </table>
 
@@ -764,7 +857,7 @@ function homePage() {
   </section>`
     )
     .join("\n");
-  return layout("home", trip.title, body + "\n" + runnerUps);
+  return layout("home", trip.title, body + "\n" + compare + "\n" + runnerUps);
 }
 
 function ideaItemHtml(idea: Idea) {
