@@ -509,8 +509,33 @@
         "detail": "No service. Allegiant dropped Oakland entirely. The Bay Area crew flies SFO, or considers Missoula."
       }
     ],
-    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. The SFO nonstop clears your dates by five days, but if United trims the tail of the season, Missoula is the hedge for the Bay Area three: cheaper fares, a year-round United SFO nonstop, and a 2h30 drive to Whitefish. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
-    "source": "https://www.flightconnections.com/flights-from-kalispell-fca"
+    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. The SFO nonstop clears your dates by five days, but it is the last week of the season, so a schedule trim would hit it before anything else. Missoula is the hedge if that happens, or if FCA fares spike. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
+    "source": "https://www.flightconnections.com/flights-from-kalispell-fca",
+    "alt": {
+      "title": "The Missoula alternative (MSO)",
+      "intro": "Missoula is the second way into the Flathead: 137 miles south of Whitefish, about 2h45 up US-93 along the east shore of Flathead Lake, and not a mountain pass the whole way. It is a bigger, less seasonal airport than Kalispell, and on US DOT Q1 2026 fare data FCA averages about 18% above it. The trade is the drive — two of them, on arrival and departure days.",
+      "rows": [
+        {
+          "route": "SEA → MSO",
+          "airline": "Alaska, year-round",
+          "status": "ok",
+          "detail": "Roughly 105 flights a month, 27 departures a week. Seattle already has a year-round nonstop into Kalispell, so this one is only worth it on price."
+        },
+        {
+          "route": "SFO → MSO",
+          "airline": "United, seasonal",
+          "status": "ok",
+          "detail": "Daily, and flying in October — but Missoula's own airport lists it as seasonal and no end date is published. United's other Montana seasonal routes stop Oct 24, so assume the same and check before you count on it."
+        },
+        {
+          "route": "EWR / JFK / LGA → MSO",
+          "airline": "—",
+          "status": "gone",
+          "detail": "No nonstop from any New York airport, in any season. The NYC three connect via Denver, Chicago, Minneapolis or Salt Lake — the same shape of day as flying into Kalispell, so Missoula buys them nothing but a cheaper fare and a 2h45 drive."
+        }
+      ],
+      "verdict": "Worth pricing for the Bay Area two and the Seattle one if FCA fares spike; not worth it for the NYC three, who connect either way and would land on top of a long drive. Renting in Missoula also means returning the cars there — build the drive into both the arrival and the departure day."
+    }
   },
   "plan": {
     "title": "Three nights at the edge of Glacier",

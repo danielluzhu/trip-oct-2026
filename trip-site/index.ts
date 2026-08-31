@@ -307,6 +307,7 @@ const sharedStyle = /* css */ `
   td strong { color: var(--text); }
   .group-total { font-weight: 700; }
   .muted-cell { color: var(--muted); font-size: .82rem; }
+  .alt-intro { font-size: .9rem; color: var(--muted); margin: .2rem 0 .8rem; }
 
   /* ---------- photos ---------- */
   .photos {
@@ -1102,8 +1103,24 @@ function flightsBlock() {
         )
         .join("\n      ")}
     </table>
+    <div class="section-label">${escapeHtml(flightInfo.alt.title)}</div>
+    <p class="alt-intro">${escapeHtml(flightInfo.alt.intro)}</p>
+    <table>
+      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
+      ${flightInfo.alt.rows
+        .map(
+          (r: any) => `<tr>
+        <td><strong>${escapeHtml(r.route)}</strong></td>
+        <td class="muted-cell">${escapeHtml(r.airline)}</td>
+        <td><span class="pill ${r.status}">${r.status === "ok" ? "nonstop" : "no nonstop"}</span><br>
+            <span class="muted-cell">${escapeHtml(r.detail)}</span></td>
+      </tr>`,
+        )
+        .join("\n      ")}
+    </table>
+    <div class="verdict">${escapeHtml(flightInfo.alt.verdict)}</div>
     <div class="caveat">${escapeHtml(flightInfo.caveat)}
-      <a href="${escapeHtml(flightInfo.source)}" target="_blank" rel="noopener">BZN schedule &rarr;</a>
+      <a href="${escapeHtml(flightInfo.source)}" target="_blank" rel="noopener">FCA schedule &rarr;</a>
     </div>
   </section>`;
 }
