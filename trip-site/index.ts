@@ -27,16 +27,22 @@ function midpoint(range: { low: number; high: number }) {
 
 // Nonstop status per origin. "seasonal" means a nonstop exists in the schedule
 // but the route dies sometime in October, usually with no published last day.
+// Each leg carries its own label because the useful fact is usually a date --
+// "Nonstop thru Oct 24" says more than "seasonal".
 const STOP_LABELS: Record<string, string> = {
   nonstop: "Nonstop",
-  seasonal: "Nonstop ends in Oct",
+  partial: "Nonstop, wrong days",
   connect: "Connecting only",
 };
 
-function stopPill(leg: { stops?: string; note?: string }, withTitle = true) {
+function stopPill(
+  leg: { stops?: string; stopLabel?: string; note?: string },
+  withTitle = true,
+) {
   const kind = leg.stops ?? "connect";
+  const label = leg.stopLabel ?? STOP_LABELS[kind] ?? kind;
   const title = withTitle && leg.note ? ` title="${escapeHtml(leg.note)}"` : "";
-  return `<span class="pill ${kind}"${title}>${STOP_LABELS[kind] ?? kind}</span>`;
+  return `<span class="pill ${kind}"${title}>${label}</span>`;
 }
 
 const ORIGINS = [
@@ -468,7 +474,7 @@ const sharedStyle = /* css */ `
   .pill.ok { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
   .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
   .pill.nonstop { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
-  .pill.seasonal { background: rgba(196,140,40,.18); color: #b8842a; }
+  .pill.partial { background: rgba(196,140,40,.18); color: #b8842a; }
   .pill.connect { background: rgba(190,60,60,.16); color: #c25555; }
 
   /* ---------- city comparison ---------- */
@@ -744,7 +750,7 @@ function homePage() {
   const compare = `
   <section class="card">
     <h2>Airfare, city by city</h2>
-    <div class="subtitle">Every option on the short list, split by where people are actually flying from &mdash; ${PARTY.nyc} from NYC, ${PARTY.sf} from SF, ${PARTY.seattle} from Seattle &mdash; with whether that leg is a nonstop or a connection</div>
+    <div class="subtitle">Every option on the short list, split by where people are actually flying from &mdash; ${PARTY.nyc} from NYC, ${PARTY.sf} from SF, ${PARTY.seattle} from Seattle &mdash; with whether that leg is actually a nonstop on Oct 16-19, and the last day any seasonal nonstop flies</div>
     <div class="table-scroll">
     <table class="compare">
       <tr>

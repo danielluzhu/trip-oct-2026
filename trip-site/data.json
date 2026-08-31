@@ -24,20 +24,23 @@
         "nyc": {
           "low": 230,
           "high": 260,
-          "note": "Nonstop year-round — Delta (JFK/LGA), United (EWR), American (JFK). About 1h30.",
-          "stops": "nonstop"
+          "note": "Year-round, no seasonal cutoff — Delta (JFK/LGA), United (EWR) and American (JFK). About 1h30.",
+          "stops": "nonstop",
+          "stopLabel": "Nonstop"
         },
         "sf": {
           "low": 350,
           "high": 550,
-          "note": "No Bay Area nonstop, in any season. One stop via a hub; ~9h door to door.",
-          "stops": "connect"
+          "note": "No Bay Area nonstop to BTV in any season. One stop via a hub; ~9h door to door.",
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         },
         "seattle": {
           "low": 400,
           "high": 550,
-          "note": "No nonstop. One stop, and the longest travel day of any option on the list.",
-          "stops": "connect"
+          "note": "No nonstop, ever. One stop, and the longest travel day of anything on this list.",
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         }
       },
       "airbnb": {
@@ -80,20 +83,23 @@
         "nyc": {
           "low": 300,
           "high": 450,
-          "note": "JFK (American) and EWR (United) nonstops both run Aug–Oct and die with the summer season — assume you connect via Denver or Salt Lake.",
-          "stops": "seasonal"
+          "note": "American's JFK nonstop last flies Oct 4. United's Newark nonstop does run to Oct 24 — but Saturdays and Sundays only from Sept 25, so it can't do a Friday out and a Monday back. On your dates: connect via Denver or Salt Lake.",
+          "stops": "partial",
+          "stopLabel": "Sa/Su nonstop only"
         },
         "sf": {
           "low": 300,
           "high": 400,
-          "note": "SFO nonstop (Alaska/United) is a summer route ending in October. If it's gone, connect via SLC or DEN.",
-          "stops": "seasonal"
+          "note": "United flies SFO–JAC daily Sept 24 through Oct 24, so your dates sit inside the window with five days to spare. Alaska's SFO nonstop ended Aug 18.",
+          "stops": "nonstop",
+          "stopLabel": "Nonstop thru Oct 24"
         },
         "seattle": {
           "low": 200,
           "high": 260,
-          "note": "Alaska's SEA nonstop is seasonal (Aug–Oct) and only 3x a week even in season.",
-          "stops": "seasonal"
+          "note": "Alaska's SEA nonstop last flies Oct 2 — two weeks before you'd go. Connect via SLC or DEN.",
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         }
       },
       "airbnb": {
@@ -132,20 +138,23 @@
         "nyc": {
           "low": 403,
           "high": 816,
-          "note": "No nonstop — both NYC nonstops end in September. Connect via Denver, Chicago or Minneapolis; ~7h50 at best.",
-          "stops": "connect"
+          "note": "Both NYC nonstops are summer-only and finished in September. Connect via Denver, Chicago or Minneapolis — about 7h50 door to door at best.",
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         },
         "sf": {
           "low": 375,
           "high": 690,
-          "note": "SFO nonstop is seasonal with no published end date and typically finishes around Oct 12 — plan on connecting.",
-          "stops": "seasonal"
+          "note": "United's SFO–FCA nonstop runs May 21 through Oct 24, one flight a day, so Oct 16-19 clears it by five days. Earlier reporting had this route dying around Columbus Day; the published range says otherwise.",
+          "stops": "nonstop",
+          "stopLabel": "Nonstop thru Oct 24"
         },
         "seattle": {
           "low": 277,
           "high": 546,
-          "note": "Alaska nonstop year-round, 1h25, ~106 flights a month. Much the easiest.",
-          "stops": "nonstop"
+          "note": "Alaska year-round, 1h25, roughly 106 flights a month. Much the easiest origin.",
+          "stops": "nonstop",
+          "stopLabel": "Nonstop"
         }
       },
       "airbnb": {
@@ -188,20 +197,23 @@
         "nyc": {
           "low": 180,
           "high": 360,
-          "note": "Nonstop into AVL from LGA (Delta/American) and EWR (United/Allegiant), ~2h.",
-          "stops": "nonstop"
+          "note": "Nonstop into AVL from LGA (Delta/American) and EWR (United/Allegiant), both still flying in October. ~2h.",
+          "stops": "nonstop",
+          "stopLabel": "Nonstop"
         },
         "sf": {
           "low": 280,
           "high": 400,
           "note": "No Bay Area nonstop to AVL. Cheaper play: SFO→CLT nonstop on American, then the 2h drive.",
-          "stops": "connect"
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         },
         "seattle": {
           "low": 270,
           "high": 390,
           "note": "No nonstop to AVL. SEA→CLT nonstop on American plus the 2h drive is the sane routing.",
-          "stops": "connect"
+          "stops": "connect",
+          "stopLabel": "Connecting only"
         }
       },
       "airbnb": {
@@ -245,20 +257,23 @@
         "nyc": {
           "low": 407,
           "high": 632,
-          "stops": "seasonal",
-          "note": "EWR (United) is the only NYC nonstop still flying in October, and it's seasonal — JFK and LGA nonstops both end in September."
+          "stops": "nonstop",
+          "note": "United's Newark nonstop runs daily May 21 through Oct 24 — your dates fit with a week to spare. The JFK nonstops (JetBlue, Delta) ended Sept 8 and Sept 5; LGA (American) ended Sept 5.",
+          "stopLabel": "Nonstop thru Oct 24"
         },
         "sf": {
           "low": 328,
           "high": 567,
           "stops": "nonstop",
-          "note": "SFO nonstop year-round on Alaska and United. No OAK or SJC service."
+          "note": "United flies SFO–BZN year-round, daily. Alaska's seasonal SFO run ended Aug 18. No OAK or SJC service.",
+          "stopLabel": "Nonstop"
         },
         "seattle": {
           "low": 209,
           "high": 388,
           "stops": "nonstop",
-          "note": "Alaska and Delta nonstop, ~171 flights a month — the busiest and cheapest origin on this whole list."
+          "note": "Alaska and Delta, both year-round and daily — the easiest origin on the whole list.",
+          "stopLabel": "Nonstop"
         }
       },
       "airbnb": {
@@ -461,7 +476,7 @@
     "carFeePct": 0.28
   },
   "flights": {
-    "headline": "Only Seattle keeps a nonstop. Everyone else connects.",
+    "headline": "Seattle and SF get nonstops. NYC connects.",
     "rows": [
       {
         "route": "SEA → FCA",
@@ -484,8 +499,8 @@
       {
         "route": "SFO → FCA",
         "airline": "United, seasonal",
-        "status": "gone",
-        "detail": "Listed as ending sometime in October with no published date. Seasonal FCA routes typically finish around Columbus Day (Oct 12), which would put your Oct 16 outbound just past it. Check united.com before counting on it."
+        "status": "ok",
+        "detail": "Alive for your dates: United runs it daily from May 21 to Oct 24, one flight a day, which leaves five days of margin after you fly home. It is still the last week of the season, so a schedule change would hit this before anything else."
       },
       {
         "route": "OAK / SJC → FCA",
@@ -494,7 +509,7 @@
         "detail": "No service. Allegiant dropped Oakland entirely. The Bay Area crew flies SFO, or considers Missoula."
       }
     ],
-    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. If the SFO nonstop is dead, Missoula is a real hedge for the Bay Area three: cheaper fares, a year-round United SFO nonstop, and a 2h30 drive to Whitefish. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
+    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. The SFO nonstop clears your dates by five days, but if United trims the tail of the season, Missoula is the hedge for the Bay Area three: cheaper fares, a year-round United SFO nonstop, and a 2h30 drive to Whitefish. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
     "source": "https://www.flightconnections.com/flights-from-kalispell-fca"
   },
   "plan": {
@@ -687,7 +702,8 @@
     "nonstop": "Nonstop",
     "seasonal": "Nonstop ends in Oct",
     "connect": "Connecting only",
-    "note": "Nonstop status checked against published Aug 2026 schedules for Oct 16-19, 2026. Seasonal routes end without a published last day — confirm with the airline before booking.",
-    "source": "https://www.flightconnections.com/"
+    "note": "Nonstop status and last-day dates come from the airports' own published 2026 summer schedules (Jackson Hole, dated Feb 11 2026; Bozeman, Feb 13 2026) and route databases for Kalispell, Asheville and Burlington, all read Aug 31 2026. United's seasonal Montana and Wyoming flying ends Oct 24 across the board — five days after you fly home — so every one of those nonstops is a late-season booking. Schedules can still move; confirm with the airline.",
+    "source": "https://www.jacksonholeairport.com/travelers/flightschedule/",
+    "partial": "Nonstop, wrong days"
   }
 }
