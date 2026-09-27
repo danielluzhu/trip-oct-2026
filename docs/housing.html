@@ -529,6 +529,38 @@
   table.extras input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); }
   table.extras td:first-child { width: 1px; }
   table.extras .x-total { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  /* .calc-grid label sets display:flex, which would beat [hidden] */
+  .calc-grid label[hidden] { display: none; }
+  .lodge-out {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    flex-wrap: wrap;
+    margin: .9rem 0 .2rem;
+    padding: .7rem .9rem;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+  }
+  .lodge-label {
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .lodge-big {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .lodge-out .calc-note { margin: 0; }
+  .stay-total {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
 
   /* ---------- itinerary timeline ---------- */
   ol.timeline {
@@ -625,7 +657,7 @@
 
   <section class="card">
     <h2>Whitefish, and the four we passed on</h2>
-    <div class="subtitle">Sorted by drive time to the West Glacier gate &mdash; each links to its own bounded search</div>
+    <div class="subtitle">Every figure is the total for the stay, not a nightly rate &mdash; cleaning, platform fee and lodging tax are already in it. Sorted by drive time to the West Glacier gate.</div>
     <div class="areas">
 
     <div class="area picked">
@@ -635,10 +667,14 @@
         <div class="subtitle">19 min to FCA, 39 to the park &middot; Whitefish Lake</div>
         <p class="area-vibe">The one town with restaurants, bars and a walkable centre. Most expensive of the five, and the only one that charges resort tax — but the premium is inventory, not tax.</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>$243-$844</td></tr>
-          <tr><td>Typical</td><td><strong>$450</strong>/night</td></tr>
-          <tr><td>3 nights all-in</td><td><strong>$2,142</strong> <span class="muted-cell">(+59% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>$268</td></tr>
+          <tr>
+            <td>3 nights, all in</td>
+            <td><span class="stay-total">$2,142</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;$268 each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>$450/night &times; 3, +59% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>$243-$844</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">$1,360-$3,631</td></tr>
         </table>
         <div class="quality">Data quality: Good — eight 4-5BR properties with published floor rates ($243-389), plus market ADR. Floor rates may not be the October rate.</div>
         <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.52&amp;ne_lng=-114.22&amp;sw_lat=48.32&amp;sw_lng=-114.45&amp;zoom=10" target="_blank" rel="noopener">Search Whitefish on Airbnb &rarr;</a>
@@ -652,10 +688,14 @@
         <div class="subtitle">17 min from Whitefish, 20 to the park &middot; Going-to-the-Sun Road</div>
         <p class="area-vibe">The best-value large-group inventory in the valley and the closest real town to the West Glacier gate. Less to do at night, which matters less than you&#39;d think in a week when nothing&#39;s open anyway.</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>$216-$579</td></tr>
-          <tr><td>Typical</td><td><strong>$375</strong>/night</td></tr>
-          <tr><td>3 nights all-in</td><td><strong>$1,814</strong> <span class="muted-cell">(+61% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>$227</td></tr>
+          <tr>
+            <td>3 nights, all in</td>
+            <td><span class="stay-total">$1,814</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;$227 each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>$375/night &times; 3, +61% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>$216-$579</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">$1,228-$2,567</td></tr>
         </table>
         <div class="quality">Data quality: Good — five 4-5BR properties with published floor rates ($216-534) plus two Vacasa homes at $377-579.</div>
         <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.46&amp;ne_lng=-114.05&amp;sw_lat=48.3&amp;sw_lng=-114.28&amp;zoom=10" target="_blank" rel="noopener">Search Columbia Falls on Airbnb &rarr;</a>
@@ -669,10 +709,14 @@
         <div class="subtitle">24 min from Whitefish, 45 to the park &middot; Flathead River</div>
         <p class="area-vibe">Cheapest beds and where the Costco is. Least charming of the five and furthest from the park, but if the group&#39;s priority is the number at the bottom of the calculator, it&#39;s here.</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>$250-$550</td></tr>
-          <tr><td>Typical</td><td><strong>$350</strong>/night</td></tr>
-          <tr><td>3 nights all-in</td><td><strong>$1,722</strong> <span class="muted-cell">(+64% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>$215</td></tr>
+          <tr>
+            <td>3 nights, all in</td>
+            <td><span class="stay-total">$1,722</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;$215 each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>$350/night &times; 3, +64% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>$250-$550</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">$1,353-$2,460</td></tr>
         </table>
         <div class="quality">Data quality: Weak — exactly one 4BR with a published rate ($366). No local manager publishes rates; one analytics source returned Great Falls data by mistake.</div>
         <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.3&amp;ne_lng=-114.18&amp;sw_lat=48.12&amp;sw_lng=-114.42&amp;zoom=10" target="_blank" rel="noopener">Search Kalispell on Airbnb &rarr;</a>
@@ -686,10 +730,14 @@
         <div class="subtitle">At the park gate &middot; Lake McDonald</div>
         <p class="area-vibe">Wake up at the entrance. The catch is that this corridor is built for summer — the one resort with published rates ends its season Oct 15, the day before you&#39;d arrive, and there&#39;s almost no bookable 4BR inventory.</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>$300-$700</td></tr>
-          <tr><td>Typical</td><td><strong>$450</strong>/night</td></tr>
-          <tr><td>3 nights all-in</td><td><strong>$2,091</strong> <span class="muted-cell">(+55% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>$261</td></tr>
+          <tr>
+            <td>3 nights, all in</td>
+            <td><span class="stay-total">$2,091</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;$261 each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>$450/night &times; 3, +55% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>$300-$700</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">$1,538-$3,014</td></tr>
         </table>
         <div class="quality">Data quality: Thin — one 3BR resort ($450 off-season) whose rate calendar stops Oct 15, plus an area-level average. Verify anything here is even open.</div>
         <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.55&amp;ne_lng=-113.85&amp;sw_lat=48.33&amp;sw_lng=-114.08&amp;zoom=10" target="_blank" rel="noopener">Search West Glacier / Coram on Airbnb &rarr;</a>
@@ -703,10 +751,14 @@
         <div class="subtitle">38 min from FCA, 55 to the park &middot; Flathead Lake</div>
         <p class="area-vibe">Flathead Lake, an arts-town main street, and a working theatre — the only one of the five with an actual evening option in October. Furthest from Glacier, closest to a rainy-day plan.</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>$250-$900</td></tr>
-          <tr><td>Typical</td><td><strong>$400</strong>/night</td></tr>
-          <tr><td>3 nights all-in</td><td><strong>$1,907</strong> <span class="muted-cell">(+59% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>$238</td></tr>
+          <tr>
+            <td>3 nights, all in</td>
+            <td><span class="stay-total">$1,907</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;$238 each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>$400/night &times; 3, +59% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>$250-$900</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">$1,353-$3,752</td></tr>
         </table>
         <div class="quality">Data quality: Weak — around ten large lakefront homes exist but every price sits behind a booking widget. Largest with a published rate is a 3BR at $434.</div>
         <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.16&amp;ne_lng=-113.95&amp;sw_lat=47.96&amp;sw_lng=-114.16&amp;zoom=10" target="_blank" rel="noopener">Search Bigfork on Airbnb &rarr;</a>

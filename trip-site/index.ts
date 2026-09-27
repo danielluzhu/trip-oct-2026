@@ -624,6 +624,38 @@ const sharedStyle = /* css */ `
   table.extras input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); }
   table.extras td:first-child { width: 1px; }
   table.extras .x-total { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  /* .calc-grid label sets display:flex, which would beat [hidden] */
+  .calc-grid label[hidden] { display: none; }
+  .lodge-out {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    flex-wrap: wrap;
+    margin: .9rem 0 .2rem;
+    padding: .7rem .9rem;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+  }
+  .lodge-label {
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .lodge-big {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .lodge-out .calc-note { margin: 0; }
+  .stay-total {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
 
   /* ---------- itinerary timeline ---------- */
   ol.timeline {
@@ -1133,10 +1165,14 @@ function housingPage() {
         <div class="subtitle">${escapeHtml(a.drive)} &middot; ${escapeHtml(a.photo.caption)}</div>
         <p class="area-vibe">${escapeHtml(a.vibe)}</p>
         <table>
-          <tr><td>Nightly (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
-          <tr><td>Typical</td><td><strong>${fmt(a.nightly.typical)}</strong>/night</td></tr>
-          <tr><td>${housing.nights} nights all-in</td><td><strong>${fmt(stayTotal(a))}</strong> <span class="muted-cell">(+${Math.round((stayTotal(a) / (a.nightly.typical * housing.nights) - 1) * 100)}% in cleaning, fees &amp; tax)</span></td></tr>
-          <tr><td>Per person (8)</td><td>${fmt(stayTotal(a) / 8)}</td></tr>
+          <tr>
+            <td>${housing.nights} nights, all in</td>
+            <td><span class="stay-total">${fmt(stayTotal(a))}</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;${fmt(stayTotal(a) / 8)} each at 8</span></td>
+          </tr>
+          <tr><td>What builds it</td><td>${fmt(a.nightly.typical)}/night &times; ${housing.nights}, +${Math.round((stayTotal(a) / (a.nightly.typical * housing.nights) - 1) * 100)}% cleaning, fees &amp; tax</td></tr>
+          <tr><td>Nightly range (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
+          <tr><td>Range, all in</td><td class="muted-cell">${fmt(stayTotal(a, housing.nights, a.nightly.low))}-${fmt(stayTotal(a, housing.nights, a.nightly.high))}</td></tr>
         </table>
         <div class="quality">Data quality: ${escapeHtml(a.quality)}</div>
         <a class="add-idea-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Search ${escapeHtml(a.name)} on Airbnb &rarr;</a>
@@ -1169,7 +1205,7 @@ function housingPage() {
 
   <section class="card">
     <h2>${escapeHtml(housing.picked)}, and the four we passed on</h2>
-    <div class="subtitle">Sorted by drive time to the West Glacier gate &mdash; each links to its own bounded search</div>
+    <div class="subtitle">Every figure is the total for the stay, not a nightly rate &mdash; cleaning, platform fee and lodging tax are already in it. Sorted by drive time to the West Glacier gate.</div>
     <div class="areas">
 ${areaCards}
     </div>
@@ -1292,12 +1328,24 @@ function costsPage() {
     <div class="calc-grid">
       <label>Area <select id="area"></select></label>
       <label>Nights <input type="number" id="nights" min="1" max="21" value="${housing.nights}"></label>
-      <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
-      <label>Cleaning fee <input type="number" id="cleaning" min="0" step="25"></label>
-      <label>Platform fee % <input type="number" id="feepct" min="0" max="50" step="0.5"></label>
-      <label>Lodging tax % <input type="number" id="taxpct" min="0" max="30" step="0.5"></label>
+      <label>Quoted as
+        <select id="lodge-mode">
+          <option value="nightly" selected>Nightly rate, add fees</option>
+          <option value="total">Total for the stay</option>
+        </select>
+      </label>
+      <label id="w-total" hidden>Total for the stay <input type="number" id="lodge-total" min="0" step="50"></label>
+      <label id="w-nightly">Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
+      <label id="w-cleaning">Cleaning fee <input type="number" id="cleaning" min="0" step="25"></label>
+      <label id="w-feepct">Platform fee % <input type="number" id="feepct" min="0" max="50" step="0.5"></label>
+      <label id="w-taxpct">Lodging tax % <input type="number" id="taxpct" min="0" max="30" step="0.5"></label>
     </div>
-    <div class="calc-note">Cleaning is flat per booking, so on three nights it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in.</div>
+    <div class="lodge-out">
+      <span class="lodge-label">Cabin, all in</span>
+      <span class="lodge-big" id="lodge-readout">&mdash;</span>
+      <span class="calc-note" id="lodge-detail"></span>
+    </div>
+    <div class="calc-note" id="lodge-hint">Cleaning is flat per booking, so on three nights it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in. Already have a real quote? Switch to <em>Total for the stay</em> and type the number Airbnb showed you &mdash; fees and tax are in it already.</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
@@ -1431,6 +1479,8 @@ function costsPage() {
       areaSel.value = "0"; seedArea();
       $("nights").value = CFG.nights;
       $("cleaning").value = CFG.cleaningFee;
+      $("lodge-mode").value = "nightly";
+      $("lodge-total").value = "";
       $("feepct").value = +(CFG.feePct * 100).toFixed(1);
       $("cars").value = 2; $("car-type").value = "suv"; seedCar();
       $("car-days").value = CFG.nights + 1;
@@ -1447,7 +1497,7 @@ function costsPage() {
 
     // ---- persistence: your numbers survive a reload ----------------------
     var IDS = ["n-nyc","n-sf","n-sea","n-local","fare-level","f-nyc","f-sf","f-sea",
-      "area","nights","nightly","cleaning","feepct","taxpct","cars","car-type",
+      "area","nights","lodge-mode","lodge-total","nightly","cleaning","feepct","taxpct","cars","car-type",
       "car-days","car-rate","car-feepct","gas","food-style","food-rate","food-days"];
     function save() {
       var state = { extras: extras, touched: touched, fields: {} };
@@ -1507,16 +1557,25 @@ function costsPage() {
       var flightSpend = fares.reduce(function (t, f) { return t + f.n * f.each; }, 0);
 
       var nights = num("nights", 1);
-      var nightly = num("nightly");
-      var cleaning = num("cleaning");
-      var feePct = num("feepct") / 100;
-      var taxPct = num("taxpct") / 100;
-      // Cleaning is a flat per-booking charge, so it hits a short stay far
-      // harder than a percentage would; fees and tax then apply on top.
-      var lodgingSub = nightly * nights + cleaning;
-      var lodging = lodgingSub * (1 + feePct + taxPct);
-      var base = nightly * nights;
-      var lodgingUplift = base > 0 ? Math.round((lodging / base - 1) * 100) : 0;
+      var lodging, lodgingDetail;
+      if ($("lodge-mode").value === "total") {
+        // A real Airbnb quote already has cleaning, service fee and tax in
+        // it, so take it at face value rather than marking it up again.
+        lodging = num("lodge-total");
+        lodgingDetail = "quoted total for " + nights +
+          (nights === 1 ? " night" : " nights") + ", fees and tax included";
+      } else {
+        var nightly = num("nightly");
+        var cleaning = num("cleaning");
+        // Cleaning is a flat per-booking charge, so it hits a short stay far
+        // harder than a percentage would; fees and tax then apply on top.
+        var lodgingSub = nightly * nights + cleaning;
+        lodging = lodgingSub * (1 + num("feepct") / 100 + num("taxpct") / 100);
+        var base = nightly * nights;
+        var uplift = base > 0 ? Math.round((lodging / base - 1) * 100) : 0;
+        lodgingDetail = money(nightly) + " \\u00d7 " + nights + " nights, +" +
+          uplift + "% cleaning/fees/tax";
+      }
 
       var cars = num("cars");
       var carDays = num("car-days", 1);
@@ -1535,8 +1594,7 @@ function costsPage() {
       });
 
       var rows = [
-        ["Housing", lodging, money(nightly) + " \\u00d7 " + nights + " nights, +" +
-          lodgingUplift + "% cleaning/fees/tax"],
+        ["Housing", lodging, lodgingDetail],
         ["Rental cars", carRental + gas, cars + " \\u00d7 " + carDays + " days, incl. tax & fees, + gas"],
         ["Food & drink", food, money(num("food-rate")) + " pp/day \\u00d7 " + foodDays + " days"]
       ];
@@ -1555,6 +1613,11 @@ function costsPage() {
         }).join("") +
         "<tr><td colspan='2'><strong>Per person</strong></td><td><strong>" +
         money(total / people) + "</strong></td></tr>";
+
+      $("lodge-readout").textContent = money(lodging);
+      $("lodge-detail").textContent = lodgingDetail + " \\u00b7 " +
+        money(lodging / nights) + " a night \\u00b7 " +
+        money(lodging / people) + " a head";
 
       var each = total / people;
       $("grand").textContent = money(total);
@@ -1585,8 +1648,38 @@ function costsPage() {
     });
     $("nights").addEventListener("input", function () { seedDays(); calc(); });
 
+    function applyLodgeMode() {
+      var total = $("lodge-mode").value === "total";
+      $("w-total").hidden = !total;
+      ["w-nightly", "w-cleaning", "w-feepct", "w-taxpct"].forEach(function (id) {
+        $(id).hidden = total;
+      });
+      $("lodge-hint").hidden = total;
+    }
+    // What the nightly side works out to, all in -- used to seed the total
+    // field so it is never blank or stale rather than showing a bare $0.
+    function nightlyAllIn() {
+      return Math.round(
+        (num("nightly") * num("nights", 1) + num("cleaning")) *
+        (1 + num("feepct") / 100 + num("taxpct") / 100)
+      );
+    }
+    $("lodge-mode").addEventListener("change", function () {
+      if ($("lodge-mode").value === "total" && !num("lodge-total")) {
+        $("lodge-total").value = nightlyAllIn();
+      }
+      applyLodgeMode();
+      calc();
+    });
+
     $("fare-level").addEventListener("change", function () { seedFares(); calc(); });
-    areaSel.addEventListener("change", function () { seedArea(); calc(); });
+    areaSel.addEventListener("change", function () {
+      seedArea();
+      // A different town means the old quote is stale -- replace it with the
+      // new area's estimate rather than dropping housing to zero.
+      if ($("lodge-mode").value === "total") $("lodge-total").value = nightlyAllIn();
+      calc();
+    });
     $("car-type").addEventListener("change", function () { seedCar(); calc(); });
     $("food-style").addEventListener("change", function () { seedFood(); calc(); });
 
@@ -1640,6 +1733,7 @@ function costsPage() {
 
     defaults();
     load();
+    applyLodgeMode();
     calc();
     booted = true;
   })();
