@@ -6,11 +6,13 @@ const IDEAS_PATH = `${import.meta.dir}/ideas.json`;
 
 const PARTY = { nyc: 3, sf: 2, seattle: 1 };
 
+// Three days, and the Saturday label says what it is. Monday is a 19-minute
+// drive to the airport, so it lives in Sunday's last block rather than a day
+// of its own.
 const DAYS = [
   "Day 1 · Fri 10/16 (Arrival)",
-  "Day 2 · Sat 10/17",
+  "Day 2 · Sat 10/17 (The big hike)",
   "Day 3 · Sun 10/18",
-  "Day 4 · Mon 10/19 (Departure)",
 ];
 
 function fmt(n: number) {
@@ -517,6 +519,13 @@ const sharedStyle = /* css */ `
     box-shadow: var(--shadow);
   }
   .area-vibe { font-size: .89rem; color: var(--muted); margin: .5rem 0 .8rem; }
+  .area.picked {
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: .9rem 1rem .9rem .8rem;
+    margin: -.2rem 0;
+  }
   @media (max-width: 620px) {
     .area { grid-template-columns: 1fr; }
     .area img { min-height: 0; aspect-ratio: 16/9; }
@@ -678,14 +687,14 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Lake McDonald panorama",
     heading: "Homeless in Montana",
     tagline:
-      "Three nights in the Flathead Valley, at the gate of Glacier, in the last week before the mountain shuts for winter.",
+      "Three nights in Whitefish, at the gate of Glacier, in the last week before the mountain shuts for winter.",
   },
   housing: {
     file: "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
     credit: "Whitefish Lake in autumn",
-    heading: "Somewhere with a porch",
+    heading: "Whitefish it is",
     tagline:
-      "Five places to base within an hour of the park entrance, what they cost once the fees land, and how good the numbers are.",
+      "What a cabin in Whitefish runs once the fees land — and the four towns we passed on, for the record.",
   },
   costs: {
     file: "Sunrise at Swiftcurrent Lake as seen from the Many Glacier Hotel (48490111337).jpg",
@@ -699,7 +708,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Wild Goose Island, St. Mary Lake",
     heading: "The plan",
     tagline:
-      "What you can actually do at Glacier in the third week of October, once the high country closes.",
+      "Three days out of Whitefish, built around one hard hike on the Saturday, in the week the high country closes.",
   },
 };
 
@@ -1019,10 +1028,10 @@ function housingPage() {
         zoom: 10,
       });
       return `
-    <div class="area">
+    <div class="area${a.picked ? " picked" : ""}">
       <img src="${a.photo.url}" alt="${escapeHtml(a.photo.caption)}" loading="lazy">
       <div class="area-body">
-        <h3>${escapeHtml(a.name)}</h3>
+        <h3>${escapeHtml(a.name)}${a.picked ? ` <span class="pill ok">staying here</span>` : ""}</h3>
         <div class="subtitle">${escapeHtml(a.drive)} &middot; ${escapeHtml(a.photo.caption)}</div>
         <p class="area-vibe">${escapeHtml(a.vibe)}</p>
         <table>
@@ -1041,7 +1050,7 @@ function housingPage() {
   const body = `
   <section class="card">
     <div class="pick-badge">Housing</div>
-    <h2>Cabins near the park gate</h2>
+    <h2>A cabin in ${escapeHtml(housing.picked)}</h2>
     <div class="subtitle">${housing.checkin} &rarr; ${housing.checkout} &middot; ${housing.nights} nights &middot; sleeps ${trip.groupSize}</div>
     <p class="area-vibe">${escapeHtml(housing.intro)}</p>
     <a class="cta" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
@@ -1061,7 +1070,7 @@ function housingPage() {
   </section>
 
   <section class="card">
-    <h2>Where to base</h2>
+    <h2>${escapeHtml(housing.picked)}, and the four we passed on</h2>
     <div class="subtitle">Sorted by drive time to the West Glacier gate &mdash; each links to its own bounded search</div>
     <div class="areas">
 ${areaCards}

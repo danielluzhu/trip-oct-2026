@@ -422,6 +422,13 @@
     box-shadow: var(--shadow);
   }
   .area-vibe { font-size: .89rem; color: var(--muted); margin: .5rem 0 .8rem; }
+  .area.picked {
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: .9rem 1rem .9rem .8rem;
+    margin: -.2rem 0;
+  }
   @media (max-width: 620px) {
     .area { grid-template-columns: 1fr; }
     .area img { min-height: 0; aspect-ratio: 16/9; }
@@ -542,8 +549,8 @@
 <header class="hero" style="--hero:url('https://commons.wikimedia.org/wiki/Special:FilePath/Whitefish%20Lake%20from%20State%20Beach%20to%20Whitefish%20Mountain%20Resort%20Autumn%20Courtesy%20of%20Mike%20Koopal.jpg?width=2000')">
   <div class="hero-inner">
     <div class="eyebrow">Oct 16-19, 2026 &middot; 5-10 people</div>
-    <h1>Somewhere with a porch</h1>
-    <p class="tagline">Five places to base within an hour of the park entrance, what they cost once the fees land, and how good the numbers are.</p>
+    <h1>Whitefish it is</h1>
+    <p class="tagline">What a cabin in Whitefish runs once the fees land — and the four towns we passed on, for the record.</p>
   </div>
   <div class="hero-credit">Whitefish Lake in autumn &middot; Wikimedia Commons</div>
 </header>
@@ -557,9 +564,9 @@
 
   <section class="card">
     <div class="pick-badge">Housing</div>
-    <h2>Cabins near the park gate</h2>
+    <h2>A cabin in Whitefish</h2>
     <div class="subtitle">2026-10-16 &rarr; 2026-10-19 &middot; 3 nights &middot; sleeps 5-10</div>
-    <p class="area-vibe">Whitefish is the hub — 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street. Everything below is within about 40 minutes of the West Glacier gate. Mid-October is a genuine dead zone: the ski mountain closed Sept 20 and doesn&#39;t reopen until Dec 4, and park visitation drops to 18% of its July peak. That&#39;s why it&#39;s cheap, and also why you should check that your restaurant is open before you drive to it.</p>
+    <p class="area-vibe">Whitefish is decided. It&#39;s 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street — which matters more than usual on this trip, because nothing inside the park is open for food and the ski mountain hasn&#39;t woken up yet. Mid-October is a genuine dead zone here: Whitefish Mountain closed Sept 20 and doesn&#39;t reopen until Dec 4, and park visitation drops to 18% of its July peak. That&#39;s why it&#39;s cheap, and also why you should check that your restaurant is open before you drive to it. The four other towns are still below for the record — and because a cabin in Columbia Falls is genuinely cheaper if the Whitefish inventory dries up.</p>
     <a class="cta" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-16&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.7&amp;ne_lng=-113.8&amp;sw_lat=47.9&amp;sw_lng=-114.6&amp;zoom=8" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
     <div class="filter-note">
       Filters baked into that link: <strong>2026-10-16 to 2026-10-19</strong>,
@@ -577,14 +584,14 @@
   </section>
 
   <section class="card">
-    <h2>Where to base</h2>
+    <h2>Whitefish, and the four we passed on</h2>
     <div class="subtitle">Sorted by drive time to the West Glacier gate &mdash; each links to its own bounded search</div>
     <div class="areas">
 
-    <div class="area">
+    <div class="area picked">
       <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Aerial%20-%20Whitefish%20Lake%20%28MT%29%2001%20%2810322715514%29.jpg?width=800" alt="Whitefish Lake" loading="lazy">
       <div class="area-body">
-        <h3>Whitefish</h3>
+        <h3>Whitefish <span class="pill ok">staying here</span></h3>
         <div class="subtitle">19 min to FCA, 39 to the park &middot; Whitefish Lake</div>
         <p class="area-vibe">The one town with restaurants, bars and a walkable centre. Most expensive of the five, and the only one that charges resort tax — but the premium is inventory, not tax.</p>
         <table>
@@ -682,7 +689,7 @@
   </section>
 </main>
 <footer>
-  Homeless in Montana &middot; Fri Oct 16 - Sun Oct 19, 2026 (flexible, 3-5 days)<br>
+  Homeless in Montana &middot; Fri Oct 16 - Mon Oct 19, 2026 &middot; 3 nights<br>
   Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
 </footer>
 </body>
