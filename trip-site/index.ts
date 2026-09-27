@@ -676,6 +676,16 @@ function addIdeaBlock(day: string) {
   )}" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>`;
 }
 
+// Favicon: a Glacier horn with a snowfield and the glacier tongue running down
+// it, over a turquoise lake -- the west-side view the whole trip is built
+// around. Inlined as a data URI so it works identically from the bun server
+// and from the static docs/ build, with no route and no extra file to ship.
+const FAVICON =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#14211a"/><path d="M0 24 L6 15 L11 20 L17 12 L24 21 L29 16 L32 20 L32 24Z" fill="#2c4536"/><path d="M13 3.5 L25 23 L1 23Z" fill="#46705a"/><path d="M23 10 L31 23 L17 23Z" fill="#3a5c4a"/><path d="M13 3.5 L18.2 12 L16.2 11 L14.6 12.8 L13 10.8 L11.2 12.8 L9.6 11 L7.8 12Z" fill="#f2f6f4"/><path d="M23 10 L26 15 L24.6 14.3 L23 15.6 L21.4 14.3 L20 15Z" fill="#e6edea"/><path d="M12.5 5.5 L14.4 9.5 L13.7 23 L12 23Z" fill="#dfeaf0"/><rect y="23" width="32" height="9" fill="#2e7d8c"/><path d="M4 27 h24 v1.3 H4Z" fill="#14211a" opacity=".2"/></svg>`,
+  );
+
 const COMMONS = "https://commons.wikimedia.org/wiki/Special:FilePath/";
 const img = (file: string, width: number) =>
   `${COMMONS}${encodeURIComponent(file)}?width=${width}`;
@@ -727,6 +737,8 @@ function layout(activeNav: Nav, title: string, body: string) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
+<link rel="icon" href="${FAVICON}" type="image/svg+xml">
+<meta name="theme-color" content="#14211a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
