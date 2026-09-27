@@ -1,7 +1,13 @@
 // Renders the site to static HTML in docs/ for GitHub Pages.
 // Run with: STATIC=1 bun trip-site/build.ts
 import { mkdir, writeFile } from "node:fs/promises";
-import { homePage, itineraryPage, housingPage, costsPage } from "./index.ts";
+import {
+  homePage,
+  itineraryPage,
+  housingPage,
+  costsPage,
+  shortlistPage,
+} from "./index.ts";
 
 if (process.env.STATIC !== "1") {
   console.error("Refusing to build: set STATIC=1 so pages render in static mode.");
@@ -15,6 +21,7 @@ const pages: Array<[string, string]> = [
   ["index.html", homePage()],
   ["housing.html", housingPage()],
   ["costs.html", costsPage()],
+  ["shortlist.html", shortlistPage()],
   ["itinerary.html", await itineraryPage()],
 ];
 

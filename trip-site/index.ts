@@ -648,8 +648,8 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-type Route = "/" | "/housing" | "/costs" | "/itinerary";
-type Nav = "home" | "housing" | "costs" | "itinerary";
+type Route = "/" | "/housing" | "/costs" | "/itinerary" | "/shortlist";
+type Nav = "home" | "housing" | "costs" | "itinerary" | "shortlist";
 
 function href(path: Route) {
   if (!STATIC) return path;
@@ -703,6 +703,13 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     tagline:
       "Flights, a cabin, two trucks and four days of eating — add it up before anyone books anything.",
   },
+  shortlist: {
+    file: "Vermont fall foliage hogback mountain.JPG",
+    credit: "Hogback Mountain, Vermont",
+    heading: "The four we didn't pick",
+    tagline:
+      "Vermont, Wyoming, North Carolina and Bozeman — the airfare, the weather and the reason each one lost. Kept for the record, and for the next trip.",
+  },
   itinerary: {
     file: "Wild Goose Island Overlook (54004237332).jpg",
     credit: "Wild Goose Island, St. Mary Lake",
@@ -735,10 +742,11 @@ function layout(activeNav: Nav, title: string, body: string) {
   <div class="hero-credit">${hero.credit} &middot; Wikimedia Commons</div>
 </header>
 <nav>
-  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Montana</a>
+  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Glacier</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/costs")}" class="${activeNav === "costs" ? "active" : ""}">Cost calculator</a>
   <a href="${href("/itinerary")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
+  <a href="${href("/shortlist")}" class="${activeNav === "shortlist" ? "active" : ""}">Shortlist</a>
 </nav>
 <main>
 ${body}
@@ -755,6 +763,78 @@ const PICK = "Montana";
 
 function homePage() {
   const picked = locations.find((l) => l.name === PICK)!;
+
+  const body = [picked]
+    .map(
+      (loc) => `
+  <section class="card">
+    <div class="pick-badge">Where we're going</div>
+    <h2>${loc.name}</h2>
+    <div class="subtitle">${loc.subtitle}</div>
+
+    <div class="photos">
+      ${loc.photos
+        .map(
+          (p) => `<figure>
+        <img src="${p.url}" alt="${p.caption}" loading="lazy">
+        <figcaption>${p.caption}</figcaption>
+      </figure>`
+        )
+        .join("\n      ")}
+    </div>
+
+    <div class="section-label">Weather (mid-Oct)</div>
+    <table>
+      <tr><td>High / Low</td><td>${loc.weather.high} / ${loc.weather.low}</td></tr>
+      <tr><td>Precip</td><td>${loc.weather.precip}</td></tr>
+      <tr><td>Notes</td><td>${loc.weather.notes}</td></tr>
+    </table>
+
+    <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
+    <table>
+      ${ORIGINS.map((o) => {
+        const leg = (loc.flights as any)[o.key];
+        return `<tr><td>${o.label} &times;${o.seats}</td><td>${money(leg)} pp &nbsp;${stopPill(leg, false)}${leg.note ? `<br><span class="muted-cell">${escapeHtml(leg.note)}</span>` : ""}</td></tr>`;
+      }).join("\n      ")}
+      <tr><td>Group total</td><td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)} (~${fmt(loc.airfare.groupTotal)} at midpoint)</td></tr>
+    </table>
+
+    <div class="section-label">4BR Airbnb cabin</div>
+    <table>
+      <tr><td>Nightly</td><td>${loc.airbnb.nightly}</td></tr>
+      <tr><td>Total</td><td>${loc.airbnb.totalRange}</td></tr>
+      <tr><td>Per person</td><td>${loc.airbnb.perPerson}</td></tr>
+    </table>
+
+    <div class="section-label">Top things to do</div>
+    <ul class="sites">
+      ${loc.topSites.map((s) => `<li>${s}</li>`).join("\n      ")}
+    </ul>
+
+    <div class="verdict">${loc.verdict}</div>
+  </section>`
+    )
+    .join("\n");
+
+  const elsewhere = `
+  <section class="card">
+    <h2>How we got here</h2>
+    <div class="subtitle">Vermont, Wyoming, North Carolina and Bozeman were all on the list</div>
+    <p class="area-vibe">
+      Four other places were costed out properly &mdash; airfare from all three origins,
+      weather, cabins, what there is to do. They lost. That research now lives on its
+      own page so this one can be about Glacier.
+    </p>
+    <a class="add-idea-link" href="${href("/shortlist")}">See the shortlist and why each one lost &rarr;</a>
+  </section>`;
+
+  return layout("home", trip.title, body + "\n" + elsewhere);
+}
+
+// The four destinations we passed on. Off the front page since Whitefish was
+// declared, but kept whole -- it is the record of why, and the start of the
+// next trip.
+function shortlistPage() {
   const alsoRan = locations.filter((l) => l.name !== PICK);
 
   const compare = `
@@ -822,58 +902,27 @@ function homePage() {
     </table>
   </section>`;
 
-  const body = [picked]
-    .map(
-      (loc) => `
+  const intro = `
   <section class="card">
-    <div class="pick-badge">Where we're going</div>
-    <h2>${loc.name}</h2>
-    <div class="subtitle">${loc.subtitle}</div>
+    <div class="pick-badge">Decided</div>
+    <h2>Montana won</h2>
+    <div class="subtitle">Kept for the record &mdash; and because one of these is the next trip</div>
+    <p class="area-vibe">
+      Five places went through the same questions: what does it cost to fly ${PARTY.nyc} people
+      from New York, ${PARTY.sf} from the Bay Area and ${PARTY.seattle} from Seattle; what is the
+      weather actually doing in the third week of October; what does a four-bedroom cabin run;
+      and what is there to do once you land. Glacier took it on the strength of the arrival
+      &mdash; 19 minutes from plane to town &mdash; and on having a nonstop from two of the three
+      origins. Everything below is what the other four looked like.
+    </p>
+    <a class="add-idea-link" href="${href("/")}">&larr; Back to the Glacier plan</a>
+  </section>`;
 
-    <div class="photos">
-      ${loc.photos
-        .map(
-          (p) => `<figure>
-        <img src="${p.url}" alt="${p.caption}" loading="lazy">
-        <figcaption>${p.caption}</figcaption>
-      </figure>`
-        )
-        .join("\n      ")}
-    </div>
-
-    <div class="section-label">Weather (mid-Oct)</div>
-    <table>
-      <tr><td>High / Low</td><td>${loc.weather.high} / ${loc.weather.low}</td></tr>
-      <tr><td>Precip</td><td>${loc.weather.precip}</td></tr>
-      <tr><td>Notes</td><td>${loc.weather.notes}</td></tr>
-    </table>
-
-    <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
-    <table>
-      ${ORIGINS.map((o) => {
-        const leg = (loc.flights as any)[o.key];
-        return `<tr><td>${o.label} &times;${o.seats}</td><td>${money(leg)} pp &nbsp;${stopPill(leg, false)}${leg.note ? `<br><span class="muted-cell">${escapeHtml(leg.note)}</span>` : ""}</td></tr>`;
-      }).join("\n      ")}
-      <tr><td>Group total</td><td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)} (~${fmt(loc.airfare.groupTotal)} at midpoint)</td></tr>
-    </table>
-
-    <div class="section-label">4BR Airbnb cabin</div>
-    <table>
-      <tr><td>Nightly</td><td>${loc.airbnb.nightly}</td></tr>
-      <tr><td>Total</td><td>${loc.airbnb.totalRange}</td></tr>
-      <tr><td>Per person</td><td>${loc.airbnb.perPerson}</td></tr>
-    </table>
-
-    <div class="section-label">Top things to do</div>
-    <ul class="sites">
-      ${loc.topSites.map((s) => `<li>${s}</li>`).join("\n      ")}
-    </ul>
-
-    <div class="verdict">${loc.verdict}</div>
-  </section>`
-    )
-    .join("\n");
-  return layout("home", trip.title, body + "\n" + compare + "\n" + runnerUps);
+  return layout(
+    "shortlist",
+    `Shortlist — ${trip.title}`,
+    intro + "\n" + compare + "\n" + runnerUps,
+  );
 }
 
 function ideaItemHtml(idea: Idea) {
@@ -1331,7 +1380,7 @@ function costsPage() {
   return layout("costs", `Costs — ${trip.title}`, flightsBlock() + "\n" + body);
 }
 
-export { homePage, itineraryPage, housingPage, costsPage };
+export { homePage, itineraryPage, housingPage, costsPage, shortlistPage };
 
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
@@ -1364,6 +1413,12 @@ Bun.serve({
         await saveIdeas(ideas);
       }
       return Response.redirect("/itinerary", 303);
+    }
+
+    if (url.pathname === "/shortlist") {
+      return new Response(shortlistPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
     }
 
     if (url.pathname === "/housing") {
