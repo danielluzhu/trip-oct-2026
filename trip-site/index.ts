@@ -748,7 +748,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Sunrise at Swiftcurrent Lake, Many Glacier",
     heading: "What it runs",
     tagline:
-      "Flights, a cabin, two trucks and four days of eating — add it up before anyone books anything.",
+      "A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot, what it splits to, and your own flight on top.",
   },
   shortlist: {
     file: "Vermont fall foliage hogback mountain.JPG",
@@ -1272,7 +1272,7 @@ function costsPage() {
     </div>
     <div class="calc-note" id="party-note"></div>
 
-    <div class="section-label">Flights &mdash; per person, each way included</div>
+    <div class="section-label">Flights &mdash; everyone books their own</div>
     <div class="calc-grid">
       <label>Fare level
         <select id="fare-level">
@@ -1285,7 +1285,7 @@ function costsPage() {
       <label>SF fare <input type="number" id="f-sf" min="0" step="25"></label>
       <label>Seattle fare <input type="number" id="f-sea" min="0" step="25"></label>
     </div>
-    <div class="calc-note">The fare level refills these three; type over any of them with a real quote and the total follows. Touching the level again refills them.</div>
+    <div class="calc-note"><strong>Airfare is not in the group total.</strong> Everyone buys their own ticket from their own city, so it never goes in the pot to be split &mdash; it's shown on its own below. The fare level refills these three; type over any of them with a real quote. Touching the level again refills them.</div>
     <div class="calc-note">${escapeHtml(costs.flightNote)}</div>
 
     <div class="section-label">Housing</div>
@@ -1343,12 +1343,20 @@ function costsPage() {
   </section>
 
   <section class="card" id="results">
-    <h2>Total</h2>
+    <h2>The pot</h2>
+    <div class="subtitle">Shared costs only &mdash; the cabin, the trucks, the food and the extras. This is the number that gets split.</div>
     <table id="breakdown"></table>
     <div class="total-row">
-      <div><span class="total-label">Group total</span><span class="total-big" id="grand">&mdash;</span></div>
-      <div><span class="total-label">Per person</span><span class="total-big accent" id="perhead">&mdash;</span></div>
+      <div><span class="total-label">To split</span><span class="total-big" id="grand">&mdash;</span></div>
+      <div><span class="total-label">Each</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
+  </section>
+
+  <section class="card">
+    <h2>Flights, separately</h2>
+    <div class="subtitle">Everyone books their own, so this is never split &mdash; what you pay depends on where you're leaving from</div>
+    <div class="table-scroll"><table id="fare-table"></table></div>
+    <div class="calc-note" id="fare-note"></div>
     <div class="calc-note">Defaults are researched ranges for mid-October in the Flathead Valley &mdash; not live quotes. Once you've typed over them they're your numbers, and they're kept in this browser only.</div>
   </section>
 
@@ -1482,10 +1490,21 @@ function costsPage() {
         $("grand").textContent = "\\u2014";
         $("perhead").textContent = "\\u2014";
         $("breakdown").innerHTML = "";
+        $("fare-table").innerHTML = "";
+        $("fare-note").textContent = "";
         return;
       }
 
-      var flights = party.nyc * num("f-nyc") + party.sf * num("f-sf") + party.sea * num("f-sea");
+      // Airfare is deliberately outside the pot: everyone buys their own
+      // ticket from their own city, so putting it in and dividing by heads
+      // would have the Seattle flyer subsidising the New Yorker.
+      var fares = [
+        { label: "NYC (LGA/JFK/EWR)", n: party.nyc, each: num("f-nyc") },
+        { label: "SF Bay (SFO/SJC/OAK)", n: party.sf, each: num("f-sf") },
+        { label: "Seattle (SEA)", n: party.sea, each: num("f-sea") },
+        { label: "Already in Montana", n: party.local, each: 0 }
+      ].filter(function (f) { return f.n > 0; });
+      var flightSpend = fares.reduce(function (t, f) { return t + f.n * f.each; }, 0);
 
       var nights = num("nights", 1);
       var nightly = num("nightly");
@@ -1516,7 +1535,6 @@ function costsPage() {
       });
 
       var rows = [
-        ["Flights", flights, people + " fares"],
         ["Housing", lodging, money(nightly) + " \\u00d7 " + nights + " nights, +" +
           lodgingUplift + "% cleaning/fees/tax"],
         ["Rental cars", carRental + gas, cars + " \\u00d7 " + carDays + " days, incl. tax & fees, + gas"],
@@ -1538,8 +1556,26 @@ function costsPage() {
         "<tr><td colspan='2'><strong>Per person</strong></td><td><strong>" +
         money(total / people) + "</strong></td></tr>";
 
+      var each = total / people;
       $("grand").textContent = money(total);
-      $("perhead").textContent = money(total / people);
+      $("perhead").textContent = money(each);
+
+      $("fare-table").innerHTML =
+        "<tr><th>Flying from</th><th>People</th><th>Fare each</th><th>That group pays</th>" +
+        "<th>All in, per person</th></tr>" +
+        fares.map(function (f) {
+          return "<tr><td><strong>" + f.label + "</strong></td>" +
+                 "<td>" + f.n + "</td>" +
+                 "<td>" + (f.each ? money(f.each) : "\\u2014") + "</td>" +
+                 "<td>" + money(f.n * f.each) + "</td>" +
+                 "<td><strong>" + money(each + f.each) + "</strong></td></tr>";
+        }).join("");
+      $("fare-note").textContent =
+        "Airfare across the group comes to " + money(flightSpend) +
+        ", and none of it is in the " + money(total) + " above \\u2014 nobody owes " +
+        "anybody for a ticket. The last column is the honest answer to \\u201cwhat " +
+        "is this trip going to cost me\\u201d: " + money(each) + " of shared costs " +
+        "plus your own fare.";
       save();
     }
 
