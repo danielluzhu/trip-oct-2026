@@ -492,6 +492,43 @@
     letter-spacing: -.02em;
   }
   .total-big.accent { color: var(--accent); }
+  .calc-actions {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+    margin: .6rem 0 .2rem;
+  }
+  .calc-actions .calc-note { margin: 0; }
+  .calc-btn {
+    font-family: var(--sans);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    padding: .45rem .8rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .calc-btn:hover { color: var(--text); border-color: var(--accent); }
+  .calc-btn.small { padding: .2rem .5rem; font-size: .9rem; line-height: 1; }
+  table.extras td { vertical-align: middle; }
+  table.extras input[type="text"], table.extras input[type="number"], table.extras select {
+    width: 100%;
+    padding: .38rem .5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: .88rem;
+  }
+  table.extras input[type="number"] { min-width: 5.5rem; }
+  table.extras input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); }
+  table.extras td:first-child { width: 1px; }
+  table.extras .x-total { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
   /* ---------- itinerary timeline ---------- */
   ol.timeline {
@@ -633,18 +670,22 @@
   <section class="card">
     <div class="pick-badge">Cost calculator</div>
     <h2>What this actually costs</h2>
-    <div class="subtitle">Flights + housing + car + food. Change anything; totals update live.</div>
+    <div class="subtitle">Every number below is editable. The dropdowns just fill them in &mdash; type over anything you have a real quote for, and the totals follow.</div>
+    <div class="calc-actions">
+      <button type="button" id="reset" class="calc-btn">Reset to researched defaults</button>
+      <span class="calc-note" id="saved-note"></span>
+    </div>
 
     <div class="section-label">Who's coming</div>
     <div class="calc-grid">
-      <label>From NYC <input type="number" id="n-nyc" min="0" max="10" value="3"></label>
-      <label>From SF <input type="number" id="n-sf" min="0" max="10" value="2"></label>
-      <label>From Seattle <input type="number" id="n-sea" min="0" max="10" value="1"></label>
-      <label>Already in MT <input type="number" id="n-local" min="0" max="10" value="0"></label>
+      <label>From NYC <input type="number" id="n-nyc" min="0" max="20" value="3"></label>
+      <label>From SF <input type="number" id="n-sf" min="0" max="20" value="2"></label>
+      <label>From Seattle <input type="number" id="n-sea" min="0" max="20" value="1"></label>
+      <label>Already in MT <input type="number" id="n-local" min="0" max="20" value="0"></label>
     </div>
     <div class="calc-note" id="party-note"></div>
 
-    <div class="section-label">Flights</div>
+    <div class="section-label">Flights &mdash; per person, each way included</div>
     <div class="calc-grid">
       <label>Fare level
         <select id="fare-level">
@@ -653,20 +694,27 @@
           <option value="high">Expensive (last minute)</option>
         </select>
       </label>
+      <label>NYC fare <input type="number" id="f-nyc" min="0" step="25"></label>
+      <label>SF fare <input type="number" id="f-sf" min="0" step="25"></label>
+      <label>Seattle fare <input type="number" id="f-sea" min="0" step="25"></label>
     </div>
+    <div class="calc-note">The fare level refills these three; type over any of them with a real quote and the total follows. Touching the level again refills them.</div>
+    <div class="calc-note">Kayak trailing-route averages read Aug 2026, not quotes. October is actually the cheapest month on the NYC-Kalispell route (~$403). FCA averages ~18% above Missoula and ~27% above Spokane on US DOT Q1 2026 fare data.</div>
 
     <div class="section-label">Housing</div>
     <div class="calc-grid">
       <label>Area <select id="area"></select></label>
-      <label>Nights <input type="number" id="nights" min="1" max="10" value="3"></label>
+      <label>Nights <input type="number" id="nights" min="1" max="21" value="3"></label>
       <label>Nightly rate <input type="number" id="nightly" min="0" step="25"></label>
+      <label>Cleaning fee <input type="number" id="cleaning" min="0" step="25"></label>
+      <label>Platform fee % <input type="number" id="feepct" min="0" max="50" step="0.5"></label>
+      <label>Lodging tax % <input type="number" id="taxpct" min="0" max="30" step="0.5"></label>
     </div>
-    <div class="calc-note">A flat $350 cleaning fee, ~15% platform fee and Montana lodging tax (8%, or 12% in Big Sky &amp; West Yellowstone) are added automatically. On three nights that lands around +45-55%.</div>
-    <div class="calc-note">Kayak trailing-route averages read Aug 2026, not quotes. October is actually the cheapest month on the NYC-Kalispell route (~$403). FCA averages ~18% above Missoula and ~27% above Spokane on US DOT Q1 2026 fare data.</div>
+    <div class="calc-note">Cleaning is flat per booking, so on three nights it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in.</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
-      <label>Vehicles <input type="number" id="cars" min="0" max="4" value="2"></label>
+      <label>Vehicles <input type="number" id="cars" min="0" max="6" value="2"></label>
       <label>Type
         <select id="car-type">
           <option value="suv">Full-size SUV (seats 7)</option>
@@ -674,9 +722,11 @@
           <option value="minivan">Minivan (seats 7)</option>
         </select>
       </label>
-      <label>Days <input type="number" id="car-days" min="1" max="10" value="4"></label>
+      <label>Days <input type="number" id="car-days" min="1" max="21" value="4"></label>
+      <label>Rate/day <input type="number" id="car-rate" min="0" step="5"></label>
+      <label>Tax &amp; fees % <input type="number" id="car-feepct" min="0" max="60" step="1"></label>
+      <label>Gas per car <input type="number" id="gas" min="0" step="10"></label>
     </div>
-    <div class="calc-note">Gas &amp; a Yellowstone day trip: <span id="gas-note"></span></div>
     <div class="caveat">Seven agencies sit in the FCA terminal by baggage claim, and October is the easy end of the year for availability. Take AWD anyway — valley roads will be bare, but nightly lows are already below freezing and the mountain roads are where you&#39;d want it. Add 4% Montana rental vehicle tax plus airport concession fees. For 8 you need two vehicles; a full-size SUV realistically seats 7 before luggage.</div>
 
     <div class="section-label">Food &amp; drink</div>
@@ -688,8 +738,21 @@
           <option value="restaurants">Mostly restaurants &amp; bars</option>
         </select>
       </label>
+      <label>Per person / day <input type="number" id="food-rate" min="0" step="5"></label>
+      <label>Days eating <input type="number" id="food-days" min="1" max="21" value="4"></label>
     </div>
     <div class="caveat">Montana has no general sales tax. Whitefish&#39;s 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it&#39;s now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.</div>
+  </section>
+
+  <section class="card">
+    <div class="section-label">Extras &amp; activities</div>
+    <div class="subtitle">The things that actually differ between this trip and a generic one. Untick what you're not doing, change what you are, add your own.</div>
+    <div class="table-scroll">
+      <table class="extras" id="extras">
+        <tr><th>On</th><th>What</th><th>Amount</th><th>Charged</th><th>Cost</th><th></th></tr>
+      </table>
+    </div>
+    <button type="button" id="add-extra" class="calc-btn">+ Add a line</button>
   </section>
 
   <section class="card" id="results">
@@ -699,17 +762,47 @@
       <div><span class="total-label">Group total</span><span class="total-big" id="grand">&mdash;</span></div>
       <div><span class="total-label">Per person</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
-    <div class="calc-note">Estimates from researched ranges for mid-October in the Flathead Valley &mdash; not live quotes. Treat as a planning ballpark, not a bill.</div>
+    <div class="calc-note">Defaults are researched ranges for mid-October in the Flathead Valley &mdash; not live quotes. Once you've typed over them they're your numbers, and they're kept in this browser only.</div>
   </section>
 
   <script>
   (function () {
-    var CFG = {"nights":3,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88}};
+    var CFG = {"nights":3,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
+    var KEY = "trip-costs-v1";
+    var booted = false;
+    // Car days and food days default to nights + 1 (you eat on the fly-out
+    // day, and the car is due back that morning), and keep following nights
+    // until someone types a number in -- after that they are theirs.
+    var touched = {};
     var $ = function (id) { return document.getElementById(id); };
-    var money = function (n) {
-      return "$" + Math.round(n).toLocaleString();
+    var money = function (n) { return "$" + Math.round(n).toLocaleString(); };
+    var num = function (id, fallback) {
+      var v = Number($(id).value);
+      return isFinite(v) && $(id).value !== "" ? v : (fallback || 0);
     };
 
+    // ---- extras: a real editable list, not a fixed set of fields ---------
+    var extras = [];
+    function extraRow(x, i) {
+      return "<tr>" +
+        "<td><input type='checkbox' class='x-on' data-i='" + i + "'" + (x.on ? " checked" : "") + "></td>" +
+        "<td><input type='text' class='x-label' data-i='" + i + "' value=\"" + String(x.label).replace(/"/g, "&quot;") + "\"></td>" +
+        "<td><input type='number' class='x-amt' data-i='" + i + "' min='0' step='5' value='" + x.amount + "'></td>" +
+        "<td><select class='x-per' data-i='" + i + "'>" +
+          "<option value='group'" + (x.per === "group" ? " selected" : "") + ">per group</option>" +
+          "<option value='person'" + (x.per === "person" ? " selected" : "") + ">per person</option>" +
+        "</select></td>" +
+        "<td class='x-total' data-i='" + i + "'></td>" +
+        "<td><button type='button' class='x-del calc-btn small' data-i='" + i + "' aria-label='Remove line'>&times;</button></td>" +
+      "</tr>";
+    }
+    function renderExtras() {
+      $("extras").innerHTML =
+        "<tr><th>On</th><th>What</th><th>Amount</th><th>Charged</th><th>Cost</th><th></th></tr>" +
+        extras.map(extraRow).join("");
+    }
+
+    // ---- seeding: presets fill the inputs, edits win ---------------------
     var areaSel = $("area");
     CFG.areas.forEach(function (a, i) {
       var o = document.createElement("option");
@@ -717,67 +810,135 @@
       o.textContent = a.name + " (" + money(a.nightly) + "/night)";
       areaSel.appendChild(o);
     });
-    $("nightly").value = CFG.areas[0].nightly;
-    areaSel.addEventListener("change", function () {
-      $("nightly").value = CFG.areas[Number(areaSel.value)].nightly;
-      calc();
-    });
+
+    function seedFares() {
+      var lvl = $("fare-level").value;
+      $("f-nyc").value = CFG.flights.nyc[lvl];
+      $("f-sf").value = CFG.flights.sf[lvl];
+      $("f-sea").value = CFG.flights.sea[lvl];
+    }
+    function seedArea() {
+      var a = CFG.areas[Number(areaSel.value)] || CFG.areas[0];
+      $("nightly").value = a.nightly;
+      $("taxpct").value = +(a.taxPct * 100).toFixed(1);
+    }
+    function seedCar() { $("car-rate").value = CFG.car[$("car-type").value]; }
+    function seedDays() {
+      var d = (num("nights", 1)) + 1;
+      if (!touched["car-days"]) $("car-days").value = d;
+      if (!touched["food-days"]) $("food-days").value = d;
+    }
+    function seedFood() { $("food-rate").value = CFG.food[$("food-style").value]; }
+
+    function defaults() {
+      $("n-nyc").value = 3; $("n-sf").value = 2; $("n-sea").value = 1; $("n-local").value = 0;
+      $("fare-level").value = "typical"; seedFares();
+      areaSel.value = "0"; seedArea();
+      $("nights").value = CFG.nights;
+      $("cleaning").value = CFG.cleaningFee;
+      $("feepct").value = +(CFG.feePct * 100).toFixed(1);
+      $("cars").value = 2; $("car-type").value = "suv"; seedCar();
+      $("car-days").value = CFG.nights + 1;
+      $("car-feepct").value = +(CFG.carFeePct * 100).toFixed(1);
+      $("gas").value = CFG.car.gasPerCar;
+      $("food-style").value = "mixed"; seedFood();
+      $("food-days").value = CFG.nights + 1;
+      touched = {};
+      extras = CFG.extras.map(function (e) {
+        return { label: e.label, amount: e.amount, per: e.per, on: e.on !== false };
+      });
+      renderExtras();
+    }
+
+    // ---- persistence: your numbers survive a reload ----------------------
+    var IDS = ["n-nyc","n-sf","n-sea","n-local","fare-level","f-nyc","f-sf","f-sea",
+      "area","nights","nightly","cleaning","feepct","taxpct","cars","car-type",
+      "car-days","car-rate","car-feepct","gas","food-style","food-rate","food-days"];
+    function save() {
+      var state = { extras: extras, touched: touched, fields: {} };
+      IDS.forEach(function (id) { state.fields[id] = $(id).value; });
+      try {
+        localStorage.setItem(KEY, JSON.stringify(state));
+        if (booted) $("saved-note").textContent = "Saved in this browser";
+      } catch (e) { /* private mode, incognito, storage off -- not worth a warning */ }
+    }
+    function load() {
+      var raw;
+      try { raw = localStorage.getItem(KEY); } catch (e) { return false; }
+      if (!raw) return false;
+      try {
+        var state = JSON.parse(raw);
+        IDS.forEach(function (id) {
+          if (state.fields && state.fields[id] !== undefined) $(id).value = state.fields[id];
+        });
+        if (Array.isArray(state.extras)) extras = state.extras;
+        if (state.touched) touched = state.touched;
+        renderExtras();
+        $("saved-note").textContent = "Restored your numbers";
+        return true;
+      } catch (e) { return false; }
+    }
 
     function calc() {
-      var lvl = $("fare-level").value;
       var party = {
-        nyc: Number($("n-nyc").value) || 0,
-        sf: Number($("n-sf").value) || 0,
-        sea: Number($("n-sea").value) || 0,
-        local: Number($("n-local").value) || 0
+        nyc: num("n-nyc"), sf: num("n-sf"), sea: num("n-sea"), local: num("n-local")
       };
       var people = party.nyc + party.sf + party.sea + party.local;
 
       var note = $("party-note");
+      note.textContent = people === 0
+        ? "Add at least one person."
+        : people + " people" + (people < 5 || people > 10
+            ? " \u2014 outside the 5-10 the cabins are sized for." : "");
+
       if (people === 0) {
-        note.textContent = "Add at least one person.";
-      } else {
-        note.textContent = people + " people" +
-          (people < 5 || people > 10 ? " — outside the 5-10 the cabins are sized for." : "");
-      }
-      if (people === 0) {
-        $("grand").textContent = "—";
-        $("perhead").textContent = "—";
+        $("grand").textContent = "\u2014";
+        $("perhead").textContent = "\u2014";
         $("breakdown").innerHTML = "";
         return;
       }
 
-      var flights =
-        party.nyc * CFG.flights.nyc[lvl] +
-        party.sf * CFG.flights.sf[lvl] +
-        party.sea * CFG.flights.sea[lvl];
+      var flights = party.nyc * num("f-nyc") + party.sf * num("f-sf") + party.sea * num("f-sea");
 
-      var nights = Number($("nights").value) || 1;
-      var nightly = Number($("nightly").value) || 0;
-      var area = CFG.areas[Number($("area").value)] || CFG.areas[0];
-      // Cleaning is a flat per-booking charge, so it hits a 3-night stay far
-      // harder than a percentage would. Tax is 8%, or 12% in the resort towns.
-      var lodgingSub = nightly * nights + CFG.cleaningFee;
-      var lodging = lodgingSub * (1 + CFG.feePct + area.taxPct);
-      var lodgingUplift = Math.round((lodging / (nightly * nights) - 1) * 100);
+      var nights = num("nights", 1);
+      var nightly = num("nightly");
+      var cleaning = num("cleaning");
+      var feePct = num("feepct") / 100;
+      var taxPct = num("taxpct") / 100;
+      // Cleaning is a flat per-booking charge, so it hits a short stay far
+      // harder than a percentage would; fees and tax then apply on top.
+      var lodgingSub = nightly * nights + cleaning;
+      var lodging = lodgingSub * (1 + feePct + taxPct);
+      var base = nightly * nights;
+      var lodgingUplift = base > 0 ? Math.round((lodging / base - 1) * 100) : 0;
 
-      var cars = Number($("cars").value) || 0;
-      var carDays = Number($("car-days").value) || 1;
-      var carRate = CFG.car[$("car-type").value];
-      var carRental = cars * carDays * carRate * (1 + CFG.carFeePct);
-      var gas = cars * CFG.car.gasPerCar;
-      $("gas-note").textContent = money(CFG.car.gasPerCar) + " per vehicle";
+      var cars = num("cars");
+      var carDays = num("car-days", 1);
+      var carRental = cars * carDays * num("car-rate") * (1 + num("car-feepct") / 100);
+      var gas = cars * num("gas");
 
-      var perDay = CFG.food[$("food-style").value];
-      var food = people * (nights + 1) * perDay;
+      var foodDays = num("food-days", 1);
+      var food = people * foodDays * num("food-rate");
+
+      var extrasTotal = 0;
+      extras.forEach(function (x, i) {
+        var line = x.on ? x.amount * (x.per === "person" ? people : 1) : 0;
+        extrasTotal += line;
+        var cell = document.querySelector(".x-total[data-i='" + i + "']");
+        if (cell) cell.textContent = x.on ? money(line) : "\u2014";
+      });
 
       var rows = [
-        ["Flights", flights, people + " fares, " + lvl],
-        ["Housing", lodging, money(nightly) + " × " + nights + " nights, +" +
+        ["Flights", flights, people + " fares"],
+        ["Housing", lodging, money(nightly) + " \u00d7 " + nights + " nights, +" +
           lodgingUplift + "% cleaning/fees/tax"],
-        ["Rental cars", carRental + gas, cars + " × " + carDays + " days, incl. tax & fees, + gas"],
-        ["Food & drink", food, money(perDay) + " pp/day × " + (nights + 1) + " days"]
+        ["Rental cars", carRental + gas, cars + " \u00d7 " + carDays + " days, incl. tax & fees, + gas"],
+        ["Food & drink", food, money(num("food-rate")) + " pp/day \u00d7 " + foodDays + " days"]
       ];
+      if (extrasTotal > 0) {
+        var on = extras.filter(function (x) { return x.on && x.amount > 0; }).length;
+        rows.push(["Extras & activities", extrasTotal, on + (on === 1 ? " line" : " lines")]);
+      }
       var total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
 
       $("breakdown").innerHTML =
@@ -792,16 +953,72 @@
 
       $("grand").textContent = money(total);
       $("perhead").textContent = money(total / people);
+      save();
     }
 
+    // ---- wiring ---------------------------------------------------------
+    ["car-days", "food-days"].forEach(function (id) {
+      $(id).addEventListener("input", function () { touched[id] = true; });
+    });
+    $("nights").addEventListener("input", function () { seedDays(); calc(); });
+
+    $("fare-level").addEventListener("change", function () { seedFares(); calc(); });
+    areaSel.addEventListener("change", function () { seedArea(); calc(); });
+    $("car-type").addEventListener("change", function () { seedCar(); calc(); });
+    $("food-style").addEventListener("change", function () { seedFood(); calc(); });
+
+    $("add-extra").addEventListener("click", function () {
+      extras.push({ label: "", amount: 0, per: "group", on: true });
+      renderExtras();
+      calc();
+      var inputs = document.querySelectorAll(".x-label");
+      if (inputs.length) inputs[inputs.length - 1].focus();
+    });
+
+    // Extras rows are re-rendered wholesale, so delegate rather than bind.
+    $("extras").addEventListener("input", function (e) {
+      var t = e.target, i = Number(t.getAttribute("data-i"));
+      if (!extras[i]) return;
+      if (t.classList.contains("x-label")) extras[i].label = t.value;
+      else if (t.classList.contains("x-amt")) extras[i].amount = Number(t.value) || 0;
+      else return;
+      calc();
+    });
+    $("extras").addEventListener("change", function (e) {
+      var t = e.target, i = Number(t.getAttribute("data-i"));
+      if (!extras[i]) return;
+      if (t.classList.contains("x-on")) extras[i].on = t.checked;
+      else if (t.classList.contains("x-per")) extras[i].per = t.value;
+      else return;
+      calc();
+    });
+    $("extras").addEventListener("click", function (e) {
+      var t = e.target;
+      if (!t.classList.contains("x-del")) return;
+      extras.splice(Number(t.getAttribute("data-i")), 1);
+      renderExtras();
+      calc();
+    });
+
+    $("reset").addEventListener("click", function () {
+      try { localStorage.removeItem(KEY); } catch (err) {}
+      defaults();
+      calc();
+      $("saved-note").textContent = "Back to the researched defaults";
+    });
+
     Array.prototype.forEach.call(
-      document.querySelectorAll("#results, .card input, .card select"),
+      document.querySelectorAll(".calc-grid input, .calc-grid select"),
       function (el) {
         el.addEventListener("input", calc);
         el.addEventListener("change", calc);
       }
     );
+
+    defaults();
+    load();
     calc();
+    booted = true;
   })();
   </script>
 </main>

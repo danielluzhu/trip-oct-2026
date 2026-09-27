@@ -479,7 +479,51 @@
     "carNote": "Seven agencies sit in the FCA terminal by baggage claim, and October is the easy end of the year for availability. Take AWD anyway — valley roads will be bare, but nightly lows are already below freezing and the mountain roads are where you'd want it. Add 4% Montana rental vehicle tax plus airport concession fees. For 8 you need two vehicles; a full-size SUV realistically seats 7 before luggage.",
     "foodNote": "Montana has no general sales tax. Whitefish's 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it's now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.",
     "cleaningFee": 350,
-    "carFeePct": 0.28
+    "carFeePct": 0.28,
+    "extras": [
+      {
+        "label": "Park entry (per vehicle, 7 days)",
+        "amount": 70,
+        "per": "group",
+        "on": true
+      },
+      {
+        "label": "Middle Fork float — 4 boats",
+        "amount": 2600,
+        "per": "group",
+        "on": true
+      },
+      {
+        "label": "Guide tips (~15%)",
+        "amount": 390,
+        "per": "group",
+        "on": true
+      },
+      {
+        "label": "Montana fishing licence",
+        "amount": 32,
+        "per": "person",
+        "on": true
+      },
+      {
+        "label": "Groceries run (Costco, day one)",
+        "amount": 400,
+        "per": "group",
+        "on": true
+      },
+      {
+        "label": "Bigfork theatre tickets",
+        "amount": 35,
+        "per": "person",
+        "on": false
+      },
+      {
+        "label": "National Bison Range drive",
+        "amount": 35,
+        "per": "group",
+        "on": false
+      }
+    ]
   },
   "flights": {
     "headline": "Seattle and SF get nonstops. NYC connects.",
