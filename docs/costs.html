@@ -819,8 +819,8 @@
 
   <script>
   (function () {
-    var CFG = {"nights":4,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
-    var KEY = "trip-costs-v1";
+    var CFG = {"nights":4,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"bookedTotal":1830,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
+    var KEY = "trip-costs-v2";
     var booted = false;
     // Car days and food days default to nights + 1 (you eat on the fly-out
     // day, and the car is due back that morning), and keep following nights
@@ -888,8 +888,10 @@
       areaSel.value = "0"; seedArea();
       $("nights").value = CFG.nights;
       $("cleaning").value = CFG.cleaningFee;
-      $("lodge-mode").value = "nightly";
-      $("lodge-total").value = "";
+      // The house is picked and priced, so lead with its real total; the
+      // nightly side stays seeded from the area for anyone comparing.
+      $("lodge-mode").value = "total";
+      $("lodge-total").value = CFG.bookedTotal;
       $("feepct").value = +(CFG.feePct * 100).toFixed(1);
       $("cars").value = 2; $("car-type").value = "suv"; seedCar();
       $("car-days").value = CFG.nights + 1;

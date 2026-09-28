@@ -1199,6 +1199,9 @@ function housingPage() {
         <h3>${escapeHtml(b.title)}</h3>
         <div class="subtitle">${escapeHtml(b.type)} &middot; &#9733; ${b.rating} (${b.reviews} reviews) &middot; hosted by ${escapeHtml(b.host)}</div>
         <table>
+          <tr><td>${housing.nights} nights, all in</td>
+            <td><span class="stay-total">${fmt(b.total)}</span>
+              <span class="muted-cell">&nbsp;&middot;&nbsp;${fmt(b.total / 8)} each at 8</span></td></tr>
           <tr><td>Sleeps</td><td>${b.sleeps}</td></tr>
           <tr><td>Bedrooms / baths</td><td>${b.bedrooms} / ${b.baths}</td></tr>
           <tr><td>Beds</td><td>${escapeHtml(b.beds)}</td></tr>
@@ -1308,6 +1311,7 @@ function costsPage() {
     })),
     feePct: costs.feePct,
     cleaningFee: costs.cleaningFee,
+    bookedTotal: housing.booked.total,
     carFeePct: costs.carFeePct,
     flights: costs.flights,
     car: costs.car,
@@ -1437,7 +1441,7 @@ function costsPage() {
   <script>
   (function () {
     var CFG = ${cfg};
-    var KEY = "trip-costs-v1";
+    var KEY = "trip-costs-v2";
     var booted = false;
     // Car days and food days default to nights + 1 (you eat on the fly-out
     // day, and the car is due back that morning), and keep following nights
@@ -1505,8 +1509,10 @@ function costsPage() {
       areaSel.value = "0"; seedArea();
       $("nights").value = CFG.nights;
       $("cleaning").value = CFG.cleaningFee;
-      $("lodge-mode").value = "nightly";
-      $("lodge-total").value = "";
+      // The house is picked and priced, so lead with its real total; the
+      // nightly side stays seeded from the area for anyone comparing.
+      $("lodge-mode").value = "total";
+      $("lodge-total").value = CFG.bookedTotal;
       $("feepct").value = +(CFG.feePct * 100).toFixed(1);
       $("cars").value = 2; $("car-type").value = "suv"; seedCar();
       $("car-days").value = CFG.nights + 1;
