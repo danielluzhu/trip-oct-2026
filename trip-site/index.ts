@@ -755,7 +755,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Sunrise at Swiftcurrent Lake, Many Glacier",
     heading: "What it runs",
     tagline:
-      "A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot, what it splits to, and your own flight on top.",
+      "A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot and what it splits to.",
   },
   shortlist: {
     file: "Vermont fall foliage hogback mountain.JPG",
@@ -1278,7 +1278,6 @@ function costsPage() {
   const cfg = JSON.stringify({
     nights: housing.nights,
     bookedTotal: housing.booked.total,
-    flights: costs.flights,
     car: costs.car,
     food: costs.food,
     extras: costs.extras,
@@ -1296,28 +1295,10 @@ function costsPage() {
 
     <div class="section-label">Who's coming</div>
     <div class="calc-grid">
-      <label>From NYC <input type="number" id="n-nyc" min="0" max="20" value="3"></label>
-      <label>From SF <input type="number" id="n-sf" min="0" max="20" value="2"></label>
-      <label>From Seattle <input type="number" id="n-sea" min="0" max="20" value="1"></label>
-      <label>Already in MT <input type="number" id="n-local" min="0" max="20" value="0"></label>
+      <label>People <input type="number" id="people" min="0" max="20" value="6"></label>
     </div>
     <div class="calc-note" id="party-note"></div>
 
-    <div class="section-label">Flights &mdash; everyone books their own</div>
-    <div class="calc-grid">
-      <label>Fare level
-        <select id="fare-level">
-          <option value="low">Cheap (book early)</option>
-          <option value="typical" selected>Typical</option>
-          <option value="high">Expensive (last minute)</option>
-        </select>
-      </label>
-      <label>NYC fare <input type="number" id="f-nyc" min="0" step="25"></label>
-      <label>SF fare <input type="number" id="f-sf" min="0" step="25"></label>
-      <label>Seattle fare <input type="number" id="f-sea" min="0" step="25"></label>
-    </div>
-    <div class="calc-note"><strong>Airfare is not in the group total.</strong> Everyone buys their own ticket from their own city, so it never goes in the pot to be split &mdash; it's shown on its own below. The fare level refills these three; type over any of them with a real quote. Touching the level again refills them.</div>
-    <div class="calc-note">${escapeHtml(costs.flightNote)}</div>
 
     <div class="section-label">Housing</div>
     <div class="calc-grid">
@@ -1366,20 +1347,14 @@ function costsPage() {
       <div><span class="total-label">To split</span><span class="total-big" id="grand">&mdash;</span></div>
       <div><span class="total-label">Each</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
+    <div class="calc-note">Airfare isn't in here &mdash; everyone books their own. Once you've typed over a default it's your number, kept in this browser only.</div>
   </section>
 
-  <section class="card">
-    <h2>Flights, separately</h2>
-    <div class="subtitle">Everyone books their own, so this is never split &mdash; what you pay depends on where you're leaving from</div>
-    <div class="table-scroll"><table id="fare-table"></table></div>
-    <div class="calc-note" id="fare-note"></div>
-    <div class="calc-note">Defaults are researched ranges for mid-October in the Flathead Valley &mdash; not live quotes. Once you've typed over them they're your numbers, and they're kept in this browser only.</div>
-  </section>
 
   <script>
   (function () {
     var CFG = ${cfg};
-    var KEY = "trip-costs-v3";
+    var KEY = "trip-costs-v4";
     var booted = false;
     var $ = function (id) { return document.getElementById(id); };
     var money = function (n) { return "$" + Math.round(n).toLocaleString(); };
@@ -1410,17 +1385,10 @@ function costsPage() {
     }
 
     // ---- seeding: presets fill the inputs, edits win ---------------------
-    function seedFares() {
-      var lvl = $("fare-level").value;
-      $("f-nyc").value = CFG.flights.nyc[lvl];
-      $("f-sf").value = CFG.flights.sf[lvl];
-      $("f-sea").value = CFG.flights.sea[lvl];
-    }
     function seedFood() { $("food-rate").value = CFG.food[$("food-style").value]; }
 
     function defaults() {
-      $("n-nyc").value = 3; $("n-sf").value = 2; $("n-sea").value = 1; $("n-local").value = 0;
-      $("fare-level").value = "typical"; seedFares();
+      $("people").value = 6;
       $("lodge-total").value = CFG.bookedTotal;
       $("cars").value = 2;
       $("car-days").value = CFG.car.days;
@@ -1436,7 +1404,7 @@ function costsPage() {
     }
 
     // ---- persistence: your numbers survive a reload ----------------------
-    var IDS = ["n-nyc","n-sf","n-sea","n-local","fare-level","f-nyc","f-sf","f-sea",
+    var IDS = ["people",
       "lodge-total","cars","car-days","car-rate","gas","food-style","food-rate","food-days"];
     function save() {
       var state = { extras: extras, fields: {} };
@@ -1463,10 +1431,7 @@ function costsPage() {
     }
 
     function calc() {
-      var party = {
-        nyc: num("n-nyc"), sf: num("n-sf"), sea: num("n-sea"), local: num("n-local")
-      };
-      var people = party.nyc + party.sf + party.sea + party.local;
+      var people = num("people");
 
       var note = $("party-note");
       note.textContent = people === 0
@@ -1478,21 +1443,8 @@ function costsPage() {
         $("grand").textContent = "\\u2014";
         $("perhead").textContent = "\\u2014";
         $("breakdown").innerHTML = "";
-        $("fare-table").innerHTML = "";
-        $("fare-note").textContent = "";
         return;
       }
-
-      // Airfare is deliberately outside the pot: everyone buys their own
-      // ticket from their own city, so putting it in and dividing by heads
-      // would have the Seattle flyer subsidising the New Yorker.
-      var fares = [
-        { label: "NYC (LGA/JFK/EWR)", n: party.nyc, each: num("f-nyc") },
-        { label: "SF Bay (SFO/SJC/OAK)", n: party.sf, each: num("f-sf") },
-        { label: "Seattle (SEA)", n: party.sea, each: num("f-sea") },
-        { label: "Already in Montana", n: party.local, each: 0 }
-      ].filter(function (f) { return f.n > 0; });
-      var flightSpend = fares.reduce(function (t, f) { return t + f.n * f.each; }, 0);
 
       var lodging = num("lodge-total");
 
@@ -1538,27 +1490,10 @@ function costsPage() {
       $("grand").textContent = money(total);
       $("perhead").textContent = money(each);
 
-      $("fare-table").innerHTML =
-        "<tr><th>Flying from</th><th>People</th><th>Fare each</th><th>That group pays</th>" +
-        "<th>All in, per person</th></tr>" +
-        fares.map(function (f) {
-          return "<tr><td><strong>" + f.label + "</strong></td>" +
-                 "<td>" + f.n + "</td>" +
-                 "<td>" + (f.each ? money(f.each) : "\\u2014") + "</td>" +
-                 "<td>" + money(f.n * f.each) + "</td>" +
-                 "<td><strong>" + money(each + f.each) + "</strong></td></tr>";
-        }).join("");
-      $("fare-note").textContent =
-        "Airfare across the group comes to " + money(flightSpend) +
-        ", and none of it is in the " + money(total) + " above \\u2014 nobody owes " +
-        "anybody for a ticket. The last column is the honest answer to \\u201cwhat " +
-        "is this trip going to cost me\\u201d: " + money(each) + " of shared costs " +
-        "plus your own fare.";
       save();
     }
 
     // ---- wiring ---------------------------------------------------------
-    $("fare-level").addEventListener("change", function () { seedFares(); calc(); });
     $("food-style").addEventListener("change", function () { seedFood(); calc(); });
 
     $("add-extra").addEventListener("click", function () {

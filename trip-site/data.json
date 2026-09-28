@@ -472,23 +472,6 @@
     "picked": "Whitefish"
   },
   "costs": {
-    "flights": {
-      "nyc": {
-        "low": 403,
-        "typical": 595,
-        "high": 816
-      },
-      "sf": {
-        "low": 375,
-        "typical": 522,
-        "high": 690
-      },
-      "sea": {
-        "low": 277,
-        "typical": 380,
-        "high": 546
-      }
-    },
     "car": {
       "rate": 100,
       "days": 4,
@@ -499,7 +482,6 @@
       "mixed": 50,
       "restaurants": 88
     },
-    "flightNote": "Kayak trailing-route averages read Aug 2026, not quotes. October is actually the cheapest month on the NYC-Kalispell route (~$403). FCA averages ~18% above Missoula and ~27% above Spokane on US DOT Q1 2026 fare data.",
     "feePct": 0.15,
     "foodNote": "Montana has no general sales tax. Whitefish's 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it's now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.",
     "cleaningFee": 350,
