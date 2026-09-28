@@ -2,13 +2,13 @@
   "trip": {
     "title": "Homeless in Montana",
     "groupSize": "5-10",
-    "dates": "Fri Oct 16 - Mon Oct 19, 2026 &middot; 3 nights",
+    "dates": "Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights",
     "origins": [
       "NYC (LGA/JFK/EWR)",
       "SF Bay Area (SFO/SJC/OAK)",
       "Seattle (SEA)"
     ],
-    "datesShort": "Oct 16-19, 2026"
+    "datesShort": "Oct 15-19, 2026"
   },
   "locations": [
     {
@@ -304,11 +304,36 @@
     }
   ],
   "housing": {
-    "checkin": "2026-10-16",
+    "checkin": "2026-10-15",
     "checkout": "2026-10-19",
-    "nights": 3,
+    "nights": 4,
     "defaultAdults": 8,
     "minBedrooms": 4,
+    "booked": {
+      "title": "Pool / Hot Tub / Sauna / Gym | King Bed | Quarry",
+      "url": "https://www.airbnb.com/rooms/49522099",
+      "town": "Whitefish",
+      "type": "Entire home",
+      "bedrooms": 3,
+      "baths": 3.5,
+      "sleeps": 10,
+      "beds": "7 beds, including two kings and bunk beds",
+      "rating": 4.98,
+      "reviews": 65,
+      "host": "Matthew",
+      "amenities": [
+        "Hot tub",
+        "Pool",
+        "Sauna",
+        "Gym",
+        "Gas fireplace",
+        "Full kitchen",
+        "Grill and deck",
+        "Garage with boot dryer"
+      ],
+      "photo": "https://a0.muscache.com/im/pictures/hosting/Hosting-49522099/original/eb943269-3fd8-46f5-98ed-66a43275004d.jpeg?im_w=720",
+      "caveat": "It's a 3-bedroom, not the 4+ we were searching for — getting to 10 depends on the bunks, so check the bed list against the final headcount. Airbnb hides the price from anything but a browser, so the total isn't on this page yet: put the quote into the cost calculator under Total for the stay."
+    },
     "intro": "Whitefish is decided. It's 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street — which matters more than usual on this trip, because nothing inside the park is open for food and the ski mountain hasn't woken up yet. Mid-October is a genuine dead zone here: Whitefish Mountain closed Sept 20 and doesn't reopen until Dec 4, and park visitation drops to 18% of its July peak. That's why it's cheap, and also why you should check that your restaurant is open before you drive to it. The four other towns are still below for the record — and because a cabin in Columbia Falls is genuinely cheaper if the Whitefish inventory dries up.",
     "bbox": {
       "neLat": 48.7,
@@ -316,7 +341,7 @@
       "swLat": 47.9,
       "swLng": -114.6
     },
-    "vrbo": "https://www.vrbo.com/search?destination=Whitefish%2C%20Montana&startDate=2026-10-16&endDate=2026-10-19&adults=8",
+    "vrbo": "https://www.vrbo.com/search?destination=Whitefish%2C%20Montana&startDate=2026-10-15&endDate=2026-10-19&adults=8",
     "areas": [
       {
         "name": "Whitefish",
@@ -437,12 +462,12 @@
     "notes": [
       "Mid-October is a true shoulder trough: Whitefish Mountain closed Sept 20 and reopens Dec 4, and Glacier's October visitation is 18% of its July peak — an 82% drop.",
       "The one published seasonal table in the valley (Great Northern, Coram) shows off-season at 36-39% below peak. Expect a real rate discount nearer 35% than the 80% the occupancy collapse might suggest.",
-      "Montana charges 8% lodging tax statewide. Whitefish adds a 3% resort tax (11% total); Columbia Falls, Kalispell, Bigfork and West Glacier add nothing. On a 3-night stay that gap is about $45 — do not pick a town over it.",
-      "Cleaning runs $325+ per turnover for a 4BR in this market, and that's the cleaner's price to the host, so the guest-facing fee is usually higher. On three nights it's the single biggest add-on.",
+      "Montana charges 8% lodging tax statewide. Whitefish adds a 3% resort tax (11% total); Columbia Falls, Kalispell, Bigfork and West Glacier add nothing. On a 4-night stay that gap is about $60 — do not pick a town over it.",
+      "Cleaning runs $325+ per turnover for a 4BR in this market, and that's the cleaner's price to the host, so the guest-facing fee is usually higher. On four nights it's still the single biggest add-on.",
       "Book by phone. Vacay Whitefish (406-609-9595) has the deepest published 4-5BR inventory in both Whitefish and Columbia Falls; Stay Montana (888-871-7856) holds the big Bigfork lakefront homes.",
       "Anything sleeping 10 usually means 4-5 bedrooms, and Airbnb's guest count includes sofa beds — read the actual bed list."
     ],
-    "sourceNote": "No public source publishes rates for Oct 16-19, 2026 anywhere in this valley — every booking engine is JavaScript-gated or blocks automated requests. The bands below are published floor rates, operator rate calendars and market averages read Aug 2026. Each area is labelled with how good its data actually is.",
+    "sourceNote": "No public source publishes rates for Oct 15-19, 2026 anywhere in this valley — every booking engine is JavaScript-gated or blocks automated requests. The bands below are published floor rates, operator rate calendars and market averages read Aug 2026. Each area is labelled with how good its data actually is.",
     "picked": "Whitefish"
   },
   "costs": {
@@ -588,13 +613,13 @@
     }
   },
   "plan": {
-    "title": "Three nights in Whitefish",
+    "title": "Four nights in Whitefish",
     "base": "Whitefish",
     "intro": "Three days, and they're shaped around one hard hike. Friday is arrival, groceries and a short walk; Saturday is the big one — Apgar Lookout, 7.2 miles and 1,800 feet, deliberately chosen because it sits below every gate NPS might close; Sunday is a guided float on the Middle Fork, which is both the README's 'learn to fish' and the only thing your legs will tolerate the day after the lookout. Assume Logan Pass is shut — NPS targets the third Monday of October, which is your checkout day, and in 2025 it actually closed on Oct 14. Every in-park lodge and restaurant shut in September. What's left is genuinely good: the lower west side is open and empty, the larch are turning, golden eagles are migrating over Lake McDonald, and the Middle Fork fishes into November.",
     "facts": [
       [
         "Stay",
-        "Whitefish — decided. 3 nights, in Fri 10/16, out Mon 10/19"
+        "The Quarry Airbnb, Whitefish — picked. 4 nights, in Thu 10/15, out Mon 10/19"
       ],
       [
         "The big hike",
@@ -628,7 +653,7 @@
     "bookAhead": [
       "Middle Fork float for Sunday — book it now. Great Northern Resort (800-735-7897) at $650 a full day, or Wild River Adventures. Two anglers per boat, so eight people is four boats.",
       "Montana fishing licences at ols.fwp.mt.gov — about $32 each. Needed for the Middle Fork even though fishing inside the park isn't licensed.",
-      "The cabin in Whitefish. Vacay Whitefish (406-609-9595) has the deepest published 4-5BR inventory in town.",
+      "The cabin — picked: the Quarry house in Whitefish on Airbnb, Thu 10/15 to Mon 10/19. Lock it in before the rate moves.",
       "Two AWD SUVs at FCA. Seven agencies are in the terminal, and October is the quiet end of the year. Two vehicles is what lets Saturday's group split in half.",
       "Text GNPROADS to 333111 before you leave — it's the live road-status line. Saturday's hike doesn't depend on it; the easy group's afternoon does.",
       "Restaurant reservations, and confirm hours first — you're arriving in the gap between summer and ski season and things close without warning."

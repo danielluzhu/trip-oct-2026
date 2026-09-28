@@ -619,7 +619,7 @@
 <body>
 <header class="hero" style="--hero:url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise%20at%20Swiftcurrent%20Lake%20as%20seen%20from%20the%20Many%20Glacier%20Hotel%20(48490111337).jpg?width=2000')">
   <div class="hero-inner">
-    <div class="eyebrow">Oct 16-19, 2026 &middot; 5-10 people</div>
+    <div class="eyebrow">Oct 15-19, 2026 &middot; 5-10 people</div>
     <h1>What it runs</h1>
     <p class="tagline">A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot, what it splits to, and your own flight on top.</p>
   </div>
@@ -736,7 +736,7 @@
     <div class="section-label">Housing</div>
     <div class="calc-grid">
       <label>Area <select id="area"></select></label>
-      <label>Nights <input type="number" id="nights" min="1" max="21" value="3"></label>
+      <label>Nights <input type="number" id="nights" min="1" max="21" value="4"></label>
       <label>Quoted as
         <select id="lodge-mode">
           <option value="nightly" selected>Nightly rate, add fees</option>
@@ -754,7 +754,7 @@
       <span class="lodge-big" id="lodge-readout">&mdash;</span>
       <span class="calc-note" id="lodge-detail"></span>
     </div>
-    <div class="calc-note" id="lodge-hint">Cleaning is flat per booking, so on three nights it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in. Already have a real quote? Switch to <em>Total for the stay</em> and type the number Airbnb showed you &mdash; fees and tax are in it already.</div>
+    <div class="calc-note" id="lodge-hint">Cleaning is flat per booking, so on a four-night stay it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in. Already have a real quote? Switch to <em>Total for the stay</em> and type the number Airbnb showed you &mdash; fees and tax are in it already.</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
@@ -766,7 +766,7 @@
           <option value="minivan">Minivan (seats 7)</option>
         </select>
       </label>
-      <label>Days <input type="number" id="car-days" min="1" max="21" value="4"></label>
+      <label>Days <input type="number" id="car-days" min="1" max="21" value="5"></label>
       <label>Rate/day <input type="number" id="car-rate" min="0" step="5"></label>
       <label>Tax &amp; fees % <input type="number" id="car-feepct" min="0" max="60" step="1"></label>
       <label>Gas per car <input type="number" id="gas" min="0" step="10"></label>
@@ -783,7 +783,7 @@
         </select>
       </label>
       <label>Per person / day <input type="number" id="food-rate" min="0" step="5"></label>
-      <label>Days eating <input type="number" id="food-days" min="1" max="21" value="4"></label>
+      <label>Days eating <input type="number" id="food-days" min="1" max="21" value="5"></label>
     </div>
     <div class="caveat">Montana has no general sales tax. Whitefish&#39;s 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it&#39;s now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.</div>
   </section>
@@ -819,7 +819,7 @@
 
   <script>
   (function () {
-    var CFG = {"nights":3,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
+    var CFG = {"nights":4,"areas":[{"name":"Whitefish","nightly":450,"taxPct":0.11},{"name":"Columbia Falls","nightly":375,"taxPct":0.08},{"name":"Kalispell","nightly":350,"taxPct":0.08},{"name":"West Glacier / Coram","nightly":450,"taxPct":0.08},{"name":"Bigfork","nightly":400,"taxPct":0.08}],"feePct":0.15,"cleaningFee":350,"carFeePct":0.28,"flights":{"nyc":{"low":403,"typical":595,"high":816},"sf":{"low":375,"typical":522,"high":690},"sea":{"low":277,"typical":380,"high":546}},"car":{"suv":132,"midsize":103,"minivan":150,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
     var KEY = "trip-costs-v1";
     var booted = false;
     // Car days and food days default to nights + 1 (you eat on the fly-out
@@ -1149,7 +1149,7 @@
   </script>
 </main>
 <footer>
-  Homeless in Montana &middot; Fri Oct 16 - Mon Oct 19, 2026 &middot; 3 nights<br>
+  Homeless in Montana &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights<br>
   Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
 </footer>
 </body>

@@ -766,14 +766,14 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Lake McDonald panorama",
     heading: "Homeless in Montana",
     tagline:
-      "Three nights in Whitefish, at the gate of Glacier, in the last week before the mountain shuts for winter.",
+      "Four nights in Whitefish, at the gate of Glacier, in the last week before the mountain shuts for winter.",
   },
   housing: {
     file: "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
     credit: "Whitefish Lake in autumn",
     heading: "Whitefish it is",
     tagline:
-      "What a cabin in Whitefish runs once the fees land — and the four towns we passed on, for the record.",
+      "The house is picked — what it has, what Whitefish runs once the fees land, and the four towns we passed on, for the record.",
   },
   costs: {
     file: "Sunrise at Swiftcurrent Lake as seen from the Many Glacier Hotel (48490111337).jpg",
@@ -1134,7 +1134,7 @@ function airbnbSearch(o: {
   return `https://www.airbnb.com/s/${SEARCH_PLACE}/homes?${p.toString()}`;
 }
 
-// Cleaning is a flat charge per booking, not a percentage — on a 3-night stay it
+// Cleaning is a flat charge per booking, not a percentage — on a short stay it
 // dominates the add-on, which is why this can't be modelled as one blanket rate.
 function stayTotal(a: any, nights = housing.nights, nightly = a.nightly.typical) {
   const sub = nightly * nights + costs.cleaningFee;
@@ -1181,13 +1181,39 @@ function housingPage() {
     })
     .join("\n");
 
+  const b = housing.booked;
+  const bookedUrl = `${b.url}?${new URLSearchParams({
+    check_in: housing.checkin,
+    check_out: housing.checkout,
+    adults: String(housing.defaultAdults),
+  }).toString()}`;
+
   const body = `
   <section class="card">
-    <div class="pick-badge">Housing</div>
-    <h2>A cabin in ${escapeHtml(housing.picked)}</h2>
-    <div class="subtitle">${housing.checkin} &rarr; ${housing.checkout} &middot; ${housing.nights} nights &middot; sleeps ${trip.groupSize}</div>
+    <div class="pick-badge">Our stay</div>
+    <h2>The Quarry house, ${escapeHtml(b.town)}</h2>
+    <div class="subtitle">${housing.checkin} &rarr; ${housing.checkout} &middot; ${housing.nights} nights &middot; Thursday to Monday</div>
+    <div class="area picked">
+      <img src="${escapeHtml(b.photo)}" alt="${escapeHtml(b.title)}" loading="lazy">
+      <div class="area-body">
+        <h3>${escapeHtml(b.title)}</h3>
+        <div class="subtitle">${escapeHtml(b.type)} &middot; &#9733; ${b.rating} (${b.reviews} reviews) &middot; hosted by ${escapeHtml(b.host)}</div>
+        <table>
+          <tr><td>Sleeps</td><td>${b.sleeps}</td></tr>
+          <tr><td>Bedrooms / baths</td><td>${b.bedrooms} / ${b.baths}</td></tr>
+          <tr><td>Beds</td><td>${escapeHtml(b.beds)}</td></tr>
+          <tr><td>Has</td><td>${b.amenities.map((x: string) => escapeHtml(x)).join(" &middot; ")}</td></tr>
+        </table>
+        <a class="cta" href="${escapeHtml(bookedUrl)}" target="_blank" rel="noopener">Open the listing on Airbnb &rarr;</a>
+      </div>
+    </div>
+    <div class="caveat">${escapeHtml(b.caveat)}</div>
+  </section>
+
+  <section class="card">
+    <h2>If it falls through</h2>
     <p class="area-vibe">${escapeHtml(housing.intro)}</p>
-    <a class="cta" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
+    <a class="add-idea-link" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
     <div class="filter-note">
       Filters baked into that link: <strong>${housing.checkin} to ${housing.checkout}</strong>,
       <strong>${housing.defaultAdults} guests</strong>, <strong>${housing.minBedrooms}+ bedrooms</strong>,
@@ -1345,7 +1371,7 @@ function costsPage() {
       <span class="lodge-big" id="lodge-readout">&mdash;</span>
       <span class="calc-note" id="lodge-detail"></span>
     </div>
-    <div class="calc-note" id="lodge-hint">Cleaning is flat per booking, so on three nights it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in. Already have a real quote? Switch to <em>Total for the stay</em> and type the number Airbnb showed you &mdash; fees and tax are in it already.</div>
+    <div class="calc-note" id="lodge-hint">Cleaning is flat per booking, so on a four-night stay it lands harder than a percentage would. Tax is 8% statewide; Whitefish adds 3% resort tax, which the area dropdown fills in. Already have a real quote? Switch to <em>Total for the stay</em> and type the number Airbnb showed you &mdash; fees and tax are in it already.</div>
 
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
