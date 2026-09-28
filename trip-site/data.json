@@ -490,9 +490,8 @@
       }
     },
     "car": {
-      "suv": 100,
-      "midsize": 103,
-      "minivan": 150,
+      "rate": 100,
+      "days": 4,
       "gasPerCar": 100
     },
     "food": {
@@ -502,10 +501,8 @@
     },
     "flightNote": "Kayak trailing-route averages read Aug 2026, not quotes. October is actually the cheapest month on the NYC-Kalispell route (~$403). FCA averages ~18% above Missoula and ~27% above Spokane on US DOT Q1 2026 fare data.",
     "feePct": 0.15,
-    "carNote": "Seven agencies sit in the FCA terminal by baggage claim, and October is the easy end of the year for availability. Take AWD anyway — valley roads will be bare, but nightly lows are already below freezing and the mountain roads are where you'd want it. Budgeted at about $100 a day per SUV with taxes and airport fees in, so no fee is added on top — if a quote comes back pre-tax, put Montana's 4% rental tax and the airport concession fee back in the fee box. For 8 you need two vehicles; a full-size SUV realistically seats 7 before luggage.",
     "foodNote": "Montana has no general sales tax. Whitefish's 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it's now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.",
     "cleaningFee": 350,
-    "carFeePct": 0,
     "extras": [
       {
         "label": "Park entry (per vehicle, 7 days)",
@@ -669,7 +666,7 @@
             "when": "Midday",
             "what": "Land at FCA, collect two AWD SUVs",
             "detail": "Glacier Park International is 19 minutes from Whitefish — far and away the easiest arrival of anywhere you considered. Seven rental agencies sit right by baggage claim. Take two vehicles even if eight of you would squeeze into one: tomorrow the group splits.",
-            "cost": "~$1,000 for both cars, 5 days at ~$100/day"
+            "cost": "~$800 for both cars, 4 days at ~$100/day"
           },
           {
             "when": "First thing",
