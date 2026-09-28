@@ -531,66 +531,29 @@
     ]
   },
   "flights": {
-    "headline": "Seattle and SF get nonstops. NYC connects.",
+    "headline": "Seattle and SF fly nonstop into Kalispell (FCA). NYC connects.",
     "rows": [
       {
-        "route": "SEA → FCA",
-        "airline": "Alaska, daily",
+        "from": "Seattle",
         "status": "ok",
-        "detail": "Year-round, 1h25, roughly 106 flights a month. Comfortably the easiest origin."
+        "fca": "Alaska nonstop, daily, 1h25",
+        "mso": "Alaska nonstop, year-round"
       },
       {
-        "route": "EWR / LGA → FCA",
-        "airline": "United / American",
-        "status": "gone",
-        "detail": "Both NYC nonstops are seasonal and end in September. October is connecting-only, usually via Denver, Chicago or Minneapolis — about 7h50 door to door at best."
-      },
-      {
-        "route": "JFK → FCA",
-        "airline": "—",
-        "status": "gone",
-        "detail": "Has never had a nonstop in any season."
-      },
-      {
-        "route": "SFO → FCA",
-        "airline": "United, seasonal",
+        "from": "SF Bay",
         "status": "ok",
-        "detail": "Alive for your dates: United runs it daily from May 21 to Oct 24, one flight a day, which leaves five days of margin after you fly home. It is still the last week of the season, so a schedule change would hit this before anything else."
+        "fca": "United nonstop from SFO, daily through Oct 24. Nothing from OAK or SJC",
+        "mso": "United nonstop, seasonal, end date unpublished"
       },
       {
-        "route": "OAK / SJC → FCA",
-        "airline": "—",
+        "from": "NYC",
         "status": "gone",
-        "detail": "No service. Allegiant dropped Oakland entirely. The Bay Area crew flies SFO, or considers Missoula."
+        "fca": "Connect via Denver, Chicago or Minneapolis, ~7h50",
+        "mso": "Connect. No gain"
       }
     ],
-    "caveat": "Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. The SFO nonstop clears your dates by five days, but it is the last week of the season, so a schedule trim would hit it before anything else. Missoula is the hedge if that happens, or if FCA fares spike. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.",
-    "source": "https://www.flightconnections.com/flights-from-kalispell-fca",
-    "alt": {
-      "title": "The Missoula alternative (MSO)",
-      "intro": "Missoula is the second way into the Flathead: 137 miles south of Whitefish, about 2h45 up US-93 along the east shore of Flathead Lake, and not a mountain pass the whole way. It is a bigger, less seasonal airport than Kalispell, and on US DOT Q1 2026 fare data FCA averages about 18% above it. The trade is the drive — two of them, on arrival and departure days.",
-      "rows": [
-        {
-          "route": "SEA → MSO",
-          "airline": "Alaska, year-round",
-          "status": "ok",
-          "detail": "Roughly 105 flights a month, 27 departures a week. Seattle already has a year-round nonstop into Kalispell, so this one is only worth it on price."
-        },
-        {
-          "route": "SFO → MSO",
-          "airline": "United, seasonal",
-          "status": "ok",
-          "detail": "Daily, and flying in October — but Missoula's own airport lists it as seasonal and no end date is published. United's other Montana seasonal routes stop Oct 24, so assume the same and check before you count on it."
-        },
-        {
-          "route": "EWR / JFK / LGA → MSO",
-          "airline": "—",
-          "status": "gone",
-          "detail": "No nonstop from any New York airport, in any season. The NYC three connect via Denver, Chicago, Minneapolis or Salt Lake — the same shape of day as flying into Kalispell, so Missoula buys them nothing but a cheaper fare and a 2h45 drive."
-        }
-      ],
-      "verdict": "Worth pricing for the Bay Area two and the Seattle one if FCA fares spike; not worth it for the NYC three, who connect either way and would land on top of a long drive. Renting in Missoula also means returning the cars there — build the drive into both the arrival and the departure day."
-    }
+    "note": "Missoula (MSO) is the backup: 2h45 south of Whitefish, fares ~18% cheaper. Only worth it for SF or Seattle if FCA fares spike.",
+    "source": "https://www.flightconnections.com/flights-from-kalispell-fca"
   },
   "plan": {
     "title": "Four nights in Whitefish",
@@ -784,7 +747,7 @@
     "nonstop": "Nonstop",
     "seasonal": "Nonstop ends in Oct",
     "connect": "Connecting only",
-    "note": "Nonstop status and last-day dates come from the airports' own published 2026 summer schedules (Jackson Hole, dated Feb 11 2026; Bozeman, Feb 13 2026) and route databases for Kalispell, Asheville and Burlington, all read Aug 31 2026. United's seasonal Montana and Wyoming flying ends Oct 24 across the board — five days after you fly home — so every one of those nonstops is a late-season booking. Schedules can still move; confirm with the airline.",
+    "note": "Nonstop status from the airports' 2026 summer schedules and route databases, read Aug 31 2026. United's seasonal Montana and Wyoming nonstops end Oct 24. Hover a pill for the route detail; confirm with the airline.",
     "source": "https://www.jacksonholeairport.com/travelers/flightschedule/",
     "partial": "Nonstop, wrong days"
   }

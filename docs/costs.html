@@ -214,7 +214,6 @@
   td strong { color: var(--text); }
   .group-total { font-weight: 700; }
   .muted-cell { color: var(--muted); font-size: .82rem; }
-  .alt-intro { font-size: .9rem; color: var(--muted); margin: .2rem 0 .8rem; }
 
   /* ---------- photos ---------- */
   .photos {
@@ -393,19 +392,6 @@
   .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
-  .routes { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
-  .routes details {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .6rem .9rem;
-    background: var(--bg-alt);
-  }
-  .routes summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
-  .routes summary .muted-cell { font-weight: 400; }
-  .routes ul { margin: .7rem 0 .2rem; padding-left: 0; list-style: none; }
-  .routes li { font-size: .86rem; margin-bottom: .55rem; line-height: 1.5; }
-  .routes li .leg { font-weight: 700; margin-right: .35rem; }
-  .routes li .pill { margin-right: .4rem; }
 
   /* ---------- housing areas ---------- */
   .areas { display: flex; flex-direction: column; gap: 1.8rem; }
@@ -611,65 +597,28 @@
 
   <section class="card">
     <h2>Getting there</h2>
-    <div class="alert"><strong>Seattle and SF get nonstops. NYC connects.</strong></div>
+    <div class="alert"><strong>Seattle and SF fly nonstop into Kalispell (FCA). NYC connects.</strong></div>
+    <div class="table-scroll">
     <table>
-      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
+      <tr><th>From</th><th>Into Kalispell (FCA)</th><th>Missoula backup</th></tr>
       <tr>
-        <td><strong>SEA → FCA</strong></td>
-        <td class="muted-cell">Alaska, daily</td>
-        <td><span class="pill ok">nonstop</span><br>
-            <span class="muted-cell">Year-round, 1h25, roughly 106 flights a month. Comfortably the easiest origin.</span></td>
+        <td><strong>Seattle</strong><br><span class="pill ok">nonstop</span></td>
+        <td>Alaska nonstop, daily, 1h25</td>
+        <td class="muted-cell">Alaska nonstop, year-round</td>
       </tr>
       <tr>
-        <td><strong>EWR / LGA → FCA</strong></td>
-        <td class="muted-cell">United / American</td>
-        <td><span class="pill gone">no nonstop</span><br>
-            <span class="muted-cell">Both NYC nonstops are seasonal and end in September. October is connecting-only, usually via Denver, Chicago or Minneapolis — about 7h50 door to door at best.</span></td>
+        <td><strong>SF Bay</strong><br><span class="pill ok">nonstop</span></td>
+        <td>United nonstop from SFO, daily through Oct 24. Nothing from OAK or SJC</td>
+        <td class="muted-cell">United nonstop, seasonal, end date unpublished</td>
       </tr>
       <tr>
-        <td><strong>JFK → FCA</strong></td>
-        <td class="muted-cell">—</td>
-        <td><span class="pill gone">no nonstop</span><br>
-            <span class="muted-cell">Has never had a nonstop in any season.</span></td>
-      </tr>
-      <tr>
-        <td><strong>SFO → FCA</strong></td>
-        <td class="muted-cell">United, seasonal</td>
-        <td><span class="pill ok">nonstop</span><br>
-            <span class="muted-cell">Alive for your dates: United runs it daily from May 21 to Oct 24, one flight a day, which leaves five days of margin after you fly home. It is still the last week of the season, so a schedule change would hit this before anything else.</span></td>
-      </tr>
-      <tr>
-        <td><strong>OAK / SJC → FCA</strong></td>
-        <td class="muted-cell">—</td>
-        <td><span class="pill gone">no nonstop</span><br>
-            <span class="muted-cell">No service. Allegiant dropped Oakland entirely. The Bay Area crew flies SFO, or considers Missoula.</span></td>
+        <td><strong>NYC</strong><br><span class="pill gone">connect</span></td>
+        <td>Connect via Denver, Chicago or Minneapolis, ~7h50</td>
+        <td class="muted-cell">Connect. No gain</td>
       </tr>
     </table>
-    <div class="section-label">The Missoula alternative (MSO)</div>
-    <p class="alt-intro">Missoula is the second way into the Flathead: 137 miles south of Whitefish, about 2h45 up US-93 along the east shore of Flathead Lake, and not a mountain pass the whole way. It is a bigger, less seasonal airport than Kalispell, and on US DOT Q1 2026 fare data FCA averages about 18% above it. The trade is the drive — two of them, on arrival and departure days.</p>
-    <table>
-      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
-      <tr>
-        <td><strong>SEA → MSO</strong></td>
-        <td class="muted-cell">Alaska, year-round</td>
-        <td><span class="pill ok">nonstop</span><br>
-            <span class="muted-cell">Roughly 105 flights a month, 27 departures a week. Seattle already has a year-round nonstop into Kalispell, so this one is only worth it on price.</span></td>
-      </tr>
-      <tr>
-        <td><strong>SFO → MSO</strong></td>
-        <td class="muted-cell">United, seasonal</td>
-        <td><span class="pill ok">nonstop</span><br>
-            <span class="muted-cell">Daily, and flying in October — but Missoula&#39;s own airport lists it as seasonal and no end date is published. United&#39;s other Montana seasonal routes stop Oct 24, so assume the same and check before you count on it.</span></td>
-      </tr>
-      <tr>
-        <td><strong>EWR / JFK / LGA → MSO</strong></td>
-        <td class="muted-cell">—</td>
-        <td><span class="pill gone">no nonstop</span><br>
-            <span class="muted-cell">No nonstop from any New York airport, in any season. The NYC three connect via Denver, Chicago, Minneapolis or Salt Lake — the same shape of day as flying into Kalispell, so Missoula buys them nothing but a cheaper fare and a 2h45 drive.</span></td>
-      </tr>
-    </table>
-    <div class="verdict">Worth pricing for the Bay Area two and the Seattle one if FCA fares spike; not worth it for the NYC three, who connect either way and would land on top of a long drive. Renting in Missoula also means returning the cars there — build the drive into both the arrival and the departure day.</div>
-    <div class="caveat">Glacier Park International is a heavily seasonal airport and its own website is stale — it still advertises Allegiant Oakland service that no longer exists. The SFO nonstop clears your dates by five days, but it is the last week of the season, so a schedule trim would hit it before anything else. Missoula is the hedge if that happens, or if FCA fares spike. Spokane is cheaper still but nearly 5 hours away — not worth it for three nights.
+    </div>
+    <div class="calc-note">Missoula (MSO) is the backup: 2h45 south of Whitefish, fares ~18% cheaper. Only worth it for SF or Seattle if FCA fares spike.
       <a href="https://www.flightconnections.com/flights-from-kalispell-fca" target="_blank" rel="noopener">FCA schedule &rarr;</a>
     </div>
   </section>

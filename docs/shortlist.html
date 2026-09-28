@@ -214,7 +214,6 @@
   td strong { color: var(--text); }
   .group-total { font-weight: 700; }
   .muted-cell { color: var(--muted); font-size: .82rem; }
-  .alt-intro { font-size: .9rem; color: var(--muted); margin: .2rem 0 .8rem; }
 
   /* ---------- photos ---------- */
   .photos {
@@ -393,19 +392,6 @@
   .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
-  .routes { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
-  .routes details {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .6rem .9rem;
-    background: var(--bg-alt);
-  }
-  .routes summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
-  .routes summary .muted-cell { font-weight: 400; }
-  .routes ul { margin: .7rem 0 .2rem; padding-left: 0; list-style: none; }
-  .routes li { font-size: .86rem; margin-bottom: .55rem; line-height: 1.5; }
-  .routes li .leg { font-weight: 700; margin-right: .35rem; }
-  .routes li .pill { margin-right: .4rem; }
 
   /* ---------- housing areas ---------- */
   .areas { display: flex; flex-direction: column; gap: 1.8rem; }
@@ -626,7 +612,7 @@
 
   <section class="card">
     <h2>Airfare, city by city</h2>
-    <div class="subtitle">Every option on the short list, split by where people are actually flying from &mdash; 3 from NYC, 2 from SF, 1 from Seattle &mdash; with whether that leg is actually a nonstop on Oct 16-19, and the last day any seasonal nonstop flies</div>
+    <div class="subtitle">Per-person fare and nonstop status from each origin &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
     <div class="table-scroll">
     <table class="compare">
       <tr>
@@ -694,49 +680,7 @@
       </tr>
     </table>
     </div>
-    <div class="routes">
-      <details>
-        <summary>North Carolina <span class="muted-cell">&mdash; AVL (Asheville)</span></summary>
-        <ul>
-          <li><span class="leg">NYC</span><span class="pill nonstop">Nonstop</span> $180-$360 pp &mdash; Nonstop into AVL from LGA (Delta/American) and EWR (United/Allegiant), both still flying in October. ~2h.</li>
-          <li><span class="leg">SF Bay</span><span class="pill connect">Connecting only</span> $280-$400 pp &mdash; No Bay Area nonstop to AVL. Cheaper play: SFO→CLT nonstop on American, then the 2h drive.</li>
-          <li><span class="leg">Seattle</span><span class="pill connect">Connecting only</span> $270-$390 pp &mdash; No nonstop to AVL. SEA→CLT nonstop on American plus the 2h drive is the sane routing.</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Wyoming <span class="muted-cell">&mdash; JAC (Jackson Hole)</span></summary>
-        <ul>
-          <li><span class="leg">NYC</span><span class="pill partial">Sa/Su nonstop only</span> $300-$450 pp &mdash; American&#39;s JFK nonstop last flies Oct 4. United&#39;s Newark nonstop does run to Oct 24 — but Saturdays and Sundays only from Sept 25, so it can&#39;t do a Friday out and a Monday back. On your dates: connect via Denver or Salt Lake.</li>
-          <li><span class="leg">SF Bay</span><span class="pill nonstop">Nonstop thru Oct 24</span> $300-$400 pp &mdash; United flies SFO–JAC daily Sept 24 through Oct 24, so your dates sit inside the window with five days to spare. Alaska&#39;s SFO nonstop ended Aug 18.</li>
-          <li><span class="leg">Seattle</span><span class="pill connect">Connecting only</span> $200-$260 pp &mdash; Alaska&#39;s SEA nonstop last flies Oct 2 — two weeks before you&#39;d go. Connect via SLC or DEN.</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Vermont <span class="muted-cell">&mdash; BTV (Burlington)</span></summary>
-        <ul>
-          <li><span class="leg">NYC</span><span class="pill nonstop">Nonstop</span> $230-$260 pp &mdash; Year-round, no seasonal cutoff — Delta (JFK/LGA), United (EWR) and American (JFK). About 1h30.</li>
-          <li><span class="leg">SF Bay</span><span class="pill connect">Connecting only</span> $350-$550 pp &mdash; No Bay Area nonstop to BTV in any season. One stop via a hub; ~9h door to door.</li>
-          <li><span class="leg">Seattle</span><span class="pill connect">Connecting only</span> $400-$550 pp &mdash; No nonstop, ever. One stop, and the longest travel day of anything on this list.</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Bozeman, MT <span class="muted-cell">&mdash; BZN (Bozeman Yellowstone Intl)</span></summary>
-        <ul>
-          <li><span class="leg">NYC</span><span class="pill nonstop">Nonstop thru Oct 24</span> $407-$632 pp &mdash; United&#39;s Newark nonstop runs daily May 21 through Oct 24 — your dates fit with a week to spare. The JFK nonstops (JetBlue, Delta) ended Sept 8 and Sept 5; LGA (American) ended Sept 5.</li>
-          <li><span class="leg">SF Bay</span><span class="pill nonstop">Nonstop</span> $328-$567 pp &mdash; United flies SFO–BZN year-round, daily. Alaska&#39;s seasonal SFO run ended Aug 18. No OAK or SJC service.</li>
-          <li><span class="leg">Seattle</span><span class="pill nonstop">Nonstop</span> $209-$388 pp &mdash; Alaska and Delta, both year-round and daily — the easiest origin on the whole list.</li>
-        </ul>
-      </details>
-      <details open>
-        <summary>Montana <span class="muted-cell">&mdash; FCA (Kalispell / Glacier Park Intl)</span></summary>
-        <ul>
-          <li><span class="leg">NYC</span><span class="pill connect">Connecting only</span> $403-$816 pp &mdash; Both NYC nonstops are summer-only and finished in September. Connect via Denver, Chicago or Minneapolis — about 7h50 door to door at best.</li>
-          <li><span class="leg">SF Bay</span><span class="pill nonstop">Nonstop thru Oct 24</span> $375-$690 pp &mdash; United&#39;s SFO–FCA nonstop runs May 21 through Oct 24, one flight a day, so Oct 16-19 clears it by five days. Earlier reporting had this route dying around Columbus Day; the published range says otherwise.</li>
-          <li><span class="leg">Seattle</span><span class="pill nonstop">Nonstop</span> $277-$546 pp &mdash; Alaska year-round, 1h25, roughly 106 flights a month. Much the easiest origin.</li>
-        </ul>
-      </details>
-    </div>
-    <div class="caveat">Nonstop status and last-day dates come from the airports&#39; own published 2026 summer schedules (Jackson Hole, dated Feb 11 2026; Bozeman, Feb 13 2026) and route databases for Kalispell, Asheville and Burlington, all read Aug 31 2026. United&#39;s seasonal Montana and Wyoming flying ends Oct 24 across the board — five days after you fly home — so every one of those nonstops is a late-season booking. Schedules can still move; confirm with the airline.</div>
+    <div class="caveat">Nonstop status from the airports&#39; 2026 summer schedules and route databases, read Aug 31 2026. United&#39;s seasonal Montana and Wyoming nonstops end Oct 24. Hover a pill for the route detail; confirm with the airline.</div>
   </section>
 
   <section class="card">

@@ -309,7 +309,6 @@ const sharedStyle = /* css */ `
   td strong { color: var(--text); }
   .group-total { font-weight: 700; }
   .muted-cell { color: var(--muted); font-size: .82rem; }
-  .alt-intro { font-size: .9rem; color: var(--muted); margin: .2rem 0 .8rem; }
 
   /* ---------- photos ---------- */
   .photos {
@@ -488,19 +487,6 @@ const sharedStyle = /* css */ `
   .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
-  .routes { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
-  .routes details {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .6rem .9rem;
-    background: var(--bg-alt);
-  }
-  .routes summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
-  .routes summary .muted-cell { font-weight: 400; }
-  .routes ul { margin: .7rem 0 .2rem; padding-left: 0; list-style: none; }
-  .routes li { font-size: .86rem; margin-bottom: .55rem; line-height: 1.5; }
-  .routes li .leg { font-weight: 700; margin-right: .35rem; }
-  .routes li .pill { margin-right: .4rem; }
 
   /* ---------- housing areas ---------- */
   .areas { display: flex; flex-direction: column; gap: 1.8rem; }
@@ -850,7 +836,7 @@ function homePage() {
     <table>
       ${ORIGINS.map((o) => {
         const leg = (loc.flights as any)[o.key];
-        return `<tr><td>${o.label} &times;${o.seats}</td><td>${money(leg)} pp &nbsp;${stopPill(leg, false)}${leg.note ? `<br><span class="muted-cell">${escapeHtml(leg.note)}</span>` : ""}</td></tr>`;
+        return `<tr><td>${o.label} &times;${o.seats}</td><td>${money(leg)} pp &nbsp;${stopPill(leg)}</td></tr>`;
       }).join("\n      ")}
       <tr><td>Group total</td><td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)} (~${fmt(loc.airfare.groupTotal)} at midpoint)</td></tr>
     </table>
@@ -896,7 +882,7 @@ function shortlistPage() {
   const compare = `
   <section class="card">
     <h2>Airfare, city by city</h2>
-    <div class="subtitle">Every option on the short list, split by where people are actually flying from &mdash; ${PARTY.nyc} from NYC, ${PARTY.sf} from SF, ${PARTY.seattle} from Seattle &mdash; with whether that leg is actually a nonstop on Oct 16-19, and the last day any seasonal nonstop flies</div>
+    <div class="subtitle">Per-person fare and nonstop status from each origin &mdash; ${PARTY.nyc} from NYC, ${PARTY.sf} from SF, ${PARTY.seattle} from Seattle</div>
     <div class="table-scroll">
     <table class="compare">
       <tr>
@@ -922,21 +908,6 @@ function shortlistPage() {
         )
         .join("\n      ")}
     </table>
-    </div>
-    <div class="routes">
-      ${locations
-        .map(
-          (loc) => `<details${loc.name === PICK ? " open" : ""}>
-        <summary>${loc.name} <span class="muted-cell">&mdash; ${(loc as any).airport ?? loc.subtitle}</span></summary>
-        <ul>
-          ${ORIGINS.map((o) => {
-            const leg = (loc.flights as any)[o.key];
-            return `<li><span class="leg">${o.label}</span>${stopPill(leg, false)} ${money(leg)} pp &mdash; ${escapeHtml(leg.note ?? "")}</li>`;
-          }).join("\n          ")}
-        </ul>
-      </details>`,
-        )
-        .join("\n      ")}
     </div>
     <div class="caveat">${escapeHtml(stopInfo.note)}</div>
   </section>`;
@@ -1235,36 +1206,21 @@ function flightsBlock() {
   <section class="card">
     <h2>Getting there</h2>
     <div class="alert"><strong>${escapeHtml(flightInfo.headline)}</strong></div>
+    <div class="table-scroll">
     <table>
-      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
+      <tr><th>From</th><th>Into Kalispell (FCA)</th><th>Missoula backup</th></tr>
       ${flightInfo.rows
         .map(
           (r: any) => `<tr>
-        <td><strong>${escapeHtml(r.route)}</strong></td>
-        <td class="muted-cell">${escapeHtml(r.airline)}</td>
-        <td><span class="pill ${r.status}">${r.status === "ok" ? "nonstop" : "no nonstop"}</span><br>
-            <span class="muted-cell">${escapeHtml(r.detail)}</span></td>
+        <td><strong>${escapeHtml(r.from)}</strong><br><span class="pill ${r.status}">${r.status === "ok" ? "nonstop" : "connect"}</span></td>
+        <td>${escapeHtml(r.fca)}</td>
+        <td class="muted-cell">${escapeHtml(r.mso)}</td>
       </tr>`,
         )
         .join("\n      ")}
     </table>
-    <div class="section-label">${escapeHtml(flightInfo.alt.title)}</div>
-    <p class="alt-intro">${escapeHtml(flightInfo.alt.intro)}</p>
-    <table>
-      <tr><th>Route</th><th>Airline</th><th>Mid-Oct</th></tr>
-      ${flightInfo.alt.rows
-        .map(
-          (r: any) => `<tr>
-        <td><strong>${escapeHtml(r.route)}</strong></td>
-        <td class="muted-cell">${escapeHtml(r.airline)}</td>
-        <td><span class="pill ${r.status}">${r.status === "ok" ? "nonstop" : "no nonstop"}</span><br>
-            <span class="muted-cell">${escapeHtml(r.detail)}</span></td>
-      </tr>`,
-        )
-        .join("\n      ")}
-    </table>
-    <div class="verdict">${escapeHtml(flightInfo.alt.verdict)}</div>
-    <div class="caveat">${escapeHtml(flightInfo.caveat)}
+    </div>
+    <div class="calc-note">${escapeHtml(flightInfo.note)}
       <a href="${escapeHtml(flightInfo.source)}" target="_blank" rel="noopener">FCA schedule &rarr;</a>
     </div>
   </section>`;

@@ -214,7 +214,6 @@
   td strong { color: var(--text); }
   .group-total { font-weight: 700; }
   .muted-cell { color: var(--muted); font-size: .82rem; }
-  .alt-intro { font-size: .9rem; color: var(--muted); margin: .2rem 0 .8rem; }
 
   /* ---------- photos ---------- */
   .photos {
@@ -393,19 +392,6 @@
   .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
-  .routes { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
-  .routes details {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .6rem .9rem;
-    background: var(--bg-alt);
-  }
-  .routes summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
-  .routes summary .muted-cell { font-weight: 400; }
-  .routes ul { margin: .7rem 0 .2rem; padding-left: 0; list-style: none; }
-  .routes li { font-size: .86rem; margin-bottom: .55rem; line-height: 1.5; }
-  .routes li .leg { font-weight: 700; margin-right: .35rem; }
-  .routes li .pill { margin-right: .4rem; }
 
   /* ---------- housing areas ---------- */
   .areas { display: flex; flex-direction: column; gap: 1.8rem; }
@@ -634,9 +620,9 @@
 
     <div class="section-label">Airfare &mdash; 3 from NYC, 2 from SF, 1 from Seattle</div>
     <table>
-      <tr><td>NYC &times;3</td><td>$403-$816 pp &nbsp;<span class="pill connect">Connecting only</span><br><span class="muted-cell">Both NYC nonstops are summer-only and finished in September. Connect via Denver, Chicago or Minneapolis — about 7h50 door to door at best.</span></td></tr>
-      <tr><td>SF Bay &times;2</td><td>$375-$690 pp &nbsp;<span class="pill nonstop">Nonstop thru Oct 24</span><br><span class="muted-cell">United&#39;s SFO–FCA nonstop runs May 21 through Oct 24, one flight a day, so Oct 16-19 clears it by five days. Earlier reporting had this route dying around Columbus Day; the published range says otherwise.</span></td></tr>
-      <tr><td>Seattle &times;1</td><td>$277-$546 pp &nbsp;<span class="pill nonstop">Nonstop</span><br><span class="muted-cell">Alaska year-round, 1h25, roughly 106 flights a month. Much the easiest origin.</span></td></tr>
+      <tr><td>NYC &times;3</td><td>$403-$816 pp &nbsp;<span class="pill connect" title="Both NYC nonstops are summer-only and finished in September. Connect via Denver, Chicago or Minneapolis — about 7h50 door to door at best.">Connecting only</span></td></tr>
+      <tr><td>SF Bay &times;2</td><td>$375-$690 pp &nbsp;<span class="pill nonstop" title="United&#39;s SFO–FCA nonstop runs May 21 through Oct 24, one flight a day, so Oct 16-19 clears it by five days. Earlier reporting had this route dying around Columbus Day; the published range says otherwise.">Nonstop thru Oct 24</span></td></tr>
+      <tr><td>Seattle &times;1</td><td>$277-$546 pp &nbsp;<span class="pill nonstop" title="Alaska year-round, 1h25, roughly 106 flights a month. Much the easiest origin.">Nonstop</span></td></tr>
       <tr><td>Group total</td><td class="group-total">$2,236-$4,374 (~$3,305 at midpoint)</td></tr>
     </table>
 
