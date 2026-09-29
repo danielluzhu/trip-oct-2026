@@ -678,7 +678,7 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-type Route = "/" | "/housing" | "/costs" | "/itinerary" | "/shortlist";
+type Route = "/" | "/glacier" | "/housing" | "/costs" | "/shortlist";
 type Nav = "home" | "housing" | "costs" | "itinerary" | "shortlist";
 
 function href(path: Route) {
@@ -784,10 +784,10 @@ function layout(activeNav: Nav, title: string, body: string) {
   <div class="hero-credit">${hero.credit} &middot; Wikimedia Commons</div>
 </header>
 <nav>
-  <a href="${href("/")}" class="${activeNav === "home" ? "active" : ""}">Glacier</a>
+  <a href="${href("/")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
+  <a href="${href("/glacier")}" class="${activeNav === "home" ? "active" : ""}">Glacier</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/costs")}" class="${activeNav === "costs" ? "active" : ""}">Cost calculator</a>
-  <a href="${href("/itinerary")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
   <a href="${href("/shortlist")}" class="${activeNav === "shortlist" ? "active" : ""}">Shortlist</a>
 </nav>
 <main>
@@ -870,7 +870,7 @@ function homePage() {
     <a class="add-idea-link" href="${href("/shortlist")}">See the shortlist and why each one lost &rarr;</a>
   </section>`;
 
-  return layout("home", trip.title, body + "\n" + elsewhere);
+  return layout("home", `Glacier — ${trip.title}`, body + "\n" + elsewhere);
 }
 
 // The four destinations we passed on. Off the front page since Whitefish was
@@ -942,7 +942,7 @@ function shortlistPage() {
       &mdash; 19 minutes from plane to town &mdash; and on having a nonstop from two of the three
       origins. Everything below is what the other four looked like.
     </p>
-    <a class="add-idea-link" href="${href("/")}">&larr; Back to the Glacier plan</a>
+    <a class="add-idea-link" href="${href("/glacier")}">&larr; Back to the Glacier plan</a>
   </section>`;
 
   return layout(
@@ -1043,7 +1043,7 @@ async function itineraryPage() {
 
   return layout(
     "itinerary",
-    `Itinerary — ${trip.title}`,
+    trip.title,
     header + "\n" + dayBlocks + "\n" + generalBlock,
   );
 }
@@ -1542,7 +1542,7 @@ Bun.serve({
         });
         await saveIdeas(ideas);
       }
-      return Response.redirect("/itinerary", 303);
+      return Response.redirect("/", 303);
     }
 
     if (url.pathname === "/shortlist") {
@@ -1563,13 +1563,18 @@ Bun.serve({
       });
     }
 
+    // The itinerary used to live here before it became the front page.
     if (url.pathname === "/itinerary") {
-      return new Response(await itineraryPage(), {
+      return Response.redirect("/", 301);
+    }
+
+    if (url.pathname === "/glacier") {
+      return new Response(homePage(), {
         headers: { "content-type": "text/html; charset=utf-8" },
       });
     }
 
-    return new Response(homePage(), {
+    return new Response(await itineraryPage(), {
       headers: { "content-type": "text/html; charset=utf-8" },
     });
   },

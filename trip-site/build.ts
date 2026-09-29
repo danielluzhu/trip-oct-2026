@@ -18,11 +18,16 @@ const outDir = `${import.meta.dir}/../docs`;
 await mkdir(outDir, { recursive: true });
 
 const pages: Array<[string, string]> = [
-  ["index.html", homePage()],
+  ["index.html", await itineraryPage()],
+  ["glacier.html", homePage()],
   ["housing.html", housingPage()],
   ["costs.html", costsPage()],
   ["shortlist.html", shortlistPage()],
-  ["itinerary.html", await itineraryPage()],
+  // Old links to itinerary.html land on the front page, where it now lives.
+  [
+    "itinerary.html",
+    `<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=./index.html"><link rel="canonical" href="./index.html"><title>Itinerary</title><a href="./index.html">The itinerary is now the front page &rarr;</a>`,
+  ],
 ];
 
 for (const [name, html] of pages) {
