@@ -4,6 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import {
   homePage,
   itineraryPage,
+  flightsPage,
   housingPage,
   costsPage,
   shortlistPage,
@@ -20,6 +21,7 @@ await mkdir(outDir, { recursive: true });
 const pages: Array<[string, string]> = [
   ["index.html", await itineraryPage()],
   ["glacier.html", homePage()],
+  ["flights.html", flightsPage()],
   ["housing.html", housingPage()],
   ["costs.html", costsPage()],
   ["shortlist.html", shortlistPage()],

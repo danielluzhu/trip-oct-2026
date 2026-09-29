@@ -385,6 +385,14 @@
   .pill.connect { background: rgba(190,60,60,.16); color: #c25555; }
 
   /* ---------- city comparison ---------- */
+  /* ---------- flights ---------- */
+  .flight-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: .8rem 0 .4rem; }
+  .flight-status { font-size: .88rem; color: var(--muted); margin: .6rem 0; }
+  table.flights td { vertical-align: top; }
+  table.flights .flight-no { font-weight: 700; white-space: nowrap; }
+  table.flights .flight-note { display: block; font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+  table.flights a.edit { white-space: nowrap; font-size: .85rem; }
+
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -589,6 +597,7 @@
 <nav>
   <a href="./index.html" class="">Itinerary &amp; ideas</a>
   <a href="./glacier.html" class="active">Glacier</a>
+  <a href="./flights.html" class="">Flights</a>
   <a href="./housing.html" class="">Housing</a>
   <a href="./costs.html" class="">Cost calculator</a>
   <a href="./shortlist.html" class="">Shortlist</a>
