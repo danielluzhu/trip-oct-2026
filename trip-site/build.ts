@@ -21,7 +21,7 @@ await mkdir(outDir, { recursive: true });
 const pages: Array<[string, string]> = [
   ["index.html", await itineraryPage()],
   ["glacier.html", homePage()],
-  ["flights.html", flightsPage()],
+  ["flights.html", await flightsPage()],
   ["housing.html", housingPage()],
   ["costs.html", costsPage()],
   ["shortlist.html", shortlistPage()],

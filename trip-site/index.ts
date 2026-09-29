@@ -474,12 +474,13 @@ const sharedStyle = /* css */ `
 
   /* ---------- city comparison ---------- */
   /* ---------- flights ---------- */
-  .flight-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: .8rem 0 .4rem; }
-  .flight-status { font-size: .88rem; color: var(--muted); margin: .6rem 0; }
-  table.flights td { vertical-align: top; }
-  table.flights .flight-no { font-weight: 700; white-space: nowrap; }
-  table.flights .flight-note { display: block; font-size: .82rem; color: var(--muted); margin-top: .2rem; }
-  table.flights a.edit { white-space: nowrap; font-size: .85rem; }
+  ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
+  li.flight { border-bottom: 1px solid var(--border); padding-bottom: .7rem; font-size: .92rem; }
+  li.flight .flight-no { font-weight: 700; margin-left: .35rem; }
+  li.flight summary { cursor: pointer; font-size: .84rem; color: var(--accent); margin-top: .3rem; }
+  .flight-form .calc-grid .wide { grid-column: 1 / -1; }
+  .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
+  .flight-delete { margin-top: .5rem; }
 
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
@@ -1146,152 +1147,156 @@ ${areaCards}
 
 // ---------------------------------------------------------------- flights
 
-// Flights live as GitHub issues filed through .github/ISSUE_TEMPLATE/flight.yml.
-// The page is static on Pages, so it reads them straight from the public API in
-// the browser; adding and editing happen on GitHub, where the issue form also
-// applies the "flight" label for people without triage rights (a ?labels= URL
-// param would be silently dropped for them).
-const FLIGHT_FORM = `https://github.com/${REPO}/issues/new?template=flight.yml`;
+// Flights are logged straight into the page and kept in flights.json next to
+// ideas.json. That only works with the bun server running; the static Pages
+// build has nowhere to write, so it just says so.
+const FLIGHTS_PATH = `${import.meta.dir}/flights.json`;
 
-function flightFormUrl(dir: "Arriving" | "Departing") {
-  const p = new URLSearchParams(
-    dir === "Arriving"
-      ? { title: "Flight in: ", to: "FCA", date: housing.checkin }
-      : { title: "Flight out: ", from: "FCA", date: housing.checkout },
-  );
-  return `${FLIGHT_FORM}&${p.toString()}`;
+type Flight = {
+  id: string;
+  direction: "in" | "out";
+  who: string;
+  airline: string;
+  flight: string;
+  from: string;
+  to: string;
+  date: string; // YYYY-MM-DD
+  departs: string; // HH:MM, 24h
+  arrives: string; // HH:MM, 24h
+  notes: string;
+  updatedAt: number;
+};
+
+async function loadFlights(): Promise<Flight[]> {
+  try {
+    const raw = await Bun.file(FLIGHTS_PATH).json();
+    return raw.flights ?? [];
+  } catch {
+    return [];
+  }
 }
 
-function flightsPage() {
+async function saveFlights(flights: Flight[]) {
+  await Bun.write(FLIGHTS_PATH, JSON.stringify({ flights }, null, 2));
+}
+
+// Everything off the form is untrusted: clamp lengths and drop anything that
+// isn't the shape the page renders.
+function flightFromForm(form: FormData, prev?: Flight): Flight | null {
+  const str = (k: string, max = 60) => String(form.get(k) ?? "").trim().slice(0, max);
+  const date = str("date", 10);
+  const time = (k: string) => (/^\d{2}:\d{2}$/.test(str(k, 5)) ? str(k, 5) : "");
+  const f: Flight = {
+    id: prev?.id ?? crypto.randomUUID(),
+    direction: str("direction") === "out" ? "out" : "in",
+    who: str("who"),
+    airline: str("airline"),
+    flight: str("flight"),
+    from: str("from", 40).toUpperCase(),
+    to: str("to", 40).toUpperCase(),
+    date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "",
+    departs: time("departs"),
+    arrives: time("arrives"),
+    notes: str("notes", 280),
+    updatedAt: Date.now(),
+  };
+  return f.who && f.flight && f.date ? f : null;
+}
+
+function fmtTime(t: string) {
+  if (!t) return "?";
+  const [h, m] = t.split(":").map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+}
+
+function fmtDate(d: string) {
+  const dt = new Date(`${d}T12:00:00`);
+  return isNaN(+dt)
+    ? d
+    : dt.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+function flightForm(f: Partial<Flight>, submit: string) {
+  const v = (x?: string) => escapeHtml(x ?? "");
+  return `<form class="flight-form" method="POST" action="/flights/save">
+      ${f.id ? `<input type="hidden" name="id" value="${v(f.id)}">` : ""}
+      <div class="calc-grid">
+        <label>Direction
+          <select name="direction">
+            <option value="in"${f.direction !== "out" ? " selected" : ""}>Flying in</option>
+            <option value="out"${f.direction === "out" ? " selected" : ""}>Flying out</option>
+          </select>
+        </label>
+        <label>Who <input type="text" name="who" required maxlength="60" value="${v(f.who)}"></label>
+        <label>Airline <input type="text" name="airline" maxlength="60" value="${v(f.airline)}"></label>
+        <label>Flight # <input type="text" name="flight" required maxlength="60" placeholder="UA 1234" value="${v(f.flight)}"></label>
+        <label>From <input type="text" name="from" maxlength="40" placeholder="SFO" value="${v(f.from)}"></label>
+        <label>To <input type="text" name="to" maxlength="40" placeholder="FCA" value="${v(f.to)}"></label>
+        <label>Date <input type="date" name="date" required value="${v(f.date)}"></label>
+        <label>Departs <input type="time" name="departs" value="${v(f.departs)}"></label>
+        <label>Arrives <input type="time" name="arrives" value="${v(f.arrives)}"></label>
+        <label class="wide">Notes <input type="text" name="notes" maxlength="280" value="${v(f.notes)}"></label>
+      </div>
+      <button type="submit" class="calc-btn primary">${submit}</button>
+    </form>`;
+}
+
+function flightItem(f: Flight) {
+  return `<li class="flight">
+      <div class="flight-line">
+        <strong>${escapeHtml(f.who)}</strong>
+        <span class="flight-no">${escapeHtml(f.flight)}</span>${f.airline ? ` <span class="muted-cell">${escapeHtml(f.airline)}</span>` : ""}
+        &middot; ${escapeHtml(f.from || "?")} &rarr; ${escapeHtml(f.to || "?")}
+        &middot; ${escapeHtml(fmtDate(f.date))}, ${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}
+      </div>
+      ${f.notes ? `<div class="muted-cell">${escapeHtml(f.notes)}</div>` : ""}
+      <details>
+        <summary>Edit</summary>
+        ${flightForm(f, "Save changes")}
+        <form method="POST" action="/flights/delete" class="flight-delete">
+          <input type="hidden" name="id" value="${escapeHtml(f.id)}">
+          <button type="submit" class="calc-btn">Delete this flight</button>
+        </form>
+      </details>
+    </li>`;
+}
+
+async function flightsPage() {
+  if (STATIC) {
+    const body = `
+  <section class="card">
+    <h2>Flights</h2>
+    <div class="subtitle">The flight log runs on the trip server, not this copy of the site.</div>
+  </section>`;
+    return layout("flights", `Flights — ${trip.title}`, body);
+  }
+
+  const flights = await loadFlights();
+  // Sort by date, then by the time that matters for pickups/drop-offs.
+  const byTime = (t: (f: Flight) => string) => (a: Flight, b: Flight) =>
+    `${a.date} ${t(a) || "99"}`.localeCompare(`${b.date} ${t(b) || "99"}`);
+  const inbound = flights.filter((f) => f.direction === "in").sort(byTime((f) => f.arrives));
+  const outbound = flights.filter((f) => f.direction === "out").sort(byTime((f) => f.departs));
+  const list = (fs: Flight[]) =>
+    fs.length
+      ? `<ul class="flights">${fs.map(flightItem).join("\n")}</ul>`
+      : `<div class="calc-note">Nobody yet.</div>`;
+
   const body = `
   <section class="card">
-    <div class="pick-badge">Flights</div>
-    <h2>Who's flying when</h2>
-    <div class="subtitle">Needs a free GitHub account.</div>
-    <div class="flight-actions">
-      <a class="cta" href="${escapeHtml(flightFormUrl("Arriving"))}" target="_blank" rel="noopener">+ Add a flight in</a>
-      <a class="cta" href="${escapeHtml(flightFormUrl("Departing"))}" target="_blank" rel="noopener">+ Add a flight out</a>
-    </div>
-    <div class="calc-note">To change a flight, click Edit and edit the issue. To remove it, close the issue. The repo is public, so no confirmation codes.</div>
+    <h2>Add a flight</h2>
+    ${flightForm({ direction: "in", to: "FCA", date: housing.checkin }, "Add flight")}
   </section>
 
   <section class="card">
-    <h2>Arriving</h2>
-    <div class="flight-status" id="status-in">Loading&hellip;</div>
-    <div class="table-scroll"><table class="flights" id="flights-in" hidden></table></div>
+    <h2>Flying in</h2>
+    ${list(inbound)}
   </section>
 
   <section class="card">
-    <h2>Departing</h2>
-    <div class="flight-status" id="status-out">Loading&hellip;</div>
-    <div class="table-scroll"><table class="flights" id="flights-out" hidden></table></div>
-  </section>
-
-  <script>
-  (function () {
-    var API = "https://api.github.com/repos/${REPO}/issues?labels=flight&state=open&per_page=100";
-    var ISSUES = "https://github.com/${REPO}/issues?q=is%3Aissue+label%3Aflight";
-    // Issue-form bodies are "### Label" followed by the answer; the keys map
-    // those labels back to fields. Matching on the label text keeps a
-    // hand-edited body readable as long as the headings survive.
-    var FIELDS = {
-      "who": "who", "direction": "direction", "airline": "airline",
-      "flight number": "flight", "from": "from", "to": "to", "date": "date",
-      "departs (local time)": "departs", "arrives (local time)": "arrives", "notes": "notes"
-    };
-    function parse(body) {
-      var out = {};
-      String(body || "").split(/^###\\s+/m).forEach(function (chunk) {
-        var nl = chunk.indexOf("\\n");
-        if (nl < 0) return;
-        var key = FIELDS[chunk.slice(0, nl).trim().toLowerCase()];
-        var val = chunk.slice(nl + 1).trim();
-        if (key && val && val !== "_No response_") out[key] = val;
-      });
-      return out;
-    }
-    function el(tag, text, cls) {
-      var e = document.createElement(tag);
-      if (text != null) e.textContent = text;
-      if (cls) e.className = cls;
-      return e;
-    }
-    function row(f) {
-      var tr = document.createElement("tr");
-      tr.appendChild(el("td", f.who || f.author, null));
-      var fl = el("td", null, null);
-      fl.appendChild(el("span", f.flight || "\\u2014", "flight-no"));
-      if (f.airline) fl.appendChild(el("span", f.airline, "flight-note"));
-      tr.appendChild(fl);
-      tr.appendChild(el("td", (f.from || "?") + " \\u2192 " + (f.to || "?"), null));
-      tr.appendChild(el("td", f.date || "\\u2014", null));
-      var t = el("td", (f.departs || "?") + " \\u2192 " + (f.arrives || "?"), null);
-      if (f.notes) t.appendChild(el("span", f.notes, "flight-note"));
-      tr.appendChild(t);
-      var ed = el("td", null, null);
-      var a = el("a", "Edit", "edit");
-      a.href = f.url; a.target = "_blank"; a.rel = "noopener";
-      ed.appendChild(a);
-      tr.appendChild(ed);
-      return tr;
-    }
-    function fill(which, list) {
-      var table = document.getElementById("flights-" + which);
-      var status = document.getElementById("status-" + which);
-      if (!list.length) {
-        status.textContent = "Nobody yet.";
-        return;
-      }
-      status.textContent = list.length + (list.length === 1 ? " flight" : " flights");
-      table.innerHTML = "<tr><th>Who</th><th>Flight</th><th>Route</th><th>Date</th><th>Times</th><th></th></tr>";
-      list.forEach(function (f) { table.appendChild(row(f)); });
-      table.hidden = false;
-    }
-    function fail(msg) {
-      ["in", "out"].forEach(function (w) {
-        var s = document.getElementById("status-" + w);
-        s.textContent = msg + " ";
-        var a = el("a", "See the flights on GitHub \\u2192", null);
-        a.href = ISSUES; a.target = "_blank"; a.rel = "noopener";
-        s.appendChild(a);
-      });
-    }
-    fetch(API, { headers: { Accept: "application/vnd.github+json" } })
-      .then(function (r) {
-        if (r.status === 403 || r.status === 429) throw new Error("GitHub's rate limit for this network is used up for the hour.");
-        if (!r.ok) throw new Error("Couldn't load flights from GitHub.");
-        return r.json();
-      })
-      .then(function (issues) {
-        var flights = issues
-          .filter(function (i) { return !i.pull_request; })
-          .map(function (i) {
-            var f = parse(i.body);
-            f.url = i.html_url;
-            f.author = i.user && i.user.login;
-            return f;
-          });
-        // Sort by date, then by the time that matters for pickups.
-        // Times are free text ("9:05 AM", "21:40"), so turn them into
-        // minutes past midnight; anything unreadable sorts last that day.
-        function mins(t) {
-          var m = /(\\d{1,2})(?::(\\d{2}))?\\s*([ap])?/i.exec(t || "");
-          if (!m) return 9999;
-          var h = Number(m[1]) % 12, ap = (m[3] || "").toLowerCase();
-          if (ap === "p" || (!ap && Number(m[1]) >= 12)) h += 12;
-          return h * 60 + Number(m[2] || 0);
-        }
-        function key(f, t) { return (f.date || "9999") + " " + (1e4 + mins(t)); }
-        var inbound = flights.filter(function (f) { return !/^depart/i.test(f.direction || ""); })
-          .sort(function (a, b) { return key(a, a.arrives) < key(b, b.arrives) ? -1 : 1; });
-        var outbound = flights.filter(function (f) { return /^depart/i.test(f.direction || ""); })
-          .sort(function (a, b) { return key(a, a.departs) < key(b, b.departs) ? -1 : 1; });
-        fill("in", inbound);
-        fill("out", outbound);
-      })
-      .catch(function (e) { fail(e.message); });
-  })();
-  </script>`;
+    <h2>Flying out</h2>
+    ${list(outbound)}
+  </section>`;
 
   return layout("flights", `Flights — ${trip.title}`, body);
 }
@@ -1651,8 +1656,30 @@ Bun.serve({
       });
     }
 
+    if (url.pathname === "/flights/save" && req.method === "POST") {
+      const form = await req.formData();
+      const flights = await loadFlights();
+      const id = String(form.get("id") ?? "");
+      const i = id ? flights.findIndex((f) => f.id === id) : -1;
+      const f = flightFromForm(form, i >= 0 ? flights[i] : undefined);
+      if (f) {
+        if (i >= 0) flights[i] = f;
+        else flights.push(f);
+        await saveFlights(flights);
+      }
+      return Response.redirect("/flights", 303);
+    }
+
+    if (url.pathname === "/flights/delete" && req.method === "POST") {
+      const form = await req.formData();
+      const id = String(form.get("id") ?? "");
+      const flights = await loadFlights();
+      await saveFlights(flights.filter((f) => f.id !== id));
+      return Response.redirect("/flights", 303);
+    }
+
     if (url.pathname === "/flights") {
-      return new Response(flightsPage(), {
+      return new Response(await flightsPage(), {
         headers: { "content-type": "text/html; charset=utf-8" },
       });
     }

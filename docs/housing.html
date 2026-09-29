@@ -379,12 +379,13 @@
 
   /* ---------- city comparison ---------- */
   /* ---------- flights ---------- */
-  .flight-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: .8rem 0 .4rem; }
-  .flight-status { font-size: .88rem; color: var(--muted); margin: .6rem 0; }
-  table.flights td { vertical-align: top; }
-  table.flights .flight-no { font-weight: 700; white-space: nowrap; }
-  table.flights .flight-note { display: block; font-size: .82rem; color: var(--muted); margin-top: .2rem; }
-  table.flights a.edit { white-space: nowrap; font-size: .85rem; }
+  ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
+  li.flight { border-bottom: 1px solid var(--border); padding-bottom: .7rem; font-size: .92rem; }
+  li.flight .flight-no { font-weight: 700; margin-left: .35rem; }
+  li.flight summary { cursor: pointer; font-size: .84rem; color: var(--accent); margin-top: .3rem; }
+  .flight-form .calc-grid .wide { grid-column: 1 / -1; }
+  .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
+  .flight-delete { margin-top: .5rem; }
 
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
