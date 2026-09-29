@@ -1410,7 +1410,7 @@ function costsPage() {
   <script>
   (function () {
     var CFG = ${cfg};
-    var KEY = "trip-costs-v4";
+    var KEY = "trip-costs-v5";
     var booted = false;
     var $ = function (id) { return document.getElementById(id); };
     var money = function (n) { return "$" + Math.round(n).toLocaleString(); };
@@ -1425,7 +1425,7 @@ function costsPage() {
       return "<tr>" +
         "<td><input type='checkbox' class='x-on' data-i='" + i + "'" + (x.on ? " checked" : "") + "></td>" +
         "<td><input type='text' class='x-label' data-i='" + i + "' value=\\"" + String(x.label).replace(/"/g, "&quot;") + "\\"></td>" +
-        "<td><input type='number' class='x-amt' data-i='" + i + "' min='0' step='5' value='" + x.amount + "'></td>" +
+        "<td><input type='number' class='x-amt' data-i='" + i + "' min='0' step='any' value='" + x.amount + "'></td>" +
         "<td><select class='x-per' data-i='" + i + "'>" +
           "<option value='group'" + (x.per === "group" ? " selected" : "") + ">per group</option>" +
           "<option value='person'" + (x.per === "person" ? " selected" : "") + ">per person</option>" +

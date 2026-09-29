@@ -445,26 +445,26 @@
     "cleaningFee": 350,
     "extras": [
       {
-        "label": "Park entry (per vehicle, 7 days)",
+        "label": "Park entry (2 vehicles × $35)",
         "amount": 70,
         "per": "group",
         "on": true
       },
       {
-        "label": "Middle Fork float — 4 boats",
-        "amount": 2600,
+        "label": "Middle Fork float — 4 boats × $650 + 8% fee",
+        "amount": 2808,
         "per": "group",
         "on": true
       },
       {
-        "label": "Guide tips (~15%)",
-        "amount": 390,
+        "label": "Guide tips (~20%)",
+        "amount": 520,
         "per": "group",
         "on": true
       },
       {
-        "label": "Montana fishing licence",
-        "amount": 32,
+        "label": "Montana fishing licence (1-day, nonresident)",
+        "amount": 31.5,
         "per": "person",
         "on": true
       },
@@ -481,8 +481,8 @@
         "on": false
       },
       {
-        "label": "National Bison Range drive",
-        "amount": 35,
+        "label": "Bison Range (2 cars × $20)",
+        "amount": 40,
         "per": "group",
         "on": false
       }
@@ -548,8 +548,8 @@
       ]
     ],
     "bookAhead": [
-      "Middle Fork float for Sunday: Great Northern Resort (800-735-7897), $650/boat full day, 2 anglers per boat",
-      "Montana fishing licences at ols.fwp.mt.gov, ~$32 each",
+      "Middle Fork float for Sunday: Great Northern Resort (800-735-7897), $650/boat full day + 8% fee, 2 anglers per boat. Confirm they're running Oct 18",
+      "Montana fishing licences at ols.fwp.mt.gov, $31.50 each for 1 day",
       "Two AWD SUVs at FCA",
       "Dinner reservations. Confirm they're open"
     ],
@@ -657,19 +657,19 @@
           {
             "when": "The main event",
             "what": "Float the Middle Fork — four boats",
-            "detail": "Great Northern Resort: $650 full day or $490 half, 2 anglers per boat.",
-            "cost": "~$2,600 + tips"
+            "detail": "Great Northern Resort: $650 full day or $490 half per boat, 2 anglers each, plus 8% service fee. Tip the guide ~20%.",
+            "cost": "~$3,330 with fee and tips"
           },
           {
             "when": "Before you go",
             "what": "Fishing licences",
-            "detail": "Montana licence needed on the Middle Fork. Buy at ols.fwp.mt.gov before Sunday.",
-            "cost": "$32 pp"
+            "detail": "Needed on the Middle Fork. 1-day nonresident licence at ols.fwp.mt.gov.",
+            "cost": "$31.50 pp"
           },
           {
             "when": "If nobody wants a boat",
             "what": "Bison Range or a day in town",
-            "detail": "Red Sleep Mountain Drive (through Oct 31, $35 per van; call 406-644-2211 an hour ahead), or breweries and the distillery in Whitefish.",
+            "detail": "Red Sleep Mountain Drive (open through October, $20 per car), or breweries and the distillery in Whitefish.",
             "cost": ""
           },
           {

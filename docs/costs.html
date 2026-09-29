@@ -692,8 +692,8 @@
 
   <script>
   (function () {
-    var CFG = {"nights":4,"bookedTotal":1830,"car":{"rate":100,"days":4,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (per vehicle, 7 days)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats","amount":2600,"per":"group","on":true},{"label":"Guide tips (~15%)","amount":390,"per":"group","on":true},{"label":"Montana fishing licence","amount":32,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"National Bison Range drive","amount":35,"per":"group","on":false}]};
-    var KEY = "trip-costs-v4";
+    var CFG = {"nights":4,"bookedTotal":1830,"car":{"rate":100,"days":4,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (2 vehicles × $35)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats × $650 + 8% fee","amount":2808,"per":"group","on":true},{"label":"Guide tips (~20%)","amount":520,"per":"group","on":true},{"label":"Montana fishing licence (1-day, nonresident)","amount":31.5,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"Bison Range (2 cars × $20)","amount":40,"per":"group","on":false}]};
+    var KEY = "trip-costs-v5";
     var booted = false;
     var $ = function (id) { return document.getElementById(id); };
     var money = function (n) { return "$" + Math.round(n).toLocaleString(); };
@@ -708,7 +708,7 @@
       return "<tr>" +
         "<td><input type='checkbox' class='x-on' data-i='" + i + "'" + (x.on ? " checked" : "") + "></td>" +
         "<td><input type='text' class='x-label' data-i='" + i + "' value=\"" + String(x.label).replace(/"/g, "&quot;") + "\"></td>" +
-        "<td><input type='number' class='x-amt' data-i='" + i + "' min='0' step='5' value='" + x.amount + "'></td>" +
+        "<td><input type='number' class='x-amt' data-i='" + i + "' min='0' step='any' value='" + x.amount + "'></td>" +
         "<td><select class='x-per' data-i='" + i + "'>" +
           "<option value='group'" + (x.per === "group" ? " selected" : "") + ">per group</option>" +
           "<option value='person'" + (x.per === "person" ? " selected" : "") + ">per person</option>" +
