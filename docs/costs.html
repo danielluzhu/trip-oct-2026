@@ -325,7 +325,7 @@
     border-radius: 999px;
     margin-bottom: .7rem;
   }
-  .filter-note, .calc-note {
+  .calc-note {
     font-size: .8rem;
     color: var(--muted);
     margin: .5rem 0;
@@ -344,13 +344,6 @@
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     padding: .1rem .3rem;
     border-radius: 4px;
-  }
-  .quality {
-    font-size: .76rem;
-    color: var(--muted);
-    margin-top: .6rem;
-    padding-left: .7rem;
-    border-left: 2px solid var(--accent-2);
   }
   .card a:not(.cta):not(.add-idea-link) {
     color: var(--accent);
@@ -402,7 +395,6 @@
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
   /* ---------- housing areas ---------- */
-  .areas { display: flex; flex-direction: column; gap: 1.8rem; }
   .area {
     display: grid;
     grid-template-columns: 220px 1fr;
@@ -590,7 +582,7 @@
   <div class="hero-inner">
     <div class="eyebrow">Oct 15-19, 2026 &middot; 5-10 people</div>
     <h1>What it runs</h1>
-    <p class="tagline">A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot and what it splits to.</p>
+    <p class="tagline">The shared costs and what each person pays.</p>
   </div>
   <div class="hero-credit">Sunrise at Swiftcurrent Lake, Many Glacier &middot; Wikimedia Commons</div>
 </header>
@@ -635,7 +627,7 @@
   <section class="card">
     <div class="pick-badge">Cost calculator</div>
     <h2>What this actually costs</h2>
-    <div class="subtitle">Every number below is editable. The dropdowns just fill them in &mdash; type over anything you have a real quote for, and the totals follow.</div>
+    <div class="subtitle">Every number is editable.</div>
     <div class="calc-actions">
       <button type="button" id="reset" class="calc-btn">Reset to researched defaults</button>
       <span class="calc-note" id="saved-note"></span>
@@ -673,12 +665,11 @@
       <label>Per person / day <input type="number" id="food-rate" min="0" step="5"></label>
       <label>Days eating <input type="number" id="food-days" min="1" max="21" ></label>
     </div>
-    <div class="caveat">Montana has no general sales tax. Whitefish&#39;s 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it&#39;s now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.</div>
   </section>
 
   <section class="card">
     <div class="section-label">Extras &amp; activities</div>
-    <div class="subtitle">The things that actually differ between this trip and a generic one. Untick what you're not doing, change what you are, add your own.</div>
+    
     <div class="table-scroll">
       <table class="extras" id="extras">
         <tr><th>On</th><th>What</th><th>Amount</th><th>Charged</th><th>Cost</th><th></th></tr>
@@ -689,13 +680,13 @@
 
   <section class="card" id="results">
     <h2>The pot</h2>
-    <div class="subtitle">Shared costs only &mdash; the cabin, the trucks, the food and the extras. This is the number that gets split.</div>
+    
     <table id="breakdown"></table>
     <div class="total-row">
       <div><span class="total-label">To split</span><span class="total-big" id="grand">&mdash;</span></div>
       <div><span class="total-label">Each</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
-    <div class="calc-note">Airfare isn't in here &mdash; everyone books their own. Once you've typed over a default it's your number, kept in this browser only.</div>
+    <div class="calc-note">Airfare not included. Your edits are saved in this browser.</div>
   </section>
 
 
@@ -901,7 +892,7 @@
 </main>
 <footer>
   Homeless in Montana &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights<br>
-  Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
+  Photos: Wikimedia Commons.
 </footer>
 </body>
 </html>

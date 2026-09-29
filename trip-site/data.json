@@ -333,142 +333,101 @@
         "Garage with boot dryer"
       ],
       "photo": "https://a0.muscache.com/im/pictures/hosting/Hosting-49522099/original/eb943269-3fd8-46f5-98ed-66a43275004d.jpeg?im_w=720",
-      "caveat": "It's a 3-bedroom, not the 4+ we were searching for — getting to 10 depends on the bunks, so check the bed list against the final headcount."
+      "caveat": "3 bedrooms. Sleeping 10 depends on the bunks."
     },
-    "intro": "Whitefish is decided. It's 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street — which matters more than usual on this trip, because nothing inside the park is open for food and the ski mountain hasn't woken up yet. Mid-October is a genuine dead zone here: Whitefish Mountain closed Sept 20 and doesn't reopen until Dec 4, and park visitation drops to 18% of its July peak. That's why it's cheap, and also why you should check that your restaurant is open before you drive to it. The four other towns are still below for the record — and because a cabin in Columbia Falls is genuinely cheaper if the Whitefish inventory dries up.",
     "bbox": {
       "neLat": 48.7,
       "neLng": -113.8,
       "swLat": 47.9,
       "swLng": -114.6
     },
-    "vrbo": "https://www.vrbo.com/search?destination=Whitefish%2C%20Montana&startDate=2026-10-15&endDate=2026-10-19&adults=8",
     "areas": [
       {
         "name": "Whitefish",
         "drive": "19 min to FCA, 39 to the park",
-        "vibe": "The one town with restaurants, bars and a walkable centre. Most expensive of the five, and the only one that charges resort tax — but the premium is inventory, not tax.",
         "nightly": {
           "low": 243,
           "typical": 450,
           "high": 844
         },
         "taxPct": 0.11,
-        "quality": "Good — eight 4-5BR properties with published floor rates ($243-389), plus market ADR. Floor rates may not be the October rate.",
         "bbox": {
           "neLat": 48.52,
           "neLng": -114.22,
           "swLat": 48.32,
           "swLng": -114.45
         },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Aerial%20-%20Whitefish%20Lake%20%28MT%29%2001%20%2810322715514%29.jpg?width=800",
-          "caption": "Whitefish Lake"
-        },
         "picked": true
       },
       {
         "name": "Columbia Falls",
         "drive": "17 min from Whitefish, 20 to the park",
-        "vibe": "The best-value large-group inventory in the valley and the closest real town to the West Glacier gate. Less to do at night, which matters less than you'd think in a week when nothing's open anyway.",
         "nightly": {
           "low": 216,
           "typical": 375,
           "high": 579
         },
         "taxPct": 0.08,
-        "quality": "Good — five 4-5BR properties with published floor rates ($216-534) plus two Vacasa homes at $377-579.",
         "bbox": {
           "neLat": 48.46,
           "neLng": -114.05,
           "swLat": 48.3,
           "swLng": -114.28
         },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800",
-          "caption": "Going-to-the-Sun Road"
-        },
         "picked": false
       },
       {
         "name": "Kalispell",
         "drive": "24 min from Whitefish, 45 to the park",
-        "vibe": "Cheapest beds and where the Costco is. Least charming of the five and furthest from the park, but if the group's priority is the number at the bottom of the calculator, it's here.",
         "nightly": {
           "low": 250,
           "typical": 350,
           "high": 550
         },
         "taxPct": 0.08,
-        "quality": "Weak — exactly one 4BR with a published rate ($366). No local manager publishes rates; one analytics source returned Great Falls data by mistake.",
         "bbox": {
           "neLat": 48.3,
           "neLng": -114.18,
           "swLat": 48.12,
           "swLng": -114.42
         },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2832575575507%29.jpg?width=800",
-          "caption": "Flathead River"
-        },
         "picked": false
       },
       {
         "name": "West Glacier / Coram",
         "drive": "At the park gate",
-        "vibe": "Wake up at the entrance. The catch is that this corridor is built for summer — the one resort with published rates ends its season Oct 15, the day before you'd arrive, and there's almost no bookable 4BR inventory.",
         "nightly": {
           "low": 300,
           "typical": 450,
           "high": 700
         },
         "taxPct": 0.08,
-        "quality": "Thin — one 3BR resort ($450 off-season) whose rate calendar stops Oct 15, plus an area-level average. Verify anything here is even open.",
         "bbox": {
           "neLat": 48.55,
           "neLng": -113.85,
           "swLat": 48.33,
           "swLng": -114.08
         },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20McDonald%2C%20Glacier%20National%20Park%2C%20Montana%20USA.jpg?width=800",
-          "caption": "Lake McDonald"
-        },
         "picked": false
       },
       {
         "name": "Bigfork",
         "drive": "38 min from FCA, 55 to the park",
-        "vibe": "Flathead Lake, an arts-town main street, and a working theatre — the only one of the five with an actual evening option in October. Furthest from Glacier, closest to a rainy-day plan.",
         "nightly": {
           "low": 250,
           "typical": 400,
           "high": 900
         },
         "taxPct": 0.08,
-        "quality": "Weak — around ten large lakefront homes exist but every price sits behind a booking widget. Largest with a published rate is a 3BR at $434.",
         "bbox": {
           "neLat": 48.16,
           "neLng": -113.95,
           "swLat": 47.96,
           "swLng": -114.16
         },
-        "photo": {
-          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2833641150388%29.jpg?width=800",
-          "caption": "Flathead Lake"
-        },
         "picked": false
       }
     ],
-    "notes": [
-      "Mid-October is a true shoulder trough: Whitefish Mountain closed Sept 20 and reopens Dec 4, and Glacier's October visitation is 18% of its July peak — an 82% drop.",
-      "The one published seasonal table in the valley (Great Northern, Coram) shows off-season at 36-39% below peak. Expect a real rate discount nearer 35% than the 80% the occupancy collapse might suggest.",
-      "Montana charges 8% lodging tax statewide. Whitefish adds a 3% resort tax (11% total); Columbia Falls, Kalispell, Bigfork and West Glacier add nothing. On a 4-night stay that gap is about $60 — do not pick a town over it.",
-      "Cleaning runs $325+ per turnover for a 4BR in this market, and that's the cleaner's price to the host, so the guest-facing fee is usually higher. On four nights it's still the single biggest add-on.",
-      "Book by phone. Vacay Whitefish (406-609-9595) has the deepest published 4-5BR inventory in both Whitefish and Columbia Falls; Stay Montana (888-871-7856) holds the big Bigfork lakefront homes.",
-      "Anything sleeping 10 usually means 4-5 bedrooms, and Airbnb's guest count includes sofa beds — read the actual bed list."
-    ],
-    "sourceNote": "No public source publishes rates for Oct 15-19, 2026 anywhere in this valley — every booking engine is JavaScript-gated or blocks automated requests. The bands below are published floor rates, operator rate calendars and market averages read Aug 2026. Each area is labelled with how good its data actually is.",
     "picked": "Whitefish"
   },
   "costs": {
@@ -483,7 +442,6 @@
       "restaurants": 88
     },
     "feePct": 0.15,
-    "foodNote": "Montana has no general sales tax. Whitefish's 3% resort tax hits restaurant meals and alcohol but exempts groceries — so cooking in is taxed at zero. Kalispell, Columbia Falls and Bigfork charge nothing on meals either. Costco moved: it's now 345 Cascade Loop, Kalispell, about 17 minutes from Whitefish. Watch for 20% auto-gratuity on parties of six or more at the upscale places, and confirm hours before you drive.",
     "cleaningFee": 350,
     "extras": [
       {
@@ -558,185 +516,178 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Three days, and they're shaped around one hard hike. Friday is arrival, groceries and a short walk; Saturday is the big one — Apgar Lookout, 7.2 miles and 1,800 feet, deliberately chosen because it sits below every gate NPS might close; Sunday is a guided float on the Middle Fork, which is both the README's 'learn to fish' and the only thing your legs will tolerate the day after the lookout. Assume Logan Pass is shut — NPS targets the third Monday of October, which is your checkout day, and in 2025 it actually closed on Oct 14. Every in-park lodge and restaurant shut in September. What's left is genuinely good: the lower west side is open and empty, the larch are turning, golden eagles are migrating over Lake McDonald, and the Middle Fork fishes into November.",
+    "intro": "Friday: arrive and stock up. Saturday: Apgar Lookout. Sunday: float the Middle Fork. Logan Pass will likely be closed and nothing in the park serves food.",
     "facts": [
       [
         "Stay",
-        "The Quarry Airbnb, Whitefish — picked. 4 nights, in Thu 10/15, out Mon 10/19"
+        "The Quarry house, Whitefish. In Thu 10/15, out Mon 10/19"
       ],
       [
-        "The big hike",
-        "Apgar Lookout, Saturday — 7.2 miles round trip, 1,800 ft"
+        "Big hike",
+        "Apgar Lookout, Sat. 7.2 mi, 1,800 ft"
       ],
       [
         "Weather",
-        "54°F day, 29°F night. 1.1in of snow is the October normal in the valley"
+        "54°F day, 29°F night, snow possible"
       ],
       [
         "Daylight",
-        "Sunrise ~8:00, dark by ~6:45. Daylight is the constraint on Saturday, not the miles"
+        "~8:00 AM to ~6:45 PM"
       ],
       [
-        "Going-to-the-Sun Road",
-        "Assume the alpine section is closed. Text GNPROADS to 333111 for live status"
+        "Road status",
+        "Text GNPROADS to 333111"
       ],
       [
         "Park entry",
-        "$35 per vehicle, 7 days. No vehicle reservations required in 2026"
+        "$35 per vehicle, 7 days, no reservation"
       ],
       [
-        "Movie",
-        "Brokeback Mountain — shot an hour north over the Alberta line"
-      ],
-      [
-        "The catch",
-        "Nothing in the park is open for food. Bring lunch every day"
+        "Food",
+        "Nothing open in the park. Bring lunch"
       ]
     ],
     "bookAhead": [
-      "Middle Fork float for Sunday — book it now. Great Northern Resort (800-735-7897) at $650 a full day, or Wild River Adventures. Two anglers per boat, so eight people is four boats.",
-      "Montana fishing licences at ols.fwp.mt.gov — about $32 each. Needed for the Middle Fork even though fishing inside the park isn't licensed.",
-      "The cabin — picked: the Quarry house in Whitefish on Airbnb, Thu 10/15 to Mon 10/19. Lock it in before the rate moves.",
-      "Two AWD SUVs at FCA. Seven agencies are in the terminal, and October is the quiet end of the year. Two vehicles is what lets Saturday's group split in half.",
-      "Text GNPROADS to 333111 before you leave — it's the live road-status line. Saturday's hike doesn't depend on it; the easy group's afternoon does.",
-      "Restaurant reservations, and confirm hours first — you're arriving in the gap between summer and ski season and things close without warning."
+      "Middle Fork float for Sunday: Great Northern Resort (800-735-7897), $650/boat full day, 2 anglers per boat",
+      "Montana fishing licences at ols.fwp.mt.gov, ~$32 each",
+      "Two AWD SUVs at FCA",
+      "Dinner reservations. Confirm they're open"
     ],
-    "caveat": "Everything with a price, a distance or a date was verified against NPS, the operator's own site, or published fare and rate data in Aug 2026. Road status is the one thing nobody can verify in advance — it turns on the weather in the week you travel, which is exactly why Saturday's hike was picked below the closure.",
     "days": [
       {
         "day": "Day 1 · Fri 10/16 (Arrival)",
-        "headline": "Land, provision, stretch your legs. Keep it short — tomorrow is 1,800 feet.",
+        "headline": "Arrive, stock up, short walk.",
         "blocks": [
           {
             "when": "Midday",
             "what": "Land at FCA, collect two AWD SUVs",
-            "detail": "Glacier Park International is 19 minutes from Whitefish — far and away the easiest arrival of anywhere you considered. Seven rental agencies sit right by baggage claim. Take two vehicles even if eight of you would squeeze into one: tomorrow the group splits.",
+            "detail": "FCA is 19 min from Whitefish. Rental desks are by baggage claim.",
             "cost": "~$800 for both cars, 4 days at ~$100/day"
           },
           {
             "when": "First thing",
             "what": "Text GNPROADS to 333111",
-            "detail": "Live Going-to-the-Sun Road status. Saturday's hike is below the west entrance and doesn't care what the answer is — but whether Avalanche Lake is reachable does, and so does Sunday.",
+            "detail": "Live Going-to-the-Sun Road status.",
             "cost": ""
           },
           {
             "when": "~1 PM",
             "what": "Costco, 345 Cascade Loop, Kalispell",
-            "detail": "Note the address — the old US-93 warehouse closed in Nov 2025 and this is the new one, about 17 minutes from Whitefish. Nothing inside the park sells food in October, so you're packing lunches. Buy tomorrow's on the way in and make them tonight. Groceries are untaxed even in Whitefish.",
+            "detail": "The new location, 17 min from Whitefish. Buy lunches for the park.",
             "cost": ""
           },
           {
             "when": "Late afternoon",
-            "what": "Check in, then something short on the Whitefish Trail",
-            "detail": "The Lion Mountain trailhead is five minutes out of town and the loop there runs about three flat miles through larch — enough to shake out the flight without spending tomorrow's legs. Whitefish City Beach is the lazier version: walk down, look at the lake, walk back.",
+            "what": "Check in, short walk",
+            "detail": "Lion Mountain loop, ~3 flat miles, 5 min from town. Or Whitefish City Beach.",
             "cost": ""
           },
           {
             "when": "Dinner",
-            "what": "Walk out into town",
-            "detail": "Whitefish is the only town in the valley with a real main street, which is the whole argument for staying here. Craggy Range does burgers at $13.50-18.50; Tupelo Grille is the upscale end at $34-57 — but it auto-applies 20% gratuity to parties of six or more and won't split a bill more than four ways.",
+            "what": "Dinner in town",
+            "detail": "Craggy Range (burgers, $14-19) or Tupelo Grille ($34-57, 20% auto-gratuity for 6+).",
             "cost": ""
           },
           {
             "when": "After dinner",
-            "what": "Movie night: Brokeback Mountain — then pack",
-            "detail": "Filmed just over the Alberta line, an hour or so north of where you're sitting. Old Boy and Internal Affairs are better films and belong to a different trip. Fill water bottles and load packs before anyone opens a second beer; you want to be in the trucks by 7:30.",
+            "what": "Movie: Brokeback Mountain",
+            "detail": "Pack for tomorrow. Out by 7:30.",
             "cost": ""
           }
         ]
       },
       {
         "day": "Day 2 · Sat 10/17 (The big hike)",
-        "headline": "Apgar Lookout, then the lake. The whole day sits below the gate, so no road closure can cancel it.",
+        "headline": "Apgar Lookout, then Lake McDonald.",
         "blocks": [
           {
             "when": "7:30 AM",
             "what": "Out of the house",
-            "detail": "Sunrise is around 8:00 in mid-October and it's dark by 6:45, so daylight is the real constraint today — not the mileage. Whitefish to the West Glacier gate is 39 minutes; the Apgar Lookout trailhead is a couple of miles past it down a gravel spur.",
+            "detail": "West Glacier gate is 39 min. Trailhead is a couple of miles past it.",
             "cost": ""
           },
           {
             "when": "At the gate",
             "what": "Entrance fee",
-            "detail": "$35 per vehicle for seven days, so $70 for two. No vehicle reservation is needed in 2026 — that system is gone, replaced by timed parking at Logan Pass you won't reach anyway. The fee drops to $25 on Nov 1, just after you leave.",
+            "detail": "$35 per vehicle, so $70 for two.",
             "cost": "$70"
           },
           {
             "when": "The big one",
             "what": "Apgar Lookout — 7.2 miles round trip, ~1,800 ft",
-            "detail": "Three long switchbacks up a south-facing slope to a fire lookout at about 5,200 feet, staring straight down the length of Lake McDonald into the peaks. It's the right big hike for this weekend for three reasons: it's low enough to stay out of early snow, it faces south so it dries and warms first, and it sits just inside the west entrance — below every point NPS might close the road. The slope burned in 2003, so it's open the whole way up: you get the view for the entire climb instead of a tunnel of trees. Budget 4-5 hours with lunch at the top.",
+            "detail": "Switchbacks to a fire lookout over Lake McDonald. 4-5 hours with lunch.",
             "cost": "bring lunch"
           },
           {
             "when": "The split",
-            "what": "Not everyone wants 1,800 feet — plan for that",
-            "detail": "With eight to ten people this is never one pace. Whoever taps out takes the second SUV 10 miles up the road to Trail of the Cedars — a 0.7-mile accessible boardwalk loop — and on to Avalanche Lake, 2.3 miles each way for 500 feet. Both groups meet at Lake McDonald Lodge in the afternoon. That is the reason for two vehicles.",
+            "what": "Easier option",
+            "detail": "Second group takes the other SUV to Trail of the Cedars (0.7 mi) and Avalanche Lake (4.6 mi round trip). Meet at Lake McDonald Lodge.",
             "cost": ""
           },
           {
             "when": "If the gate has moved down",
-            "what": "Johns Lake Loop and Rocky Point instead",
-            "detail": "Avalanche sits above the Lake McDonald Lodge gate, so an early closure puts it out of reach. Johns Lake (3-mile loop, 160 ft) and Rocky Point (1.1 miles, nearly flat) are both below the lodge and stay reachable wherever NPS draws the line. The lookout is unaffected either way.",
+            "what": "If the road closes lower",
+            "detail": "If the road closes below Avalanche: Johns Lake (3 mi) or Rocky Point (1.1 mi).",
             "cost": ""
           },
           {
             "when": "Bring it with you",
-            "what": "There is no food in the park",
-            "detail": "Every in-park restaurant closed in September — Russell's on Sept 28, Ptarmigan on Sept 21, Two Dog Flats on Sept 13. NPS says the Apgar camp store 'may' be open. Do not count on it. Carry more water than feels necessary: the lookout climb is exposed the whole way and there's nothing on it.",
+            "what": "No food in the park",
+            "detail": "Every in-park restaurant is closed. Bring food and extra water.",
             "cost": ""
           },
           {
             "when": "Late afternoon",
-            "what": "Lake McDonald, and look up",
-            "detail": "NPS runs a Hawk Watch from late September through October and roughly 2,000 golden eagles pass Mount Brown in a season — observable from around Lake McDonald Lodge. It's the best-sourced wildlife opportunity of the trip and nobody plans for it. Good place to sit still while the fast group finishes coming down.",
+            "what": "Lake McDonald",
+            "detail": "Golden eagle migration over Mount Brown, visible from the lodge.",
             "cost": ""
           },
           {
             "when": "Evening",
-            "what": "Back in Whitefish by 7, and eat properly",
-            "detail": "This is the night to have booked something. Tupelo or one of the main-street places — confirm hours when you reserve, because mid-October is when kitchens quietly stop opening on the slow nights.",
+            "what": "Dinner in Whitefish",
+            "detail": "Book dinner ahead.",
             "cost": ""
           }
         ]
       },
       {
         "day": "Day 3 · Sun 10/18",
-        "headline": "Float the Middle Fork — the one guided thing still running, and the only thing your legs will accept.",
+        "headline": "Float the Middle Fork.",
         "blocks": [
           {
             "when": "The main event",
             "what": "Float the Middle Fork — four boats",
-            "detail": "This is the README's 'let's all learn to fish', and putting it the day after the lookout is deliberate: you sit down for six hours. Montana's western district season runs to Nov 30, so it's one of the very few guided things still operating in the valley. Great Northern Resort posts $650 for a full day and $490 for a half, two anglers per boat, which means four boats for eight of you.",
+            "detail": "Great Northern Resort: $650 full day or $490 half, 2 anglers per boat.",
             "cost": "~$2,600 + tips"
           },
           {
             "when": "Before you go",
-            "what": "Licences, and a wrinkle",
-            "detail": "The park boundary on the Middle Fork is the high-water mark, so a guided float there does need a Montana licence even though fishing inside the park doesn't. About $32 each at ols.fwp.mt.gov — buy them Friday night, not at the put-in.",
+            "what": "Fishing licences",
+            "detail": "Montana licence needed on the Middle Fork. Buy at ols.fwp.mt.gov before Sunday.",
             "cost": "$32 pp"
           },
           {
             "when": "If nobody wants a boat",
-            "what": "National Bison Range, or a slow day in town",
-            "detail": "Red Sleep Mountain Drive runs through Oct 31 and is $35 for a van of 10 or more; they ask you to call 406-644-2211 about an hour ahead. Whitefish itself is a fine Sunday — the distillery and the breweries are all on the same walkable street, which is the other half of why you're based here.",
+            "what": "Bison Range or a day in town",
+            "detail": "Red Sleep Mountain Drive (through Oct 31, $35 per van; call 406-644-2211 an hour ahead), or breweries and the distillery in Whitefish.",
             "cost": ""
           },
           {
             "when": "What not to do today",
             "what": "Many Glacier",
-            "detail": "It's the best of the east side — Grinnell Lake 3.4 miles nearly flat, Redrock Falls 1.8, Apikuni Falls 1 mile for 700 feet. But with Logan Pass shut you go the long way round via US-2 and Marias Pass: 131 miles, about 2h50 each way. Close to six hours in the truck for a day hike, on the day after a 1,800-foot climb. Save it for a June trip.",
+            "detail": "2h50 each way with Logan Pass closed. Skip it.",
             "cost": ""
           },
           {
             "when": "Evening",
-            "what": "Something is actually on",
-            "detail": "'The Game's Afoot' runs Oct 16-25 at the Bigfork Center for the Performing Arts — a genuine rainy-day option for eight, and a 40-minute drive. The Vienna Boys Choir is in Kalispell at 7pm, which may or may not be the vibe.",
+            "what": "Theatre in Bigfork",
+            "detail": "'The Game's Afoot' at Bigfork Center for the Performing Arts, 40 min away.",
             "cost": ""
           },
           {
             "when": "Before bed",
-            "what": "Pack — Monday is a 19-minute departure",
-            "detail": "Checkout is Monday 10/19 and FCA is 19 minutes from the house, so leave an hour and you're comfortable; there's no dawn scramble. Monday is also NPS's stated target for shutting the alpine road, so if it's open when you drive out you're watching the last hours of the season. Two things you're just missing: the larch peak Oct 20-31, Kintla and Bowman closer to Oct 22-25, so you catch maybe 60-85% of it — and Bigfork's larch festival, which was Oct 10.",
+            "what": "Pack",
+            "detail": "Checkout Mon 10/19. FCA is 19 min away.",
             "cost": ""
           }
         ]

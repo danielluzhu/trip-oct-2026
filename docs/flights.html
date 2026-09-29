@@ -325,7 +325,7 @@
     border-radius: 999px;
     margin-bottom: .7rem;
   }
-  .filter-note, .calc-note {
+  .calc-note {
     font-size: .8rem;
     color: var(--muted);
     margin: .5rem 0;
@@ -344,13 +344,6 @@
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     padding: .1rem .3rem;
     border-radius: 4px;
-  }
-  .quality {
-    font-size: .76rem;
-    color: var(--muted);
-    margin-top: .6rem;
-    padding-left: .7rem;
-    border-left: 2px solid var(--accent-2);
   }
   .card a:not(.cta):not(.add-idea-link) {
     color: var(--accent);
@@ -402,7 +395,6 @@
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
   /* ---------- housing areas ---------- */
-  .areas { display: flex; flex-direction: column; gap: 1.8rem; }
   .area {
     display: grid;
     grid-template-columns: 220px 1fr;
@@ -590,7 +582,7 @@
   <div class="hero-inner">
     <div class="eyebrow">Oct 15-19, 2026 &middot; 5-10 people</div>
     <h1>Who lands when</h1>
-    <p class="tagline">Everyone's flights in and out of Montana, so we know who's on which truck and when.</p>
+    <p class="tagline">Everyone's flights in and out.</p>
   </div>
   <div class="hero-credit">Going-to-the-Sun Road &middot; Wikimedia Commons</div>
 </header>
@@ -607,12 +599,12 @@
   <section class="card">
     <div class="pick-badge">Flights</div>
     <h2>Who's flying when</h2>
-    <div class="subtitle">In by 2026-10-15, out 2026-10-19. Each flight is an issue on the trip's GitHub repo &mdash; you'll need a free GitHub account to add one.</div>
+    <div class="subtitle">Needs a free GitHub account.</div>
     <div class="flight-actions">
       <a class="cta" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?template=flight.yml&amp;title=Flight+in%3A+&amp;to=FCA&amp;date=2026-10-15" target="_blank" rel="noopener">+ Add a flight in</a>
       <a class="cta" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?template=flight.yml&amp;title=Flight+out%3A+&amp;from=FCA&amp;date=2026-10-19" target="_blank" rel="noopener">+ Add a flight out</a>
     </div>
-    <div class="calc-note">To change a flight, hit <em>Edit</em> next to it and edit the issue on GitHub (&hellip; menu &rarr; Edit). To remove one, close the issue. Only the person who added a flight can edit it. Changes show here on reload. Don't post confirmation codes &mdash; the repo is public.</div>
+    <div class="calc-note">To change a flight, click Edit and edit the issue. To remove it, close the issue. The repo is public, so no confirmation codes.</div>
   </section>
 
   <section class="card">
@@ -735,7 +727,7 @@
 </main>
 <footer>
   Homeless in Montana &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights<br>
-  Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
+  Photos: Wikimedia Commons.
 </footer>
 </body>
 </html>

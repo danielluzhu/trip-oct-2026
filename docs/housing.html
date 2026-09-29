@@ -325,7 +325,7 @@
     border-radius: 999px;
     margin-bottom: .7rem;
   }
-  .filter-note, .calc-note {
+  .calc-note {
     font-size: .8rem;
     color: var(--muted);
     margin: .5rem 0;
@@ -344,13 +344,6 @@
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     padding: .1rem .3rem;
     border-radius: 4px;
-  }
-  .quality {
-    font-size: .76rem;
-    color: var(--muted);
-    margin-top: .6rem;
-    padding-left: .7rem;
-    border-left: 2px solid var(--accent-2);
   }
   .card a:not(.cta):not(.add-idea-link) {
     color: var(--accent);
@@ -402,7 +395,6 @@
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
   /* ---------- housing areas ---------- */
-  .areas { display: flex; flex-direction: column; gap: 1.8rem; }
   .area {
     display: grid;
     grid-template-columns: 220px 1fr;
@@ -590,7 +582,7 @@
   <div class="hero-inner">
     <div class="eyebrow">Oct 15-19, 2026 &middot; 5-10 people</div>
     <h1>Whitefish it is</h1>
-    <p class="tagline">The house is picked — what it has, what Whitefish runs once the fees land, and the four towns we passed on, for the record.</p>
+    <p class="tagline">The Quarry house, Thu to Mon.</p>
   </div>
   <div class="hero-credit">Whitefish Lake in autumn &middot; Wikimedia Commons</div>
 </header>
@@ -625,146 +617,53 @@
         <a class="cta" href="https://www.airbnb.com/rooms/49522099?check_in=2026-10-15&amp;check_out=2026-10-19&amp;adults=8" target="_blank" rel="noopener">Open the listing on Airbnb &rarr;</a>
       </div>
     </div>
-    <div class="caveat">It&#39;s a 3-bedroom, not the 4+ we were searching for — getting to 10 depends on the bunks, so check the bed list against the final headcount.</div>
+    <div class="caveat">3 bedrooms. Sleeping 10 depends on the bunks.</div>
   </section>
 
   <section class="card">
-    <h2>If it falls through</h2>
-    <p class="area-vibe">Whitefish is decided. It&#39;s 19 minutes from the airport, 39 from the park entrance, and the only town in the valley with a real main street — which matters more than usual on this trip, because nothing inside the park is open for food and the ski mountain hasn&#39;t woken up yet. Mid-October is a genuine dead zone here: Whitefish Mountain closed Sept 20 and doesn&#39;t reopen until Dec 4, and park visitation drops to 18% of its July peak. That&#39;s why it&#39;s cheap, and also why you should check that your restaurant is open before you drive to it. The four other towns are still below for the record — and because a cabin in Columbia Falls is genuinely cheaper if the Whitefish inventory dries up.</p>
-    <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.7&amp;ne_lng=-113.8&amp;sw_lat=47.9&amp;sw_lng=-114.6&amp;zoom=8" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
-    <div class="filter-note">
-      Filters baked into that link: <strong>2026-10-15 to 2026-10-19</strong>,
-      <strong>8 guests</strong>, <strong>4+ bedrooms</strong>,
-      entire place only, map bounded to the Flathead Valley.
-      Add the <em>Cabin</em> property-type filter in Airbnb's own panel to narrow further.
+    <h2>Backups</h2>
+    <div class="subtitle">Estimated 4-night totals for a 4BR, fees and tax in</div>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Town</th><th>Drive</th><th>4 nights</th><th></th></tr>
+<tr>
+        <td><strong>Whitefish</strong></td>
+        <td class="muted-cell">19 min to FCA, 39 to the park</td>
+        <td>$2,709</td>
+        <td><a href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.52&amp;ne_lng=-114.22&amp;sw_lat=48.32&amp;sw_lng=-114.45&amp;zoom=10" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>
+<tr>
+        <td><strong>Columbia Falls</strong></td>
+        <td class="muted-cell">17 min from Whitefish, 20 to the park</td>
+        <td>$2,276</td>
+        <td><a href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.46&amp;ne_lng=-114.05&amp;sw_lat=48.3&amp;sw_lng=-114.28&amp;zoom=10" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>
+<tr>
+        <td><strong>Kalispell</strong></td>
+        <td class="muted-cell">24 min from Whitefish, 45 to the park</td>
+        <td>$2,153</td>
+        <td><a href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.3&amp;ne_lng=-114.18&amp;sw_lat=48.12&amp;sw_lng=-114.42&amp;zoom=10" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>
+<tr>
+        <td><strong>West Glacier / Coram</strong></td>
+        <td class="muted-cell">At the park gate</td>
+        <td>$2,645</td>
+        <td><a href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.55&amp;ne_lng=-113.85&amp;sw_lat=48.33&amp;sw_lng=-114.08&amp;zoom=10" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>
+<tr>
+        <td><strong>Bigfork</strong></td>
+        <td class="muted-cell">38 min from FCA, 55 to the park</td>
+        <td>$2,399</td>
+        <td><a href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.16&amp;ne_lng=-113.95&amp;sw_lat=47.96&amp;sw_lng=-114.16&amp;zoom=10" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>
+    </table>
     </div>
-    <div class="caveat">
-      <strong>Why this is a link and not an embed:</strong> Airbnb sends
-      <code>x-frame-options: SAMEORIGIN</code>, so its pages cannot be displayed inside
-      another site &mdash; an iframe renders blank. There is also no public Airbnb search API.
-      No public source publishes rates for Oct 15-19, 2026 anywhere in this valley — every booking engine is JavaScript-gated or blocks automated requests. The bands below are published floor rates, operator rate calendars and market averages read Aug 2026. Each area is labelled with how good its data actually is.
-      Photos are of the areas themselves (Wikimedia Commons), not listing photos.
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Whitefish, and the four we passed on</h2>
-    <div class="subtitle">Every figure is the total for the stay, not a nightly rate &mdash; cleaning, platform fee and lodging tax are already in it. Sorted by drive time to the West Glacier gate.</div>
-    <div class="areas">
-
-    <div class="area picked">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Aerial%20-%20Whitefish%20Lake%20%28MT%29%2001%20%2810322715514%29.jpg?width=800" alt="Whitefish Lake" loading="lazy">
-      <div class="area-body">
-        <h3>Whitefish <span class="pill ok">staying here</span></h3>
-        <div class="subtitle">19 min to FCA, 39 to the park &middot; Whitefish Lake</div>
-        <p class="area-vibe">The one town with restaurants, bars and a walkable centre. Most expensive of the five, and the only one that charges resort tax — but the premium is inventory, not tax.</p>
-        <table>
-          <tr>
-            <td>4 nights, all in</td>
-            <td><span class="stay-total">$2,709</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;$339 each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>$243-$844</td></tr>
-        </table>
-        <div class="quality">Data quality: Good — eight 4-5BR properties with published floor rates ($243-389), plus market ADR. Floor rates may not be the October rate.</div>
-        <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.52&amp;ne_lng=-114.22&amp;sw_lat=48.32&amp;sw_lng=-114.45&amp;zoom=10" target="_blank" rel="noopener">Search Whitefish on Airbnb &rarr;</a>
-      </div>
-    </div>
-
-    <div class="area">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Going-to-the-Sun%20Road%20-%20Glacier%20National%20Park.jpg?width=800" alt="Going-to-the-Sun Road" loading="lazy">
-      <div class="area-body">
-        <h3>Columbia Falls</h3>
-        <div class="subtitle">17 min from Whitefish, 20 to the park &middot; Going-to-the-Sun Road</div>
-        <p class="area-vibe">The best-value large-group inventory in the valley and the closest real town to the West Glacier gate. Less to do at night, which matters less than you&#39;d think in a week when nothing&#39;s open anyway.</p>
-        <table>
-          <tr>
-            <td>4 nights, all in</td>
-            <td><span class="stay-total">$2,276</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;$284 each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>$216-$579</td></tr>
-        </table>
-        <div class="quality">Data quality: Good — five 4-5BR properties with published floor rates ($216-534) plus two Vacasa homes at $377-579.</div>
-        <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.46&amp;ne_lng=-114.05&amp;sw_lat=48.3&amp;sw_lng=-114.28&amp;zoom=10" target="_blank" rel="noopener">Search Columbia Falls on Airbnb &rarr;</a>
-      </div>
-    </div>
-
-    <div class="area">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2832575575507%29.jpg?width=800" alt="Flathead River" loading="lazy">
-      <div class="area-body">
-        <h3>Kalispell</h3>
-        <div class="subtitle">24 min from Whitefish, 45 to the park &middot; Flathead River</div>
-        <p class="area-vibe">Cheapest beds and where the Costco is. Least charming of the five and furthest from the park, but if the group&#39;s priority is the number at the bottom of the calculator, it&#39;s here.</p>
-        <table>
-          <tr>
-            <td>4 nights, all in</td>
-            <td><span class="stay-total">$2,153</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;$269 each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>$250-$550</td></tr>
-        </table>
-        <div class="quality">Data quality: Weak — exactly one 4BR with a published rate ($366). No local manager publishes rates; one analytics source returned Great Falls data by mistake.</div>
-        <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.3&amp;ne_lng=-114.18&amp;sw_lat=48.12&amp;sw_lng=-114.42&amp;zoom=10" target="_blank" rel="noopener">Search Kalispell on Airbnb &rarr;</a>
-      </div>
-    </div>
-
-    <div class="area">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20McDonald%2C%20Glacier%20National%20Park%2C%20Montana%20USA.jpg?width=800" alt="Lake McDonald" loading="lazy">
-      <div class="area-body">
-        <h3>West Glacier / Coram</h3>
-        <div class="subtitle">At the park gate &middot; Lake McDonald</div>
-        <p class="area-vibe">Wake up at the entrance. The catch is that this corridor is built for summer — the one resort with published rates ends its season Oct 15, the day before you&#39;d arrive, and there&#39;s almost no bookable 4BR inventory.</p>
-        <table>
-          <tr>
-            <td>4 nights, all in</td>
-            <td><span class="stay-total">$2,645</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;$331 each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>$300-$700</td></tr>
-        </table>
-        <div class="quality">Data quality: Thin — one 3BR resort ($450 off-season) whose rate calendar stops Oct 15, plus an area-level average. Verify anything here is even open.</div>
-        <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.55&amp;ne_lng=-113.85&amp;sw_lat=48.33&amp;sw_lng=-114.08&amp;zoom=10" target="_blank" rel="noopener">Search West Glacier / Coram on Airbnb &rarr;</a>
-      </div>
-    </div>
-
-    <div class="area">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kayaking%20on%20the%20Flathead%20National%20Forest%20%2833641150388%29.jpg?width=800" alt="Flathead Lake" loading="lazy">
-      <div class="area-body">
-        <h3>Bigfork</h3>
-        <div class="subtitle">38 min from FCA, 55 to the park &middot; Flathead Lake</div>
-        <p class="area-vibe">Flathead Lake, an arts-town main street, and a working theatre — the only one of the five with an actual evening option in October. Furthest from Glacier, closest to a rainy-day plan.</p>
-        <table>
-          <tr>
-            <td>4 nights, all in</td>
-            <td><span class="stay-total">$2,399</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;$300 each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>$250-$900</td></tr>
-        </table>
-        <div class="quality">Data quality: Weak — around ten large lakefront homes exist but every price sits behind a booking widget. Largest with a published rate is a 3BR at $434.</div>
-        <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.16&amp;ne_lng=-113.95&amp;sw_lat=47.96&amp;sw_lng=-114.16&amp;zoom=10" target="_blank" rel="noopener">Search Bigfork on Airbnb &rarr;</a>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Booking notes</h2>
-    <ul class="sites">
-      <li>Mid-October is a true shoulder trough: Whitefish Mountain closed Sept 20 and reopens Dec 4, and Glacier&#39;s October visitation is 18% of its July peak — an 82% drop.</li>
-      <li>The one published seasonal table in the valley (Great Northern, Coram) shows off-season at 36-39% below peak. Expect a real rate discount nearer 35% than the 80% the occupancy collapse might suggest.</li>
-      <li>Montana charges 8% lodging tax statewide. Whitefish adds a 3% resort tax (11% total); Columbia Falls, Kalispell, Bigfork and West Glacier add nothing. On a 4-night stay that gap is about $60 — do not pick a town over it.</li>
-      <li>Cleaning runs $325+ per turnover for a 4BR in this market, and that&#39;s the cleaner&#39;s price to the host, so the guest-facing fee is usually higher. On four nights it&#39;s still the single biggest add-on.</li>
-      <li>Book by phone. Vacay Whitefish (406-609-9595) has the deepest published 4-5BR inventory in both Whitefish and Columbia Falls; Stay Montana (888-871-7856) holds the big Bigfork lakefront homes.</li>
-      <li>Anything sleeping 10 usually means 4-5 bedrooms, and Airbnb&#39;s guest count includes sofa beds — read the actual bed list.</li>
-    </ul>
-    <a class="add-idea-link" href="https://www.vrbo.com/search?destination=Whitefish%2C%20Montana&amp;startDate=2026-10-15&amp;endDate=2026-10-19&amp;adults=8" target="_blank" rel="noopener">Same dates on VRBO &rarr;</a>
+    <a class="add-idea-link" href="https://www.airbnb.com/s/Whitefish--Montana--United-States/homes?checkin=2026-10-15&amp;checkout=2026-10-19&amp;adults=8&amp;min_bedrooms=4&amp;room_types%5B%5D=Entire+home%2Fapt&amp;search_by_map=true&amp;ne_lat=48.7&amp;ne_lng=-113.8&amp;sw_lat=47.9&amp;sw_lng=-114.6&amp;zoom=8" target="_blank" rel="noopener">Search the whole valley on Airbnb &rarr;</a>
   </section>
 </main>
 <footer>
   Homeless in Montana &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights<br>
-  Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
+  Photos: Wikimedia Commons.
 </footer>
 </body>
 </html>

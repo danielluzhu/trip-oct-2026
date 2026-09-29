@@ -420,7 +420,7 @@ const sharedStyle = /* css */ `
     border-radius: 999px;
     margin-bottom: .7rem;
   }
-  .filter-note, .calc-note {
+  .calc-note {
     font-size: .8rem;
     color: var(--muted);
     margin: .5rem 0;
@@ -439,13 +439,6 @@ const sharedStyle = /* css */ `
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     padding: .1rem .3rem;
     border-radius: 4px;
-  }
-  .quality {
-    font-size: .76rem;
-    color: var(--muted);
-    margin-top: .6rem;
-    padding-left: .7rem;
-    border-left: 2px solid var(--accent-2);
   }
   .card a:not(.cta):not(.add-idea-link) {
     color: var(--accent);
@@ -497,7 +490,6 @@ const sharedStyle = /* css */ `
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
   /* ---------- housing areas ---------- */
-  .areas { display: flex; flex-direction: column; gap: 1.8rem; }
   .area {
     display: grid;
     grid-template-columns: 220px 1fr;
@@ -735,42 +727,42 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Lake McDonald panorama",
     heading: "Homeless in Montana",
     tagline:
-      "Four nights in Whitefish, at the gate of Glacier, in the last week before the mountain shuts for winter.",
+      "Four nights in Whitefish, at the gate of Glacier.",
   },
   flights: {
     file: "Going-to-the-Sun Road - Glacier National Park.jpg",
     credit: "Going-to-the-Sun Road",
     heading: "Who lands when",
     tagline:
-      "Everyone's flights in and out of Montana, so we know who's on which truck and when.",
+      "Everyone's flights in and out.",
   },
   housing: {
     file: "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
     credit: "Whitefish Lake in autumn",
     heading: "Whitefish it is",
     tagline:
-      "The house is picked — what it has, what Whitefish runs once the fees land, and the four towns we passed on, for the record.",
+      "The Quarry house, Thu to Mon.",
   },
   costs: {
     file: "Sunrise at Swiftcurrent Lake as seen from the Many Glacier Hotel (48490111337).jpg",
     credit: "Sunrise at Swiftcurrent Lake, Many Glacier",
     heading: "What it runs",
     tagline:
-      "A cabin, two trucks, four days of eating and the guided stuff — what goes in the pot and what it splits to.",
+      "The shared costs and what each person pays.",
   },
   shortlist: {
     file: "Vermont fall foliage hogback mountain.JPG",
     credit: "Hogback Mountain, Vermont",
     heading: "The four we didn't pick",
     tagline:
-      "Vermont, Wyoming, North Carolina and Bozeman — the airfare, the weather and the reason each one lost. Kept for the record, and for the next trip.",
+      "The four places we didn't pick.",
   },
   itinerary: {
     file: "Wild Goose Island Overlook (54004237332).jpg",
     credit: "Wild Goose Island, St. Mary Lake",
     heading: "The plan",
     tagline:
-      "Three days out of Whitefish, built around one hard hike on the Saturday, in the week the high country closes.",
+      "Four nights in Whitefish. One big hike, one float.",
   },
 };
 
@@ -811,7 +803,7 @@ ${body}
 </main>
 <footer>
   ${escapeHtml(trip.title)} &middot; ${trip.dates}<br>
-  Photography from Wikimedia Commons. Prices researched, not quoted &mdash; check before you book.
+  Photos: Wikimedia Commons.
 </footer>
 </body>
 </html>`;
@@ -857,13 +849,6 @@ function homePage() {
       <tr><td>Group total</td><td class="group-total">${fmt(loc.airfare.groupLow)}-${fmt(loc.airfare.groupHigh)} (~${fmt(loc.airfare.groupTotal)} at midpoint)</td></tr>
     </table>
 
-    <div class="section-label">4BR Airbnb cabin</div>
-    <table>
-      <tr><td>Nightly</td><td>${loc.airbnb.nightly}</td></tr>
-      <tr><td>Total</td><td>${loc.airbnb.totalRange}</td></tr>
-      <tr><td>Per person</td><td>${loc.airbnb.perPerson}</td></tr>
-    </table>
-
     <div class="section-label">Top things to do</div>
     <ul class="sites">
       ${loc.topSites.map((s) => `<li>${s}</li>`).join("\n      ")}
@@ -876,14 +861,7 @@ function homePage() {
 
   const elsewhere = `
   <section class="card">
-    <h2>How we got here</h2>
-    <div class="subtitle">Vermont, Wyoming, North Carolina and Bozeman were all on the list</div>
-    <p class="area-vibe">
-      Four other places were costed out properly &mdash; airfare from all three origins,
-      weather, cabins, what there is to do. They lost. That research now lives on its
-      own page so this one can be about Glacier.
-    </p>
-    <a class="add-idea-link" href="${href("/shortlist")}">See the shortlist and why each one lost &rarr;</a>
+    <a class="add-idea-link" href="${href("/shortlist")}">The four places we didn't pick &rarr;</a>
   </section>`;
 
   return layout("home", `Glacier — ${trip.title}`, body + "\n" + elsewhere);
@@ -949,15 +927,7 @@ function shortlistPage() {
   <section class="card">
     <div class="pick-badge">Decided</div>
     <h2>Montana won</h2>
-    <div class="subtitle">Kept for the record &mdash; and because one of these is the next trip</div>
-    <p class="area-vibe">
-      Five places went through the same questions: what does it cost to fly ${PARTY.nyc} people
-      from New York, ${PARTY.sf} from the Bay Area and ${PARTY.seattle} from Seattle; what is the
-      weather actually doing in the third week of October; what does a four-bedroom cabin run;
-      and what is there to do once you land. Glacier took it on the strength of the arrival
-      &mdash; 19 minutes from plane to town &mdash; and on having a nonstop from two of the three
-      origins. Everything below is what the other four looked like.
-    </p>
+    <div class="subtitle">The other four options, for the record</div>
     <a class="add-idea-link" href="${href("/glacier")}">&larr; Back to the Glacier plan</a>
   </section>`;
 
@@ -1054,7 +1024,6 @@ async function itineraryPage() {
     <ul class="sites">
       ${plan.bookAhead.map((b: string) => `<li>${escapeHtml(b)}</li>`).join("\n      ")}
     </ul>
-    <div class="caveat">${escapeHtml(plan.caveat)}</div>
   </section>`;
 
   return layout(
@@ -1119,25 +1088,12 @@ function housingPage() {
         bbox: a.bbox,
         zoom: 10,
       });
-      return `
-    <div class="area${a.picked ? " picked" : ""}">
-      <img src="${a.photo.url}" alt="${escapeHtml(a.photo.caption)}" loading="lazy">
-      <div class="area-body">
-        <h3>${escapeHtml(a.name)}${a.picked ? ` <span class="pill ok">staying here</span>` : ""}</h3>
-        <div class="subtitle">${escapeHtml(a.drive)} &middot; ${escapeHtml(a.photo.caption)}</div>
-        <p class="area-vibe">${escapeHtml(a.vibe)}</p>
-        <table>
-          <tr>
-            <td>${housing.nights} nights, all in</td>
-            <td><span class="stay-total">${fmt(stayTotal(a))}</span>
-              <span class="muted-cell">&nbsp;&middot;&nbsp;${fmt(stayTotal(a) / 8)} each at 8</span></td>
-          </tr>
-          <tr><td>Nightly range (sleeps 8-10)</td><td>${fmt(a.nightly.low)}-${fmt(a.nightly.high)}</td></tr>
-        </table>
-        <div class="quality">Data quality: ${escapeHtml(a.quality)}</div>
-        <a class="add-idea-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Search ${escapeHtml(a.name)} on Airbnb &rarr;</a>
-      </div>
-    </div>`;
+      return `<tr>
+        <td><strong>${escapeHtml(a.name)}</strong></td>
+        <td class="muted-cell">${escapeHtml(a.drive)}</td>
+        <td>${fmt(stayTotal(a))}</td>
+        <td><a href="${escapeHtml(url)}" target="_blank" rel="noopener">Search &rarr;</a></td>
+      </tr>`;
     })
     .join("\n");
 
@@ -1174,38 +1130,15 @@ function housingPage() {
   </section>
 
   <section class="card">
-    <h2>If it falls through</h2>
-    <p class="area-vibe">${escapeHtml(housing.intro)}</p>
-    <a class="add-idea-link" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Open the full pre-filtered Airbnb search &rarr;</a>
-    <div class="filter-note">
-      Filters baked into that link: <strong>${housing.checkin} to ${housing.checkout}</strong>,
-      <strong>${housing.defaultAdults} guests</strong>, <strong>${housing.minBedrooms}+ bedrooms</strong>,
-      entire place only, map bounded to the Flathead Valley.
-      Add the <em>Cabin</em> property-type filter in Airbnb's own panel to narrow further.
-    </div>
-    <div class="caveat">
-      <strong>Why this is a link and not an embed:</strong> Airbnb sends
-      <code>x-frame-options: SAMEORIGIN</code>, so its pages cannot be displayed inside
-      another site &mdash; an iframe renders blank. There is also no public Airbnb search API.
-      ${escapeHtml(housing.sourceNote)}
-      Photos are of the areas themselves (Wikimedia Commons), not listing photos.
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>${escapeHtml(housing.picked)}, and the four we passed on</h2>
-    <div class="subtitle">Every figure is the total for the stay, not a nightly rate &mdash; cleaning, platform fee and lodging tax are already in it. Sorted by drive time to the West Glacier gate.</div>
-    <div class="areas">
+    <h2>Backups</h2>
+    <div class="subtitle">Estimated ${housing.nights}-night totals for a 4BR, fees and tax in</div>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Town</th><th>Drive</th><th>${housing.nights} nights</th><th></th></tr>
 ${areaCards}
+    </table>
     </div>
-  </section>
-
-  <section class="card">
-    <h2>Booking notes</h2>
-    <ul class="sites">
-      ${housing.notes.map((n: string) => `<li>${escapeHtml(n)}</li>`).join("\n      ")}
-    </ul>
-    <a class="add-idea-link" href="${escapeHtml(housing.vrbo)}" target="_blank" rel="noopener">Same dates on VRBO &rarr;</a>
+    <a class="add-idea-link" href="${escapeHtml(wide)}" target="_blank" rel="noopener">Search the whole valley on Airbnb &rarr;</a>
   </section>`;
 
   return layout("housing", `Housing — ${trip.title}`, body);
@@ -1234,12 +1167,12 @@ function flightsPage() {
   <section class="card">
     <div class="pick-badge">Flights</div>
     <h2>Who's flying when</h2>
-    <div class="subtitle">In by ${housing.checkin}, out ${housing.checkout}. Each flight is an issue on the trip's GitHub repo &mdash; you'll need a free GitHub account to add one.</div>
+    <div class="subtitle">Needs a free GitHub account.</div>
     <div class="flight-actions">
       <a class="cta" href="${escapeHtml(flightFormUrl("Arriving"))}" target="_blank" rel="noopener">+ Add a flight in</a>
       <a class="cta" href="${escapeHtml(flightFormUrl("Departing"))}" target="_blank" rel="noopener">+ Add a flight out</a>
     </div>
-    <div class="calc-note">To change a flight, hit <em>Edit</em> next to it and edit the issue on GitHub (&hellip; menu &rarr; Edit). To remove one, close the issue. Only the person who added a flight can edit it. Changes show here on reload. Don't post confirmation codes &mdash; the repo is public.</div>
+    <div class="calc-note">To change a flight, click Edit and edit the issue. To remove it, close the issue. The repo is public, so no confirmation codes.</div>
   </section>
 
   <section class="card">
@@ -1411,7 +1344,7 @@ function costsPage() {
   <section class="card">
     <div class="pick-badge">Cost calculator</div>
     <h2>What this actually costs</h2>
-    <div class="subtitle">Every number below is editable. The dropdowns just fill them in &mdash; type over anything you have a real quote for, and the totals follow.</div>
+    <div class="subtitle">Every number is editable.</div>
     <div class="calc-actions">
       <button type="button" id="reset" class="calc-btn">Reset to researched defaults</button>
       <span class="calc-note" id="saved-note"></span>
@@ -1449,12 +1382,11 @@ function costsPage() {
       <label>Per person / day <input type="number" id="food-rate" min="0" step="5"></label>
       <label>Days eating <input type="number" id="food-days" min="1" max="21" ></label>
     </div>
-    <div class="caveat">${escapeHtml(costs.foodNote)}</div>
   </section>
 
   <section class="card">
     <div class="section-label">Extras &amp; activities</div>
-    <div class="subtitle">The things that actually differ between this trip and a generic one. Untick what you're not doing, change what you are, add your own.</div>
+    
     <div class="table-scroll">
       <table class="extras" id="extras">
         <tr><th>On</th><th>What</th><th>Amount</th><th>Charged</th><th>Cost</th><th></th></tr>
@@ -1465,13 +1397,13 @@ function costsPage() {
 
   <section class="card" id="results">
     <h2>The pot</h2>
-    <div class="subtitle">Shared costs only &mdash; the cabin, the trucks, the food and the extras. This is the number that gets split.</div>
+    
     <table id="breakdown"></table>
     <div class="total-row">
       <div><span class="total-label">To split</span><span class="total-big" id="grand">&mdash;</span></div>
       <div><span class="total-label">Each</span><span class="total-big accent" id="perhead">&mdash;</span></div>
     </div>
-    <div class="calc-note">Airfare isn't in here &mdash; everyone books their own. Once you've typed over a default it's your number, kept in this browser only.</div>
+    <div class="calc-note">Airfare not included. Your edits are saved in this browser.</div>
   </section>
 
 
