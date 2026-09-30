@@ -155,6 +155,11 @@ const sharedStyle = /* css */ `
     background-size: cover;
     background-position: center;
   }
+  /* Flights is a lookup page: a short banner so every card fits on screen. */
+  .hero.compact { min-height: 150px; }
+  .hero.compact .hero-inner { padding: 1rem 1.5rem 1.1rem; }
+  .hero.compact h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0; }
+  .hero.compact .tagline, .hero.compact .eyebrow { display: none; }
   .hero::before {
     content: "";
     position: absolute;
@@ -474,16 +479,25 @@ const sharedStyle = /* css */ `
 
   /* ---------- city comparison ---------- */
   /* ---------- flights ---------- */
-  .flight-day + .flight-day { margin-top: 1.2rem; }
-  h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .6rem 0 .2rem; color: var(--accent); letter-spacing: -.01em; }
-  ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
-  li.flight { border: 1px solid var(--border); border-radius: 10px; padding: .75rem .9rem; font-size: .92rem; }
-  li.flight .flight-who { font-size: 1.02rem; }
-  li.flight .flight-when { margin-left: .4rem; font-weight: 700; color: var(--accent); }
-  ol.flight-legs { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
-  li.flight-leg + li.flight-leg { border-top: 1px dashed var(--border); padding-top: .5rem; }
-  li.flight-leg .flight-no { font-weight: 700; }
-  li.flight summary { cursor: pointer; font-size: .84rem; color: var(--accent); margin-top: .3rem; }
+  .flight-cols { display: grid; gap: 0 1rem; }
+  @media (min-width: 760px) { .flight-cols { grid-template-columns: 1fr 1fr; } .flight-cols .card { padding: 1rem 1.1rem; } }
+  .flight-cols h2 { margin-bottom: .2rem; }
+  .flight-day + .flight-day { margin-top: .6rem; }
+  h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .2rem 0 .3rem; color: var(--accent); letter-spacing: -.01em; }
+  ul.flights { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .35rem; }
+  li.flight { border: 1px solid var(--border); border-radius: 8px; padding: .35rem .6rem; font-size: .86rem; line-height: 1.35; }
+  li.flight .flight-when { margin-left: .3rem; font-weight: 700; color: var(--accent); }
+  ol.flight-legs { list-style: none; padding: 0; margin: 0; }
+  li.flight-leg summary { cursor: pointer; list-style: none; }
+  li.flight-leg summary::-webkit-details-marker { display: none; }
+  li.flight-leg summary:hover .flight-no { text-decoration: underline; }
+  li.flight-leg .flight-no { font-weight: 700; margin-right: .25rem; }
+  li.flight-leg details[open] { padding-bottom: .4rem; }
+  .flight-add > summary { cursor: pointer; list-style: none; }
+  .flight-add > summary::-webkit-details-marker { display: none; }
+  .flight-add > summary h2 { display: inline; margin: 0; }
+  .flight-add > summary h2::after { content: " +"; color: var(--accent); }
+  .flight-add[open] > summary h2::after { content: " \2212"; }
   .flight-form .calc-grid .wide { grid-column: 1 / -1; }
   .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
   .flight-delete { margin-top: .5rem; }
@@ -523,6 +537,7 @@ const sharedStyle = /* css */ `
     .area { grid-template-columns: 1fr; }
     .area img { min-height: 0; aspect-ratio: 16/9; }
     .hero { min-height: 340px; }
+    .hero.compact { min-height: 120px; }
     .card { padding: 1.25rem; }
     .total-row { gap: 1.6rem; }
   }
@@ -789,7 +804,7 @@ function layout(activeNav: Nav, title: string, body: string) {
 <style>${sharedStyle}</style>
 </head>
 <body>
-<header class="hero" style="--hero:url('${img(hero.file, 2000)}')">
+<header class="hero${activeNav === "flights" ? " compact" : ""}" style="--hero:url('${img(hero.file, 2000)}')">
   <div class="hero-inner">
     <div class="eyebrow">${trip.datesShort} &middot; ${trip.groupSize} people</div>
     <h1>${hero.heading}</h1>
@@ -1250,23 +1265,22 @@ function flightForm(f: Partial<Flight>, submit: string) {
     </form>`;
 }
 
+// One line per leg; clicking it opens the notes and the edit form, so a
+// whole day's arrivals fit on one screen.
 function flightLeg(f: Flight) {
-  return `<li class="flight-leg">
-      <div class="flight-line">
-        <span class="flight-no">${escapeHtml(f.flight)}</span>${f.airline ? ` <span class="muted-cell">${escapeHtml(f.airline)}</span>` : ""}
-        &middot; ${escapeHtml(f.from || "?")} &rarr; ${escapeHtml(f.to || "?")}
-        &middot; ${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}${f.seat ? ` &middot; Seat ${escapeHtml(f.seat)}` : ""}
-      </div>
-      ${f.notes ? `<div class="muted-cell">${escapeHtml(f.notes)}</div>` : ""}
-      <details>
-        <summary>Edit</summary>
-        ${flightForm(f, "Save changes")}
-        <form method="POST" action="/flights/delete" class="flight-delete">
-          <input type="hidden" name="id" value="${escapeHtml(f.id)}">
-          <button type="submit" class="calc-btn">Delete this flight</button>
-        </form>
-      </details>
-    </li>`;
+  return `<li class="flight-leg"><details>
+      <summary title="${escapeHtml(f.notes)}">
+        <span class="flight-no">${escapeHtml(f.flight)}</span>
+        ${escapeHtml(f.from || "?")}&rarr;${escapeHtml(f.to || "?")}
+        <span class="muted-cell">${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}${f.seat ? ` &middot; ${escapeHtml(f.seat)}` : ""}</span>
+      </summary>
+      ${f.airline || f.notes ? `<div class="muted-cell">${escapeHtml([f.airline, f.notes].filter(Boolean).join(" · "))}</div>` : ""}
+      ${flightForm(f, "Save changes")}
+      <form method="POST" action="/flights/delete" class="flight-delete">
+        <input type="hidden" name="id" value="${escapeHtml(f.id)}">
+        <button type="submit" class="calc-btn">Delete this flight</button>
+      </form>
+    </details></li>`;
 }
 
 // One person's trip in one direction: every leg, layovers included.
@@ -1307,11 +1321,10 @@ function tripKey(t: Trip) {
 
 function tripItem(t: Trip) {
   const { time } = tripKey(t);
-  const route = [t.legs[0].from || "?", ...t.legs.map((l) => l.to || "?")].map(escapeHtml).join(" &rarr; ");
-  const when = t.direction === "in" ? `Lands FCA ${fmtTime(time)}` : `Leaves FCA ${fmtTime(time)}`;
+  const stops = t.legs.length - 1;
+  const when = `${t.direction === "in" ? "lands" : "leaves"} ${fmtTime(time)}`;
   return `<li class="flight">
-      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span></div>
-      <div class="muted-cell">${route}${t.legs.length > 1 ? ` &middot; ${t.legs.length - 1} layover${t.legs.length > 2 ? "s" : ""}` : t.legs[0].flight === "TBD" ? "" : " &middot; nonstop"}</div>
+      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span>${stops ? ` <span class="muted-cell">&middot; ${stops} stop${stops > 1 ? "s" : ""}</span>` : ""}</div>
       <ol class="flight-legs">${t.legs.map(flightLeg).join("\n")}</ol>
     </li>`;
 }
@@ -1350,19 +1363,22 @@ async function flightsPage() {
   };
 
   const body = `
-  <section class="card">
-    <h2>Add a flight</h2>
-    ${flightForm({ direction: "in", to: "FCA", date: housing.checkin }, "Add flight")}
-  </section>
+  <div class="flight-cols">
+    <section class="card">
+      <h2>Flying in</h2>
+      ${list(inbound)}
+    </section>
+    <section class="card">
+      <h2>Flying out</h2>
+      ${list(outbound)}
+    </section>
+  </div>
 
   <section class="card">
-    <h2>Flying in</h2>
-    ${list(inbound)}
-  </section>
-
-  <section class="card">
-    <h2>Flying out</h2>
-    ${list(outbound)}
+    <details class="flight-add">
+      <summary><h2>Add a flight</h2></summary>
+      ${flightForm({ direction: "in", to: "FCA", date: housing.checkin }, "Add flight")}
+    </details>
   </section>`;
 
   return layout("flights", `Flights — ${trip.title}`, body);
