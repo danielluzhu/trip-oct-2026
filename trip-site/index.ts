@@ -477,8 +477,12 @@ const sharedStyle = /* css */ `
   .flight-day + .flight-day { margin-top: 1.2rem; }
   h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .6rem 0 .2rem; color: var(--accent); letter-spacing: -.01em; }
   ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
-  li.flight { border-bottom: 1px solid var(--border); padding-bottom: .7rem; font-size: .92rem; }
-  li.flight .flight-no { font-weight: 700; margin-left: .35rem; }
+  li.flight { border: 1px solid var(--border); border-radius: 10px; padding: .75rem .9rem; font-size: .92rem; }
+  li.flight .flight-who { font-size: 1.02rem; }
+  li.flight .flight-when { margin-left: .4rem; font-weight: 700; color: var(--accent); }
+  ol.flight-legs { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
+  li.flight-leg + li.flight-leg { border-top: 1px dashed var(--border); padding-top: .5rem; }
+  li.flight-leg .flight-no { font-weight: 700; }
   li.flight summary { cursor: pointer; font-size: .84rem; color: var(--accent); margin-top: .3rem; }
   .flight-form .calc-grid .wide { grid-column: 1 / -1; }
   .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
@@ -1246,10 +1250,9 @@ function flightForm(f: Partial<Flight>, submit: string) {
     </form>`;
 }
 
-function flightItem(f: Flight) {
-  return `<li class="flight">
+function flightLeg(f: Flight) {
+  return `<li class="flight-leg">
       <div class="flight-line">
-        <strong>${escapeHtml(f.who)}</strong>
         <span class="flight-no">${escapeHtml(f.flight)}</span>${f.airline ? ` <span class="muted-cell">${escapeHtml(f.airline)}</span>` : ""}
         &middot; ${escapeHtml(f.from || "?")} &rarr; ${escapeHtml(f.to || "?")}
         &middot; ${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}${f.seat ? ` &middot; Seat ${escapeHtml(f.seat)}` : ""}
@@ -1266,6 +1269,53 @@ function flightItem(f: Flight) {
     </li>`;
 }
 
+// One person's trip in one direction: every leg, layovers included.
+type Trip = { who: string; direction: Flight["direction"]; legs: Flight[]; fca: Flight };
+
+// Order legs by following the route (A→B, B→C), since connecting legs often
+// have no times yet; fall back to date/departure for anything that won't chain.
+function chainLegs(legs: Flight[]): Flight[] {
+  const rest = [...legs].sort((a, b) => `${a.date} ${a.departs}`.localeCompare(`${b.date} ${b.departs}`));
+  const start = rest.find((l) => !rest.some((o) => o !== l && o.to && o.to === l.from)) ?? rest[0];
+  const out = [start];
+  rest.splice(rest.indexOf(start), 1);
+  while (rest.length) {
+    const last = out[out.length - 1];
+    const i = rest.findIndex((l) => l.from && l.from === last.to);
+    out.push(rest.splice(i >= 0 ? i : 0, 1)[0]);
+  }
+  return out;
+}
+
+function groupTrips(flights: Flight[], direction: Flight["direction"]): Trip[] {
+  const byWho = new Map<string, Flight[]>();
+  for (const f of flights.filter((f) => f.direction === direction)) {
+    const k = f.who.trim().toLowerCase();
+    byWho.set(k, [...(byWho.get(k) ?? []), f]);
+  }
+  return [...byWho.values()].map((fs) => {
+    const legs = chainLegs(fs);
+    // The FCA leg sets the card's date and sort time: landing in, taking off out.
+    const fca = direction === "in" ? legs[legs.length - 1] : legs[0];
+    return { who: legs[0].who, direction, legs, fca };
+  });
+}
+
+function tripKey(t: Trip) {
+  return { date: t.fca.date, time: t.direction === "in" ? t.fca.arrives : t.fca.departs };
+}
+
+function tripItem(t: Trip) {
+  const { time } = tripKey(t);
+  const route = [t.legs[0].from || "?", ...t.legs.map((l) => l.to || "?")].map(escapeHtml).join(" &rarr; ");
+  const when = t.direction === "in" ? `Lands FCA ${fmtTime(time)}` : `Leaves FCA ${fmtTime(time)}`;
+  return `<li class="flight">
+      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span></div>
+      <div class="muted-cell">${route}${t.legs.length > 1 ? ` &middot; ${t.legs.length - 1} layover${t.legs.length > 2 ? "s" : ""}` : t.legs[0].flight === "TBD" ? "" : " &middot; nonstop"}</div>
+      <ol class="flight-legs">${t.legs.map(flightLeg).join("\n")}</ol>
+    </li>`;
+}
+
 async function flightsPage() {
   if (STATIC) {
     const body = `
@@ -1277,21 +1327,23 @@ async function flightsPage() {
   }
 
   const flights = await loadFlights();
-  // Sort by date, then by the time that matters for pickups/drop-offs.
-  const byTime = (t: (f: Flight) => string) => (a: Flight, b: Flight) =>
-    `${a.date} ${t(a) || "99"}`.localeCompare(`${b.date} ${t(b) || "99"}`);
-  const inbound = flights.filter((f) => f.direction === "in").sort(byTime((f) => f.arrives));
-  const outbound = flights.filter((f) => f.direction === "out").sort(byTime((f) => f.departs));
+  // Sort by date, then by the FCA time that matters for pickups/drop-offs.
+  const byFca = (a: Trip, b: Trip) => {
+    const ka = tripKey(a), kb = tripKey(b);
+    return `${ka.date} ${ka.time || "99"}`.localeCompare(`${kb.date} ${kb.time || "99"}`);
+  };
+  const inbound = groupTrips(flights, "in").sort(byFca);
+  const outbound = groupTrips(flights, "out").sort(byFca);
   // One block per date, with the date as the heading: who lands (or leaves)
   // on which day is what pickups and drop-offs get planned around.
-  const list = (fs: Flight[]) => {
-    if (!fs.length) return `<div class="calc-note">Nobody yet.</div>`;
-    const dates = [...new Set(fs.map((f) => f.date))];
+  const list = (ts: Trip[]) => {
+    if (!ts.length) return `<div class="calc-note">Nobody yet.</div>`;
+    const dates = [...new Set(ts.map((t) => t.fca.date))];
     return dates
       .map(
         (d) => `<div class="flight-day">
       <h3 class="flight-date">${escapeHtml(fmtDate(d))}</h3>
-      <ul class="flights">${fs.filter((f) => f.date === d).map(flightItem).join("\n")}</ul>
+      <ul class="flights">${ts.filter((t) => t.fca.date === d).map(tripItem).join("\n")}</ul>
     </div>`,
       )
       .join("\n");

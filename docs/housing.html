@@ -382,8 +382,12 @@
   .flight-day + .flight-day { margin-top: 1.2rem; }
   h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .6rem 0 .2rem; color: var(--accent); letter-spacing: -.01em; }
   ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
-  li.flight { border-bottom: 1px solid var(--border); padding-bottom: .7rem; font-size: .92rem; }
-  li.flight .flight-no { font-weight: 700; margin-left: .35rem; }
+  li.flight { border: 1px solid var(--border); border-radius: 10px; padding: .75rem .9rem; font-size: .92rem; }
+  li.flight .flight-who { font-size: 1.02rem; }
+  li.flight .flight-when { margin-left: .4rem; font-weight: 700; color: var(--accent); }
+  ol.flight-legs { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
+  li.flight-leg + li.flight-leg { border-top: 1px dashed var(--border); padding-top: .5rem; }
+  li.flight-leg .flight-no { font-weight: 700; }
   li.flight summary { cursor: pointer; font-size: .84rem; color: var(--accent); margin-top: .3rem; }
   .flight-form .calc-grid .wide { grid-column: 1 / -1; }
   .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
