@@ -2,6 +2,7 @@
 # Keeps the trip site up. Run it under tmux so it survives the terminal:
 #   tmux new -d -s trip-site trip-site/serve.sh
 #   tmux attach -t trip-site
+# trip-site/watchdog.sh (cron, every minute) starts it if the session is gone.
 # bun --watch reloads on edits to index.ts / data.json; the loop covers a
 # crash or a syntax error that takes the process down entirely.
 set -u
