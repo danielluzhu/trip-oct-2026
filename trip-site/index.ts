@@ -474,6 +474,8 @@ const sharedStyle = /* css */ `
 
   /* ---------- city comparison ---------- */
   /* ---------- flights ---------- */
+  .flight-day + .flight-day { margin-top: 1.2rem; }
+  h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .6rem 0 .2rem; color: var(--accent); letter-spacing: -.01em; }
   ul.flights { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .8rem; }
   li.flight { border-bottom: 1px solid var(--border); padding-bottom: .7rem; font-size: .92rem; }
   li.flight .flight-no { font-weight: 700; margin-left: .35rem; }
@@ -1163,6 +1165,7 @@ type Flight = {
   date: string; // YYYY-MM-DD
   departs: string; // HH:MM, 24h
   arrives: string; // HH:MM, 24h
+  seat?: string;
   notes: string;
   updatedAt: number;
 };
@@ -1197,6 +1200,7 @@ function flightFromForm(form: FormData, prev?: Flight): Flight | null {
     date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "",
     departs: time("departs"),
     arrives: time("arrives"),
+    seat: str("seat", 8).toUpperCase(),
     notes: str("notes", 280),
     updatedAt: Date.now(),
   };
@@ -1204,7 +1208,7 @@ function flightFromForm(form: FormData, prev?: Flight): Flight | null {
 }
 
 function fmtTime(t: string) {
-  if (!t) return "?";
+  if (!t) return "time TBD";
   const [h, m] = t.split(":").map(Number);
   return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
 }
@@ -1235,6 +1239,7 @@ function flightForm(f: Partial<Flight>, submit: string) {
         <label>Date <input type="date" name="date" required value="${v(f.date)}"></label>
         <label>Departs <input type="time" name="departs" value="${v(f.departs)}"></label>
         <label>Arrives <input type="time" name="arrives" value="${v(f.arrives)}"></label>
+        <label>Seat <input type="text" name="seat" maxlength="8" placeholder="12A" value="${v(f.seat)}"></label>
         <label class="wide">Notes <input type="text" name="notes" maxlength="280" value="${v(f.notes)}"></label>
       </div>
       <button type="submit" class="calc-btn primary">${submit}</button>
@@ -1247,7 +1252,7 @@ function flightItem(f: Flight) {
         <strong>${escapeHtml(f.who)}</strong>
         <span class="flight-no">${escapeHtml(f.flight)}</span>${f.airline ? ` <span class="muted-cell">${escapeHtml(f.airline)}</span>` : ""}
         &middot; ${escapeHtml(f.from || "?")} &rarr; ${escapeHtml(f.to || "?")}
-        &middot; ${escapeHtml(fmtDate(f.date))}, ${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}
+        &middot; ${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}${f.seat ? ` &middot; Seat ${escapeHtml(f.seat)}` : ""}
       </div>
       ${f.notes ? `<div class="muted-cell">${escapeHtml(f.notes)}</div>` : ""}
       <details>
@@ -1277,10 +1282,20 @@ async function flightsPage() {
     `${a.date} ${t(a) || "99"}`.localeCompare(`${b.date} ${t(b) || "99"}`);
   const inbound = flights.filter((f) => f.direction === "in").sort(byTime((f) => f.arrives));
   const outbound = flights.filter((f) => f.direction === "out").sort(byTime((f) => f.departs));
-  const list = (fs: Flight[]) =>
-    fs.length
-      ? `<ul class="flights">${fs.map(flightItem).join("\n")}</ul>`
-      : `<div class="calc-note">Nobody yet.</div>`;
+  // One block per date, with the date as the heading: who lands (or leaves)
+  // on which day is what pickups and drop-offs get planned around.
+  const list = (fs: Flight[]) => {
+    if (!fs.length) return `<div class="calc-note">Nobody yet.</div>`;
+    const dates = [...new Set(fs.map((f) => f.date))];
+    return dates
+      .map(
+        (d) => `<div class="flight-day">
+      <h3 class="flight-date">${escapeHtml(fmtDate(d))}</h3>
+      <ul class="flights">${fs.filter((f) => f.date === d).map(flightItem).join("\n")}</ul>
+    </div>`,
+      )
+      .join("\n");
+  };
 
   const body = `
   <section class="card">
