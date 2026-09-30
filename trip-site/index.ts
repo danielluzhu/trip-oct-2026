@@ -482,6 +482,7 @@ const sharedStyle = /* css */ `
   .flight-cols { display: grid; gap: 0 1rem; }
   @media (min-width: 760px) { .flight-cols { grid-template-columns: 1fr 1fr; } .flight-cols .card { padding: 1rem 1.1rem; } }
   .flight-cols h2 { margin-bottom: .2rem; }
+  .flight-tz { font-family: var(--sans); font-size: .8rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: .3rem; }
   .flight-day + .flight-day { margin-top: .6rem; }
   h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .2rem 0 .3rem; color: var(--accent); letter-spacing: -.01em; }
   ul.flights { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .35rem; }
@@ -1365,11 +1366,11 @@ async function flightsPage() {
   const body = `
   <div class="flight-cols">
     <section class="card">
-      <h2>Flying in</h2>
+      <h2>Flying in <span class="flight-tz">local times</span></h2>
       ${list(inbound)}
     </section>
     <section class="card">
-      <h2>Flying out</h2>
+      <h2>Flying out <span class="flight-tz">local times</span></h2>
       ${list(outbound)}
     </section>
   </div>
