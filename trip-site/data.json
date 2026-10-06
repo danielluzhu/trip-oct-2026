@@ -432,7 +432,7 @@
   },
   "costs": {
     "car": {
-      "rate": 100,
+      "rate": 65,
       "days": 4,
       "gasPerCar": 100
     },
@@ -546,7 +546,7 @@
             "when": "Midday",
             "what": "Land at FCA, pick up two SUVs",
             "detail": "",
-            "cost": "~$800"
+            "cost": "$520 ($260 each)"
           },
           {
             "when": "Afternoon",
