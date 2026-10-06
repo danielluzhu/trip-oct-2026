@@ -432,7 +432,7 @@
   },
   "costs": {
     "car": {
-      "rate": 65,
+      "pricePerCar": 260,
       "days": 4,
       "gasPerCar": 100
     },

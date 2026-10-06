@@ -1454,8 +1454,7 @@ function costsPage() {
     <div class="section-label">Rental cars</div>
     <div class="calc-grid">
       <label>Vehicles <input type="number" id="cars" min="0" max="6" value="2"></label>
-      <label>Days <input type="number" id="car-days" min="1" max="21"></label>
-      <label>Rate/day, all in <input type="number" id="car-rate" min="0" step="5"></label>
+      <label>Price per car, ${costs.car.days} days <input type="number" id="car-price" min="0" step="10"></label>
       <label>Gas per car <input type="number" id="gas" min="0" step="10"></label>
     </div>
 
@@ -1536,8 +1535,7 @@ function costsPage() {
       $("people").value = 6;
       $("lodge-total").value = CFG.bookedTotal;
       $("cars").value = 2;
-      $("car-days").value = CFG.car.days;
-      $("car-rate").value = CFG.car.rate;
+      $("car-price").value = CFG.car.pricePerCar;
       $("gas").value = CFG.car.gasPerCar;
       $("food-style").value = "mixed"; seedFood();
       // You eat on the fly-out day too.
@@ -1550,7 +1548,7 @@ function costsPage() {
 
     // ---- persistence: your numbers survive a reload ----------------------
     var IDS = ["people",
-      "lodge-total","cars","car-days","car-rate","gas","food-style","food-rate","food-days"];
+      "lodge-total","cars","car-price","gas","food-style","food-rate","food-days"];
     function save() {
       var state = { extras: extras, fields: {} };
       IDS.forEach(function (id) { state.fields[id] = $(id).value; });
@@ -1594,8 +1592,7 @@ function costsPage() {
       var lodging = num("lodge-total");
 
       var cars = num("cars");
-      var carDays = num("car-days", 1);
-      var carRental = cars * carDays * num("car-rate");
+      var carRental = cars * num("car-price");
       var gas = cars * num("gas");
 
       var foodDays = num("food-days", 1);
@@ -1611,7 +1608,7 @@ function costsPage() {
 
       var rows = [
         ["Housing", lodging, "The Quarry house, " + CFG.nights + " nights"],
-        ["Rental cars", carRental + gas, cars + " \\u00d7 " + carDays + " days \\u00d7 " + money(num("car-rate")) + ", + gas"],
+        ["Rental cars", carRental + gas, cars + " \\u00d7 " + money(num("car-price")) + ", + gas"],
         ["Food & drink", food, money(num("food-rate")) + " pp/day \\u00d7 " + foodDays + " days"]
       ];
       if (extrasTotal > 0) {
