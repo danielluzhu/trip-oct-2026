@@ -1320,12 +1320,16 @@ function tripKey(t: Trip) {
   return { date: t.fca.date, time: t.direction === "in" ? t.fca.arrives : t.fca.departs };
 }
 
+// Who picks up (and returns) the two rental SUVs at FCA.
+const renters = new Set<string>(((data as any).costs.car.renters as string[]).map((n) => n.toLowerCase()));
+
 function tripItem(t: Trip) {
   const { time } = tripKey(t);
+  const car = renters.has(t.who.trim().toLowerCase()) ? ` <span class="pill ok">rental car</span>` : "";
   const stops = t.legs.length - 1;
   const when = `${t.direction === "in" ? "lands" : "leaves"} ${fmtTime(time)}`;
   return `<li class="flight">
-      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span>${stops ? ` <span class="muted-cell">&middot; ${stops} stop${stops > 1 ? "s" : ""}</span>` : ""}</div>
+      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span>${car}${stops ? ` <span class="muted-cell">&middot; ${stops} stop${stops > 1 ? "s" : ""}</span>` : ""}</div>
       <ol class="flight-legs">${t.legs.map(flightLeg).join("\n")}</ol>
     </li>`;
 }
@@ -1367,6 +1371,7 @@ async function flightsPage() {
   <div class="flight-cols">
     <section class="card">
       <h2>Flying in <span class="flight-tz">local times</span></h2>
+      <div class="calc-note">${escapeHtml((data as any).costs.car.renters.join(" and "))} are getting the rental cars.</div>
       ${list(inbound)}
     </section>
     <section class="card">

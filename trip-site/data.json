@@ -434,7 +434,11 @@
     "car": {
       "pricePerCar": 260,
       "days": 4,
-      "gasPerCar": 100
+      "gasPerCar": 100,
+      "renters": [
+        "Dan",
+        "JWu"
+      ]
     },
     "food": {
       "cook": 25,
