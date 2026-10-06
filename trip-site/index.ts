@@ -6,13 +6,13 @@ const IDEAS_PATH = `${import.meta.dir}/ideas.json`;
 
 const PARTY = { nyc: 3, sf: 2, seattle: 1 };
 
-// Three days, and the Saturday label says what it is. Monday is a 19-minute
-// drive to the airport, so it lives in Sunday's last block rather than a day
-// of its own.
+// Four days: most people land Thursday. Monday is a 19-minute drive to the
+// airport, so it lives in Sunday's last block rather than a day of its own.
 const DAYS = [
-  "Day 1 · Fri 10/16 (Arrival)",
-  "Day 2 · Sat 10/17 (The big hike)",
-  "Day 3 · Sun 10/18",
+  "Day 1 · Thu 10/15 (Arrival)",
+  "Day 2 · Fri 10/16",
+  "Day 3 · Sat 10/17 (The big hike)",
+  "Day 4 · Sun 10/18",
 ];
 
 function fmt(n: number) {

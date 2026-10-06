@@ -520,7 +520,7 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Fri: arrive. Sat: Apgar Lookout. Sun: float the Middle Fork. Bring food; nothing in the park is open.",
+    "intro": "Thu: arrive. Fri: stock up, short walk. Sat: Apgar Lookout. Sun: float the Middle Fork. Bring food; nothing in the park is open.",
     "facts": [
       [
         "Stay",
@@ -543,31 +543,55 @@
     ],
     "days": [
       {
-        "day": "Day 1 · Fri 10/16 (Arrival)",
-        "headline": "Arrive, stock up, short walk.",
+        "day": "Day 1 · Thu 10/15 (Arrival)",
+        "headline": "Land, pick up the cars, check in.",
         "blocks": [
           {
-            "when": "Midday",
-            "what": "Land at FCA, pick up two SUVs",
+            "when": "11:37 AM",
+            "what": "JWu and Youssef land, JWu picks up the first SUV",
             "detail": "",
-            "cost": "$520 ($260 each)"
+            "cost": "$520 for both ($260 each)"
           },
           {
             "when": "Afternoon",
-            "what": "Costco in Kalispell, then check in",
-            "detail": "Buy park lunches. Short walk: Lion Mountain loop or City Beach.",
+            "what": "Vinnie lands 3:17, check in",
+            "detail": "The Quarry house, 19 min from FCA.",
             "cost": ""
           },
           {
             "when": "Evening",
-            "what": "Dinner in town, movie night",
-            "detail": "Craggy Range or Tupelo Grille.",
+            "what": "Dan lands 7:05 and picks up the second SUV, Kevin lands 10:56",
+            "detail": "Dinner in town: Craggy Range or Tupelo Grille.",
             "cost": ""
           }
         ]
       },
       {
-        "day": "Day 2 · Sat 10/17 (The big hike)",
+        "day": "Day 2 · Fri 10/16",
+        "headline": "Stock up, short walk.",
+        "blocks": [
+          {
+            "when": "Midday",
+            "what": "Sean lands 12:00, his friend 3:00",
+            "detail": "",
+            "cost": ""
+          },
+          {
+            "when": "Afternoon",
+            "what": "Costco in Kalispell, short walk",
+            "detail": "Buy park lunches. Lion Mountain loop or City Beach.",
+            "cost": ""
+          },
+          {
+            "when": "Evening",
+            "what": "Dinner and movie night",
+            "detail": "Pack for tomorrow. Out by 7:30.",
+            "cost": ""
+          }
+        ]
+      },
+      {
+        "day": "Day 3 · Sat 10/17 (The big hike)",
         "headline": "Apgar Lookout, then Lake McDonald.",
         "blocks": [
           {
@@ -591,7 +615,7 @@
         ]
       },
       {
-        "day": "Day 3 · Sun 10/18",
+        "day": "Day 4 · Sun 10/18",
         "headline": "Float the Middle Fork.",
         "blocks": [
           {
