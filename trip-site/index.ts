@@ -1416,7 +1416,15 @@ function flightsBlock() {
   </section>`;
 }
 
-function costsPage() {
+// Headcount = distinct names in the flights log, so the calculator follows
+// whoever has actually booked.
+async function flyerCount() {
+  const flights = await loadFlights();
+  return new Set(flights.map((f) => f.who.trim().toLowerCase()).filter(Boolean)).size;
+}
+
+async function costsPage() {
+  const flyers = await flyerCount();
   // Everything the calculator needs, handed to the client as one blob so the
   // page stays a single self-contained file (no fetch -- Pages is static).
   // The presets only *seed* the inputs now; every number on the page is
@@ -1424,6 +1432,7 @@ function costsPage() {
   const cfg = JSON.stringify({
     nights: housing.nights,
     bookedTotal: housing.booked.total,
+    flyers,
     car: costs.car,
     food: costs.food,
     extras: costs.extras,
@@ -1441,8 +1450,9 @@ function costsPage() {
 
     <div class="section-label">Who's coming</div>
     <div class="calc-grid">
-      <label>People <input type="number" id="people" min="0" max="20" value="6"></label>
+      <label>People <input type="number" id="people" min="0" max="20" value="${flyers}"></label>
     </div>
+    <div class="calc-note">${flyers} ${flyers === 1 ? "person has" : "people have"} flights logged.</div>
     <div class="calc-note" id="party-note"></div>
 
 
@@ -1532,7 +1542,7 @@ function costsPage() {
     function seedFood() { $("food-rate").value = CFG.food[$("food-style").value]; }
 
     function defaults() {
-      $("people").value = 6;
+      $("people").value = CFG.flyers;
       $("lodge-total").value = CFG.bookedTotal;
       $("cars").value = 2;
       $("car-price").value = CFG.car.pricePerCar;
@@ -1550,7 +1560,7 @@ function costsPage() {
     var IDS = ["people",
       "lodge-total","cars","car-price","gas","food-style","food-rate","food-days"];
     function save() {
-      var state = { extras: extras, fields: {} };
+      var state = { extras: extras, fields: {}, flyers: CFG.flyers };
       IDS.forEach(function (id) { state.fields[id] = $(id).value; });
       try {
         localStorage.setItem(KEY, JSON.stringify(state));
@@ -1564,6 +1574,8 @@ function costsPage() {
       try {
         var state = JSON.parse(raw);
         IDS.forEach(function (id) {
+          // A new flight changes the headcount; take it over an old saved one.
+          if (id === "people" && state.flyers !== CFG.flyers) return;
           if (state.fields && state.fields[id] !== undefined) $(id).value = state.fields[id];
         });
         if (Array.isArray(state.extras)) extras = state.extras;
@@ -1772,7 +1784,7 @@ Bun.serve({
     }
 
     if (url.pathname === "/costs") {
-      return new Response(costsPage(), {
+      return new Response(await costsPage(), {
         headers: { "content-type": "text/html; charset=utf-8" },
       });
     }

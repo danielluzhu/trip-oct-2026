@@ -23,7 +23,7 @@ const pages: Array<[string, string]> = [
   ["glacier.html", homePage()],
   ["flights.html", await flightsPage()],
   ["housing.html", housingPage()],
-  ["costs.html", costsPage()],
+  ["costs.html", await costsPage()],
   ["shortlist.html", shortlistPage()],
   // Old links to itinerary.html land on the front page, where it now lives.
   [

@@ -658,8 +658,9 @@
 
     <div class="section-label">Who's coming</div>
     <div class="calc-grid">
-      <label>People <input type="number" id="people" min="0" max="20" value="6"></label>
+      <label>People <input type="number" id="people" min="0" max="20" value="8"></label>
     </div>
+    <div class="calc-note">8 people have flights logged.</div>
     <div class="calc-note" id="party-note"></div>
 
 
@@ -714,7 +715,7 @@
 
   <script>
   (function () {
-    var CFG = {"nights":4,"bookedTotal":1830,"car":{"pricePerCar":260,"days":4,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (2 vehicles × $35)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats × $650 + 8% fee","amount":2808,"per":"group","on":true},{"label":"Guide tips (~20%)","amount":520,"per":"group","on":true},{"label":"Montana fishing licence (1-day, nonresident)","amount":31.5,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"Bison Range (2 cars × $20)","amount":40,"per":"group","on":false}]};
+    var CFG = {"nights":4,"bookedTotal":1830,"flyers":8,"car":{"pricePerCar":260,"days":4,"gasPerCar":100},"food":{"cook":25,"mixed":50,"restaurants":88},"extras":[{"label":"Park entry (2 vehicles × $35)","amount":70,"per":"group","on":true},{"label":"Middle Fork float — 4 boats × $650 + 8% fee","amount":2808,"per":"group","on":true},{"label":"Guide tips (~20%)","amount":520,"per":"group","on":true},{"label":"Montana fishing licence (1-day, nonresident)","amount":31.5,"per":"person","on":true},{"label":"Groceries run (Costco, day one)","amount":400,"per":"group","on":true},{"label":"Bigfork theatre tickets","amount":35,"per":"person","on":false},{"label":"Bison Range (2 cars × $20)","amount":40,"per":"group","on":false}]};
     var KEY = "trip-costs-v5";
     var booted = false;
     var $ = function (id) { return document.getElementById(id); };
@@ -749,7 +750,7 @@
     function seedFood() { $("food-rate").value = CFG.food[$("food-style").value]; }
 
     function defaults() {
-      $("people").value = 6;
+      $("people").value = CFG.flyers;
       $("lodge-total").value = CFG.bookedTotal;
       $("cars").value = 2;
       $("car-price").value = CFG.car.pricePerCar;
@@ -767,7 +768,7 @@
     var IDS = ["people",
       "lodge-total","cars","car-price","gas","food-style","food-rate","food-days"];
     function save() {
-      var state = { extras: extras, fields: {} };
+      var state = { extras: extras, fields: {}, flyers: CFG.flyers };
       IDS.forEach(function (id) { state.fields[id] = $(id).value; });
       try {
         localStorage.setItem(KEY, JSON.stringify(state));
@@ -781,6 +782,8 @@
       try {
         var state = JSON.parse(raw);
         IDS.forEach(function (id) {
+          // A new flight changes the headcount; take it over an old saved one.
+          if (id === "people" && state.flyers !== CFG.flyers) return;
           if (state.fields && state.fields[id] !== undefined) $(id).value = state.fields[id];
         });
         if (Array.isArray(state.extras)) extras = state.extras;
