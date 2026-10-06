@@ -541,7 +541,7 @@
     ],
     "bookAhead": [
       "Middle Fork float: Great Northern Resort, 800-735-7897",
-      "Fishing licences: ols.fwp.mt.gov, $31.50 each",
+      "Fishing licences: ols.fwp.mt.gov",
       "Two AWD SUVs at FCA",
       "Dinner reservations"
     ],
@@ -553,20 +553,17 @@
           {
             "when": "11:37 AM",
             "what": "JWu and Youssef land, JWu picks up the first SUV",
-            "detail": "",
-            "cost": "$520 for both ($260 each)"
+            "detail": ""
           },
           {
             "when": "Afternoon",
             "what": "Vinnie lands 3:17, check in",
-            "detail": "The Quarry house, 19 min from FCA.",
-            "cost": ""
+            "detail": "The Quarry house, 19 min from FCA."
           },
           {
             "when": "Evening",
             "what": "Dan lands 7:05 and picks up the second SUV, Kevin lands 10:56",
-            "detail": "Dinner in town: Craggy Range or Tupelo Grille.",
-            "cost": ""
+            "detail": "Dinner in town: Craggy Range or Tupelo Grille."
           }
         ]
       },
@@ -577,20 +574,17 @@
           {
             "when": "Midday",
             "what": "Sean lands 12:00, his friend 3:00",
-            "detail": "",
-            "cost": ""
+            "detail": ""
           },
           {
             "when": "Afternoon",
             "what": "Costco in Kalispell, short walk",
-            "detail": "Buy park lunches. Lion Mountain loop or City Beach.",
-            "cost": ""
+            "detail": "Buy park lunches. Lion Mountain loop or City Beach."
           },
           {
             "when": "Evening",
             "what": "Dinner and movie night",
-            "detail": "Pack for tomorrow. Out by 7:30.",
-            "cost": ""
+            "detail": "Pack for tomorrow. Out by 7:30."
           }
         ]
       },
@@ -601,20 +595,17 @@
           {
             "when": "7:30 AM",
             "what": "Leave for West Glacier",
-            "detail": "39 min. Park entry $35 per car.",
-            "cost": "$70"
+            "detail": "39 min. Park entry per car at the gate."
           },
           {
             "when": "Day",
             "what": "Apgar Lookout, 7.2 mi, 1,800 ft",
-            "detail": "Easier option: Trail of the Cedars and Avalanche Lake. Bring lunch.",
-            "cost": ""
+            "detail": "Easier option: Trail of the Cedars and Avalanche Lake. Bring lunch."
           },
           {
             "when": "Evening",
             "what": "Lake McDonald, then dinner in Whitefish",
-            "detail": "",
-            "cost": ""
+            "detail": ""
           }
         ]
       },
@@ -625,14 +616,12 @@
           {
             "when": "Day",
             "what": "Float the Middle Fork, four boats",
-            "detail": "Fishing licence required. Alternative: Bison Range or breweries in town.",
-            "cost": "~$3,330"
+            "detail": "Fishing licence required. Alternative: Bison Range or breweries in town."
           },
           {
             "when": "Evening",
             "what": "Theatre in Bigfork, then pack",
-            "detail": "Checkout Mon morning.",
-            "cost": ""
+            "detail": "Checkout Mon morning."
           }
         ]
       },
@@ -643,26 +632,22 @@
           {
             "when": "Morning",
             "what": "Check out, Sean to FCA for 12:00",
-            "detail": "FCA is 19 min from the house.",
-            "cost": ""
+            "detail": "FCA is 19 min from the house."
           },
           {
             "when": "Afternoon",
             "what": "JWu and Youssef fly 3:30, Vinnie 4:09",
-            "detail": "JWu returns the first SUV at FCA.",
-            "cost": ""
+            "detail": "JWu returns the first SUV at FCA."
           },
           {
             "when": "All day",
             "what": "Dan's full day in Montana",
-            "detail": "Lake McDonald and Avalanche Lake, or Whitefish Lake and downtown. Bring lunch.",
-            "cost": ""
+            "detail": "Lake McDonald and Avalanche Lake, or Whitefish Lake and downtown. Bring lunch."
           },
           {
             "when": "Evening",
             "what": "Dan returns the second SUV, flies 7:45",
-            "detail": "",
-            "cost": ""
+            "detail": ""
           }
         ]
       }

@@ -679,16 +679,6 @@ const sharedStyle = /* css */ `
     margin-top: .28rem;
     text-wrap: pretty;
   }
-  ol.timeline .cost {
-    font-size: .72rem;
-    font-weight: 700;
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
-    color: var(--accent);
-    border-radius: 6px;
-    padding: .12rem .45rem;
-    white-space: nowrap;
-    margin-left: .3rem;
-  }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -984,7 +974,7 @@ function planBlocks(d: any) {
         .map(
           (b: any) => `<li>
         <span class="when">${escapeHtml(b.when)}</span>
-        <div class="what"><strong>${escapeHtml(b.what)}</strong>${b.cost ? ` <span class="cost">${escapeHtml(b.cost)}</span>` : ""}</div>
+        <div class="what"><strong>${escapeHtml(b.what)}</strong></div>
         <div class="detail">${escapeHtml(b.detail)}</div>
       </li>`,
         )
