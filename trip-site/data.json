@@ -520,7 +520,7 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Thu: arrive. Fri: stock up, short walk. Sat: Apgar Lookout. Sun: float the Middle Fork. Bring food; nothing in the park is open.",
+    "intro": "Thu: arrive. Fri: stock up, short walk. Sat: Apgar Lookout. Sun: float the Middle Fork. Mon: last day out, flights home. Bring food; nothing in the park is open.",
     "facts": [
       [
         "Stay",
@@ -627,7 +627,37 @@
           {
             "when": "Evening",
             "what": "Theatre in Bigfork, then pack",
-            "detail": "Checkout Mon 10/19.",
+            "detail": "Checkout Mon morning.",
+            "cost": ""
+          }
+        ]
+      },
+      {
+        "day": "Day 5 · Mon 10/19 (Exit)",
+        "headline": "Check out, one more day out, fly home.",
+        "blocks": [
+          {
+            "when": "Morning",
+            "what": "Check out, Sean to FCA for 12:00",
+            "detail": "FCA is 19 min from the house.",
+            "cost": ""
+          },
+          {
+            "when": "Afternoon",
+            "what": "JWu and Youssef fly 3:30, Vinnie 4:09",
+            "detail": "JWu returns the first SUV at FCA.",
+            "cost": ""
+          },
+          {
+            "when": "All day",
+            "what": "Dan's full day in Montana",
+            "detail": "Lake McDonald and Avalanche Lake, or Whitefish Lake and downtown. Bring lunch.",
+            "cost": ""
+          },
+          {
+            "when": "Evening",
+            "what": "Dan returns the second SUV, flies 7:45",
+            "detail": "",
             "cost": ""
           }
         ]
