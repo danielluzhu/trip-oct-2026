@@ -520,7 +520,7 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Thu: arrive. Fri: stock up, short walk. Sat: Apgar Lookout. Sun: float the Middle Fork. Mon: last day out, flights home. Bring food; nothing in the park is open.",
+    "intro": "Thu: arrive. Fri: Avalanche Lake. Sat: Apgar Lookout. Sun: float the Middle Fork. Mon: last day out, flights home. Bring food; nothing in the park is open.",
     "facts": [
       [
         "Stay",
@@ -569,17 +569,22 @@
       },
       {
         "day": "Day 2 · Fri 10/16",
-        "headline": "Stock up, short walk.",
+        "headline": "Avalanche Lake, then a sunset walk.",
         "blocks": [
           {
-            "when": "Midday",
-            "what": "Sean lands 12:00, his friend 3:00",
-            "detail": ""
+            "when": "8:30 AM",
+            "what": "SUV 1 to Glacier: Trail of the Cedars and Avalanche Lake",
+            "detail": "4.6 mi round trip, ~500 ft, to a lake under waterfalls. ~3 hours. Bring lunch."
           },
           {
-            "when": "Afternoon",
-            "what": "Costco in Kalispell, short walk",
-            "detail": "Buy park lunches. Lion Mountain loop or City Beach."
+            "when": "Midday",
+            "what": "SUV 2: airport and Costco",
+            "detail": "Sean lands 12:00, his friend 3:00. Costco in Kalispell is on the way; buy park lunches for the weekend."
+          },
+          {
+            "when": "Late afternoon",
+            "what": "Everyone: Lion Mountain loop",
+            "detail": "~3 flat miles, 5 min from town. Sunset ~7 PM."
           },
           {
             "when": "Evening",
@@ -600,7 +605,7 @@
           {
             "when": "Day",
             "what": "Apgar Lookout, 7.2 mi, 1,800 ft",
-            "detail": "Easier option: Trail of the Cedars and Avalanche Lake. Bring lunch."
+            "detail": "Easier option: Johns Lake loop (3 mi) or Rocky Point (1.1 mi). Bring lunch."
           },
           {
             "when": "Evening",
