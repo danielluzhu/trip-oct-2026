@@ -513,6 +513,12 @@ const sharedStyle = /* css */ `
   li.task form { margin: 0; }
   .task-check { flex: none; width: 1.35rem; height: 1.35rem; margin-top: .05rem; border-radius: 6px; border: 2px solid var(--accent); background: transparent; color: var(--on-dark); font-weight: 800; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
   li.task.done .task-check { background: var(--accent); }
+  li.task.done { opacity: .5; background: var(--bg-alt); }
+  li.task.done:hover, li.task.done:focus-within { opacity: .85; }
+  ul.tasks.hide-done li.task.done { display: none; }
+  .task-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .task-filter { font-size: .85rem; color: var(--muted); display: inline-flex; align-items: center; gap: .35rem; cursor: pointer; }
+  .task-filter input { accent-color: var(--accent); width: 1rem; height: 1rem; }
   li.task.done .task-text { text-decoration: line-through; color: var(--muted); }
   .task-body { flex: 1; min-width: 0; }
   li.task { align-items: center; }
@@ -534,6 +540,10 @@ const sharedStyle = /* css */ `
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  table.hikes { min-width: 640px; }
+  table.hikes td { vertical-align: top; }
+  table.hikes td:first-child { width: 18%; }
+  table.hikes td:nth-child(3) { white-space: nowrap; }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -1063,10 +1073,33 @@ async function itineraryPage() {
     </ul>
   </section>`;
 
+  const hikesBlock = plan.hikes?.length
+    ? `
+  <section class="card">
+    <h2>The three big hikes</h2>
+    <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.</div>
+    <div class="table-scroll">
+    <table class="hikes">
+      <tr><th>Hike</th><th>Length</th><th>Time</th><th>Getting there</th></tr>
+      ${plan.hikes
+        .map(
+          (h: any) => `<tr>
+        <td><strong>${escapeHtml(h.name)}</strong></td>
+        <td>${escapeHtml(h.length)}<br><span class="muted-cell">${escapeHtml(h.gain)}</span></td>
+        <td><strong>${escapeHtml(h.time)}</strong></td>
+        <td>${escapeHtml(h.drive)}<br><span class="muted-cell">${escapeHtml(h.status)}</span></td>
+      </tr>`,
+        )
+        .join("\n      ")}
+    </table>
+    </div>
+  </section>`
+    : "";
+
   return layout(
     "itinerary",
     trip.title,
-    header + "\n" + dayBlocks + "\n" + generalBlock,
+    header + "\n" + hikesBlock + "\n" + dayBlocks + "\n" + generalBlock,
   );
 }
 
@@ -1562,17 +1595,23 @@ async function tasksPage() {
     `${a.due || "9999"} ${String(a.createdAt).padStart(15, "0")}`.localeCompare(
       `${b.due || "9999"} ${String(b.createdAt).padStart(15, "0")}`,
     );
-  const open = tasks.filter((t) => !t.done).sort(order);
-  const done = tasks.filter((t) => t.done).sort(order);
+  const all = [...tasks].sort(order);
+  const open = all.filter((t) => !t.done);
+  const doneCount = all.length - open.length;
   const unassigned = open.filter((t) => !t.who).length;
 
+  // Completed tasks stay in the list, grayed out; the toggle hides them and
+  // the choice is remembered per browser.
   const body = `
   <section class="card">
-    <h2>To do</h2>
-    <div class="subtitle">${open.length} open${unassigned ? ` &middot; ${unassigned} unassigned` : ""}${
+    <div class="task-head">
+      <h2>To do</h2>
+      ${doneCount ? `<label class="task-filter"><input type="checkbox" id="hide-done"> Hide completed (${doneCount})</label>` : ""}
+    </div>
+    <div class="subtitle">${open.length} open${doneCount ? ` &middot; ${doneCount} done` : ""}${unassigned ? ` &middot; ${unassigned} unassigned` : ""}${
       STATIC ? " &middot; add and assign tasks on the trip server" : " &middot; tick the box when it's done; click a task, person or date to change it"
     }</div>
-    <ul class="tasks">${open.length ? open.map(taskItem).join("\n") : `<li class="idea-empty">Nothing left to do.</li>`}</ul>
+    <ul class="tasks" id="task-list">${all.length ? all.map(taskItem).join("\n") : `<li class="idea-empty">Nothing to do yet.</li>`}</ul>
   </section>
   ${
     STATIC
@@ -1583,16 +1622,19 @@ async function tasksPage() {
     <datalist id="people">${people.map((n) => `<option value="${escapeHtml(n)}">`).join("")}</datalist>
   </section>`
   }
-  ${
-    done.length
-      ? `<section class="card">
-    <details class="flight-add">
-      <summary><h2>Done (${done.length})</h2></summary>
-      <ul class="tasks">${done.map(taskItem).join("\n")}</ul>
-    </details>
-  </section>`
-      : ""
-  }
+  <script>
+  (function () {
+    var box = document.getElementById("hide-done"), list = document.getElementById("task-list");
+    if (!box) return;
+    try { box.checked = localStorage.getItem("tasks-hide-done") === "1"; } catch (e) {}
+    var apply = function () { list.classList.toggle("hide-done", box.checked); };
+    apply();
+    box.addEventListener("change", function () {
+      apply();
+      try { localStorage.setItem("tasks-hide-done", box.checked ? "1" : "0"); } catch (e) {}
+    });
+  })();
+  </script>
   ${STATIC ? "" : `<script>
   var COLORS = ${JSON.stringify(PERSON_COLORS)}, KNOWN = ${JSON.stringify(taskColors)};
   function colorFor(who) {

@@ -25,25 +25,9 @@
       "createdAt": 3
     },
     {
-      "id": "seed-04",
-      "text": "Book the Middle Fork float for Sun, four boats: Great Northern Resort, 800-735-7897",
-      "who": "",
-      "due": "2026-10-14",
-      "done": false,
-      "createdAt": 4
-    },
-    {
-      "id": "seed-05",
-      "text": "Thu dinner reservation for 8: Craggy Range or Tupelo Grille",
-      "who": "",
-      "due": "2026-10-15",
-      "done": false,
-      "createdAt": 5
-    },
-    {
       "id": "seed-06",
-      "text": "Bear spray: one can per hiking group",
-      "who": "",
+      "text": "Bear spray: one can per hiking group (2)",
+      "who": "JWu",
       "due": "2026-10-16",
       "done": false,
       "createdAt": 6
@@ -58,8 +42,8 @@
     },
     {
       "id": "seed-08",
-      "text": "Pick the movie for Fri movie night",
-      "who": "",
+      "text": "Fri Movie Night",
+      "who": "Dan",
       "due": "2026-10-16",
       "done": false,
       "createdAt": 8
@@ -123,18 +107,26 @@
     {
       "id": "seed-16",
       "text": "Split the Airbnb ($1,830) and settle up shared costs",
-      "who": "",
+      "who": "Everyone",
       "due": "2026-10-19",
       "done": false,
       "createdAt": 16
     },
     {
       "id": "ab975751-9348-45e5-9e79-c7b53106ae96",
-      "text": "Groceries",
+      "text": "Groceries (food + alc)",
       "who": "Dan",
       "due": "2026-10-15",
       "done": false,
       "createdAt": 1791920936012
+    },
+    {
+      "id": "1402fb88-1d42-44ec-ad15-d3cc91ebe79a",
+      "text": "Airbnb",
+      "who": "Dan",
+      "due": "2026-10-14",
+      "done": true,
+      "createdAt": 1791921691479
     }
   ]
 }

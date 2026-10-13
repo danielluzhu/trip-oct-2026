@@ -555,6 +555,32 @@
         "Text GNPROADS to 333111"
       ]
     ],
+    "hikes": [
+      {
+        "name": "Highline Trail",
+        "length": "11.8 mi one way, Logan Pass to The Loop",
+        "gain": "~800 ft up, ~2,800 ft down",
+        "time": "6 to 8 hours",
+        "drive": "~1 hr to West Glacier, then the Sun Road",
+        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Only possible if it reopens."
+      },
+      {
+        "name": "Grinnell Glacier",
+        "length": "~11 mi round trip from Swiftcurrent",
+        "gain": "~1,800 ft",
+        "time": "6 to 7 hours",
+        "drive": "~3 hrs each way via US-2 around the park, with the Sun Road closed",
+        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, it's a very long day."
+      },
+      {
+        "name": "Dawson Pass",
+        "length": "~13 mi round trip from Two Medicine Lake",
+        "gain": "~2,500 ft",
+        "time": "7 to 8 hours",
+        "drive": "~1 hr 45 min to Two Medicine",
+        "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so add a road walk to the trailhead. Check with the park (406-888-7800)."
+      }
+    ],
     "bookAhead": [
       "Middle Fork float: Great Northern Resort, 800-735-7897",
       "Fishing licences: ols.fwp.mt.gov",
