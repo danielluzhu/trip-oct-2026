@@ -1366,6 +1366,25 @@ async function flightsPage() {
   };
   const inbound = groupTrips(flights, "in").sort(byFca);
   const outbound = groupTrips(flights, "out").sort(byFca);
+  // Anyone who's flying in but hasn't logged a way home yet.
+  const leaving = new Set(outbound.map((t) => t.who.trim().toLowerCase()));
+  const pending = inbound.filter((t) => !leaving.has(t.who.trim().toLowerCase()));
+  const pendingBlock = pending.length
+    ? `<div class="flight-day">
+      <h3 class="flight-date">Pending</h3>
+      <ul class="flights">${pending
+        .map(
+          (t) => `<li class="flight">
+      <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="pill partial">flight unknown</span></div>
+      <details class="flight-rename">
+        <summary><span class="edit-link">add flight out</span></summary>
+        ${flightForm({ direction: "out", who: t.who, from: "FCA", date: housing.checkout }, "Add flight")}
+      </details>
+    </li>`,
+        )
+        .join("\n")}</ul>
+    </div>`
+    : "";
   // One block per date, with the date as the heading: who lands (or leaves)
   // on which day is what pickups and drop-offs get planned around.
   const list = (ts: Trip[]) => {
@@ -1391,6 +1410,7 @@ async function flightsPage() {
     <section class="card">
       <h2>Flying out <span class="flight-tz">local times</span></h2>
       ${list(outbound)}
+      ${pendingBlock}
     </section>
   </div>
 
