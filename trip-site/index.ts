@@ -789,7 +789,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
   itinerary: {
     file: "Wild Goose Island Overlook (54004237332).jpg",
     credit: "Wild Goose Island, St. Mary Lake",
-    heading: "The plan",
+    heading: "Homeless in Montana",
     tagline:
       "Four nights in Whitefish. One big hike, one float.",
   },
