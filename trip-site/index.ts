@@ -821,7 +821,6 @@ function layout(activeNav: Nav, title: string, body: string) {
 </header>
 <nav>
   <a href="${href("/")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
-  <a href="${href("/glacier")}" class="${activeNav === "home" ? "active" : ""}">Glacier</a>
   <a href="${href("/flights")}" class="${activeNav === "flights" ? "active" : ""}">Flights</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/tasks")}" class="${activeNav === "tasks" ? "active" : ""}">Tasks</a>
