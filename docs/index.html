@@ -508,10 +508,17 @@
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 760px; }
+  table.hikes { min-width: 820px; }
+  #hikes { scroll-margin-top: 4.5rem; }
   table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 14%; }
-  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 26%; }
+  table.hikes td:first-child { width: 11%; }
+  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
+  table.hikes td.hk-cond { width: 24%; }
+  .hk-label { margin: 0 0 .2rem; }
+  .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
+  ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
+  ul.hk-days li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3rem; padding: .1rem 0; margin: 0; border: 0; }
+  .hk-day { width: 2.1em; color: var(--muted); }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -728,32 +735,39 @@
     <a class="add-idea-link" href="./tasks.html">To-dos and who's on them live on Tasks &rarr;</a>
   </section>
 
-  <section class="card">
+  <section class="card" id="hikes">
     <h2>The three big hikes</h2>
-    <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.</div>
+    <div class="wx-head">
+      <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one. Conditions updated Oct 13, 4:08 PM MT.</div>
+      
+    </div>
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th></tr>
+      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
       <tr>
         <td><strong>Highline Trail</strong></td>
         <td><strong>11.8 mi &middot; 6 to 8 hrs</strong><br>Logan Pass to The Loop, one way (needs a car at each end)<br><span class="muted-cell">~800 ft up, ~2,800 ft down</span></td>
         <td><strong>7.2 mi round trip &middot; 3.5 to 4 hrs</strong><br>Logan Pass to Haystack Butte saddle and back<br><span class="muted-cell">~1,000 ft</span></td>
         <td>~1 hr to West Glacier, then the Sun Road<br><span class="muted-cell">Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.</span></td>
+        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Logan Pass &middot; 6,646 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>1°C</strong> <span class="muted-cell">feels -4°C &middot; wind 7 mph &middot; 5 in snow on the ground</span></div><div class="hk-now"><span class="muted-cell">Haystack Butte saddle &middot; 7,024 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>0°C</strong> <span class="muted-cell">feels -5°C &middot; wind 8 mph &middot; 5 in snow on the ground</span></div><div class="section-label hk-label" title="Haystack Butte saddle">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-3°C <span class="muted-cell">1%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 9°C/-2°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 10°C/-1°C <span class="muted-cell">7%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 3°C/-4°C <span class="muted-cell">7%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-3°C <span class="muted-cell">18%</span></li></ul></td>
       </tr>
       <tr>
         <td><strong>Grinnell Glacier</strong></td>
         <td><strong>~11 mi round trip &middot; 6 to 7 hrs</strong><br>Swiftcurrent to the Grinnell Glacier overlook and back<br><span class="muted-cell">~1,800 ft</span></td>
         <td><strong>~7 mi round trip &middot; 2.5 to 3 hrs</strong><br>Swiftcurrent to Grinnell Lake and back, along the lakeshores<br><span class="muted-cell">~200 ft</span></td>
         <td>~3 hrs each way via US-2 around the park, with the Sun Road closed<br><span class="muted-cell">Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.</span></td>
+        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Swiftcurrent trailhead &middot; 4,900 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>8°C</strong> <span class="muted-cell">feels 4°C &middot; wind 8 mph</span></div><div class="hk-now"><span class="muted-cell">Glacier overlook &middot; 6,500 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>0°C</strong> <span class="muted-cell">feels -6°C &middot; wind 15 mph &middot; 2 in snow on the ground</span></div><div class="section-label hk-label" title="Glacier overlook">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/0°C <span class="muted-cell">1%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 10°C/1°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Snow showers">🌨️</span> 11°C/0°C <span class="muted-cell">7% &middot; 0.3 in snow</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 5°C/-3°C <span class="muted-cell">7%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 9°C/-1°C <span class="muted-cell">18%</span></li></ul></td>
       </tr>
       <tr>
         <td><strong>Dawson Pass</strong></td>
         <td><strong>~13 mi round trip &middot; 7 to 8 hrs</strong><br>Two Medicine Lake to Dawson Pass and back<br><span class="muted-cell">~2,500 ft</span></td>
         <td><strong>~8.5 mi round trip &middot; ~4 hrs</strong><br>Two Medicine Lake to No Name Lake and back<br><span class="muted-cell">~700 ft</span></td>
         <td>~1 hr 45 min to Two Medicine<br><span class="muted-cell">The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).</span></td>
+        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Two Medicine trailhead &middot; 5,200 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>6°C</strong> <span class="muted-cell">feels 2°C &middot; wind 8 mph &middot; 4 in snow on the ground</span></div><div class="hk-now"><span class="muted-cell">Dawson Pass &middot; 7,598 ft</span><br><span class="wx-icon" title="Clear">☀️</span> <strong>-1°C</strong> <span class="muted-cell">feels -7°C &middot; wind 12 mph &middot; 11 in snow on the ground</span></div><div class="section-label hk-label" title="Dawson Pass">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 5°C/-5°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/-5°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 10°C/-3°C <span class="muted-cell">4%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 3°C/-6°C <span class="muted-cell">4%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/-4°C <span class="muted-cell">21%</span></li></ul></td>
       </tr>
     </table>
     </div>
+    <div class="calc-note">Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>
 
   <section class="card">

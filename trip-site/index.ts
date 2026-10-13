@@ -604,10 +604,17 @@ const sharedStyle = /* css */ `
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 760px; }
+  table.hikes { min-width: 820px; }
+  #hikes { scroll-margin-top: 4.5rem; }
   table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 14%; }
-  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 26%; }
+  table.hikes td:first-child { width: 11%; }
+  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
+  table.hikes td.hk-cond { width: 24%; }
+  .hk-label { margin: 0 0 .2rem; }
+  .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
+  ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
+  ul.hk-days li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3rem; padding: .1rem 0; margin: 0; border: 0; }
+  .hk-day { width: 2.1em; color: var(--muted); }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -1142,14 +1149,55 @@ async function itineraryPage() {
     <a class="add-idea-link" href="${href("/tasks")}">To-dos and who's on them live on Tasks &rarr;</a>
   </section>`;
 
+  // The itinerary waits at most 4s for the weather; a slow fetch keeps going
+  // and fills the column on a later load. The static build waits it out.
+  const wx = plan.hikes?.length
+    ? await (STATIC ? loadHikeWx() : Promise.race([loadHikeWx(), Bun.sleep(4000).then(() => hikeCache)]))
+    : null;
+  const wxAsOf = wx
+    ? new Date(wx.at).toLocaleString("en-US", { timeZone: "America/Denver", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + " MT"
+    : "";
+  let wxIdx = 0;
+  // One hike's conditions cell: now at the trailhead and the high point, then
+  // each trip day at the high point (the coldest place you'll stand).
+  const conditions = (h: any) => {
+    const pts: any[] = h.points ?? [];
+    const got = pts.map(() => wx?.points[wxIdx++] ?? null);
+    if (!got.some(Boolean)) return `<span class="muted-cell">${hikeFetch ? "Still fetching conditions. Reload in a minute." : "No conditions data right now."}</span>`;
+    const now = pts
+      .map((pt, i) => {
+        const w = got[i];
+        if (!w) return "";
+        const c = w.current;
+        let [icon, label] = wmo(c.weather_code);
+        if (!c.is_day && c.weather_code <= 1) icon = "🌙";
+        const snow = c.snow_depth >= 0.1 ? ` &middot; ${Math.round(c.snow_depth * 12)} in snow on the ground` : "";
+        return `<div class="hk-now"><span class="muted-cell">${escapeHtml(pt.name)} &middot; ${pt.ft.toLocaleString("en-US")} ft</span><br><span class="wx-icon" title="${label}">${icon}</span> <strong>${deg(c.temperature_2m)}</strong> <span class="muted-cell">feels ${deg(c.apparent_temperature)} &middot; wind ${Math.round(c.wind_speed_10m)} mph${snow}</span></div>`;
+      })
+      .join("");
+    const top = got[got.length - 1] ?? got.find(Boolean)!;
+    const topName = pts[got.lastIndexOf(top)]?.name ?? "";
+    const days = top.daily.time
+      .map((d, i) => {
+        const [icon, label] = wmo(top.daily.weather_code[i]);
+        const snow = top.daily.snowfall_sum[i] >= 0.1 ? ` &middot; ${top.daily.snowfall_sum[i].toFixed(1)} in snow` : "";
+        return `<li><span class="hk-day">${escapeHtml(fmtDate(d).split(",")[0])}</span> <span class="wx-icon" title="${label}">${icon}</span> ${deg(top.daily.temperature_2m_max[i])}/${deg(top.daily.temperature_2m_min[i])} <span class="muted-cell">${top.daily.precipitation_probability_max[i]}%${snow}</span></li>`;
+      })
+      .join("");
+    return `<div class="section-label hk-label">Now</div>${now}<div class="section-label hk-label" title="${escapeHtml(topName)}">Trip days up top</div><ul class="hk-days">${days}</ul>`;
+  };
+
   const hikesBlock = plan.hikes?.length
     ? `
-  <section class="card">
+  <section class="card" id="hikes">
     <h2>The three big hikes</h2>
-    <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.</div>
+    <div class="wx-head">
+      <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.${wxAsOf ? ` Conditions updated ${escapeHtml(wxAsOf)}.` : ""}</div>
+      ${STATIC ? "" : `<form method="POST" action="/hikes/refresh"><button type="submit" class="calc-btn">&#8635; Refresh conditions</button></form>`}
+    </div>
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th></tr>
+      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
@@ -1158,11 +1206,13 @@ async function itineraryPage() {
         <td>${opt(h.full)}</td>
         <td>${opt(h.short)}</td>
         <td>${escapeHtml(h.drive)}<br><span class="muted-cell">${escapeHtml(h.status)}</span></td>
+        <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })
         .join("\n      ")}
     </table>
     </div>
+    <div class="calc-note">Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>`
     : "";
 
@@ -1830,6 +1880,51 @@ async function loadForecast(force = false) {
   return forecastCache;
 }
 
+// Conditions at each hike's trailhead and high point: right now, plus the
+// trip days. Open-Meteo scales temps to the elevation we pass, so the high
+// point reads colder than the valley. Same cache rules as the forecast.
+type HikeWx = {
+  current: { temperature_2m: number; apparent_temperature: number; weather_code: number; wind_speed_10m: number; snow_depth: number; is_day: number } // snow_depth in ft (inch units);
+  daily: Pick<Daily, "time" | "weather_code" | "temperature_2m_max" | "temperature_2m_min" | "precipitation_probability_max" | "snowfall_sum">;
+};
+let hikeCache: { at: number; points: (HikeWx | null)[] } | null = null;
+let hikeFetch: Promise<typeof hikeCache> | null = null;
+
+// One fetch at a time; callers that arrive mid-fetch share it.
+function loadHikeWx(force = false) {
+  const age = hikeCache ? Date.now() - hikeCache.at : Infinity;
+  if (age < (force ? 60 * 1000 : 60 * 60 * 1000)) return Promise.resolve(hikeCache);
+  return (hikeFetch ??= fetchHikeWx().finally(() => (hikeFetch = null)));
+}
+
+async function fetchHikeWx() {
+  const pts = (plan.hikes ?? []).flatMap((h: any) => h.points ?? []);
+  if (!pts.length) return null;
+  const p = new URLSearchParams({
+    latitude: pts.map((x: any) => x.lat).join(","),
+    longitude: pts.map((x: any) => x.lon).join(","),
+    elevation: pts.map((x: any) => Math.round(x.ft * 0.3048)).join(","),
+    current: "temperature_2m,apparent_temperature,weather_code,wind_speed_10m,snow_depth,is_day",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,snowfall_sum",
+    wind_speed_unit: "mph",
+    precipitation_unit: "inch",
+    timezone: "America/Denver",
+    start_date: housing.checkin,
+    end_date: housing.checkout,
+  });
+  try {
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?${p}`, { signal: AbortSignal.timeout(45000) });
+    if (!r.ok) throw new Error(`open-meteo ${r.status}`);
+    const json = await r.json();
+    const list = Array.isArray(json) ? json : [json];
+    hikeCache = { at: Date.now(), points: list.map((x: any) => (x.current && x.daily ? x : null)) };
+  } catch (e) {
+    console.error("hike conditions fetch failed:", e);
+    if (!hikeCache) return null;
+  }
+  return hikeCache;
+}
+
 // WMO weather codes, as Open-Meteo reports them.
 function wmo(code: number): [string, string] {
   if (code === 0) return ["☀️", "Clear"];
@@ -2214,6 +2309,7 @@ export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, forecastP
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
 const port = Number(process.env.PORT) || 3000;
+loadHikeWx(); // warm the hike conditions so the first itinerary load has them
 
 Bun.serve({
   port,
@@ -2330,6 +2426,11 @@ Bun.serve({
       const tasks = await loadTasks();
       await saveTasks(tasks.filter((t) => t.id !== id));
       return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/hikes/refresh" && req.method === "POST") {
+      await loadHikeWx(true);
+      return Response.redirect("/#hikes", 303);
     }
 
     if (url.pathname === "/forecast/refresh" && req.method === "POST") {

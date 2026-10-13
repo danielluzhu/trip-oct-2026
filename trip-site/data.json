@@ -550,7 +550,6 @@
         "Daylight",
         "Sunrise ~8 AM, sunset ~6:45 PM"
       ]
-
     ],
     "hikes": [
       {
@@ -568,7 +567,21 @@
           "time": "3.5 to 4 hrs"
         },
         "drive": "~1 hr to West Glacier, then the Sun Road",
-        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass."
+        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.",
+        "points": [
+          {
+            "name": "Logan Pass",
+            "lat": 48.6966,
+            "lon": -113.7183,
+            "ft": 6646
+          },
+          {
+            "name": "Haystack Butte saddle",
+            "lat": 48.7255,
+            "lon": -113.7475,
+            "ft": 7024
+          }
+        ]
       },
       {
         "name": "Grinnell Glacier",
@@ -585,7 +598,21 @@
           "time": "2.5 to 3 hrs"
         },
         "drive": "~3 hrs each way via US-2 around the park, with the Sun Road closed",
-        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day."
+        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.",
+        "points": [
+          {
+            "name": "Swiftcurrent trailhead",
+            "lat": 48.7976,
+            "lon": -113.6563,
+            "ft": 4900
+          },
+          {
+            "name": "Glacier overlook",
+            "lat": 48.7553,
+            "lon": -113.7192,
+            "ft": 6500
+          }
+        ]
       },
       {
         "name": "Dawson Pass",
@@ -602,7 +629,21 @@
           "time": "~4 hrs"
         },
         "drive": "~1 hr 45 min to Two Medicine",
-        "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800)."
+        "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).",
+        "points": [
+          {
+            "name": "Two Medicine trailhead",
+            "lat": 48.4925,
+            "lon": -113.3647,
+            "ft": 5200
+          },
+          {
+            "name": "Dawson Pass",
+            "lat": 48.4597,
+            "lon": -113.4386,
+            "ft": 7598
+          }
+        ]
       }
     ],
     "days": [
