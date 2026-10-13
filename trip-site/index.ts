@@ -1067,10 +1067,7 @@ async function itineraryPage() {
     <table>
       ${plan.facts.map((f: any) => `<tr><td>${escapeHtml(f[0])}</td><td>${escapeHtml(f[1])}</td></tr>`).join("\n      ")}
     </table>
-    <div class="section-label">Book before you go</div>
-    <ul class="sites">
-      ${plan.bookAhead.map((b: string) => `<li>${escapeHtml(b)}</li>`).join("\n      ")}
-    </ul>
+    <a class="add-idea-link" href="${href("/tasks")}">To-dos and who's on them live on Tasks &rarr;</a>
   </section>`;
 
   const hikesBlock = plan.hikes?.length

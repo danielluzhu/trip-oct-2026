@@ -111,6 +111,22 @@
       "due": "2026-10-14",
       "done": true,
       "createdAt": 1791921691479
+    },
+    {
+      "id": "3ce8d3d4-9857-429b-9254-6152cd3bf032",
+      "text": "Book the Middle Fork float for Sun, four boats: Great Northern Resort, 800-735-7897",
+      "who": "",
+      "due": "2026-10-16",
+      "done": false,
+      "createdAt": 1791922388642
+    },
+    {
+      "id": "741ab4a8-7df8-49ba-a7dd-f313f5f7f715",
+      "text": "Dinner reservations: Thu in town (Craggy Range or Tupelo Grille)",
+      "who": "",
+      "due": "2026-10-15",
+      "done": false,
+      "createdAt": 1791922388663
     }
   ]
 }
