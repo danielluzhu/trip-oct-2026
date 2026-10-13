@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast — Homeless in Montana</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2314211a%22%2F%3E%3Cpath%20d%3D%22M0%2024%20L6%2015%20L11%2020%20L17%2012%20L24%2021%20L29%2016%20L32%2020%20L32%2024Z%22%20fill%3D%22%232c4536%22%2F%3E%3Cpath%20d%3D%22M13%203.5%20L25%2023%20L1%2023Z%22%20fill%3D%22%2346705a%22%2F%3E%3Cpath%20d%3D%22M23%2010%20L31%2023%20L17%2023Z%22%20fill%3D%22%233a5c4a%22%2F%3E%3Cpath%20d%3D%22M13%203.5%20L18.2%2012%20L16.2%2011%20L14.6%2012.8%20L13%2010.8%20L11.2%2012.8%20L9.6%2011%20L7.8%2012Z%22%20fill%3D%22%23f2f6f4%22%2F%3E%3Cpath%20d%3D%22M23%2010%20L26%2015%20L24.6%2014.3%20L23%2015.6%20L21.4%2014.3%20L20%2015Z%22%20fill%3D%22%23e6edea%22%2F%3E%3Cpath%20d%3D%22M12.5%205.5%20L14.4%209.5%20L13.7%2023%20L12%2023Z%22%20fill%3D%22%23dfeaf0%22%2F%3E%3Crect%20y%3D%2223%22%20width%3D%2232%22%20height%3D%229%22%20fill%3D%22%232e7d8c%22%2F%3E%3Cpath%20d%3D%22M4%2027%20h24%20v1.3%20H4Z%22%20fill%3D%22%2314211a%22%20opacity%3D%22.2%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+<meta name="theme-color" content="#14211a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #faf7f2;
+    --bg-alt: #f3eee5;
+    --card: #ffffff;
+    --text: #1a1714;
+    --muted: #6f6659;
+    --border: #e7e0d4;
+    --accent: #a8481c;
+    --accent-2: #35543f;
+    --on-dark: #f6f1e8;
+    --shadow: 0 1px 2px rgba(26,23,20,.04), 0 10px 30px -14px rgba(26,23,20,.18);
+    --radius: 16px;
+    --display: "Fraunces", ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #100e0c;
+      --bg-alt: #171411;
+      --card: #1b1815;
+      --text: #f2ece1;
+      --muted: #9d9384;
+      --border: #2c2721;
+      --accent: #e08a4e;
+      --accent-2: #8fb89c;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 34px -16px rgba(0,0,0,.75);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: clamp(300px, 54vh, 540px);
+    display: flex;
+    align-items: flex-end;
+    background-image: var(--hero);
+    background-size: cover;
+    background-position: center;
+  }
+  /* Flights is a lookup page: a short banner so every card fits on screen. */
+  .hero.compact { min-height: 150px; }
+  .hero.compact .hero-inner { padding: 1rem 1.5rem 1.1rem; }
+  .hero.compact h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0; }
+  .hero.compact .tagline, .hero.compact .eyebrow { display: none; }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,8,6,.42) 0%, rgba(10,8,6,.06) 30%, rgba(10,8,6,.55) 72%, rgba(10,8,6,.88) 100%);
+  }
+  .hero-inner {
+    position: relative;
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 2.4rem;
+    color: var(--on-dark);
+    text-shadow: 0 1px 14px rgba(8,6,4,.55), 0 1px 3px rgba(8,6,4,.4);
+  }
+  .eyebrow {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .82;
+    margin-bottom: .7rem;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.3rem, 7vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    margin: 0 0 .5rem;
+    text-wrap: balance;
+  }
+  .hero .tagline {
+    margin: 0;
+    font-size: clamp(.95rem, 2vw, 1.12rem);
+    max-width: 46ch;
+    opacity: .93;
+    text-wrap: pretty;
+  }
+  .hero-credit {
+    position: absolute;
+    right: .7rem;
+    bottom: .45rem;
+    font-size: .62rem;
+    color: rgba(255,255,255,.5);
+    letter-spacing: .03em;
+  }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .35rem;
+    padding: .6rem 1rem;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: saturate(1.6) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: .42rem .95rem;
+    border-radius: 999px;
+    transition: color .15s, background .15s;
+  }
+  nav a:hover { color: var(--text); background: var(--bg-alt); }
+  nav a.active { color: var(--on-dark); background: var(--accent); }
+
+  /* ---------- layout ---------- */
+  main {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 2.2rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.7rem;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  .card h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    line-height: 1.15;
+    letter-spacing: -.015em;
+    margin: 0 0 .3rem;
+  }
+  .card h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0 0 .2rem;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: .9rem;
+    margin-bottom: .9rem;
+  }
+  .section-label {
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 1.5rem 0 .5rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .78rem;
+    padding: 2rem 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---------- tables ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .89rem;
+    margin: .3rem 0;
+  }
+  th {
+    text-align: left;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: .4rem .6rem .4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: .58rem .6rem .58rem 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--muted); width: 38%; }
+  td strong { color: var(--text); }
+  .group-total { font-weight: 700; }
+  .muted-cell { color: var(--muted); font-size: .82rem; }
+
+  /* ---------- photos ---------- */
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: .7rem;
+    margin: .2rem 0 1.2rem;
+  }
+  .photos figure { margin: 0; }
+  .photos img {
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    filter: saturate(1.04);
+  }
+  .photos figcaption {
+    font-size: .74rem;
+    color: var(--muted);
+    margin-top: .35rem;
+  }
+
+  /* ---------- lists ---------- */
+  ul.sites, ul.ideas-list { margin: .4rem 0; padding-left: 1.1rem; }
+  ul.sites li, ul.ideas-list li { margin: .32rem 0; font-size: .9rem; }
+  ul.ideas-list { list-style: none; padding-left: 0; }
+  li.idea {
+    background: var(--bg-alt);
+    border-radius: 10px;
+    padding: .6rem .8rem;
+    margin: .4rem 0;
+  }
+  .idea-meta { font-size: .74rem; color: var(--muted); margin-top: .2rem; }
+  .idea-empty { color: var(--muted); font-size: .86rem; font-style: italic; }
+  .verdict {
+    margin-top: 1.1rem;
+    padding: .8rem 1rem;
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-size: .9rem;
+  }
+
+  /* ---------- buttons ---------- */
+  form.add-idea { display: flex; flex-wrap: wrap; gap: .5rem; }
+  form.add-idea input[type="text"] {
+    flex: 1 1 160px;
+    padding: .58rem .75rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .88rem;
+  }
+  form.add-idea input[name="text"] { flex: 3 1 240px; }
+  form.add-idea button {
+    padding: .58rem 1.2rem;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: var(--on-dark);
+    font-size: .88rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  a.add-idea-link {
+    display: inline-block;
+    padding: .58rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    color: var(--accent);
+    font-size: .86rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  a.add-idea-link:hover {
+    background: var(--accent);
+    color: var(--on-dark);
+    border-color: var(--accent);
+  }
+  a.cta {
+    display: block;
+    text-align: center;
+    padding: .95rem 1.2rem;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--on-dark);
+    font-weight: 700;
+    text-decoration: none;
+    margin: 1.1rem 0 .6rem;
+    box-shadow: 0 6px 18px -8px var(--accent);
+    transition: transform .12s, filter .12s;
+  }
+  a.cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+  /* ---------- badges & notes ---------- */
+  .pick-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-dark);
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    margin-bottom: .7rem;
+  }
+  .calc-note {
+    font-size: .8rem;
+    color: var(--muted);
+    margin: .5rem 0;
+  }
+  .caveat {
+    font-size: .83rem;
+    color: var(--muted);
+    border-left: 3px solid var(--border);
+    padding: .7rem 1rem;
+    margin-top: 1rem;
+    background: var(--bg-alt);
+    border-radius: 0 10px 10px 0;
+  }
+  .caveat code {
+    font-size: .78rem;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    padding: .1rem .3rem;
+    border-radius: 4px;
+  }
+  .card a:not(.cta):not(.add-idea-link) {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+    font-weight: 600;
+  }
+  .card a:not(.cta):not(.add-idea-link):hover {
+    border-bottom-color: var(--accent);
+  }
+  .alert {
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+    border-radius: 10px;
+    padding: .8rem 1rem;
+    font-size: .92rem;
+    margin-bottom: 1rem;
+  }
+  .pill {
+    display: inline-block;
+    font-size: .64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .16rem .55rem;
+    border-radius: 999px;
+  }
+  .pill.person { color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 24%, transparent); }
+  .pill.ok { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
+  .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
+  .pill.nonstop { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
+  .pill.partial { background: rgba(196,140,40,.18); color: #b8842a; }
+  .pill.connect { background: rgba(190,60,60,.16); color: #c25555; }
+
+  /* ---------- city comparison ---------- */
+  /* ---------- flights ---------- */
+  .flight-cols { display: grid; gap: 0 1rem; }
+  @media (min-width: 760px) { .flight-cols { grid-template-columns: 1fr 1fr; } .flight-cols .card { padding: 1rem 1.1rem; } }
+  .flight-cols h2 { margin-bottom: .2rem; }
+  .flight-tz { font-family: var(--sans); font-size: .8rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: .3rem; }
+  .flight-day + .flight-day { margin-top: .6rem; }
+  h3.flight-date { font-size: 1.35rem; font-weight: 800; margin: .2rem 0 .3rem; color: var(--accent); letter-spacing: -.01em; }
+  ul.flights { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .35rem; }
+  li.flight { border: 1px solid var(--border); border-radius: 8px; padding: .35rem .6rem; font-size: .86rem; line-height: 1.35; }
+  li.flight .flight-when { margin-left: .3rem; font-weight: 700; color: var(--accent); }
+  ol.flight-legs { list-style: none; padding: 0; margin: 0; }
+  li.flight-leg summary { cursor: pointer; list-style: none; }
+  li.flight-leg summary::-webkit-details-marker { display: none; }
+  li.flight-leg summary:hover .flight-no { text-decoration: underline; }
+  li.flight-leg .flight-no { font-weight: 700; margin-right: .25rem; }
+  li.flight-leg details[open] { padding-bottom: .4rem; }
+  .flight-rename > summary { cursor: pointer; list-style: none; display: inline-block; }
+  .flight-rename > summary::-webkit-details-marker { display: none; }
+  .flight-rename .edit-link { margin-left: 0; }
+  .flight-add > summary { cursor: pointer; list-style: none; }
+  .flight-add > summary::-webkit-details-marker { display: none; }
+  .flight-add > summary h2 { display: inline; margin: 0; }
+  .flight-add > summary h2::after { content: " +"; color: var(--accent); }
+  .flight-add[open] > summary h2::after { content: " 2"; }
+  .flight-form .calc-grid .wide { grid-column: 1 / -1; }
+  .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
+  .flight-delete { margin-top: .5rem; }
+  .edit-link { font-size: .74rem; font-weight: 700; color: var(--accent); margin-left: .35rem; }
+  ul.tasks { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .35rem; }
+  li.task { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid var(--border); border-radius: 8px; padding: .45rem .6rem; font-size: .9rem; line-height: 1.4; }
+  li.task form { margin: 0; }
+  .task-check { flex: none; width: 1.35rem; height: 1.35rem; margin-top: .05rem; border-radius: 6px; border: 2px solid var(--accent); background: transparent; color: var(--on-dark); font-weight: 800; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  li.task.done .task-check { background: var(--accent); }
+  li.task.done { opacity: .5; background: var(--bg-alt); }
+  li.task.done:hover, li.task.done:focus-within { opacity: .85; }
+  ul.tasks.hide-done li.task.done { display: none; }
+  .task-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .task-filter { font-size: .85rem; color: var(--muted); display: inline-flex; align-items: center; gap: .35rem; cursor: pointer; }
+  .task-filter input { accent-color: var(--accent); width: 1rem; height: 1rem; }
+  li.task.done .task-text { text-decoration: line-through; color: var(--muted); }
+  .task-body { flex: 1; min-width: 0; }
+  li.task { align-items: center; }
+  form.task-edit { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .4rem; }
+  form.task-edit input, form.task-edit textarea { font: inherit; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: .2rem .35rem; margin: 0; }
+  form.task-edit input:hover, form.task-edit textarea:hover { border-color: var(--border); }
+  form.task-edit input:focus, form.task-edit textarea:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+  form.task-edit .task-text { flex: 1 1 16rem; min-width: 0; margin: 0; resize: none; overflow: hidden; line-height: 1.4; field-sizing: content; }
+  form.task-edit .task-who { flex: 0 1 10rem; width: 10rem; font-size: .92rem; font-weight: 600; color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 30%, transparent); border-radius: 999px; padding: .25rem .7rem; }
+  form.task-edit .task-who.empty { background: transparent; border: 1px dashed var(--border); font-weight: 500; }
+  form.task-edit .task-who:focus { border-color: var(--p, var(--accent)); }
+  form.task-edit .task-who::placeholder { color: var(--muted); font-style: italic; }
+  form.task-edit .task-due { flex: 0 0 auto; font-size: .8rem; color: var(--muted); }
+  .task-saved { font-size: .72rem; color: var(--muted); min-width: 3.5rem; }
+  .task-delete { border: 0; background: transparent; color: var(--muted); font-size: 1.15rem; line-height: 1; cursor: pointer; padding: .1rem .3rem; border-radius: 6px; }
+  .task-delete:hover { color: #c25555; background: rgba(190,60,60,.12); }
+  .task-body > summary { cursor: pointer; list-style: none; }
+  .task-body > summary::-webkit-details-marker { display: none; }
+  .task-body > summary:hover .task-text { text-decoration: underline; }
+  .task-text { margin-right: .3rem; }
+
+  table.forecast { min-width: 760px; }
+  table.forecast td { vertical-align: top; }
+  table.forecast.spots td:first-child { width: 17%; }
+  table.forecast:not(.spots) td:first-child { width: 12%; white-space: nowrap; }
+  table.forecast:not(.spots) td:nth-child(2), table.forecast:not(.spots) td:nth-child(3) { white-space: nowrap; }
+  .wx-icon { font-size: 1.1rem; }
+  .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
+  .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
+  table.hikes { min-width: 760px; }
+  table.hikes td { vertical-align: top; }
+  table.hikes td:first-child { width: 14%; }
+  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 26%; }
+  .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
+  table.compare { min-width: 720px; }
+  table.compare td:first-child { color: var(--text); width: 22%; }
+  table.compare td { vertical-align: top; }
+  .cmp-pick td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
+  .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
+
+  /* ---------- housing areas ---------- */
+  .area {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+  .area img {
+    width: 100%;
+    height: 100%;
+    min-height: 210px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  .area-vibe { font-size: .89rem; color: var(--muted); margin: .5rem 0 .8rem; }
+  .area.picked {
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: .9rem 1rem .9rem .8rem;
+    margin: -.2rem 0;
+  }
+  @media (max-width: 620px) {
+    .area { grid-template-columns: 1fr; }
+    .area img { min-height: 0; aspect-ratio: 16/9; }
+    .hero { min-height: 340px; }
+    .hero.compact { min-height: 120px; }
+    .card { padding: 1.25rem; }
+    .total-row { gap: 1.6rem; }
+  }
+
+  /* ---------- calculator ---------- */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .8rem;
+    margin: .4rem 0 .2rem;
+  }
+  .calc-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: .28rem;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .calc-grid input, .calc-grid select {
+    padding: .58rem .7rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .95rem;
+    font-family: var(--sans);
+  }
+  .calc-grid input:focus, .calc-grid select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .total-row {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+  .total-label {
+    display: block;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .total-big {
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+  }
+  .total-big.accent { color: var(--accent); }
+  .calc-actions {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+    margin: .6rem 0 .2rem;
+  }
+  .calc-actions .calc-note { margin: 0; }
+  .calc-btn {
+    font-family: var(--sans);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    padding: .45rem .8rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .calc-btn:hover { color: var(--text); border-color: var(--accent); }
+  .calc-btn.small { padding: .2rem .5rem; font-size: .9rem; line-height: 1; }
+  table.extras td { vertical-align: middle; }
+  table.extras input[type="text"], table.extras input[type="number"], table.extras select {
+    width: 100%;
+    padding: .38rem .5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: .88rem;
+  }
+  table.extras input[type="number"] { min-width: 5.5rem; }
+  table.extras input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); }
+  table.extras td:first-child { width: 1px; }
+  table.extras .x-total { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  /* .calc-grid label sets display:flex, which would beat [hidden] */
+  .calc-grid label[hidden] { display: none; }
+  .stay-total {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  /* ---------- itinerary timeline ---------- */
+  ol.timeline {
+    list-style: none;
+    margin: 1.2rem 0 .4rem;
+    padding: 0 0 0 1.2rem;
+    border-left: 2px solid var(--border);
+  }
+  ol.timeline li {
+    position: relative;
+    padding: 0 0 1.4rem 1rem;
+  }
+  ol.timeline li:last-child { padding-bottom: .2rem; }
+  ol.timeline li::before {
+    content: "";
+    position: absolute;
+    left: -1.53rem;
+    top: .45rem;
+    width: .58rem;
+    height: .58rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--card);
+  }
+  ol.timeline .when {
+    font-size: .67rem;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+    color: var(--accent);
+    font-weight: 800;
+  }
+  ol.timeline .what { margin-top: .18rem; font-size: 1rem; }
+  ol.timeline .detail {
+    font-size: .87rem;
+    color: var(--muted);
+    margin-top: .28rem;
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="hero" style="--hero:url('https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20McDonald%20Panorama%20-%20Montana%20-%20Glacier%20National%20Park%20(29788703722).jpg?width=2000')">
+  <div class="hero-inner">
+    <div class="eyebrow">Oct 15-19, 2026 &middot; 5-10 people</div>
+    <h1>Nature forecast</h1>
+    <p class="tagline">Weather, daylight and conditions for the trip, kept up to date.</p>
+  </div>
+  <div class="hero-credit">Lake McDonald panorama &middot; Wikimedia Commons</div>
+</header>
+<nav>
+  <a href="./index.html" class="">Itinerary</a>
+  <a href="./flights.html" class="">Flights</a>
+  <a href="./housing.html" class="">Housing</a>
+  <a href="./tasks.html" class="">Tasks</a>
+  <a href="./forecast.html" class="active">Forecast</a>
+</nav>
+<main>
+
+  <section class="card">
+    <div class="pick-badge">Whitefish</div>
+    <h2>Trip forecast</h2>
+    <div class="subtitle">Thu, Oct 15 to Mon, Oct 19 &middot; updated Oct 13, 2:30 PM MT</div>
+    <div class="total-row wx-summary">
+      <div><span class="total-label">Temp range</span><span class="total-big">34°–70°</span></div>
+      <div><span class="total-label">Sunrise / sunset</span><span class="total-big">7:57 AM / 6:47 PM</span></div>
+      <div><span class="total-label">Max UV</span><span class="total-big">3.8</span></div>
+      <div><span class="total-label">Wettest day</span><span class="total-big">20%</span></div>
+    </div>
+    <div class="table-scroll">
+    <table class="forecast">
+      <tr><th>Day</th><th>Weather</th><th>High / low</th><th>Rain / snow</th><th>UV</th><th>Wind</th><th>Sunrise / sunset</th></tr>
+      <tr>
+        <td><strong>Thu, Oct 15</strong></td>
+        <td><span class="wx-icon">☁️</span> Overcast</td>
+        <td><strong>59°</strong> / 34°</td>
+        <td>0%<span class="muted-cell"></span></td>
+        <td>3.8 <span class="muted-cell">moderate</span></td>
+        <td>7 mph<span class="muted-cell"> &middot; gusts 7</span></td>
+        <td>7:57 AM / 6:47 PM<br><span class="muted-cell">10h 51m of light &middot; waxing crescent, 15% lit</span></td>
+      </tr>
+      <tr>
+        <td><strong>Fri, Oct 16</strong></td>
+        <td><span class="wx-icon">☁️</span> Overcast</td>
+        <td><strong>60°</strong> / 36°</td>
+        <td>0%<span class="muted-cell"></span></td>
+        <td>3.8 <span class="muted-cell">moderate</span></td>
+        <td>4 mph<span class="muted-cell"> &middot; gusts 6</span></td>
+        <td>7:58 AM / 6:45 PM<br><span class="muted-cell">10h 47m of light &middot; waxing crescent, 24% lit</span></td>
+      </tr>
+      <tr>
+        <td><strong>Sat, Oct 17</strong></td>
+        <td><span class="wx-icon">🌦️</span> Drizzle</td>
+        <td><strong>70°</strong> / 39°</td>
+        <td>2%<span class="muted-cell"></span></td>
+        <td>3.5 <span class="muted-cell">moderate</span></td>
+        <td>18 mph<span class="muted-cell"> &middot; gusts 46</span></td>
+        <td>8:00 AM / 6:44 PM<br><span class="muted-cell">10h 44m of light &middot; first quarter, 33% lit</span></td>
+      </tr>
+      <tr>
+        <td><strong>Sun, Oct 18</strong></td>
+        <td><span class="wx-icon">☁️</span> Overcast</td>
+        <td><strong>54°</strong> / 35°</td>
+        <td>2%<span class="muted-cell"></span></td>
+        <td>3.4 <span class="muted-cell">moderate</span></td>
+        <td>11 mph<span class="muted-cell"> &middot; gusts 15</span></td>
+        <td>8:01 AM / 6:42 PM<br><span class="muted-cell">10h 40m of light &middot; first quarter, 44% lit</span></td>
+      </tr>
+      <tr>
+        <td><strong>Mon, Oct 19</strong></td>
+        <td><span class="wx-icon">☁️</span> Overcast</td>
+        <td><strong>57°</strong> / 37°</td>
+        <td>20%<span class="muted-cell"></span></td>
+        <td>2.5 <span class="muted-cell">low</span></td>
+        <td>4 mph<span class="muted-cell"> &middot; gusts 4</span></td>
+        <td>8:03 AM / 6:40 PM<br><span class="muted-cell">10h 37m of light &middot; first quarter, 54% lit</span></td>
+      </tr>
+    </table>
+    </div>
+    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; check again the night before.</div>
+  </section>
+
+  <section class="card">
+    <h2>In the park</h2>
+    <div class="subtitle">High / low, chance of rain or snow, and UV at each place on the plan. Trailheads and passes run colder than these valley numbers.</div>
+    <div class="table-scroll">
+    <table class="forecast spots">
+      <tr><th>Where</th><th>Thu, Oct 15</th><th>Fri, Oct 16</th><th>Sat, Oct 17</th><th>Sun, Oct 18</th><th>Mon, Oct 19</th></tr>
+      <tr>
+        <td><strong>Whitefish</strong><br><span class="muted-cell">Base, Lion Mountain</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/34°<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>60°</strong>/36°<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>70°</strong>/39°<br><span class="muted-cell">2% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/35°<br><span class="muted-cell">2% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>57°</strong>/37°<br><span class="muted-cell">20% precip &middot; UV 2.5</span></td>
+      </tr>
+      <tr>
+        <td><strong>Lake McDonald</strong><br><span class="muted-cell">Avalanche Lake, Apgar Lookout</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>58°</strong>/37°<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>63°</strong>/40°<br><span class="muted-cell">0% precip &middot; UV 3.6</span></td><td><span class="wx-icon" title="Showers">🌦️</span> <strong>66°</strong>/41°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>53°</strong>/37°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>58°</strong>/39°<br><span class="muted-cell">22% precip &middot; UV 2.7</span></td>
+      </tr>
+      <tr>
+        <td><strong>Middle Fork Flathead</strong><br><span class="muted-cell">Sunday float</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/31°<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>63°</strong>/35°<br><span class="muted-cell">0% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>68°</strong>/39°<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/34°<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/36°<br><span class="muted-cell">21% precip &middot; UV 2.8</span></td>
+      </tr>
+      <tr>
+        <td><strong>Two Medicine</strong><br><span class="muted-cell">Dawson Pass</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>48°</strong>/24°<br><span class="muted-cell">0% precip &middot; UV 4.2</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/34°<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>58°</strong>/34°<br><span class="muted-cell">5% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>47°</strong>/29°<br><span class="muted-cell">5% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>55°</strong>/32°<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
+      </tr>
+      <tr>
+        <td><strong>Many Glacier</strong><br><span class="muted-cell">Grinnell Glacier</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>51°</strong>/31°<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/38°<br><span class="muted-cell">0% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>56°</strong>/33°<br><span class="muted-cell">8% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>45°</strong>/31°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>53°</strong>/35°<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
+      </tr>
+    </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Know before you go</h2>
+    <table>
+      <tr><td>Roads</td><td>The Sun Road is closed from Avalanche Creek to Logan Pass (snow, since Oct 9), so no Logan Pass or Highline. The Two Medicine Road is closed at Running Eagle Falls for construction. Text <strong>GNPROADS</strong> to 333111 for live status.</td></tr>
+      <tr><td>Bears</td><td>Bears are feeding hard before winter. Carry bear spray where you can reach it, hike in a group and make noise on blind corners.</td></tr>
+      <tr><td>Hunting</td><td>Hunting seasons are open on national forest land outside the park, including along the Middle Fork. Wear something bright off park trails.</td></tr>
+      <tr><td>Cold water</td><td>The Middle Fork is snowmelt-cold in October. Layers that stay warm wet (no cotton) and a dry change of clothes in the car.</td></tr>
+      <tr><td>Fall color</td><td>Western larch turn gold mid to late October; look for them on the hillsides around Lake McDonald and the North Fork.</td></tr>
+      <tr><td>Sun</td><td>UV stays moderate this late in the year, but it bounces off snow and water. Sunglasses and sunscreen for the float and anything above treeline.</td></tr>
+      <tr><td>Daylight</td><td>About 10h 45m of light. Start long hikes by 9 AM so you're off the trail before the ~6:45 PM sunset.</td></tr>
+    </table>
+    <a class="add-idea-link" href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">Park road and trail conditions &rarr;</a>
+  </section>
+</main>
+<footer>
+  Homeless in Montana &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights<br>
+  Photos: Wikimedia Commons.
+</footer>
+</body>
+</html>

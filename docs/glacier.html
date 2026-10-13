@@ -444,6 +444,14 @@
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  table.forecast { min-width: 760px; }
+  table.forecast td { vertical-align: top; }
+  table.forecast.spots td:first-child { width: 17%; }
+  table.forecast:not(.spots) td:first-child { width: 12%; white-space: nowrap; }
+  table.forecast:not(.spots) td:nth-child(2), table.forecast:not(.spots) td:nth-child(3) { white-space: nowrap; }
+  .wx-icon { font-size: 1.1rem; }
+  .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
+  .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
   table.hikes td { vertical-align: top; }
   table.hikes td:first-child { width: 14%; }
@@ -644,6 +652,7 @@
   <a href="./flights.html" class="">Flights</a>
   <a href="./housing.html" class="">Housing</a>
   <a href="./tasks.html" class="">Tasks</a>
+  <a href="./forecast.html" class="">Forecast</a>
 </nav>
 <main>
 

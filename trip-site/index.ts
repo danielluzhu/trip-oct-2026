@@ -540,6 +540,14 @@ const sharedStyle = /* css */ `
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  table.forecast { min-width: 760px; }
+  table.forecast td { vertical-align: top; }
+  table.forecast.spots td:first-child { width: 17%; }
+  table.forecast:not(.spots) td:first-child { width: 12%; white-space: nowrap; }
+  table.forecast:not(.spots) td:nth-child(2), table.forecast:not(.spots) td:nth-child(3) { white-space: nowrap; }
+  .wx-icon { font-size: 1.1rem; }
+  .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
+  .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
   table.hikes td { vertical-align: top; }
   table.hikes td:first-child { width: 14%; }
@@ -732,8 +740,8 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-type Route = "/" | "/glacier" | "/flights" | "/housing" | "/tasks" | "/shortlist";
-type Nav = "home" | "flights" | "housing" | "tasks" | "itinerary" | "shortlist";
+type Route = "/" | "/glacier" | "/flights" | "/housing" | "/tasks" | "/forecast" | "/shortlist";
+type Nav = "home" | "flights" | "housing" | "tasks" | "forecast" | "itinerary" | "shortlist";
 
 function href(path: Route) {
   if (!STATIC) return path;
@@ -804,6 +812,13 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     tagline:
       "Everything the group needs to get done, and who's on it.",
   },
+  forecast: {
+    file: "Lake McDonald Panorama - Montana - Glacier National Park (29788703722).jpg",
+    credit: "Lake McDonald panorama",
+    heading: "Nature forecast",
+    tagline:
+      "Weather, daylight and conditions for the trip, kept up to date.",
+  },
   shortlist: {
     file: "Vermont fall foliage hogback mountain.JPG",
     credit: "Hogback Mountain, Vermont",
@@ -849,6 +864,7 @@ function layout(activeNav: Nav, title: string, body: string) {
   <a href="${href("/flights")}" class="${activeNav === "flights" ? "active" : ""}">Flights</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/tasks")}" class="${activeNav === "tasks" ? "active" : ""}">Tasks</a>
+  <a href="${href("/forecast")}" class="${activeNav === "forecast" ? "active" : ""}">Forecast</a>
 </nav>
 <main>
 ${body}
@@ -1683,11 +1699,209 @@ async function tasksPage() {
   return layout("tasks", `Tasks — ${trip.title}`, body);
 }
 
+// ---------------------------------------------------------------- forecast
+
+// Live trip-dates forecast from Open-Meteo (free, no key). The server caches
+// it for an hour; the static build bakes in whatever it got at build time and
+// says when that was.
+const FORECAST_SPOTS = [
+  { key: "whitefish", name: "Whitefish", note: "Base, Lion Mountain", lat: 48.411, lon: -114.338 },
+  { key: "mcdonald", name: "Lake McDonald", note: "Avalanche Lake, Apgar Lookout", lat: 48.62, lon: -113.88 },
+  { key: "middlefork", name: "Middle Fork Flathead", note: "Sunday float", lat: 48.47, lon: -113.99 },
+  { key: "twomed", name: "Two Medicine", note: "Dawson Pass", lat: 48.49, lon: -113.37 },
+  { key: "manyglacier", name: "Many Glacier", note: "Grinnell Glacier", lat: 48.8, lon: -113.67 },
+];
+
+type Daily = {
+  time: string[];
+  weather_code: number[];
+  temperature_2m_max: number[];
+  temperature_2m_min: number[];
+  sunrise: string[];
+  sunset: string[];
+  daylight_duration: number[];
+  uv_index_max: number[];
+  precipitation_probability_max: number[];
+  precipitation_sum: number[];
+  snowfall_sum: number[];
+  wind_speed_10m_max: number[];
+  wind_gusts_10m_max: number[];
+};
+
+let forecastCache: { at: number; spots: (Daily | null)[] } | null = null;
+
+async function loadForecast() {
+  if (forecastCache && Date.now() - forecastCache.at < 60 * 60 * 1000) return forecastCache;
+  const p = new URLSearchParams({
+    latitude: FORECAST_SPOTS.map((s) => s.lat).join(","),
+    longitude: FORECAST_SPOTS.map((s) => s.lon).join(","),
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,uv_index_max,precipitation_probability_max,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max",
+    temperature_unit: "fahrenheit",
+    wind_speed_unit: "mph",
+    precipitation_unit: "inch",
+    timezone: "America/Denver",
+    start_date: housing.checkin,
+    end_date: housing.checkout,
+  });
+  try {
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?${p}`, { signal: AbortSignal.timeout(10000) });
+    if (!r.ok) throw new Error(`open-meteo ${r.status}`);
+    const json = await r.json();
+    const list = Array.isArray(json) ? json : [json];
+    forecastCache = { at: Date.now(), spots: list.map((x: any) => x.daily ?? null) };
+  } catch (e) {
+    console.error("forecast fetch failed:", e);
+    // Keep serving the last good forecast if there is one.
+    if (!forecastCache) return null;
+  }
+  return forecastCache;
+}
+
+// WMO weather codes, as Open-Meteo reports them.
+function wmo(code: number): [string, string] {
+  if (code === 0) return ["☀️", "Clear"];
+  if (code === 1) return ["🌤️", "Mostly clear"];
+  if (code === 2) return ["⛅", "Partly cloudy"];
+  if (code === 3) return ["☁️", "Overcast"];
+  if (code === 45 || code === 48) return ["🌫️", "Fog"];
+  if (code >= 51 && code <= 57) return ["🌦️", "Drizzle"];
+  if (code >= 61 && code <= 67) return ["🌧️", code >= 65 ? "Heavy rain" : "Rain"];
+  if (code >= 71 && code <= 77) return ["🌨️", code >= 75 ? "Heavy snow" : "Snow"];
+  if (code >= 80 && code <= 82) return ["🌦️", "Showers"];
+  if (code === 85 || code === 86) return ["🌨️", "Snow showers"];
+  if (code >= 95) return ["⛈️", "Thunderstorms"];
+  return ["", "—"];
+}
+
+function uvLabel(uv: number) {
+  if (uv < 3) return "low";
+  if (uv < 6) return "moderate";
+  if (uv < 8) return "high";
+  return "very high";
+}
+
+const clock = (iso: string) => fmtTime(iso.slice(11, 16));
+const hrs = (sec: number) => `${Math.floor(sec / 3600)}h ${String(Math.round((sec % 3600) / 60)).padStart(2, "0")}m`;
+const deg = (n: number) => `${Math.round(n)}°`;
+
+// Moon phase for stargazing, from the mean synodic month (good to a day).
+function moonPhase(date: string) {
+  const days = (Date.parse(`${date}T04:00:00Z`) - Date.parse("2000-01-06T18:14:00Z")) / 86400000;
+  const age = ((days % 29.530588853) + 29.530588853) % 29.530588853;
+  const lit = Math.round(((1 - Math.cos((2 * Math.PI * age) / 29.530588853)) / 2) * 100);
+  const names = ["New moon", "Waxing crescent", "First quarter", "Waxing gibbous", "Full moon", "Waning gibbous", "Last quarter", "Waning crescent"];
+  return { name: names[Math.floor(((age + 1.845) / 29.530588853) * 8) % 8], lit };
+}
+
+async function forecastPage() {
+  const fc = await loadForecast();
+  const base = fc?.spots[0];
+  const asOf = fc
+    ? new Date(fc.at).toLocaleString("en-US", { timeZone: "America/Denver", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + " MT"
+    : "";
+
+  const dayName = (d: string) => fmtDate(d);
+
+  const mainTable = base
+    ? `<div class="table-scroll">
+    <table class="forecast">
+      <tr><th>Day</th><th>Weather</th><th>High / low</th><th>Rain / snow</th><th>UV</th><th>Wind</th><th>Sunrise / sunset</th></tr>
+      ${base.time
+        .map((d, i) => {
+          const [icon, label] = wmo(base.weather_code[i]);
+          const snow = base.snowfall_sum[i] >= 0.1 ? `, ${base.snowfall_sum[i].toFixed(1)} in snow` : "";
+          const moon = moonPhase(d);
+          return `<tr>
+        <td><strong>${escapeHtml(dayName(d))}</strong></td>
+        <td><span class="wx-icon">${icon}</span> ${label}</td>
+        <td><strong>${deg(base.temperature_2m_max[i])}</strong> / ${deg(base.temperature_2m_min[i])}</td>
+        <td>${base.precipitation_probability_max[i]}%<span class="muted-cell">${base.precipitation_sum[i] >= 0.01 ? ` &middot; ${base.precipitation_sum[i].toFixed(2)} in` : ""}${snow}</span></td>
+        <td>${base.uv_index_max[i].toFixed(1)} <span class="muted-cell">${uvLabel(base.uv_index_max[i])}</span></td>
+        <td>${Math.round(base.wind_speed_10m_max[i])} mph<span class="muted-cell"> &middot; gusts ${Math.round(base.wind_gusts_10m_max[i])}</span></td>
+        <td>${clock(base.sunrise[i])} / ${clock(base.sunset[i])}<br><span class="muted-cell">${hrs(base.daylight_duration[i])} of light &middot; ${moon.name.toLowerCase()}, ${moon.lit}% lit</span></td>
+      </tr>`;
+        })
+        .join("\n      ")}
+    </table>
+    </div>`
+    : `<div class="caveat">The forecast service didn't answer. Try again in a few minutes.</div>`;
+
+  const spotsTable =
+    fc && base
+      ? `<div class="table-scroll">
+    <table class="forecast spots">
+      <tr><th>Where</th>${base.time.map((d) => `<th>${escapeHtml(dayName(d))}</th>`).join("")}</tr>
+      ${FORECAST_SPOTS.map((s, si) => {
+        const f = fc.spots[si];
+        if (!f) return "";
+        return `<tr>
+        <td><strong>${escapeHtml(s.name)}</strong><br><span class="muted-cell">${escapeHtml(s.note)}</span></td>
+        ${f.time
+          .map((_, i) => {
+            const [icon, label] = wmo(f.weather_code[i]);
+            const snow = f.snowfall_sum[i] >= 0.1 ? `<br><span class="muted-cell">${f.snowfall_sum[i].toFixed(1)} in snow</span>` : "";
+            return `<td><span class="wx-icon" title="${label}">${icon}</span> <strong>${deg(f.temperature_2m_max[i])}</strong>/${deg(f.temperature_2m_min[i])}<br><span class="muted-cell">${f.precipitation_probability_max[i]}% precip &middot; UV ${f.uv_index_max[i].toFixed(1)}</span>${snow}</td>`;
+          })
+          .join("")}
+      </tr>`;
+      }).join("\n      ")}
+    </table>
+    </div>`
+      : "";
+
+  // Headline numbers across the whole trip at the base.
+  const summary = base
+    ? (() => {
+        const hi = Math.max(...base.temperature_2m_max), lo = Math.min(...base.temperature_2m_min);
+        const uv = Math.max(...base.uv_index_max);
+        const wet = Math.max(...base.precipitation_probability_max);
+        return `<div class="total-row wx-summary">
+      <div><span class="total-label">Temp range</span><span class="total-big">${deg(lo)}–${deg(hi)}</span></div>
+      <div><span class="total-label">Sunrise / sunset</span><span class="total-big">${clock(base.sunrise[0])} / ${clock(base.sunset[0])}</span></div>
+      <div><span class="total-label">Max UV</span><span class="total-big">${uv.toFixed(1)}</span></div>
+      <div><span class="total-label">Wettest day</span><span class="total-big">${wet}%</span></div>
+    </div>`;
+      })()
+    : "";
+
+  const body = `
+  <section class="card">
+    <div class="pick-badge">Whitefish</div>
+    <h2>Trip forecast</h2>
+    <div class="subtitle">${escapeHtml(fmtDate(housing.checkin))} to ${escapeHtml(fmtDate(housing.checkout))}${asOf ? ` &middot; updated ${escapeHtml(asOf)}` : ""}</div>
+    ${summary}
+    ${mainTable}
+    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; check again the night before.</div>
+  </section>
+
+  <section class="card">
+    <h2>In the park</h2>
+    <div class="subtitle">High / low, chance of rain or snow, and UV at each place on the plan. Trailheads and passes run colder than these valley numbers.</div>
+    ${spotsTable}
+  </section>
+
+  <section class="card">
+    <h2>Know before you go</h2>
+    <table>
+      <tr><td>Roads</td><td>The Sun Road is closed from Avalanche Creek to Logan Pass (snow, since Oct 9), so no Logan Pass or Highline. The Two Medicine Road is closed at Running Eagle Falls for construction. Text <strong>GNPROADS</strong> to 333111 for live status.</td></tr>
+      <tr><td>Bears</td><td>Bears are feeding hard before winter. Carry bear spray where you can reach it, hike in a group and make noise on blind corners.</td></tr>
+      <tr><td>Hunting</td><td>Hunting seasons are open on national forest land outside the park, including along the Middle Fork. Wear something bright off park trails.</td></tr>
+      <tr><td>Cold water</td><td>The Middle Fork is snowmelt-cold in October. Layers that stay warm wet (no cotton) and a dry change of clothes in the car.</td></tr>
+      <tr><td>Fall color</td><td>Western larch turn gold mid to late October; look for them on the hillsides around Lake McDonald and the North Fork.</td></tr>
+      <tr><td>Sun</td><td>UV stays moderate this late in the year, but it bounces off snow and water. Sunglasses and sunscreen for the float and anything above treeline.</td></tr>
+      <tr><td>Daylight</td><td>About 10h 45m of light. Start long hikes by 9 AM so you're off the trail before the ~6:45 PM sunset.</td></tr>
+    </table>
+    <a class="add-idea-link" href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">Park road and trail conditions &rarr;</a>
+  </section>`;
+
+  return layout("forecast", `Forecast — ${trip.title}`, body);
+}
+
 // ---------------------------------------------------------------- costs
 
 const costs = (data as any).costs;
 
-export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, shortlistPage };
+export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, forecastPage, shortlistPage };
 
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
@@ -1808,6 +2022,12 @@ Bun.serve({
       const tasks = await loadTasks();
       await saveTasks(tasks.filter((t) => t.id !== id));
       return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/forecast") {
+      return new Response(await forecastPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
     }
 
     if (url.pathname === "/tasks") {
