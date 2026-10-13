@@ -791,7 +791,7 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     credit: "Wild Goose Island, St. Mary Lake",
     heading: "Homeless in Montana",
     tagline:
-      "Four nights in Whitefish. One big hike, one float.",
+      "",
   },
 };
 
@@ -815,7 +815,7 @@ function layout(activeNav: Nav, title: string, body: string) {
   <div class="hero-inner">
     <div class="eyebrow">${trip.datesShort} &middot; ${trip.groupSize} people</div>
     <h1>${hero.heading}</h1>
-    <p class="tagline">${hero.tagline}</p>
+    ${hero.tagline ? `<p class="tagline">${hero.tagline}</p>` : ""}
   </div>
   <div class="hero-credit">${hero.credit} &middot; Wikimedia Commons</div>
 </header>
