@@ -313,6 +313,8 @@
       "title": "Pool / Hot Tub / Sauna / Gym | King Bed | Quarry",
       "url": "https://www.airbnb.com/rooms/49522099",
       "town": "Whitefish",
+      "address": "138 Jasper Loop, Whitefish, MT 59937",
+      "checkInOut": "Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock",
       "total": 1830,
       "type": "Entire home",
       "bedrooms": 3,
@@ -524,7 +526,11 @@
     "facts": [
       [
         "Stay",
-        "The Quarry house, Whitefish. Thu 10/15 to Mon 10/19"
+        "The Quarry house, 138 Jasper Loop, Whitefish, MT 59937. Thu 10/15 to Mon 10/19"
+      ],
+      [
+        "Check-in",
+        "After 4 PM Thu (smart lock). Check out before 10 AM Mon"
       ],
       [
         "Weather",

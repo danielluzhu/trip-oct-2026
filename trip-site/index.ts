@@ -1132,6 +1132,8 @@ function housingPage() {
           <tr><td>${housing.nights} nights, all in</td>
             <td><span class="stay-total">${fmt(b.total)}</span>
               <span class="muted-cell">&nbsp;&middot;&nbsp;${fmt(b.total / 8)} each at 8</span></td></tr>
+          <tr><td>Address</td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(b.address)}" target="_blank" rel="noopener">${escapeHtml(b.address)}</a></td></tr>
+          <tr><td>Check-in / out</td><td>${escapeHtml(b.checkInOut)}</td></tr>
           <tr><td>Sleeps</td><td>${b.sleeps}</td></tr>
           <tr><td>Bedrooms / baths</td><td>${b.bedrooms} / ${b.baths}</td></tr>
           <tr><td>Beds</td><td>${escapeHtml(b.beds)}</td></tr>
