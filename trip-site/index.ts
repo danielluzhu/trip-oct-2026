@@ -845,7 +845,7 @@ function layout(activeNav: Nav, title: string, body: string) {
   <div class="hero-credit">${hero.credit} &middot; Wikimedia Commons</div>
 </header>
 <nav>
-  <a href="${href("/")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary &amp; ideas</a>
+  <a href="${href("/")}" class="${activeNav === "itinerary" ? "active" : ""}">Itinerary</a>
   <a href="${href("/flights")}" class="${activeNav === "flights" ? "active" : ""}">Flights</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/tasks")}" class="${activeNav === "tasks" ? "active" : ""}">Tasks</a>

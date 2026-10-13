@@ -2,27 +2,19 @@
   "tasks": [
     {
       "id": "seed-01",
-      "text": "Confirm the first AWD SUV at FCA (pickup Thu 11:37)",
+      "text": "Pickup Car Rental 1",
       "who": "JWu",
-      "due": "2026-10-14",
+      "due": "2026-10-15",
       "done": false,
       "createdAt": 1
     },
     {
       "id": "seed-02",
-      "text": "Confirm the second AWD SUV at FCA (pickup Thu 7:05 PM)",
+      "text": "Pickup Car Rental 2",
       "who": "Dan",
-      "due": "2026-10-14",
+      "due": "2026-10-15",
       "done": false,
       "createdAt": 2
-    },
-    {
-      "id": "seed-03",
-      "text": "Check the 41 min Seattle connection (AS 656 to AS 2406) with Alaska",
-      "who": "Dan",
-      "due": "2026-10-14",
-      "done": false,
-      "createdAt": 3
     },
     {
       "id": "seed-06",
@@ -31,14 +23,6 @@
       "due": "2026-10-16",
       "done": false,
       "createdAt": 6
-    },
-    {
-      "id": "seed-07",
-      "text": "Costco run in Kalispell: park lunches for the weekend",
-      "who": "",
-      "due": "2026-10-16",
-      "done": false,
-      "createdAt": 7
     },
     {
       "id": "seed-08",
@@ -51,7 +35,7 @@
     {
       "id": "seed-09",
       "text": "Glacier entry: buy a park pass online, or pay per car at the gate",
-      "who": "",
+      "who": "Dan",
       "due": "2026-10-17",
       "done": false,
       "createdAt": 9
