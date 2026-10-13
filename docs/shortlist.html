@@ -452,6 +452,16 @@
   .wx-icon { font-size: 1.1rem; }
   .wx-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1rem; flex-wrap: wrap; }
   .wx-head form { margin: 0; }
+  .hourly-toggle { margin-top: .3rem; padding: .15rem .55rem; font: 600 .74rem var(--sans); color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
+  .hourly-toggle:hover, .hourly-toggle[aria-expanded="true"] { border-color: var(--accent); }
+  tr.hourly-row > td { padding: .3rem 0 .8rem; background: var(--bg-alt); }
+  .hourly-day { font: 700 .74rem var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: .5rem .6rem .2rem; }
+  /* width:0 + min-width:100% keeps the strip from widening the table; it scrolls instead. */
+  .hourly-strip { display: flex; gap: .3rem; overflow-x: auto; padding: .2rem .6rem .4rem; width: 0; min-width: 100%; box-sizing: border-box; }
+  .hour { flex: 0 0 4.6rem; text-align: center; padding: .4rem .2rem; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); font-size: .8rem; line-height: 1.35; }
+  .hour.night { opacity: .6; }
+  .hour-time { font-weight: 700; font-size: .74rem; }
+  .hour-temp { font-weight: 700; font-size: .95rem; }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }

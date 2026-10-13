@@ -548,6 +548,16 @@ const sharedStyle = /* css */ `
   .wx-icon { font-size: 1.1rem; }
   .wx-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1rem; flex-wrap: wrap; }
   .wx-head form { margin: 0; }
+  .hourly-toggle { margin-top: .3rem; padding: .15rem .55rem; font: 600 .74rem var(--sans); color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
+  .hourly-toggle:hover, .hourly-toggle[aria-expanded="true"] { border-color: var(--accent); }
+  tr.hourly-row > td { padding: .3rem 0 .8rem; background: var(--bg-alt); }
+  .hourly-day { font: 700 .74rem var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: .5rem .6rem .2rem; }
+  /* width:0 + min-width:100% keeps the strip from widening the table; it scrolls instead. */
+  .hourly-strip { display: flex; gap: .3rem; overflow-x: auto; padding: .2rem .6rem .4rem; width: 0; min-width: 100%; box-sizing: border-box; }
+  .hour { flex: 0 0 4.6rem; text-align: center; padding: .4rem .2rem; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); font-size: .8rem; line-height: 1.35; }
+  .hour.night { opacity: .6; }
+  .hour-time { font-weight: 700; font-size: .74rem; }
+  .hour-temp { font-weight: 700; font-size: .95rem; }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
@@ -1730,7 +1740,17 @@ type Daily = {
   wind_gusts_10m_max: number[];
 };
 
-let forecastCache: { at: number; spots: (Daily | null)[] } | null = null;
+type Hourly = {
+  time: string[];
+  temperature_2m: number[];
+  apparent_temperature: number[];
+  weather_code: number[];
+  precipitation_probability: number[];
+  wind_speed_10m: number[];
+  is_day: number[];
+};
+
+let forecastCache: { at: number; spots: (Daily | null)[]; hourly: (Hourly | null)[] } | null = null;
 
 // `force` skips the hour cache (the Refresh button), but never more than once
 // a minute so a mashed button can't hammer the API.
@@ -1743,6 +1763,7 @@ async function loadForecast(force = false) {
     daily: "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,uv_index_max,precipitation_probability_max,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max",
     wind_speed_unit: "mph",
     precipitation_unit: "inch",
+    hourly: "temperature_2m,apparent_temperature,weather_code,precipitation_probability,wind_speed_10m,is_day",
     timezone: "America/Denver",
     start_date: housing.checkin,
     end_date: housing.checkout,
@@ -1752,7 +1773,11 @@ async function loadForecast(force = false) {
     if (!r.ok) throw new Error(`open-meteo ${r.status}`);
     const json = await r.json();
     const list = Array.isArray(json) ? json : [json];
-    forecastCache = { at: Date.now(), spots: list.map((x: any) => x.daily ?? null) };
+    forecastCache = {
+      at: Date.now(),
+      spots: list.map((x: any) => x.daily ?? null),
+      hourly: list.map((x: any) => x.hourly ?? null),
+    };
   } catch (e) {
     console.error("forecast fetch failed:", e);
     // Keep serving the last good forecast if there is one.
@@ -1797,6 +1822,27 @@ function moonPhase(date: string) {
   return { name: names[Math.floor(((age + 1.845) / 29.530588853) * 8) % 8], lit };
 }
 
+// One day's hours as a sideways-scrolling strip. Night hours are dimmed.
+function hourlyStrip(h: Hourly | null | undefined, day: string) {
+  if (!h) return `<div class="calc-note">No hourly data.</div>`;
+  const idx = h.time.map((t, i) => (t.startsWith(day) ? i : -1)).filter((i) => i >= 0);
+  return `<div class="hourly-strip">${idx
+    .map((i) => {
+      let [icon, label] = wmo(h.weather_code[i]);
+      if (!h.is_day[i] && h.weather_code[i] <= 1) icon = "🌙";
+      if (!h.is_day[i] && h.weather_code[i] === 2) icon = "☁️";
+      return `<div class="hour${h.is_day[i] ? "" : " night"}" title="${label}">
+        <div class="hour-time">${fmtTime(h.time[i].slice(11, 16)).replace(":00 ", " ")}</div>
+        <div class="wx-icon">${icon}</div>
+        <div class="hour-temp">${deg(h.temperature_2m[i])}</div>
+        <div class="muted-cell">feels ${deg(h.apparent_temperature[i])}</div>
+        <div class="muted-cell">${h.precipitation_probability[i]}% rain</div>
+        <div class="muted-cell">${Math.round(h.wind_speed_10m[i])} mph</div>
+      </div>`;
+    })
+    .join("")}</div>`;
+}
+
 async function forecastPage() {
   const fc = await loadForecast();
   const base = fc?.spots[0];
@@ -1816,14 +1862,15 @@ async function forecastPage() {
           const snow = base.snowfall_sum[i] >= 0.1 ? `, ${base.snowfall_sum[i].toFixed(1)} in snow` : "";
           const moon = moonPhase(d);
           return `<tr>
-        <td><strong>${escapeHtml(dayName(d))}</strong></td>
+        <td><strong>${escapeHtml(dayName(d))}</strong><br><button type="button" class="hourly-toggle" aria-expanded="false">Hourly &#9662;</button></td>
         <td><span class="wx-icon">${icon}</span> ${label}</td>
         <td><strong>${deg(base.temperature_2m_max[i])}</strong> / ${deg(base.temperature_2m_min[i])}</td>
         <td>${base.precipitation_probability_max[i]}%<span class="muted-cell">${base.precipitation_sum[i] >= 0.01 ? ` &middot; ${base.precipitation_sum[i].toFixed(2)} in` : ""}${snow}</span></td>
         <td>${base.uv_index_max[i].toFixed(1)} <span class="muted-cell">${uvLabel(base.uv_index_max[i])}</span></td>
         <td>${Math.round(base.wind_speed_10m_max[i])} mph<span class="muted-cell"> &middot; gusts ${Math.round(base.wind_gusts_10m_max[i])}</span></td>
         <td>${clock(base.sunrise[i])} / ${clock(base.sunset[i])}<br><span class="muted-cell">${hrs(base.daylight_duration[i])} of light &middot; ${moon.name.toLowerCase()}, ${moon.lit}% lit</span></td>
-      </tr>`;
+      </tr>
+      <tr class="hourly-row" hidden><td colspan="7">${hourlyStrip(fc?.hourly[0], d)}</td></tr>`;
         })
         .join("\n      ")}
     </table>
@@ -1839,7 +1886,7 @@ async function forecastPage() {
         const f = fc.spots[si];
         if (!f) return "";
         return `<tr>
-        <td><strong>${escapeHtml(s.name)}</strong><br><span class="muted-cell">${escapeHtml(s.note)}</span></td>
+        <td><strong>${escapeHtml(s.name)}</strong><br><span class="muted-cell">${escapeHtml(s.note)}</span><br><button type="button" class="hourly-toggle" aria-expanded="false">Hourly &#9662;</button></td>
         ${f.time
           .map((_, i) => {
             const [icon, label] = wmo(f.weather_code[i]);
@@ -1847,7 +1894,10 @@ async function forecastPage() {
             return `<td><span class="wx-icon" title="${label}">${icon}</span> <strong>${deg(f.temperature_2m_max[i])}</strong>/${deg(f.temperature_2m_min[i])}<br><span class="muted-cell">${f.precipitation_probability_max[i]}% precip &middot; UV ${f.uv_index_max[i].toFixed(1)}</span>${snow}</td>`;
           })
           .join("")}
-      </tr>`;
+      </tr>
+      <tr class="hourly-row" hidden><td colspan="${f.time.length + 1}">${f.time
+        .map((d) => `<div class="hourly-day">${escapeHtml(dayName(d))}</div>${hourlyStrip(fc.hourly[si], d)}`)
+        .join("")}</td></tr>`;
       }).join("\n      ")}
     </table>
     </div>`
@@ -1901,7 +1951,25 @@ async function forecastPage() {
     <a class="add-idea-link" href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">Park road and trail conditions &rarr;</a>
   </section>`;
 
-  return layout("forecast", `Forecast — ${trip.title}`, body);
+  const script = `<script>
+  // Each Hourly button opens the hidden row right below its own.
+  document.querySelectorAll(".hourly-toggle").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var row = b.closest("tr").nextElementSibling;
+      var open = row.hidden;
+      row.hidden = !open;
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      b.innerHTML = open ? "Hide hourly &#9652;" : "Hourly &#9662;";
+      // Start each strip at 7 AM rather than midnight.
+      if (open) row.querySelectorAll(".hourly-strip").forEach(function (s) {
+        var h = s.children[7];
+        if (h) s.scrollLeft = h.offsetLeft - s.offsetLeft - 8;
+      });
+    });
+  });
+  </script>`;
+
+  return layout("forecast", `Forecast — ${trip.title}`, body + script);
 }
 
 // ---------------------------------------------------------------- costs
