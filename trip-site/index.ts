@@ -495,6 +495,9 @@ const sharedStyle = /* css */ `
   li.flight-leg summary:hover .flight-no { text-decoration: underline; }
   li.flight-leg .flight-no { font-weight: 700; margin-right: .25rem; }
   li.flight-leg details[open] { padding-bottom: .4rem; }
+  .flight-rename > summary { cursor: pointer; list-style: none; display: inline-block; }
+  .flight-rename > summary::-webkit-details-marker { display: none; }
+  .flight-rename .edit-link { margin-left: 0; }
   .flight-add > summary { cursor: pointer; list-style: none; }
   .flight-add > summary::-webkit-details-marker { display: none; }
   .flight-add > summary h2 { display: inline; margin: 0; }
@@ -503,6 +506,18 @@ const sharedStyle = /* css */ `
   .flight-form .calc-grid .wide { grid-column: 1 / -1; }
   .flight-form .calc-btn.primary { margin-top: .6rem; background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
   .flight-delete { margin-top: .5rem; }
+  .edit-link { font-size: .74rem; font-weight: 700; color: var(--accent); margin-left: .35rem; }
+  ul.tasks { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .35rem; }
+  li.task { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid var(--border); border-radius: 8px; padding: .45rem .6rem; font-size: .9rem; line-height: 1.4; }
+  li.task form { margin: 0; }
+  .task-check { flex: none; width: 1.35rem; height: 1.35rem; margin-top: .05rem; border-radius: 6px; border: 2px solid var(--accent); background: transparent; color: var(--on-dark); font-weight: 800; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  li.task.done .task-check { background: var(--accent); }
+  li.task.done .task-text { text-decoration: line-through; color: var(--muted); }
+  .task-body { flex: 1; min-width: 0; }
+  .task-body > summary { cursor: pointer; list-style: none; }
+  .task-body > summary::-webkit-details-marker { display: none; }
+  .task-body > summary:hover .task-text { text-decoration: underline; }
+  .task-text { margin-right: .3rem; }
 
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
@@ -692,8 +707,8 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-type Route = "/" | "/glacier" | "/flights" | "/housing" | "/costs" | "/shortlist";
-type Nav = "home" | "flights" | "housing" | "costs" | "itinerary" | "shortlist";
+type Route = "/" | "/glacier" | "/flights" | "/housing" | "/tasks" | "/shortlist";
+type Nav = "home" | "flights" | "housing" | "tasks" | "itinerary" | "shortlist";
 
 function href(path: Route) {
   if (!STATIC) return path;
@@ -757,12 +772,12 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     tagline:
       "The Quarry house, Thu to Mon.",
   },
-  costs: {
+  tasks: {
     file: "Sunrise at Swiftcurrent Lake as seen from the Many Glacier Hotel (48490111337).jpg",
     credit: "Sunrise at Swiftcurrent Lake, Many Glacier",
-    heading: "What it runs",
+    heading: "Who's doing what",
     tagline:
-      "The shared costs and what each person pays.",
+      "Everything the group needs to get done, and who's on it.",
   },
   shortlist: {
     file: "Vermont fall foliage hogback mountain.JPG",
@@ -809,6 +824,7 @@ function layout(activeNav: Nav, title: string, body: string) {
   <a href="${href("/glacier")}" class="${activeNav === "home" ? "active" : ""}">Glacier</a>
   <a href="${href("/flights")}" class="${activeNav === "flights" ? "active" : ""}">Flights</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
+  <a href="${href("/tasks")}" class="${activeNav === "tasks" ? "active" : ""}">Tasks</a>
 </nav>
 <main>
 ${body}
@@ -1261,6 +1277,7 @@ function flightLeg(f: Flight) {
         <span class="flight-no">${escapeHtml(f.flight)}</span>
         ${escapeHtml(f.from || "?")}&rarr;${escapeHtml(f.to || "?")}
         <span class="muted-cell">${fmtTime(f.departs)} &rarr; ${fmtTime(f.arrives)}${f.seat ? ` &middot; ${escapeHtml(f.seat)}` : ""}</span>
+        <span class="edit-link">edit</span>
       </summary>
       ${f.airline || f.notes ? `<div class="muted-cell">${escapeHtml([f.airline, f.notes].filter(Boolean).join(" · "))}</div>` : ""}
       ${flightForm(f, "Save changes")}
@@ -1318,6 +1335,16 @@ function tripItem(t: Trip) {
   return `<li class="flight">
       <div class="flight-who"><strong>${escapeHtml(t.who)}</strong> <span class="flight-when">${when}</span>${car}${stops ? ` <span class="muted-cell">&middot; ${stops} stop${stops > 1 ? "s" : ""}</span>` : ""}</div>
       <ol class="flight-legs">${t.legs.map(flightLeg).join("\n")}</ol>
+      <details class="flight-rename">
+        <summary><span class="edit-link">rename</span></summary>
+        <form method="POST" action="/flights/rename" class="flight-form">
+          <input type="hidden" name="from" value="${escapeHtml(t.who)}">
+          <div class="calc-grid">
+            <label>Name on all ${t.legs.length > 1 ? `${t.legs.length} legs` : "this leg"} <input type="text" name="to" required maxlength="60" value="${escapeHtml(t.who)}"></label>
+          </div>
+          <button type="submit" class="calc-btn primary">Rename</button>
+        </form>
+      </details>
     </li>`;
 }
 
@@ -1377,11 +1404,140 @@ async function flightsPage() {
   return layout("flights", `Flights — ${trip.title}`, body);
 }
 
+// ---------------------------------------------------------------- tasks
+
+// The group's to-do list, kept in tasks.json like the flight log. Anyone on
+// the trip server can add, assign, tick off or delete; the static Pages build
+// shows a read-only snapshot.
+const TASKS_PATH = `${import.meta.dir}/tasks.json`;
+
+type Task = {
+  id: string;
+  text: string;
+  who: string; // "" = unassigned
+  due: string; // YYYY-MM-DD or ""
+  done: boolean;
+  createdAt: number;
+};
+
+async function loadTasks(): Promise<Task[]> {
+  try {
+    const raw = await Bun.file(TASKS_PATH).json();
+    return raw.tasks ?? [];
+  } catch {
+    return [];
+  }
+}
+
+async function saveTasks(tasks: Task[]) {
+  await Bun.write(TASKS_PATH, JSON.stringify({ tasks }, null, 2) + "\n");
+}
+
+function taskFromForm(form: FormData, prev?: Task): Task | null {
+  const str = (k: string, max: number) => String(form.get(k) ?? "").trim().slice(0, max);
+  const due = str("due", 10);
+  const t: Task = {
+    id: prev?.id ?? crypto.randomUUID(),
+    text: str("text", 280),
+    who: str("who", 60),
+    due: /^\d{4}-\d{2}-\d{2}$/.test(due) ? due : "",
+    done: prev?.done ?? false,
+    createdAt: prev?.createdAt ?? Date.now(),
+  };
+  return t.text ? t : null;
+}
+
+// Assignee suggestions: everyone in the flight log, plus "Everyone".
+async function peopleNames() {
+  const seen = new Map<string, string>();
+  for (const f of await loadFlights()) {
+    const n = f.who.trim();
+    if (n && !seen.has(n.toLowerCase())) seen.set(n.toLowerCase(), n);
+  }
+  return [...[...seen.values()].sort(), "Everyone"];
+}
+
+function taskForm(t: Partial<Task>, submit: string) {
+  const v = (x?: string) => escapeHtml(x ?? "");
+  return `<form class="flight-form" method="POST" action="/tasks/save">
+      ${t.id ? `<input type="hidden" name="id" value="${v(t.id)}">` : ""}
+      <div class="calc-grid">
+        <label class="wide">Task <input type="text" name="text" required maxlength="280" placeholder="What needs doing?" value="${v(t.text)}"></label>
+        <label>Assigned to <input type="text" name="who" maxlength="60" list="people" placeholder="Unassigned" value="${v(t.who)}"></label>
+        <label>Due <input type="date" name="due" value="${v(t.due)}"></label>
+      </div>
+      <button type="submit" class="calc-btn primary">${submit}</button>
+    </form>`;
+}
+
+function taskItem(t: Task) {
+  const meta = `${t.who ? `<span class="pill ok">${escapeHtml(t.who)}</span>` : `<span class="pill partial">unassigned</span>`}${
+    t.due ? ` <span class="muted-cell">due ${escapeHtml(fmtDate(t.due))}</span>` : ""
+  }`;
+  if (STATIC) {
+    return `<li class="task${t.done ? " done" : ""}"><span class="task-check">${t.done ? "&#10003;" : ""}</span>
+      <div class="task-body"><span class="task-text">${escapeHtml(t.text)}</span> ${meta}</div></li>`;
+  }
+  return `<li class="task${t.done ? " done" : ""}">
+      <form method="POST" action="/tasks/toggle"><input type="hidden" name="id" value="${escapeHtml(t.id)}">
+        <button type="submit" class="task-check" title="${t.done ? "Mark not done" : "Mark done"}">${t.done ? "&#10003;" : ""}</button></form>
+      <details class="task-body">
+        <summary><span class="task-text">${escapeHtml(t.text)}</span> ${meta} <span class="edit-link">edit</span></summary>
+        ${taskForm(t, "Save changes")}
+        <form method="POST" action="/tasks/delete" class="flight-delete">
+          <input type="hidden" name="id" value="${escapeHtml(t.id)}">
+          <button type="submit" class="calc-btn">Delete this task</button>
+        </form>
+      </details>
+    </li>`;
+}
+
+async function tasksPage() {
+  const tasks = await loadTasks();
+  const order = (a: Task, b: Task) =>
+    `${a.due || "9999"} ${String(a.createdAt).padStart(15, "0")}`.localeCompare(
+      `${b.due || "9999"} ${String(b.createdAt).padStart(15, "0")}`,
+    );
+  const open = tasks.filter((t) => !t.done).sort(order);
+  const done = tasks.filter((t) => t.done).sort(order);
+  const unassigned = open.filter((t) => !t.who).length;
+
+  const body = `
+  <section class="card">
+    <h2>To do</h2>
+    <div class="subtitle">${open.length} open${unassigned ? ` &middot; ${unassigned} unassigned` : ""}${
+      STATIC ? " &middot; add and assign tasks on the trip server" : " &middot; tick the box when it's done, tap a task to reassign or edit it"
+    }</div>
+    <ul class="tasks">${open.length ? open.map(taskItem).join("\n") : `<li class="idea-empty">Nothing left to do.</li>`}</ul>
+  </section>
+  ${
+    STATIC
+      ? ""
+      : `<section class="card">
+    <h2>Add a task</h2>
+    ${taskForm({}, "Add task")}
+    <datalist id="people">${(await peopleNames()).map((n) => `<option value="${escapeHtml(n)}">`).join("")}</datalist>
+  </section>`
+  }
+  ${
+    done.length
+      ? `<section class="card">
+    <details class="flight-add">
+      <summary><h2>Done (${done.length})</h2></summary>
+      <ul class="tasks">${done.map(taskItem).join("\n")}</ul>
+    </details>
+  </section>`
+      : ""
+  }`;
+
+  return layout("tasks", `Tasks — ${trip.title}`, body);
+}
+
 // ---------------------------------------------------------------- costs
 
 const costs = (data as any).costs;
 
-export { homePage, itineraryPage, flightsPage, housingPage, shortlistPage };
+export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, shortlistPage };
 
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
@@ -1436,6 +1592,19 @@ Bun.serve({
       return Response.redirect("/flights", 303);
     }
 
+    // Renames a person on every leg they're logged on, both directions.
+    if (url.pathname === "/flights/rename" && req.method === "POST") {
+      const form = await req.formData();
+      const from = String(form.get("from") ?? "").trim().toLowerCase();
+      const to = String(form.get("to") ?? "").trim().slice(0, 60);
+      if (from && to) {
+        const flights = await loadFlights();
+        for (const f of flights) if (f.who.trim().toLowerCase() === from) f.who = to;
+        await saveFlights(flights);
+      }
+      return Response.redirect("/flights", 303);
+    }
+
     if (url.pathname === "/flights/delete" && req.method === "POST") {
       const form = await req.formData();
       const id = String(form.get("id") ?? "");
@@ -1452,6 +1621,46 @@ Bun.serve({
 
     if (url.pathname === "/housing") {
       return new Response(housingPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
+    if (url.pathname === "/tasks/save" && req.method === "POST") {
+      const form = await req.formData();
+      const tasks = await loadTasks();
+      const id = String(form.get("id") ?? "");
+      const i = id ? tasks.findIndex((t) => t.id === id) : -1;
+      const t = taskFromForm(form, i >= 0 ? tasks[i] : undefined);
+      if (t) {
+        if (i >= 0) tasks[i] = t;
+        else tasks.push(t);
+        await saveTasks(tasks);
+      }
+      return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/tasks/toggle" && req.method === "POST") {
+      const form = await req.formData();
+      const id = String(form.get("id") ?? "");
+      const tasks = await loadTasks();
+      const t = tasks.find((t) => t.id === id);
+      if (t) {
+        t.done = !t.done;
+        await saveTasks(tasks);
+      }
+      return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/tasks/delete" && req.method === "POST") {
+      const form = await req.formData();
+      const id = String(form.get("id") ?? "");
+      const tasks = await loadTasks();
+      await saveTasks(tasks.filter((t) => t.id !== id));
+      return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/tasks") {
+      return new Response(await tasksPage(), {
         headers: { "content-type": "text/html; charset=utf-8" },
       });
     }
