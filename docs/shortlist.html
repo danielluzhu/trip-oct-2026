@@ -485,6 +485,14 @@
   .hc-svg .hc-line { fill: none; }
   .hc-svg .hc-area { stroke: none; }
   .hc-line.hc-feels { stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .hc-area.hc-rain { fill-opacity: .12; }
+  .hc-legend { fill: var(--text); font-size: 11.5px; }
+  .hc-unit { font-size: 10.5px; font-weight: 700; }
+  .hc-tick.hc-u-temp, .hc-unit.hc-u-temp { fill: var(--viz-temp); }
+  .hc-tick.hc-u-rain, .hc-unit.hc-u-rain { fill: var(--viz-rain); }
+  .hc-tick.hc-u-wind, .hc-unit.hc-u-wind { fill: var(--viz-wind); }
+  tr.has-hourly { cursor: pointer; }
+  tr.has-hourly:hover > td, tr.has-hourly.open > td { background: color-mix(in srgb, var(--accent) 5%, transparent); }
   .hc-area.hc-rain, .hc-area.hc-wind { stroke: none; }
   .hc-cross { stroke: var(--text); stroke-opacity: .45; stroke-width: 1; }
   .hc-dot { stroke: var(--card); stroke-width: 2; }
