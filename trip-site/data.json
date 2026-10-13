@@ -324,6 +324,7 @@
       "rating": 4.98,
       "reviews": 65,
       "host": "Matthew",
+      "hostPhone": "+14066099595",
       "amenities": [
         "Hot tub",
         "Pool",
@@ -531,6 +532,10 @@
       [
         "Check-in",
         "After 4 PM Thu (smart lock). Check out before 10 AM Mon"
+      ],
+      [
+        "Host",
+        "Matthew, (406) 609-9595"
       ],
       [
         "Weather",
