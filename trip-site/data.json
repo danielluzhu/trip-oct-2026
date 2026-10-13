@@ -558,27 +558,54 @@
     "hikes": [
       {
         "name": "Highline Trail",
-        "length": "11.8 mi one way, Logan Pass to The Loop",
-        "gain": "~800 ft up, ~2,800 ft down",
-        "time": "6 to 8 hours",
+        "full": {
+          "route": "Logan Pass to The Loop, one way (needs a car at each end)",
+          "length": "11.8 mi",
+          "gain": "~800 ft up, ~2,800 ft down",
+          "time": "6 to 8 hrs"
+        },
+        "short": {
+          "route": "Logan Pass to Haystack Butte saddle and back",
+          "length": "7.2 mi round trip",
+          "gain": "~1,000 ft",
+          "time": "3.5 to 4 hrs"
+        },
         "drive": "~1 hr to West Glacier, then the Sun Road",
-        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Only possible if it reopens."
+        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass."
       },
       {
         "name": "Grinnell Glacier",
-        "length": "~11 mi round trip from Swiftcurrent",
-        "gain": "~1,800 ft",
-        "time": "6 to 7 hours",
+        "full": {
+          "route": "Swiftcurrent to the Grinnell Glacier overlook and back",
+          "length": "~11 mi round trip",
+          "gain": "~1,800 ft",
+          "time": "6 to 7 hrs"
+        },
+        "short": {
+          "route": "Swiftcurrent to Grinnell Lake and back, along the lakeshores",
+          "length": "~7 mi round trip",
+          "gain": "~200 ft",
+          "time": "2.5 to 3 hrs"
+        },
         "drive": "~3 hrs each way via US-2 around the park, with the Sun Road closed",
-        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, it's a very long day."
+        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day."
       },
       {
         "name": "Dawson Pass",
-        "length": "~13 mi round trip from Two Medicine Lake",
-        "gain": "~2,500 ft",
-        "time": "7 to 8 hours",
+        "full": {
+          "route": "Two Medicine Lake to Dawson Pass and back",
+          "length": "~13 mi round trip",
+          "gain": "~2,500 ft",
+          "time": "7 to 8 hrs"
+        },
+        "short": {
+          "route": "Two Medicine Lake to No Name Lake and back",
+          "length": "~8.5 mi round trip",
+          "gain": "~700 ft",
+          "time": "~4 hrs"
+        },
         "drive": "~1 hr 45 min to Two Medicine",
-        "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so add a road walk to the trailhead. Check with the park (406-888-7800)."
+        "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800)."
       }
     ],
     "bookAhead": [

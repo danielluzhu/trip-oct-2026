@@ -540,10 +540,10 @@ const sharedStyle = /* css */ `
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
-  table.hikes { min-width: 640px; }
+  table.hikes { min-width: 760px; }
   table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 18%; }
-  table.hikes td:nth-child(3) { white-space: nowrap; }
+  table.hikes td:first-child { width: 14%; }
+  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 26%; }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -1080,16 +1080,17 @@ async function itineraryPage() {
     <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.</div>
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike</th><th>Length</th><th>Time</th><th>Getting there</th></tr>
+      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th></tr>
       ${plan.hikes
-        .map(
-          (h: any) => `<tr>
+        .map((h: any) => {
+          const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
+          return `<tr>
         <td><strong>${escapeHtml(h.name)}</strong></td>
-        <td>${escapeHtml(h.length)}<br><span class="muted-cell">${escapeHtml(h.gain)}</span></td>
-        <td><strong>${escapeHtml(h.time)}</strong></td>
+        <td>${opt(h.full)}</td>
+        <td>${opt(h.short)}</td>
         <td>${escapeHtml(h.drive)}<br><span class="muted-cell">${escapeHtml(h.status)}</span></td>
-      </tr>`,
-        )
+      </tr>`;
+        })
         .join("\n      ")}
     </table>
     </div>
