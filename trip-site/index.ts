@@ -472,6 +472,7 @@ const sharedStyle = /* css */ `
     padding: .16rem .55rem;
     border-radius: 999px;
   }
+  .pill.person { color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 24%, transparent); }
   .pill.ok { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
   .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
   .pill.nonstop { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
@@ -514,6 +515,20 @@ const sharedStyle = /* css */ `
   li.task.done .task-check { background: var(--accent); }
   li.task.done .task-text { text-decoration: line-through; color: var(--muted); }
   .task-body { flex: 1; min-width: 0; }
+  li.task { align-items: center; }
+  form.task-edit { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .4rem; }
+  form.task-edit input, form.task-edit textarea { font: inherit; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: .2rem .35rem; margin: 0; }
+  form.task-edit input:hover, form.task-edit textarea:hover { border-color: var(--border); }
+  form.task-edit input:focus, form.task-edit textarea:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+  form.task-edit .task-text { flex: 1 1 16rem; min-width: 0; margin: 0; resize: none; overflow: hidden; line-height: 1.4; field-sizing: content; }
+  form.task-edit .task-who { flex: 0 1 10rem; width: 10rem; font-size: .92rem; font-weight: 600; color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 30%, transparent); border-radius: 999px; padding: .25rem .7rem; }
+  form.task-edit .task-who.empty { background: transparent; border: 1px dashed var(--border); font-weight: 500; }
+  form.task-edit .task-who:focus { border-color: var(--p, var(--accent)); }
+  form.task-edit .task-who::placeholder { color: var(--muted); font-style: italic; }
+  form.task-edit .task-due { flex: 0 0 auto; font-size: .8rem; color: var(--muted); }
+  .task-saved { font-size: .72rem; color: var(--muted); min-width: 3.5rem; }
+  .task-delete { border: 0; background: transparent; color: var(--muted); font-size: 1.15rem; line-height: 1; cursor: pointer; padding: .1rem .3rem; border-radius: 6px; }
+  .task-delete:hover { color: #c25555; background: rgba(190,60,60,.12); }
   .task-body > summary { cursor: pointer; list-style: none; }
   .task-body > summary::-webkit-details-marker { display: none; }
   .task-body > summary:hover .task-text { text-decoration: underline; }
@@ -1141,7 +1156,7 @@ function housingPage() {
             <td><span class="stay-total">${fmt(b.total)}</span>
               <span class="muted-cell">&nbsp;&middot;&nbsp;${fmt(b.total / 8)} each at 8</span></td></tr>
           <tr><td>Address</td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(b.address)}" target="_blank" rel="noopener">${escapeHtml(b.address)}</a></td></tr>
-          <tr><td>Check-in / out</td><td>${escapeHtml(b.checkInOut)}</td></tr>
+          <tr><td>Check-in / out</td><td>${escapeHtml(b.checkInOut)}${b.checkInNote ? `<div class="muted-cell">${escapeHtml(b.checkInNote)}</div>` : ""}</td></tr>
           <tr><td>Host</td><td>${escapeHtml(b.host)}, <a href="tel:${escapeHtml(b.hostPhone)}">${escapeHtml(b.hostPhone.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3"))}</a></td></tr>
           <tr><td>Sleeps</td><td>${b.sleeps}</td></tr>
           <tr><td>Bedrooms / baths</td><td>${b.bedrooms} / ${b.baths}</td></tr>
@@ -1489,30 +1504,60 @@ function taskForm(t: Partial<Task>, submit: string) {
     </form>`;
 }
 
+// One color per person, so whose task is whose reads at a glance. People in
+// the flight log get palette slots in name order (no two share a color);
+// anyone else is hashed onto the palette. "Everyone" stays neutral.
+const PERSON_COLORS = ["#3a86ff", "#e4572e", "#2a9d8f", "#9b5de5", "#f4a300", "#e05297", "#6a994e", "#00a6d6", "#8d6e63", "#577590"];
+
+function personColors(names: string[]) {
+  const map: Record<string, string> = {};
+  names.filter((n) => n !== "Everyone").forEach((n, i) => (map[n.toLowerCase()] = PERSON_COLORS[i % PERSON_COLORS.length]));
+  return map;
+}
+
+let taskColors: Record<string, string> = {};
+
+function colorFor(who: string) {
+  const k = who.trim().toLowerCase();
+  if (!k || k === "everyone") return "";
+  if (taskColors[k]) return taskColors[k];
+  let h = 0;
+  for (const c of k) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PERSON_COLORS[h % PERSON_COLORS.length];
+}
+
 function taskItem(t: Task) {
-  const meta = `${t.who ? `<span class="pill ok">${escapeHtml(t.who)}</span>` : `<span class="pill partial">unassigned</span>`}${
+  const meta = `${t.who ? `<span class="pill person"${colorFor(t.who) ? ` style="--p:${colorFor(t.who)}"` : ""}>${escapeHtml(t.who)}</span>` : `<span class="pill partial">unassigned</span>`}${
     t.due ? ` <span class="muted-cell">due ${escapeHtml(fmtDate(t.due))}</span>` : ""
   }`;
   if (STATIC) {
     return `<li class="task${t.done ? " done" : ""}"><span class="task-check">${t.done ? "&#10003;" : ""}</span>
       <div class="task-body"><span class="task-text">${escapeHtml(t.text)}</span> ${meta}</div></li>`;
   }
+  // Each field is its own borderless input: click the name, person or date
+  // and type. The script at the bottom of the page saves on change.
+  const v = (x: string) => escapeHtml(x);
   return `<li class="task${t.done ? " done" : ""}">
-      <form method="POST" action="/tasks/toggle"><input type="hidden" name="id" value="${escapeHtml(t.id)}">
+      <form method="POST" action="/tasks/toggle"><input type="hidden" name="id" value="${v(t.id)}">
         <button type="submit" class="task-check" title="${t.done ? "Mark not done" : "Mark done"}">${t.done ? "&#10003;" : ""}</button></form>
-      <details class="task-body">
-        <summary><span class="task-text">${escapeHtml(t.text)}</span> ${meta} <span class="edit-link">edit</span></summary>
-        ${taskForm(t, "Save changes")}
-        <form method="POST" action="/tasks/delete" class="flight-delete">
-          <input type="hidden" name="id" value="${escapeHtml(t.id)}">
-          <button type="submit" class="calc-btn">Delete this task</button>
-        </form>
-      </details>
+      <form method="POST" action="/tasks/save" class="task-edit">
+        <input type="hidden" name="id" value="${v(t.id)}">
+        <textarea name="text" class="task-text" required maxlength="280" rows="1" aria-label="Task">${v(t.text)}</textarea>
+        <input type="text" name="who" class="task-who${t.who ? "" : " empty"}" maxlength="60" list="people" placeholder="Unassigned" value="${v(t.who)}" aria-label="Assigned to"${colorFor(t.who) ? ` style="--p:${colorFor(t.who)}"` : ""}>
+        <input type="date" name="due" class="task-due" value="${v(t.due)}" aria-label="Due">
+        <span class="task-saved" aria-live="polite"></span>
+      </form>
+      <form method="POST" action="/tasks/delete">
+        <input type="hidden" name="id" value="${v(t.id)}">
+        <button type="submit" class="task-delete" title="Delete this task" aria-label="Delete this task">&times;</button>
+      </form>
     </li>`;
 }
 
 async function tasksPage() {
   const tasks = await loadTasks();
+  const people = await peopleNames();
+  taskColors = personColors(people);
   const order = (a: Task, b: Task) =>
     `${a.due || "9999"} ${String(a.createdAt).padStart(15, "0")}`.localeCompare(
       `${b.due || "9999"} ${String(b.createdAt).padStart(15, "0")}`,
@@ -1525,7 +1570,7 @@ async function tasksPage() {
   <section class="card">
     <h2>To do</h2>
     <div class="subtitle">${open.length} open${unassigned ? ` &middot; ${unassigned} unassigned` : ""}${
-      STATIC ? " &middot; add and assign tasks on the trip server" : " &middot; tick the box when it's done, tap a task to reassign or edit it"
+      STATIC ? " &middot; add and assign tasks on the trip server" : " &middot; tick the box when it's done; click a task, person or date to change it"
     }</div>
     <ul class="tasks">${open.length ? open.map(taskItem).join("\n") : `<li class="idea-empty">Nothing left to do.</li>`}</ul>
   </section>
@@ -1535,7 +1580,7 @@ async function tasksPage() {
       : `<section class="card">
     <h2>Add a task</h2>
     ${taskForm({}, "Add task")}
-    <datalist id="people">${(await peopleNames()).map((n) => `<option value="${escapeHtml(n)}">`).join("")}</datalist>
+    <datalist id="people">${people.map((n) => `<option value="${escapeHtml(n)}">`).join("")}</datalist>
   </section>`
   }
   ${
@@ -1547,7 +1592,53 @@ async function tasksPage() {
     </details>
   </section>`
       : ""
-  }`;
+  }
+  ${STATIC ? "" : `<script>
+  var COLORS = ${JSON.stringify(PERSON_COLORS)}, KNOWN = ${JSON.stringify(taskColors)};
+  function colorFor(who) {
+    var k = who.trim().toLowerCase();
+    if (!k || k === "everyone") return "";
+    if (KNOWN[k]) return KNOWN[k];
+    var h = 0;
+    for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) >>> 0;
+    return COLORS[h % COLORS.length];
+  }
+  // Inline edits: save a row whenever one of its fields changes, no reload.
+  document.querySelectorAll("form.task-edit").forEach(function (form) {
+    var saved = form.querySelector(".task-saved");
+    form.querySelectorAll("input:not([type=hidden]), textarea").forEach(function (input) {
+      input.dataset.orig = input.value;
+      // Grow the task name to fit, for browsers without field-sizing.
+      if (input.tagName === "TEXTAREA") {
+        var fit = function () { input.style.height = "auto"; input.style.height = input.scrollHeight + 2 + "px"; };
+        fit();
+        input.addEventListener("input", fit);
+        window.addEventListener("resize", fit);
+      }
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { e.preventDefault(); input.blur(); }
+        if (e.key === "Escape") { input.value = input.dataset.orig; input.blur(); }
+      });
+      input.addEventListener("change", function () {
+        if (input.name === "text" && !input.value.trim()) { input.value = input.dataset.orig; return; }
+        if (input.name === "who") {
+          input.classList.toggle("empty", !input.value.trim());
+          input.style.setProperty("--p", colorFor(input.value));
+        }
+        saved.textContent = "saving…";
+        fetch(form.action, { method: "POST", body: new FormData(form), headers: { "x-inline": "1" } })
+          .then(function (r) {
+            if (!r.ok) throw r;
+            input.dataset.orig = input.value;
+            saved.textContent = "saved";
+            setTimeout(function () { saved.textContent = ""; }, 1500);
+          })
+          .catch(function () { saved.textContent = "not saved, try again"; });
+      });
+    });
+    form.addEventListener("submit", function (e) { e.preventDefault(); });
+  });
+  </script>`}`;
 
   return layout("tasks", `Tasks — ${trip.title}`, body);
 }
@@ -1655,6 +1746,7 @@ Bun.serve({
         else tasks.push(t);
         await saveTasks(tasks);
       }
+      if (req.headers.get("x-inline")) return new Response(null, { status: t ? 204 : 400 });
       return Response.redirect("/tasks", 303);
     }
 

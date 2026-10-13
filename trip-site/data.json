@@ -315,6 +315,7 @@
       "town": "Whitefish",
       "address": "138 Jasper Loop, Whitefish, MT 59937",
       "checkInOut": "Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock",
+      "checkInNote": "You received a text message with the link to your online guidebook this morning. The access code for the garage door and the interior door will populate the day before your arrival.",
       "total": 1830,
       "type": "Entire home",
       "bedrooms": 3,

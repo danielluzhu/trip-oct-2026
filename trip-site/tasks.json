@@ -1,20 +1,140 @@
 {
   "tasks": [
-    { "id": "seed-01", "text": "Confirm the first AWD SUV at FCA (pickup Thu 11:37)", "who": "JWu", "due": "2026-10-14", "done": false, "createdAt": 1 },
-    { "id": "seed-02", "text": "Confirm the second AWD SUV at FCA (pickup Thu 7:05 PM)", "who": "Dan", "due": "2026-10-14", "done": false, "createdAt": 2 },
-    { "id": "seed-03", "text": "Check the 41 min Seattle connection (AS 656 to AS 2406) with Alaska", "who": "Dan", "due": "2026-10-14", "done": false, "createdAt": 3 },
-    { "id": "seed-04", "text": "Book the Middle Fork float for Sun, four boats: Great Northern Resort, 800-735-7897", "who": "", "due": "2026-10-14", "done": false, "createdAt": 4 },
-    { "id": "seed-05", "text": "Thu dinner reservation for 8: Craggy Range or Tupelo Grille", "who": "", "due": "2026-10-15", "done": false, "createdAt": 5 },
-    { "id": "seed-06", "text": "Bear spray: one can per hiking group", "who": "", "due": "2026-10-16", "done": false, "createdAt": 6 },
-    { "id": "seed-07", "text": "Costco run in Kalispell: park lunches for the weekend", "who": "", "due": "2026-10-16", "done": false, "createdAt": 7 },
-    { "id": "seed-08", "text": "Pick the movie for Fri movie night", "who": "", "due": "2026-10-16", "done": false, "createdAt": 8 },
-    { "id": "seed-09", "text": "Glacier entry: buy a park pass online, or pay per car at the gate", "who": "", "due": "2026-10-17", "done": false, "createdAt": 9 },
-    { "id": "seed-10", "text": "Check road status before the Sat drive: text GNPROADS to 333111", "who": "", "due": "2026-10-17", "done": false, "createdAt": 10 },
-    { "id": "seed-11", "text": "Montana fishing licences for the float: ols.fwp.mt.gov", "who": "Everyone", "due": "2026-10-17", "done": false, "createdAt": 11 },
-    { "id": "seed-12", "text": "Tickets for the theatre in Bigfork, Sun evening", "who": "", "due": "2026-10-17", "done": false, "createdAt": 12 },
-    { "id": "seed-13", "text": "Check out by 10 AM Mon: tidy up and lock the smart lock", "who": "Everyone", "due": "2026-10-19", "done": false, "createdAt": 13 },
-    { "id": "seed-14", "text": "Return the first SUV at FCA before the 3:30 flight", "who": "JWu", "due": "2026-10-19", "done": false, "createdAt": 14 },
-    { "id": "seed-15", "text": "Return the second SUV at FCA before the 7:45 flight", "who": "Dan", "due": "2026-10-19", "done": false, "createdAt": 15 },
-    { "id": "seed-16", "text": "Split the Airbnb ($1,830) and settle up shared costs", "who": "", "due": "2026-10-19", "done": false, "createdAt": 16 }
+    {
+      "id": "seed-01",
+      "text": "Confirm the first AWD SUV at FCA (pickup Thu 11:37)",
+      "who": "JWu",
+      "due": "2026-10-14",
+      "done": false,
+      "createdAt": 1
+    },
+    {
+      "id": "seed-02",
+      "text": "Confirm the second AWD SUV at FCA (pickup Thu 7:05 PM)",
+      "who": "Dan",
+      "due": "2026-10-14",
+      "done": false,
+      "createdAt": 2
+    },
+    {
+      "id": "seed-03",
+      "text": "Check the 41 min Seattle connection (AS 656 to AS 2406) with Alaska",
+      "who": "Dan",
+      "due": "2026-10-14",
+      "done": false,
+      "createdAt": 3
+    },
+    {
+      "id": "seed-04",
+      "text": "Book the Middle Fork float for Sun, four boats: Great Northern Resort, 800-735-7897",
+      "who": "",
+      "due": "2026-10-14",
+      "done": false,
+      "createdAt": 4
+    },
+    {
+      "id": "seed-05",
+      "text": "Thu dinner reservation for 8: Craggy Range or Tupelo Grille",
+      "who": "",
+      "due": "2026-10-15",
+      "done": false,
+      "createdAt": 5
+    },
+    {
+      "id": "seed-06",
+      "text": "Bear spray: one can per hiking group",
+      "who": "",
+      "due": "2026-10-16",
+      "done": false,
+      "createdAt": 6
+    },
+    {
+      "id": "seed-07",
+      "text": "Costco run in Kalispell: park lunches for the weekend",
+      "who": "",
+      "due": "2026-10-16",
+      "done": false,
+      "createdAt": 7
+    },
+    {
+      "id": "seed-08",
+      "text": "Pick the movie for Fri movie night",
+      "who": "",
+      "due": "2026-10-16",
+      "done": false,
+      "createdAt": 8
+    },
+    {
+      "id": "seed-09",
+      "text": "Glacier entry: buy a park pass online, or pay per car at the gate",
+      "who": "",
+      "due": "2026-10-17",
+      "done": false,
+      "createdAt": 9
+    },
+    {
+      "id": "seed-10",
+      "text": "Check road status before the Sat drive: text GNPROADS to 333111",
+      "who": "",
+      "due": "2026-10-17",
+      "done": false,
+      "createdAt": 10
+    },
+    {
+      "id": "seed-11",
+      "text": "Montana fishing licences for the float: ols.fwp.mt.gov",
+      "who": "Everyone",
+      "due": "2026-10-17",
+      "done": false,
+      "createdAt": 11
+    },
+    {
+      "id": "seed-12",
+      "text": "Tickets for the theatre in Bigfork, Sun evening",
+      "who": "",
+      "due": "2026-10-17",
+      "done": false,
+      "createdAt": 12
+    },
+    {
+      "id": "seed-13",
+      "text": "Check out by 10 AM Mon: tidy up and lock the smart lock",
+      "who": "Everyone",
+      "due": "2026-10-19",
+      "done": false,
+      "createdAt": 13
+    },
+    {
+      "id": "seed-14",
+      "text": "Return the first SUV at FCA before the 3:30 flight",
+      "who": "JWu",
+      "due": "2026-10-19",
+      "done": false,
+      "createdAt": 14
+    },
+    {
+      "id": "seed-15",
+      "text": "Return the second SUV at FCA before the 7:45 flight",
+      "who": "Dan",
+      "due": "2026-10-19",
+      "done": false,
+      "createdAt": 15
+    },
+    {
+      "id": "seed-16",
+      "text": "Split the Airbnb ($1,830) and settle up shared costs",
+      "who": "",
+      "due": "2026-10-19",
+      "done": false,
+      "createdAt": 16
+    },
+    {
+      "id": "ab975751-9348-45e5-9e79-c7b53106ae96",
+      "text": "Groceries",
+      "who": "Dan",
+      "due": "2026-10-15",
+      "done": false,
+      "createdAt": 1791920936012
+    }
   ]
 }

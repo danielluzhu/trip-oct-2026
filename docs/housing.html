@@ -376,6 +376,7 @@
     padding: .16rem .55rem;
     border-radius: 999px;
   }
+  .pill.person { color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 24%, transparent); }
   .pill.ok { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
   .pill.gone { background: rgba(190,60,60,.16); color: #c25555; }
   .pill.nonstop { background: color-mix(in srgb, var(--accent-2) 22%, transparent); color: var(--accent-2); }
@@ -418,6 +419,20 @@
   li.task.done .task-check { background: var(--accent); }
   li.task.done .task-text { text-decoration: line-through; color: var(--muted); }
   .task-body { flex: 1; min-width: 0; }
+  li.task { align-items: center; }
+  form.task-edit { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .4rem; }
+  form.task-edit input, form.task-edit textarea { font: inherit; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: .2rem .35rem; margin: 0; }
+  form.task-edit input:hover, form.task-edit textarea:hover { border-color: var(--border); }
+  form.task-edit input:focus, form.task-edit textarea:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+  form.task-edit .task-text { flex: 1 1 16rem; min-width: 0; margin: 0; resize: none; overflow: hidden; line-height: 1.4; field-sizing: content; }
+  form.task-edit .task-who { flex: 0 1 10rem; width: 10rem; font-size: .92rem; font-weight: 600; color: var(--text); background: color-mix(in srgb, var(--p, #8a8f8c) 30%, transparent); border-radius: 999px; padding: .25rem .7rem; }
+  form.task-edit .task-who.empty { background: transparent; border: 1px dashed var(--border); font-weight: 500; }
+  form.task-edit .task-who:focus { border-color: var(--p, var(--accent)); }
+  form.task-edit .task-who::placeholder { color: var(--muted); font-style: italic; }
+  form.task-edit .task-due { flex: 0 0 auto; font-size: .8rem; color: var(--muted); }
+  .task-saved { font-size: .72rem; color: var(--muted); min-width: 3.5rem; }
+  .task-delete { border: 0; background: transparent; color: var(--muted); font-size: 1.15rem; line-height: 1; cursor: pointer; padding: .1rem .3rem; border-radius: 6px; }
+  .task-delete:hover { color: #c25555; background: rgba(190,60,60,.12); }
   .task-body > summary { cursor: pointer; list-style: none; }
   .task-body > summary::-webkit-details-marker { display: none; }
   .task-body > summary:hover .task-text { text-decoration: underline; }
@@ -636,7 +651,7 @@
             <td><span class="stay-total">$1,830</span>
               <span class="muted-cell">&nbsp;&middot;&nbsp;$229 each at 8</span></td></tr>
           <tr><td>Address</td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=138%20Jasper%20Loop%2C%20Whitefish%2C%20MT%2059937" target="_blank" rel="noopener">138 Jasper Loop, Whitefish, MT 59937</a></td></tr>
-          <tr><td>Check-in / out</td><td>Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock</td></tr>
+          <tr><td>Check-in / out</td><td>Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock<div class="muted-cell">You received a text message with the link to your online guidebook this morning. The access code for the garage door and the interior door will populate the day before your arrival.</div></td></tr>
           <tr><td>Host</td><td>Matthew, <a href="tel:+14066099595">(406) 609-9595</a></td></tr>
           <tr><td>Sleeps</td><td>10</td></tr>
           <tr><td>Bedrooms / baths</td><td>3 / 3.5</td></tr>
