@@ -116,6 +116,10 @@ const sharedStyle = /* css */ `
     --border: #e7e0d4;
     --accent: #a8481c;
     --accent-2: #35543f;
+    --viz-temp: #eb6834;
+    --viz-feels: #6f6659;
+    --viz-rain: #2a78d6;
+    --viz-wind: #1baf7a;
     --on-dark: #f6f1e8;
     --shadow: 0 1px 2px rgba(26,23,20,.04), 0 10px 30px -14px rgba(26,23,20,.18);
     --radius: 16px;
@@ -132,6 +136,10 @@ const sharedStyle = /* css */ `
       --border: #2c2721;
       --accent: #e08a4e;
       --accent-2: #8fb89c;
+      --viz-temp: #d95926;
+      --viz-feels: #9d9384;
+      --viz-rain: #3987e5;
+      --viz-wind: #199e70;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 34px -16px rgba(0,0,0,.75);
     }
   }
@@ -550,14 +558,42 @@ const sharedStyle = /* css */ `
   .wx-head form { margin: 0; }
   .hourly-toggle { margin-top: .3rem; padding: .15rem .55rem; font: 600 .74rem var(--sans); color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
   .hourly-toggle:hover, .hourly-toggle[aria-expanded="true"] { border-color: var(--accent); }
-  tr.hourly-row > td { padding: .3rem 0 .8rem; background: var(--bg-alt); }
-  .hourly-day { font: 700 .74rem var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: .5rem .6rem .2rem; }
-  /* width:0 + min-width:100% keeps the strip from widening the table; it scrolls instead. */
-  .hourly-strip { display: flex; gap: .3rem; overflow-x: auto; padding: .2rem .6rem .4rem; width: 0; min-width: 100%; box-sizing: border-box; }
-  .hour { flex: 0 0 4.6rem; text-align: center; padding: .4rem .2rem; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); font-size: .8rem; line-height: 1.35; }
-  .hour.night { opacity: .6; }
-  .hour-time { font-weight: 700; font-size: .74rem; }
-  .hour-temp { font-weight: 700; font-size: .95rem; }
+  tr.hourly-row > td { padding: .4rem 0 .8rem; }
+  .hourly-chart { position: sticky; left: 0; width: 0; min-width: 100%; }
+  .hc-svg { display: block; font-family: var(--sans); touch-action: pan-y; outline: none; }
+  .hc-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  .hc-night { fill: var(--bg-alt); }
+  .hc-daysep { stroke: var(--border); stroke-width: 1; }
+  .hc-grid { stroke: var(--border); stroke-width: 1; }
+  .hc-base { stroke: var(--muted); stroke-opacity: .5; stroke-width: 1; }
+  .hc-tick { fill: var(--muted); font-size: 10.5px; }
+  .hc-title { fill: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .hc-day { fill: var(--text); font-size: 11px; font-weight: 700; }
+  .hc-icon { font-size: 14px; }
+  .hc-endlabel { fill: var(--text); font-size: 11px; font-weight: 600; }
+  .hc-peak { fill: var(--muted); font-size: 10.5px; font-weight: 600; }
+  .hc-line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .hc-area { stroke: none; fill-opacity: .16; }
+  .hc-temp { stroke: var(--viz-temp); fill: var(--viz-temp); }
+  .hc-feels { stroke: var(--viz-feels); fill: var(--viz-feels); }
+  .hc-rain { stroke: var(--viz-rain); fill: var(--viz-rain); }
+  .hc-wind { stroke: var(--viz-wind); fill: var(--viz-wind); }
+  .hc-svg .hc-line { fill: none; }
+  .hc-svg .hc-area { stroke: none; }
+  .hc-line.hc-feels { stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .hc-area.hc-rain, .hc-area.hc-wind { stroke: none; }
+  .hc-cross { stroke: var(--text); stroke-opacity: .45; stroke-width: 1; }
+  .hc-dot { stroke: var(--card); stroke-width: 2; }
+  .hc-tip { position: absolute; z-index: 2; pointer-events: none; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: .5rem .65rem; font-size: .8rem; line-height: 1.5; white-space: nowrap; }
+  .hc-tip-head { font-weight: 700; margin-bottom: .15rem; }
+  .hc-tip-row { display: flex; align-items: center; gap: .45rem; }
+  .hc-tip-row strong { min-width: 3.4rem; }
+  .hc-tip-row span:last-child { color: var(--muted); }
+  .hc-key { display: inline-block; width: 14px; height: 0; border-top: 2px solid; }
+  .hc-key.hc-temp { border-color: var(--viz-temp); }
+  .hc-key.hc-feels { border-top-style: dashed; border-color: var(--viz-feels); }
+  .hc-key.hc-rain { border-color: var(--viz-rain); }
+  .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
@@ -1822,25 +1858,32 @@ function moonPhase(date: string) {
   return { name: names[Math.floor(((age + 1.845) / 29.530588853) * 8) % 8], lit };
 }
 
-// One day's hours as a sideways-scrolling strip. Night hours are dimmed.
-function hourlyStrip(h: Hourly | null | undefined, day: string) {
+// The hours for one day (or every trip day, when `day` is omitted) as data
+// for the client-side chart: temp and feels-like share one °C chart, rain
+// chance and wind get their own, all on one hour axis.
+function hourlyChart(h: Hourly | null | undefined, day?: string) {
   if (!h) return `<div class="calc-note">No hourly data.</div>`;
-  const idx = h.time.map((t, i) => (t.startsWith(day) ? i : -1)).filter((i) => i >= 0);
-  return `<div class="hourly-strip">${idx
-    .map((i) => {
-      let [icon, label] = wmo(h.weather_code[i]);
-      if (!h.is_day[i] && h.weather_code[i] <= 1) icon = "🌙";
-      if (!h.is_day[i] && h.weather_code[i] === 2) icon = "☁️";
-      return `<div class="hour${h.is_day[i] ? "" : " night"}" title="${label}">
-        <div class="hour-time">${fmtTime(h.time[i].slice(11, 16)).replace(":00 ", " ")}</div>
-        <div class="wx-icon">${icon}</div>
-        <div class="hour-temp">${deg(h.temperature_2m[i])}</div>
-        <div class="muted-cell">feels ${deg(h.apparent_temperature[i])}</div>
-        <div class="muted-cell">${h.precipitation_probability[i]}% rain</div>
-        <div class="muted-cell">${Math.round(h.wind_speed_10m[i])} mph</div>
-      </div>`;
-    })
-    .join("")}</div>`;
+  const idx = h.time.map((t, i) => (!day || t.startsWith(day) ? i : -1)).filter((i) => i >= 0);
+  const icons: string[] = [], labels: string[] = [];
+  for (const i of idx) {
+    let [icon, label] = wmo(h.weather_code[i]);
+    if (!h.is_day[i] && h.weather_code[i] <= 1) icon = "🌙";
+    if (!h.is_day[i] && h.weather_code[i] === 2) icon = "☁️";
+    icons.push(icon);
+    labels.push(label);
+  }
+  const pick = (a: number[]) => idx.map((i) => Math.round(a[i] * 10) / 10);
+  const data = {
+    t: idx.map((i) => h.time[i]),
+    temp: pick(h.temperature_2m),
+    feels: pick(h.apparent_temperature),
+    rain: pick(h.precipitation_probability),
+    wind: pick(h.wind_speed_10m),
+    day: idx.map((i) => h.is_day[i]),
+    icon: icons,
+    label: labels,
+  };
+  return `<div class="hourly-chart" data-hours="${escapeHtml(JSON.stringify(data))}"></div>`;
 }
 
 async function forecastPage() {
@@ -1870,7 +1913,7 @@ async function forecastPage() {
         <td>${Math.round(base.wind_speed_10m_max[i])} mph<span class="muted-cell"> &middot; gusts ${Math.round(base.wind_gusts_10m_max[i])}</span></td>
         <td>${clock(base.sunrise[i])} / ${clock(base.sunset[i])}<br><span class="muted-cell">${hrs(base.daylight_duration[i])} of light &middot; ${moon.name.toLowerCase()}, ${moon.lit}% lit</span></td>
       </tr>
-      <tr class="hourly-row" hidden><td colspan="7">${hourlyStrip(fc?.hourly[0], d)}</td></tr>`;
+      <tr class="hourly-row" hidden><td colspan="7">${hourlyChart(fc?.hourly[0], d)}</td></tr>`;
         })
         .join("\n      ")}
     </table>
@@ -1895,9 +1938,7 @@ async function forecastPage() {
           })
           .join("")}
       </tr>
-      <tr class="hourly-row" hidden><td colspan="${f.time.length + 1}">${f.time
-        .map((d) => `<div class="hourly-day">${escapeHtml(dayName(d))}</div>${hourlyStrip(fc.hourly[si], d)}`)
-        .join("")}</td></tr>`;
+      <tr class="hourly-row" hidden><td colspan="${f.time.length + 1}">${hourlyChart(fc.hourly[si])}</td></tr>`;
       }).join("\n      ")}
     </table>
     </div>`
@@ -1952,7 +1993,196 @@ async function forecastPage() {
   </section>`;
 
   const script = `<script>
-  // Each Hourly button opens the hidden row right below its own.
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function hourLabel(iso) {
+    var h = +iso.slice(11, 13);
+    return (h % 12 || 12) + (h < 12 ? "a" : "p");
+  }
+  function dayLabel(iso) {
+    var d = new Date(iso.slice(0, 10) + "T12:00:00");
+    return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  }
+  function niceRange(lo, hi, step) {
+    lo = Math.floor(lo / step) * step;
+    hi = Math.ceil(hi / step) * step;
+    if (hi === lo) hi = lo + step;
+    return [lo, hi];
+  }
+
+  // Draws three stacked charts (temp + feels-like, rain chance, wind) on one
+  // shared hour axis, with night shading, weather icons along the top and a
+  // crosshair whose tooltip reads every value at that hour.
+  function render(box) {
+    var d = JSON.parse(box.dataset.hours);
+    var n = d.t.length;
+    box.textContent = "";
+    // Fit the visible part of a sideways-scrolling table, not the whole table.
+    var sc = box.closest(".table-scroll");
+    var vis = sc ? sc.getBoundingClientRect().right - box.getBoundingClientRect().left : box.clientWidth;
+    var W = Math.max(260, Math.floor(Math.min(box.clientWidth, vis)));
+    box.style.maxWidth = W + "px";
+    var L = 38, R = 64, iconH = 26;
+    var panels = [
+      { key: "temp", title: "Temperature °C", h: 130 },
+      { key: "rain", title: "Chance of rain %", h: 64 },
+      { key: "wind", title: "Wind mph", h: 64 },
+    ];
+    var gap = 30, axisH = n > 24 ? 34 : 20;
+    var y0 = iconH + 18, top = y0;
+    panels.forEach(function (p) { p.top = top; top += p.h + gap; });
+    var H = top - gap + axisH;
+    var x = function (i) { return L + (n === 1 ? 0 : (i * (W - L - R)) / (n - 1)); };
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, class: "hc-svg", role: "img", tabindex: "0",
+      "aria-label": "Hourly temperature, rain chance and wind. Use arrow keys to step through hours." }, box);
+
+    // Night shading behind everything.
+    var step = n > 1 ? x(1) - x(0) : 0;
+    for (var i = 0; i < n; i++) {
+      if (!d.day[i]) el("rect", { x: x(i) - step / 2, y: y0 - 4, width: step + 0.5, height: top - gap - y0 + 8, class: "hc-night" }, svg);
+    }
+    // Day boundaries on multi-day charts.
+    for (i = 1; i < n; i++) {
+      if (d.t[i].slice(11, 13) === "00") el("line", { x1: x(i), x2: x(i), y1: 0, y2: H - axisH + 4, class: "hc-daysep" }, svg);
+    }
+
+    // Weather icons along the top.
+    // Space icons at least ~28px apart, on whole hours that divide the day.
+    var every = [1, 2, 3, 4, 6, 8, 12, 24].filter(function (k) { return k * step >= 28; })[0] || 24;
+    for (i = 0; i < n; i += every) {
+      var t = el("text", { x: x(i), y: iconH - 6, "text-anchor": "middle", class: "hc-icon" }, svg);
+      t.textContent = d.icon[i];
+    }
+
+    panels.forEach(function (p) {
+      var series, lo, hi, ticks;
+      if (p.key === "temp") {
+        var all = d.temp.concat(d.feels);
+        var r = niceRange(Math.min.apply(null, all), Math.max.apply(null, all), 5);
+        lo = r[0]; hi = r[1];
+        ticks = [];
+        for (var v = lo; v <= hi; v += 5) ticks.push(v);
+        series = [{ vals: d.feels, cls: "hc-feels", name: "Feels like" }, { vals: d.temp, cls: "hc-temp", name: "Temp" }];
+      } else if (p.key === "rain") {
+        lo = 0; hi = 100; ticks = [0, 50, 100];
+        series = [{ vals: d.rain, cls: "hc-rain", area: true }];
+      } else {
+        lo = 0; hi = Math.max(10, Math.ceil(Math.max.apply(null, d.wind) / 5) * 5); ticks = [0, hi / 2, hi];
+        series = [{ vals: d.wind, cls: "hc-wind", area: true }];
+      }
+      var y = function (v) { return p.top + p.h - ((v - lo) / (hi - lo)) * p.h; };
+      p.y = y;
+      var title = el("text", { x: L, y: p.top - 12, class: "hc-title" }, svg);
+      title.textContent = p.title;
+      ticks.forEach(function (tv) {
+        el("line", { x1: L, x2: W - R, y1: y(tv), y2: y(tv), class: tv === lo ? "hc-base" : "hc-grid" }, svg);
+        var tl = el("text", { x: L - 6, y: y(tv) + 4, "text-anchor": "end", class: "hc-tick" }, svg);
+        tl.textContent = tv;
+      });
+      series.forEach(function (s) {
+        var pts = s.vals.map(function (v, i) { return x(i).toFixed(1) + "," + y(v).toFixed(1); });
+        if (s.area) el("path", { d: "M" + x(0) + "," + y(lo) + " L" + pts.join(" L") + " L" + x(n - 1) + "," + y(lo) + " Z", class: s.cls + " hc-area" }, svg);
+        el("polyline", { points: pts.join(" "), class: s.cls + " hc-line" }, svg);
+      });
+      // Direct labels: temp series at the line end; peaks for rain and wind.
+      if (p.key === "temp") {
+        var ends = series.map(function (s) { return { s: s, y: y(s.vals[n - 1]) }; }).sort(function (a, b) { return a.y - b.y; });
+        if (ends.length === 2 && ends[1].y - ends[0].y < 13) { ends[0].y -= (13 - (ends[1].y - ends[0].y)) / 2; ends[1].y = ends[0].y + 13; }
+        ends.forEach(function (e) {
+          var lb = el("text", { x: W - R + 6, y: e.y + 4, class: "hc-endlabel" }, svg);
+          lb.textContent = e.s.name;
+          el("line", { x1: W - R + 1, x2: W - R + 4, y1: e.y, y2: e.y, class: e.s.cls + " hc-line" }, svg);
+        });
+      } else {
+        var vals = series[0].vals, mi = vals.indexOf(Math.max.apply(null, vals));
+        var pk = el("text", { x: Math.min(Math.max(x(mi), L + 14), W - R - 14), y: y(vals[mi]) - 6, "text-anchor": "middle", class: "hc-peak" }, svg);
+        pk.textContent = "max " + Math.round(vals[mi]) + (p.key === "rain" ? "%" : "");
+      }
+    });
+
+    // Hour axis.
+    var ay = H - axisH + 14;
+    var tickEvery = n > 24 ? (step * 12 >= 30 ? 12 : 24) : (step * 3 >= 30 ? 3 : 6);
+    for (i = 0; i < n; i++) {
+      var hh = +d.t[i].slice(11, 13);
+      if (hh % tickEvery) continue;
+      var xt = el("text", { x: x(i), y: ay, "text-anchor": "middle", class: "hc-tick" }, svg);
+      xt.textContent = n > 24 && hh === 0 ? "" : hourLabel(d.t[i]);
+      if (n > 24 && hh === 0) {
+        var dl = el("text", { x: x(i) + 4, y: ay + 14, class: "hc-day" }, svg);
+        dl.textContent = dayLabel(d.t[i]);
+      }
+    }
+
+    // Crosshair + tooltip.
+    var cross = el("line", { x1: 0, x2: 0, y1: y0 - 4, y2: top - gap + 4, class: "hc-cross", visibility: "hidden" }, svg);
+    var dots = panels.map(function (p) {
+      return (p.key === "temp" ? ["feels", "temp"] : [p.key]).map(function (k) {
+        return { k: k, p: p, c: el("circle", { r: 4, class: "hc-dot hc-" + k, visibility: "hidden" }, svg) };
+      });
+    }).reduce(function (a, b) { return a.concat(b); }, []);
+    var tip = document.createElement("div");
+    tip.className = "hc-tip";
+    tip.hidden = true;
+    box.appendChild(tip);
+    var cur = -1;
+    function show(i) {
+      cur = Math.max(0, Math.min(n - 1, i));
+      var cx = x(cur);
+      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.setAttribute("visibility", "visible");
+      dots.forEach(function (o) {
+        o.c.setAttribute("cx", cx); o.c.setAttribute("cy", o.p.y(d[o.k][cur])); o.c.setAttribute("visibility", "visible");
+      });
+      tip.textContent = "";
+      var head = document.createElement("div");
+      head.className = "hc-tip-head";
+      head.textContent = (n > 24 ? dayLabel(d.t[cur]) + ", " : "") + hourLabel(d.t[cur]).replace("a", " AM").replace("p", " PM") + "  " + d.icon[cur] + " " + d.label[cur];
+      tip.appendChild(head);
+      [["temp", Math.round(d.temp[cur]) + "°C", "Temp"], ["feels", Math.round(d.feels[cur]) + "°C", "Feels like"],
+       ["rain", Math.round(d.rain[cur]) + "%", "Rain chance"], ["wind", Math.round(d.wind[cur]) + " mph", "Wind"]].forEach(function (r) {
+        var row = document.createElement("div");
+        row.className = "hc-tip-row";
+        var key = document.createElement("span"); key.className = "hc-key hc-" + r[0];
+        var val = document.createElement("strong"); val.textContent = r[1];
+        var lab = document.createElement("span"); lab.textContent = r[2];
+        row.appendChild(key); row.appendChild(val); row.appendChild(lab);
+        tip.appendChild(row);
+      });
+      tip.hidden = false;
+      var tw = tip.offsetWidth;
+      tip.style.left = (cx + 12 + tw > W ? cx - 12 - tw : cx + 12) + "px";
+      tip.style.top = (y0 + 4) + "px";
+    }
+    function hide() {
+      cur = -1; tip.hidden = true; cross.setAttribute("visibility", "hidden");
+      dots.forEach(function (o) { o.c.setAttribute("visibility", "hidden"); });
+    }
+    function at(e) {
+      var r = svg.getBoundingClientRect();
+      var px = ((e.clientX - r.left) / r.width) * W;
+      show(Math.round(((px - L) / (W - L - R)) * (n - 1)));
+    }
+    svg.addEventListener("pointermove", at);
+    svg.addEventListener("pointerdown", at);
+    svg.addEventListener("pointerleave", hide);
+    svg.addEventListener("blur", hide);
+    svg.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        show(cur < 0 ? 0 : cur + (e.key === "ArrowRight" ? 1 : -1));
+      }
+      if (e.key === "Escape") hide();
+    });
+  }
+
+  // Each Hourly button opens the hidden row right below its own; charts draw
+  // on open (they need the row's width) and redraw on resize.
   document.querySelectorAll(".hourly-toggle").forEach(function (b) {
     b.addEventListener("click", function () {
       var row = b.closest("tr").nextElementSibling;
@@ -1960,13 +2190,17 @@ async function forecastPage() {
       row.hidden = !open;
       b.setAttribute("aria-expanded", open ? "true" : "false");
       b.innerHTML = open ? "Hide hourly &#9652;" : "Hourly &#9662;";
-      // Start each strip at 7 AM rather than midnight.
-      if (open) row.querySelectorAll(".hourly-strip").forEach(function (s) {
-        var h = s.children[7];
-        if (h) s.scrollLeft = h.offsetLeft - s.offsetLeft - 8;
-      });
+      if (open) row.querySelectorAll(".hourly-chart").forEach(render);
     });
   });
+  var rt;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      document.querySelectorAll("tr.hourly-row:not([hidden]) .hourly-chart").forEach(render);
+    }, 150);
+  });
+})();
   </script>`;
 
   return layout("forecast", `Forecast — ${trip.title}`, body + script);

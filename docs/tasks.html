@@ -20,6 +20,10 @@
     --border: #e7e0d4;
     --accent: #a8481c;
     --accent-2: #35543f;
+    --viz-temp: #eb6834;
+    --viz-feels: #6f6659;
+    --viz-rain: #2a78d6;
+    --viz-wind: #1baf7a;
     --on-dark: #f6f1e8;
     --shadow: 0 1px 2px rgba(26,23,20,.04), 0 10px 30px -14px rgba(26,23,20,.18);
     --radius: 16px;
@@ -36,6 +40,10 @@
       --border: #2c2721;
       --accent: #e08a4e;
       --accent-2: #8fb89c;
+      --viz-temp: #d95926;
+      --viz-feels: #9d9384;
+      --viz-rain: #3987e5;
+      --viz-wind: #199e70;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 34px -16px rgba(0,0,0,.75);
     }
   }
@@ -454,14 +462,42 @@
   .wx-head form { margin: 0; }
   .hourly-toggle { margin-top: .3rem; padding: .15rem .55rem; font: 600 .74rem var(--sans); color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
   .hourly-toggle:hover, .hourly-toggle[aria-expanded="true"] { border-color: var(--accent); }
-  tr.hourly-row > td { padding: .3rem 0 .8rem; background: var(--bg-alt); }
-  .hourly-day { font: 700 .74rem var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: .5rem .6rem .2rem; }
-  /* width:0 + min-width:100% keeps the strip from widening the table; it scrolls instead. */
-  .hourly-strip { display: flex; gap: .3rem; overflow-x: auto; padding: .2rem .6rem .4rem; width: 0; min-width: 100%; box-sizing: border-box; }
-  .hour { flex: 0 0 4.6rem; text-align: center; padding: .4rem .2rem; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); font-size: .8rem; line-height: 1.35; }
-  .hour.night { opacity: .6; }
-  .hour-time { font-weight: 700; font-size: .74rem; }
-  .hour-temp { font-weight: 700; font-size: .95rem; }
+  tr.hourly-row > td { padding: .4rem 0 .8rem; }
+  .hourly-chart { position: sticky; left: 0; width: 0; min-width: 100%; }
+  .hc-svg { display: block; font-family: var(--sans); touch-action: pan-y; outline: none; }
+  .hc-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  .hc-night { fill: var(--bg-alt); }
+  .hc-daysep { stroke: var(--border); stroke-width: 1; }
+  .hc-grid { stroke: var(--border); stroke-width: 1; }
+  .hc-base { stroke: var(--muted); stroke-opacity: .5; stroke-width: 1; }
+  .hc-tick { fill: var(--muted); font-size: 10.5px; }
+  .hc-title { fill: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .hc-day { fill: var(--text); font-size: 11px; font-weight: 700; }
+  .hc-icon { font-size: 14px; }
+  .hc-endlabel { fill: var(--text); font-size: 11px; font-weight: 600; }
+  .hc-peak { fill: var(--muted); font-size: 10.5px; font-weight: 600; }
+  .hc-line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .hc-area { stroke: none; fill-opacity: .16; }
+  .hc-temp { stroke: var(--viz-temp); fill: var(--viz-temp); }
+  .hc-feels { stroke: var(--viz-feels); fill: var(--viz-feels); }
+  .hc-rain { stroke: var(--viz-rain); fill: var(--viz-rain); }
+  .hc-wind { stroke: var(--viz-wind); fill: var(--viz-wind); }
+  .hc-svg .hc-line { fill: none; }
+  .hc-svg .hc-area { stroke: none; }
+  .hc-line.hc-feels { stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .hc-area.hc-rain, .hc-area.hc-wind { stroke: none; }
+  .hc-cross { stroke: var(--text); stroke-opacity: .45; stroke-width: 1; }
+  .hc-dot { stroke: var(--card); stroke-width: 2; }
+  .hc-tip { position: absolute; z-index: 2; pointer-events: none; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: .5rem .65rem; font-size: .8rem; line-height: 1.5; white-space: nowrap; }
+  .hc-tip-head { font-weight: 700; margin-bottom: .15rem; }
+  .hc-tip-row { display: flex; align-items: center; gap: .45rem; }
+  .hc-tip-row strong { min-width: 3.4rem; }
+  .hc-tip-row span:last-child { color: var(--muted); }
+  .hc-key { display: inline-block; width: 14px; height: 0; border-top: 2px solid; }
+  .hc-key.hc-temp { border-color: var(--viz-temp); }
+  .hc-key.hc-feels { border-top-style: dashed; border-color: var(--viz-feels); }
+  .hc-key.hc-rain { border-color: var(--viz-rain); }
+  .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
