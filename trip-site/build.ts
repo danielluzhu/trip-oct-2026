@@ -6,7 +6,6 @@ import {
   itineraryPage,
   flightsPage,
   housingPage,
-  costsPage,
   shortlistPage,
 } from "./index.ts";
 
@@ -23,8 +22,12 @@ const pages: Array<[string, string]> = [
   ["glacier.html", homePage()],
   ["flights.html", await flightsPage()],
   ["housing.html", housingPage()],
-  ["costs.html", await costsPage()],
   ["shortlist.html", shortlistPage()],
+  // The cost calculator was removed; old links to it land on the front page.
+  [
+    "costs.html",
+    `<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=./index.html"><link rel="canonical" href="./index.html"><title>Itinerary</title><a href="./index.html">The cost calculator was removed &rarr;</a>`,
+  ],
   // Old links to itinerary.html land on the front page, where it now lives.
   [
     "itinerary.html",
