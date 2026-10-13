@@ -546,6 +546,8 @@ const sharedStyle = /* css */ `
   table.forecast:not(.spots) td:first-child { width: 12%; white-space: nowrap; }
   table.forecast:not(.spots) td:nth-child(2), table.forecast:not(.spots) td:nth-child(3) { white-space: nowrap; }
   .wx-icon { font-size: 1.1rem; }
+  .wx-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1rem; flex-wrap: wrap; }
+  .wx-head form { margin: 0; }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
@@ -1730,13 +1732,15 @@ type Daily = {
 
 let forecastCache: { at: number; spots: (Daily | null)[] } | null = null;
 
-async function loadForecast() {
-  if (forecastCache && Date.now() - forecastCache.at < 60 * 60 * 1000) return forecastCache;
+// `force` skips the hour cache (the Refresh button), but never more than once
+// a minute so a mashed button can't hammer the API.
+async function loadForecast(force = false) {
+  const age = forecastCache ? Date.now() - forecastCache.at : Infinity;
+  if (age < (force ? 60 * 1000 : 60 * 60 * 1000)) return forecastCache;
   const p = new URLSearchParams({
     latitude: FORECAST_SPOTS.map((s) => s.lat).join(","),
     longitude: FORECAST_SPOTS.map((s) => s.lon).join(","),
     daily: "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,uv_index_max,precipitation_probability_max,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max",
-    temperature_unit: "fahrenheit",
     wind_speed_unit: "mph",
     precipitation_unit: "inch",
     timezone: "America/Denver",
@@ -1782,7 +1786,7 @@ function uvLabel(uv: number) {
 
 const clock = (iso: string) => fmtTime(iso.slice(11, 16));
 const hrs = (sec: number) => `${Math.floor(sec / 3600)}h ${String(Math.round((sec % 3600) / 60)).padStart(2, "0")}m`;
-const deg = (n: number) => `${Math.round(n)}°`;
+const deg = (n: number) => `${Math.round(n)}°C`;
 
 // Moon phase for stargazing, from the mean synodic month (good to a day).
 function moonPhase(date: string) {
@@ -1868,10 +1872,13 @@ async function forecastPage() {
   <section class="card">
     <div class="pick-badge">Whitefish</div>
     <h2>Trip forecast</h2>
-    <div class="subtitle">${escapeHtml(fmtDate(housing.checkin))} to ${escapeHtml(fmtDate(housing.checkout))}${asOf ? ` &middot; updated ${escapeHtml(asOf)}` : ""}</div>
+    <div class="wx-head">
+      <div class="subtitle">${escapeHtml(fmtDate(housing.checkin))} to ${escapeHtml(fmtDate(housing.checkout))}${asOf ? ` &middot; updated ${escapeHtml(asOf)}` : ""}</div>
+      ${STATIC ? "" : `<form method="POST" action="/forecast/refresh"><button type="submit" class="calc-btn">&#8635; Refresh forecast</button></form>`}
+    </div>
     ${summary}
     ${mainTable}
-    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; check again the night before.</div>
+    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; hit refresh the night before.</div>
   </section>
 
   <section class="card">
@@ -2022,6 +2029,11 @@ Bun.serve({
       const tasks = await loadTasks();
       await saveTasks(tasks.filter((t) => t.id !== id));
       return Response.redirect("/tasks", 303);
+    }
+
+    if (url.pathname === "/forecast/refresh" && req.method === "POST") {
+      await loadForecast(true);
+      return Response.redirect("/forecast", 303);
     }
 
     if (url.pathname === "/forecast") {

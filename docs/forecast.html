@@ -450,6 +450,8 @@
   table.forecast:not(.spots) td:first-child { width: 12%; white-space: nowrap; }
   table.forecast:not(.spots) td:nth-child(2), table.forecast:not(.spots) td:nth-child(3) { white-space: nowrap; }
   .wx-icon { font-size: 1.1rem; }
+  .wx-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1rem; flex-wrap: wrap; }
+  .wx-head form { margin: 0; }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
   table.hikes { min-width: 760px; }
@@ -659,9 +661,12 @@
   <section class="card">
     <div class="pick-badge">Whitefish</div>
     <h2>Trip forecast</h2>
-    <div class="subtitle">Thu, Oct 15 to Mon, Oct 19 &middot; updated Oct 13, 2:30 PM MT</div>
+    <div class="wx-head">
+      <div class="subtitle">Thu, Oct 15 to Mon, Oct 19 &middot; updated Oct 13, 2:32 PM MT</div>
+      
+    </div>
     <div class="total-row wx-summary">
-      <div><span class="total-label">Temp range</span><span class="total-big">34°–70°</span></div>
+      <div><span class="total-label">Temp range</span><span class="total-big">1°C–21°C</span></div>
       <div><span class="total-label">Sunrise / sunset</span><span class="total-big">7:57 AM / 6:47 PM</span></div>
       <div><span class="total-label">Max UV</span><span class="total-big">3.8</span></div>
       <div><span class="total-label">Wettest day</span><span class="total-big">20%</span></div>
@@ -672,7 +677,7 @@
       <tr>
         <td><strong>Thu, Oct 15</strong></td>
         <td><span class="wx-icon">☁️</span> Overcast</td>
-        <td><strong>59°</strong> / 34°</td>
+        <td><strong>15°C</strong> / 1°C</td>
         <td>0%<span class="muted-cell"></span></td>
         <td>3.8 <span class="muted-cell">moderate</span></td>
         <td>7 mph<span class="muted-cell"> &middot; gusts 7</span></td>
@@ -681,7 +686,7 @@
       <tr>
         <td><strong>Fri, Oct 16</strong></td>
         <td><span class="wx-icon">☁️</span> Overcast</td>
-        <td><strong>60°</strong> / 36°</td>
+        <td><strong>16°C</strong> / 2°C</td>
         <td>0%<span class="muted-cell"></span></td>
         <td>3.8 <span class="muted-cell">moderate</span></td>
         <td>4 mph<span class="muted-cell"> &middot; gusts 6</span></td>
@@ -690,7 +695,7 @@
       <tr>
         <td><strong>Sat, Oct 17</strong></td>
         <td><span class="wx-icon">🌦️</span> Drizzle</td>
-        <td><strong>70°</strong> / 39°</td>
+        <td><strong>21°C</strong> / 4°C</td>
         <td>2%<span class="muted-cell"></span></td>
         <td>3.5 <span class="muted-cell">moderate</span></td>
         <td>18 mph<span class="muted-cell"> &middot; gusts 46</span></td>
@@ -699,7 +704,7 @@
       <tr>
         <td><strong>Sun, Oct 18</strong></td>
         <td><span class="wx-icon">☁️</span> Overcast</td>
-        <td><strong>54°</strong> / 35°</td>
+        <td><strong>12°C</strong> / 2°C</td>
         <td>2%<span class="muted-cell"></span></td>
         <td>3.4 <span class="muted-cell">moderate</span></td>
         <td>11 mph<span class="muted-cell"> &middot; gusts 15</span></td>
@@ -708,7 +713,7 @@
       <tr>
         <td><strong>Mon, Oct 19</strong></td>
         <td><span class="wx-icon">☁️</span> Overcast</td>
-        <td><strong>57°</strong> / 37°</td>
+        <td><strong>14°C</strong> / 3°C</td>
         <td>20%<span class="muted-cell"></span></td>
         <td>2.5 <span class="muted-cell">low</span></td>
         <td>4 mph<span class="muted-cell"> &middot; gusts 4</span></td>
@@ -716,7 +721,7 @@
       </tr>
     </table>
     </div>
-    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; check again the night before.</div>
+    <div class="calc-note">Forecast from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. Times are Mountain. Days further out will shift; hit refresh the night before.</div>
   </section>
 
   <section class="card">
@@ -727,23 +732,23 @@
       <tr><th>Where</th><th>Thu, Oct 15</th><th>Fri, Oct 16</th><th>Sat, Oct 17</th><th>Sun, Oct 18</th><th>Mon, Oct 19</th></tr>
       <tr>
         <td><strong>Whitefish</strong><br><span class="muted-cell">Base, Lion Mountain</span></td>
-        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/34°<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>60°</strong>/36°<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>70°</strong>/39°<br><span class="muted-cell">2% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/35°<br><span class="muted-cell">2% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>57°</strong>/37°<br><span class="muted-cell">20% precip &middot; UV 2.5</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>15°C</strong>/1°C<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>16°C</strong>/2°C<br><span class="muted-cell">0% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>21°C</strong>/4°C<br><span class="muted-cell">2% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/2°C<br><span class="muted-cell">2% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>14°C</strong>/3°C<br><span class="muted-cell">20% precip &middot; UV 2.5</span></td>
       </tr>
       <tr>
         <td><strong>Lake McDonald</strong><br><span class="muted-cell">Avalanche Lake, Apgar Lookout</span></td>
-        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>58°</strong>/37°<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>63°</strong>/40°<br><span class="muted-cell">0% precip &middot; UV 3.6</span></td><td><span class="wx-icon" title="Showers">🌦️</span> <strong>66°</strong>/41°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>53°</strong>/37°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>58°</strong>/39°<br><span class="muted-cell">22% precip &middot; UV 2.7</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>15°C</strong>/3°C<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>17°C</strong>/5°C<br><span class="muted-cell">0% precip &middot; UV 3.6</span></td><td><span class="wx-icon" title="Showers">🌦️</span> <strong>19°C</strong>/5°C<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/3°C<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>14°C</strong>/4°C<br><span class="muted-cell">22% precip &middot; UV 2.7</span></td>
       </tr>
       <tr>
         <td><strong>Middle Fork Flathead</strong><br><span class="muted-cell">Sunday float</span></td>
-        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/31°<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>63°</strong>/35°<br><span class="muted-cell">0% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>68°</strong>/39°<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/34°<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>59°</strong>/36°<br><span class="muted-cell">21% precip &middot; UV 2.8</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>15°C</strong>/-1°C<br><span class="muted-cell">0% precip &middot; UV 3.7</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>17°C</strong>/2°C<br><span class="muted-cell">0% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>20°C</strong>/4°C<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/1°C<br><span class="muted-cell">6% precip &middot; UV 3.4</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>15°C</strong>/2°C<br><span class="muted-cell">21% precip &middot; UV 2.8</span></td>
       </tr>
       <tr>
         <td><strong>Two Medicine</strong><br><span class="muted-cell">Dawson Pass</span></td>
-        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>48°</strong>/24°<br><span class="muted-cell">0% precip &middot; UV 4.2</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/34°<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>58°</strong>/34°<br><span class="muted-cell">5% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>47°</strong>/29°<br><span class="muted-cell">5% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>55°</strong>/32°<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>9°C</strong>/-4°C<br><span class="muted-cell">0% precip &middot; UV 4.2</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/1°C<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>14°C</strong>/1°C<br><span class="muted-cell">5% precip &middot; UV 3.9</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>8°C</strong>/-1°C<br><span class="muted-cell">5% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>13°C</strong>/0°C<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
       </tr>
       <tr>
         <td><strong>Many Glacier</strong><br><span class="muted-cell">Grinnell Glacier</span></td>
-        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>51°</strong>/31°<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>54°</strong>/38°<br><span class="muted-cell">0% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>56°</strong>/33°<br><span class="muted-cell">8% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>45°</strong>/31°<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>53°</strong>/35°<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
+        <td><span class="wx-icon" title="Overcast">☁️</span> <strong>11°C</strong>/-1°C<br><span class="muted-cell">0% precip &middot; UV 4.0</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/3°C<br><span class="muted-cell">0% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Drizzle">🌦️</span> <strong>14°C</strong>/1°C<br><span class="muted-cell">8% precip &middot; UV 3.8</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>7°C</strong>/0°C<br><span class="muted-cell">8% precip &middot; UV 3.5</span></td><td><span class="wx-icon" title="Overcast">☁️</span> <strong>12°C</strong>/2°C<br><span class="muted-cell">21% precip &middot; UV 3.0</span></td>
       </tr>
     </table>
     </div>
