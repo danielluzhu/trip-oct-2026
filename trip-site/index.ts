@@ -12,7 +12,7 @@ const DAYS = [
   "Day 1 · Thu 10/15 (Arrival)",
   "Day 2 · Fri 10/16",
   "Day 3 · Sat 10/17 (Sunrise hike, fly fishing)",
-  "Day 4 · Sun 10/18",
+  "Day 4 · Sun 10/18 (Hike day)",
   "Day 5 · Mon 10/19 (Exit)",
 ];
 
@@ -604,26 +604,35 @@ const sharedStyle = /* css */ `
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 1040px; }
   #hikes { scroll-margin-top: 4.5rem; }
-  table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 11%; }
-  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
-  table.hikes td.hk-cond { width: 24%; }
-  table.hikes td.hk-from { width: 10%; }
-  table.hikes td.hk-nps { white-space: nowrap; font-size: .9rem; }
-  /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
-  table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
-  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
+  /* Hikes: one row each, three wide columns so cells don't stack up tall. */
+  table.hikes { min-width: 760px; font-size: .9rem; line-height: 1.45; }
+  table.hikes td { vertical-align: top; padding-top: .75rem; padding-bottom: .75rem; }
+  table.hikes td.hk-name { width: 29%; }
+  table.hikes td.hk-routes { width: 29%; }
+  table.hikes td:first-child { padding-left: .7rem; }
+  table.hikes td:last-child { padding-right: .6rem; }
+  table.hikes tr.hk-no td { background: rgba(190,60,60,.06); }
+  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; }
   table.hikes tr.hk-check td:first-child { box-shadow: inset 3px 0 0 #b8842a; }
-  table.hikes tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
-  .hk-name .pill { margin-top: .3rem; }
+  table.hikes tr.hk-no .hk-routes { opacity: .7; }
+  .hk-title { font-size: 1rem; }
+  .hk-name .pill { white-space: nowrap; }
+  .hk-sub { color: var(--muted); font-size: .85rem; margin-top: .15rem; }
+  .hk-status { color: var(--muted); font-size: .85rem; margin: .35rem 0; }
+  tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
+  .hk-foot { display: flex; flex-wrap: wrap; gap: .2rem .9rem; font-size: .85rem; }
+  .hk-opt + .hk-opt { margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--border); }
+  .hk-opt .section-label { display: inline; margin: 0; }
+  .hk-cond > div + div { margin-top: .4rem; }
+  .hk-now { display: flex; flex-wrap: wrap; gap: 0 .35rem; align-items: baseline; font-size: .85rem; }
+  .hk-now .hk-pt { color: var(--muted); }
+  .hk-days { display: grid; grid-template-columns: repeat(5, 1fr); gap: .25rem; text-align: center; font-size: .78rem; line-height: 1.3; }
+  .hk-days > div { min-width: 0; background: var(--bg-alt); border-radius: 6px; padding: .25rem .1rem; }
+  .hk-days .hk-day { display: block; color: var(--muted); }
+  .hk-days .wx-icon { display: block; font-size: 1rem; }
+  .hk-label { margin: 0 0 .15rem; }
   .hk-warn { margin: .35rem 0 0; padding: .45rem .7rem; border-radius: 10px; background: rgba(190,60,60,.1); color: #c25555; font-size: .9rem; }
-  .hk-label { margin: 0 0 .2rem; }
-  .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
-  ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
-  ul.hk-days li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3rem; padding: .1rem 0; margin: 0; border: 0; }
-  .hk-day { width: 2.1em; color: var(--muted); }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -1180,8 +1189,8 @@ async function itineraryPage() {
         const c = w.current;
         let [icon, label] = wmo(c.weather_code);
         if (!c.is_day && c.weather_code <= 1) icon = "🌙";
-        const snow = c.snow_depth >= 0.1 ? ` &middot; ${Math.round(c.snow_depth * 12)} in snow on the ground` : "";
-        return `<div class="hk-now"><span class="muted-cell">${escapeHtml(pt.name)} &middot; ${pt.ft.toLocaleString("en-US")} ft</span><br><span class="wx-icon" title="${label}">${icon}</span> <strong>${deg(c.temperature_2m)}</strong> <span class="muted-cell">feels ${deg(c.apparent_temperature)} &middot; wind ${Math.round(c.wind_speed_10m)} mph${snow}</span></div>`;
+        const snow = c.snow_depth >= 0.1 ? ` &middot; ${Math.round(c.snow_depth * 12)} in snow down` : "";
+        return `<div class="hk-now"><span class="hk-pt">${escapeHtml(pt.name)}, ${pt.ft.toLocaleString("en-US")} ft</span> <span class="wx-icon" title="${label}">${icon}</span> <strong>${deg(c.temperature_2m)}</strong> <span class="muted-cell">feels ${deg(c.apparent_temperature)} &middot; wind ${Math.round(c.wind_speed_10m)} mph${snow}</span></div>`;
       })
       .join("");
     const top = got[got.length - 1] ?? got.find(Boolean)!;
@@ -1189,11 +1198,11 @@ async function itineraryPage() {
     const days = top.daily.time
       .map((d, i) => {
         const [icon, label] = wmo(top.daily.weather_code[i]);
-        const snow = top.daily.snowfall_sum[i] >= 0.1 ? ` &middot; ${top.daily.snowfall_sum[i].toFixed(1)} in snow` : "";
-        return `<li><span class="hk-day">${escapeHtml(fmtDate(d).split(",")[0])}</span> <span class="wx-icon" title="${label}">${icon}</span> ${deg(top.daily.temperature_2m_max[i])}/${deg(top.daily.temperature_2m_min[i])} <span class="muted-cell">${top.daily.precipitation_probability_max[i]}%${snow}</span></li>`;
+        const snow = top.daily.snowfall_sum[i] >= 0.1 ? `<br>${top.daily.snowfall_sum[i].toFixed(1)}" snow` : "";
+        return `<div title="${label}, ${top.daily.precipitation_probability_max[i]}% chance of rain/snow"><span class="hk-day">${escapeHtml(fmtDate(d).split(",")[0])}</span><span class="wx-icon">${icon}</span>${Math.round(top.daily.temperature_2m_max[i])}°/${Math.round(top.daily.temperature_2m_min[i])}°<br><span class="muted-cell">${top.daily.precipitation_probability_max[i]}%${snow}</span></div>`;
       })
       .join("");
-    return `<div class="section-label hk-label">Now</div>${now}<div class="section-label hk-label" title="${escapeHtml(topName)}">Trip days up top</div><ul class="hk-days">${days}</ul>`;
+    return `<div><div class="section-label hk-label">Now</div>${now}</div><div><div class="section-label hk-label">Trip days at ${escapeHtml(topName)}</div><div class="hk-days">${days}</div></div>`;
   };
 
   const hikesBlock = plan.hikes?.length
@@ -1206,22 +1215,23 @@ async function itineraryPage() {
     </div>
     ${(() => {
       const no = plan.hikes.filter((h: any) => h.doable === "no").map((h: any) => h.name);
-      return no.length ? `<div class="hk-warn">&#9888; Not doable right now: <strong>${no.map(escapeHtml).join(", ")}</strong>. See the red row${no.length > 1 ? "s" : ""} below.</div>` : "";
+      return no.length ? `<div class="hk-warn">&#9888; Not doable right now: <strong>${no.map(escapeHtml).join(", ")}</strong>. Marked in red below.</div>` : "";
     })()}
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike or drive</th><th>From Whitefish</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>nps.gov/glac</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>Routes</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
-          const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
+          const opt = (label: string, o: any) => `<div class="hk-opt"><span class="section-label">${label}</span> <strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong> <span class="muted-cell">&middot; ${escapeHtml(o.gain)}</span><br>${escapeHtml(o.route)}</div>`;
           const flag = h.doable === "no" ? `<span class="pill gone">Not doable</span>` : h.doable === "check" ? `<span class="pill partial">Check first</span>` : "";
           return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""}>
-        <td class="hk-name"><strong>${escapeHtml(h.name)}</strong>${flag ? `<br>${flag}` : ""}</td>
-        <td class="hk-from">${escapeHtml(h.fromWhitefish ?? "")}</td>
-        <td>${opt(h.full)}</td>
-        <td>${opt(h.short)}</td>
-        <td>${escapeHtml(h.drive)}<br><span class="muted-cell hk-status">${escapeHtml(h.status)}</span></td>
-        <td class="hk-nps">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("<br>")}</td>
+        <td class="hk-name">
+          <strong class="hk-title">${escapeHtml(h.name)}</strong>${flag ? ` ${flag}` : ""}
+          <div class="hk-sub">&#128663; From Whitefish: ${escapeHtml(h.fromWhitefish ?? h.drive)}</div>
+          <p class="hk-status">${escapeHtml(h.status)}</p>
+          <div class="hk-foot">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("")}</div>
+        </td>
+        <td class="hk-routes">${opt("Full", h.full)}${opt("Short", h.short)}</td>
         <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })
@@ -1829,7 +1839,7 @@ async function tasksPage() {
 const FORECAST_SPOTS = [
   { key: "whitefish", name: "Whitefish", note: "Base, Lion Mountain", lat: 48.411, lon: -114.338 },
   { key: "mcdonald", name: "Lake McDonald", note: "Avalanche Lake, Apgar Lookout", lat: 48.62, lon: -113.88 },
-  { key: "middlefork", name: "Middle Fork Flathead", note: "Sunday float", lat: 48.47, lon: -113.99 },
+  { key: "middlefork", name: "Middle Fork Flathead", note: "Fly fishing, floats", lat: 48.47, lon: -113.99 },
   { key: "twomed", name: "Two Medicine", note: "Dawson Pass", lat: 48.49, lon: -113.37 },
   { key: "manyglacier", name: "Many Glacier", note: "Grinnell Glacier", lat: 48.8, lon: -113.67 },
 ];

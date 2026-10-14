@@ -524,7 +524,7 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Thu: arrive. Fri: Avalanche Lake. Sat: Apgar Lookout. Sun: float the Middle Fork. Mon: last day out, flights home. Nothing in the park is open.",
+    "intro": "Thu: arrive. Fri: Avalanche Lake. Sat: sunrise hike up Apgar Lookout, fly fishing 12 to 4. Sun: hike day. Mon: last day out, flights home. Nothing in the park is open.",
     "facts": [
       [
         "Stay",
@@ -820,9 +820,9 @@
             "detail": "Back in Whitefish around 10:15, or eat in West Glacier."
           },
           {
-            "when": "Afternoon",
+            "when": "12:00 to 4:00 PM",
             "what": "Fly fishing on the Flathead",
-            "detail": "Everyone fishing needs a Montana licence (nonresident, buy online at fwp.mt.gov). Fish until the light goes, ~6:45 PM."
+            "detail": "Everyone fishing needs a Montana licence (nonresident, buy online at fwp.mt.gov)."
           },
           {
             "when": "Evening",
@@ -832,13 +832,13 @@
         ]
       },
       {
-        "day": "Day 4 · Sun 10/18",
-        "headline": "Float the Middle Fork.",
+        "day": "Day 4 · Sun 10/18 (Hike day)",
+        "headline": "A day hike in the park.",
         "blocks": [
           {
             "when": "Day",
-            "what": "Float the Middle Fork, four boats",
-            "detail": "Alternative: Bison Range or breweries in town."
+            "what": "Hike day: pick one from Hikes and the Sun Road above",
+            "detail": "Open right now: Grinnell Glacier (the big one, ~3 hrs' drive each way), Lake McDonald, or Avalanche Lake if we skip it Friday. Dawson Pass needs a road walk. Start by 9 AM to be off the trail before the ~6:45 PM sunset."
           },
           {
             "when": "Evening",

@@ -508,26 +508,35 @@
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 1040px; }
   #hikes { scroll-margin-top: 4.5rem; }
-  table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 11%; }
-  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
-  table.hikes td.hk-cond { width: 24%; }
-  table.hikes td.hk-from { width: 10%; }
-  table.hikes td.hk-nps { white-space: nowrap; font-size: .9rem; }
-  /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
-  table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
-  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
+  /* Hikes: one row each, three wide columns so cells don't stack up tall. */
+  table.hikes { min-width: 760px; font-size: .9rem; line-height: 1.45; }
+  table.hikes td { vertical-align: top; padding-top: .75rem; padding-bottom: .75rem; }
+  table.hikes td.hk-name { width: 29%; }
+  table.hikes td.hk-routes { width: 29%; }
+  table.hikes td:first-child { padding-left: .7rem; }
+  table.hikes td:last-child { padding-right: .6rem; }
+  table.hikes tr.hk-no td { background: rgba(190,60,60,.06); }
+  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; }
   table.hikes tr.hk-check td:first-child { box-shadow: inset 3px 0 0 #b8842a; }
-  table.hikes tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
-  .hk-name .pill { margin-top: .3rem; }
+  table.hikes tr.hk-no .hk-routes { opacity: .7; }
+  .hk-title { font-size: 1rem; }
+  .hk-name .pill { white-space: nowrap; }
+  .hk-sub { color: var(--muted); font-size: .85rem; margin-top: .15rem; }
+  .hk-status { color: var(--muted); font-size: .85rem; margin: .35rem 0; }
+  tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
+  .hk-foot { display: flex; flex-wrap: wrap; gap: .2rem .9rem; font-size: .85rem; }
+  .hk-opt + .hk-opt { margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--border); }
+  .hk-opt .section-label { display: inline; margin: 0; }
+  .hk-cond > div + div { margin-top: .4rem; }
+  .hk-now { display: flex; flex-wrap: wrap; gap: 0 .35rem; align-items: baseline; font-size: .85rem; }
+  .hk-now .hk-pt { color: var(--muted); }
+  .hk-days { display: grid; grid-template-columns: repeat(5, 1fr); gap: .25rem; text-align: center; font-size: .78rem; line-height: 1.3; }
+  .hk-days > div { min-width: 0; background: var(--bg-alt); border-radius: 6px; padding: .25rem .1rem; }
+  .hk-days .hk-day { display: block; color: var(--muted); }
+  .hk-days .wx-icon { display: block; font-size: 1rem; }
+  .hk-label { margin: 0 0 .15rem; }
   .hk-warn { margin: .35rem 0 0; padding: .45rem .7rem; border-radius: 10px; background: rgba(190,60,60,.1); color: #c25555; font-size: .9rem; }
-  .hk-label { margin: 0 0 .2rem; }
-  .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
-  ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
-  ul.hk-days li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3rem; padding: .1rem 0; margin: 0; border: 0; }
-  .hk-day { width: 2.1em; color: var(--muted); }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }

@@ -508,26 +508,35 @@
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 1040px; }
   #hikes { scroll-margin-top: 4.5rem; }
-  table.hikes td { vertical-align: top; }
-  table.hikes td:first-child { width: 11%; }
-  table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
-  table.hikes td.hk-cond { width: 24%; }
-  table.hikes td.hk-from { width: 10%; }
-  table.hikes td.hk-nps { white-space: nowrap; font-size: .9rem; }
-  /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
-  table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
-  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
+  /* Hikes: one row each, three wide columns so cells don't stack up tall. */
+  table.hikes { min-width: 760px; font-size: .9rem; line-height: 1.45; }
+  table.hikes td { vertical-align: top; padding-top: .75rem; padding-bottom: .75rem; }
+  table.hikes td.hk-name { width: 29%; }
+  table.hikes td.hk-routes { width: 29%; }
+  table.hikes td:first-child { padding-left: .7rem; }
+  table.hikes td:last-child { padding-right: .6rem; }
+  table.hikes tr.hk-no td { background: rgba(190,60,60,.06); }
+  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; }
   table.hikes tr.hk-check td:first-child { box-shadow: inset 3px 0 0 #b8842a; }
-  table.hikes tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
-  .hk-name .pill { margin-top: .3rem; }
+  table.hikes tr.hk-no .hk-routes { opacity: .7; }
+  .hk-title { font-size: 1rem; }
+  .hk-name .pill { white-space: nowrap; }
+  .hk-sub { color: var(--muted); font-size: .85rem; margin-top: .15rem; }
+  .hk-status { color: var(--muted); font-size: .85rem; margin: .35rem 0; }
+  tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
+  .hk-foot { display: flex; flex-wrap: wrap; gap: .2rem .9rem; font-size: .85rem; }
+  .hk-opt + .hk-opt { margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--border); }
+  .hk-opt .section-label { display: inline; margin: 0; }
+  .hk-cond > div + div { margin-top: .4rem; }
+  .hk-now { display: flex; flex-wrap: wrap; gap: 0 .35rem; align-items: baseline; font-size: .85rem; }
+  .hk-now .hk-pt { color: var(--muted); }
+  .hk-days { display: grid; grid-template-columns: repeat(5, 1fr); gap: .25rem; text-align: center; font-size: .78rem; line-height: 1.3; }
+  .hk-days > div { min-width: 0; background: var(--bg-alt); border-radius: 6px; padding: .25rem .1rem; }
+  .hk-days .hk-day { display: block; color: var(--muted); }
+  .hk-days .wx-icon { display: block; font-size: 1rem; }
+  .hk-label { margin: 0 0 .15rem; }
   .hk-warn { margin: .35rem 0 0; padding: .45rem .7rem; border-radius: 10px; background: rgba(190,60,60,.1); color: #c25555; font-size: .9rem; }
-  .hk-label { margin: 0 0 .2rem; }
-  .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
-  ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
-  ul.hk-days li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3rem; padding: .1rem 0; margin: 0; border: 0; }
-  .hk-day { width: 2.1em; color: var(--muted); }
   .table-scroll { overflow-x: auto; margin: .3rem -.2rem .2rem; padding: 0 .2rem; }
   table.compare { min-width: 720px; }
   table.compare td:first-child { color: var(--text); width: 22%; }
@@ -732,7 +741,7 @@
     <div class="pick-badge">The plan</div>
     <h2>Four nights in Whitefish</h2>
     <div class="subtitle">Based in Whitefish &middot; Thu Oct 15 - Mon Oct 19, 2026 &middot; 4 nights</div>
-    <p class="area-vibe">Thu: arrive. Fri: Avalanche Lake. Sat: Apgar Lookout. Sun: float the Middle Fork. Mon: last day out, flights home. Nothing in the park is open.</p>
+    <p class="area-vibe">Thu: arrive. Fri: Avalanche Lake. Sat: sunrise hike up Apgar Lookout, fly fishing 12 to 4. Sun: hike day. Mon: last day out, flights home. Nothing in the park is open.</p>
     <table>
       <tr><td>Stay</td><td>The Quarry house, 138 Jasper Loop, Whitefish, MT 59937. Thu 10/15 to Mon 10/19</td></tr>
       <tr><td>House has</td><td>Pool, hot tub, sauna, gym</td></tr>
@@ -747,66 +756,72 @@
   <section class="card" id="hikes">
     <h2>Hikes and the Sun Road</h2>
     <div class="wx-head">
-      <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one. Conditions updated Oct 14, 2:08 AM MT.</div>
+      <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one. Conditions updated Oct 14, 2:11 AM MT.</div>
       
     </div>
-    <div class="hk-warn">&#9888; Not doable right now: <strong>Highline Trail, Drive Going-to-the-Sun Road to Logan Pass</strong>. See the red rows below.</div>
+    <div class="hk-warn">&#9888; Not doable right now: <strong>Highline Trail, Drive Going-to-the-Sun Road to Logan Pass</strong>. Marked in red below.</div>
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike or drive</th><th>From Whitefish</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>nps.gov/glac</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>Routes</th><th>Conditions</th></tr>
       <tr class="hk-no">
-        <td class="hk-name"><strong>Highline Trail</strong><br><span class="pill gone">Not doable</span></td>
-        <td class="hk-from">58 mi · ~1 hr 50 min to Logan Pass</td>
-        <td><strong>11.8 mi &middot; 6 to 8 hrs</strong><br>Logan Pass to The Loop, one way (needs a car at each end)<br><span class="muted-cell">~800 ft up, ~2,800 ft down</span></td>
-        <td><strong>7.2 mi round trip &middot; 3.5 to 4 hrs</strong><br>Logan Pass to Haystack Butte saddle and back<br><span class="muted-cell">~1,000 ft</span></td>
-        <td>~1 hr to West Glacier, then the Sun Road<br><span class="muted-cell hk-status">Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" target="_blank" rel="noopener">Sun Road status &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Logan Pass &middot; 6,646 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>-3°C</strong> <span class="muted-cell">feels -8°C &middot; wind 11 mph &middot; 5 in snow on the ground</span></div><div class="hk-now"><span class="muted-cell">Haystack Butte saddle &middot; 7,024 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>-4°C</strong> <span class="muted-cell">feels -10°C &middot; wind 11 mph &middot; 5 in snow on the ground</span></div><div class="section-label hk-label" title="Haystack Butte saddle">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 5°C/-4°C <span class="muted-cell">2%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 9°C/-2°C <span class="muted-cell">2%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 11°C/-2°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 4°C/-4°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-3°C <span class="muted-cell">17%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Highline Trail</strong> <span class="pill gone">Not doable</span>
+          <div class="hk-sub">&#128663; From Whitefish: 58 mi · ~1 hr 50 min to Logan Pass</div>
+          <p class="hk-status">Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" target="_blank" rel="noopener">Sun Road status &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>11.8 mi &middot; 6 to 8 hrs</strong> <span class="muted-cell">&middot; ~800 ft up, ~2,800 ft down</span><br>Logan Pass to The Loop, one way (needs a car at each end)</div><div class="hk-opt"><span class="section-label">Short</span> <strong>7.2 mi round trip &middot; 3.5 to 4 hrs</strong> <span class="muted-cell">&middot; ~1,000 ft</span><br>Logan Pass to Haystack Butte saddle and back</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Logan Pass, 6,646 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>-3°C</strong> <span class="muted-cell">feels -8°C &middot; wind 11 mph &middot; 5 in snow down</span></div><div class="hk-now"><span class="hk-pt">Haystack Butte saddle, 7,024 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>-4°C</strong> <span class="muted-cell">feels -10°C &middot; wind 11 mph &middot; 5 in snow down</span></div></div><div><div class="section-label hk-label">Trip days at Haystack Butte saddle</div><div class="hk-days"><div title="Overcast, 2% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>5°/-4°<br><span class="muted-cell">2%</span></div><div title="Overcast, 2% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>9°/-2°<br><span class="muted-cell">2%</span></div><div title="Drizzle, 9% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌦️</span>11°/-2°<br><span class="muted-cell">9%</span></div><div title="Overcast, 9% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>4°/-4°<br><span class="muted-cell">9%</span></div><div title="Overcast, 17% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>7°/-3°<br><span class="muted-cell">17%</span></div></div></div></td>
       </tr>
       <tr>
-        <td class="hk-name"><strong>Grinnell Glacier</strong></td>
-        <td class="hk-from">133 mi · ~3 hrs, via US-2 around the park</td>
-        <td><strong>~11 mi round trip &middot; 6 to 7 hrs</strong><br>Swiftcurrent to the Grinnell Glacier overlook and back<br><span class="muted-cell">~1,800 ft</span></td>
-        <td><strong>~7 mi round trip &middot; 2.5 to 3 hrs</strong><br>Swiftcurrent to Grinnell Lake and back, along the lakeshores<br><span class="muted-cell">~200 ft</span></td>
-        <td>~3 hrs each way via US-2 around the park, with the Sun Road closed<br><span class="muted-cell hk-status">Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/manyglacier.htm" target="_blank" rel="noopener">Many Glacier &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Swiftcurrent trailhead &middot; 4,900 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>2°C</strong> <span class="muted-cell">feels -3°C &middot; wind 8 mph</span></div><div class="hk-now"><span class="muted-cell">Glacier overlook &middot; 6,500 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>-1°C</strong> <span class="muted-cell">feels -10°C &middot; wind 24 mph</span></div><div class="section-label hk-label" title="Glacier overlook">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-4°C <span class="muted-cell">2%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 10°C/0°C <span class="muted-cell">2%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Snow showers">🌨️</span> 11°C/-1°C <span class="muted-cell">9% &middot; 0.3 in snow</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 5°C/-3°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/-1°C <span class="muted-cell">17%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Grinnell Glacier</strong>
+          <div class="hk-sub">&#128663; From Whitefish: 133 mi · ~3 hrs, via US-2 around the park</div>
+          <p class="hk-status">Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/manyglacier.htm" target="_blank" rel="noopener">Many Glacier &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>~11 mi round trip &middot; 6 to 7 hrs</strong> <span class="muted-cell">&middot; ~1,800 ft</span><br>Swiftcurrent to the Grinnell Glacier overlook and back</div><div class="hk-opt"><span class="section-label">Short</span> <strong>~7 mi round trip &middot; 2.5 to 3 hrs</strong> <span class="muted-cell">&middot; ~200 ft</span><br>Swiftcurrent to Grinnell Lake and back, along the lakeshores</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Swiftcurrent trailhead, 4,900 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>2°C</strong> <span class="muted-cell">feels -3°C &middot; wind 8 mph</span></div><div class="hk-now"><span class="hk-pt">Glacier overlook, 6,500 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>-1°C</strong> <span class="muted-cell">feels -10°C &middot; wind 24 mph</span></div></div><div><div class="section-label hk-label">Trip days at Glacier overlook</div><div class="hk-days"><div title="Overcast, 2% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>7°/-4°<br><span class="muted-cell">2%</span></div><div title="Overcast, 2% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>10°/0°<br><span class="muted-cell">2%</span></div><div title="Snow showers, 9% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌨️</span>11°/-1°<br><span class="muted-cell">9%<br>0.3" snow</span></div><div title="Overcast, 9% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>5°/-3°<br><span class="muted-cell">9%</span></div><div title="Overcast, 17% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>8°/-1°<br><span class="muted-cell">17%</span></div></div></div></td>
       </tr>
       <tr class="hk-check">
-        <td class="hk-name"><strong>Dawson Pass</strong><br><span class="pill partial">Check first</span></td>
-        <td class="hk-from">93 mi · ~2 hrs to Two Medicine</td>
-        <td><strong>~13 mi round trip &middot; 7 to 8 hrs</strong><br>Two Medicine Lake to Dawson Pass and back<br><span class="muted-cell">~2,500 ft</span></td>
-        <td><strong>~8.5 mi round trip &middot; ~4 hrs</strong><br>Two Medicine Lake to No Name Lake and back<br><span class="muted-cell">~700 ft</span></td>
-        <td>~2 hrs to Two Medicine<br><span class="muted-cell hk-status">The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/twomedicine.htm" target="_blank" rel="noopener">Two Medicine &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Two Medicine trailhead &middot; 5,200 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>1°C</strong> <span class="muted-cell">feels -4°C &middot; wind 12 mph &middot; 3 in snow on the ground</span></div><div class="hk-now"><span class="muted-cell">Dawson Pass &middot; 7,598 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>-2°C</strong> <span class="muted-cell">feels -10°C &middot; wind 21 mph &middot; 11 in snow on the ground</span></div><div class="section-label hk-label" title="Dawson Pass">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 3°C/-6°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/-5°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 10°C/-3°C <span class="muted-cell">7%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 4°C/-6°C <span class="muted-cell">7%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 8°C/-4°C <span class="muted-cell">20%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Dawson Pass</strong> <span class="pill partial">Check first</span>
+          <div class="hk-sub">&#128663; From Whitefish: 93 mi · ~2 hrs to Two Medicine</div>
+          <p class="hk-status">The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/twomedicine.htm" target="_blank" rel="noopener">Two Medicine &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>~13 mi round trip &middot; 7 to 8 hrs</strong> <span class="muted-cell">&middot; ~2,500 ft</span><br>Two Medicine Lake to Dawson Pass and back</div><div class="hk-opt"><span class="section-label">Short</span> <strong>~8.5 mi round trip &middot; ~4 hrs</strong> <span class="muted-cell">&middot; ~700 ft</span><br>Two Medicine Lake to No Name Lake and back</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Two Medicine trailhead, 5,200 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>1°C</strong> <span class="muted-cell">feels -4°C &middot; wind 12 mph &middot; 3 in snow down</span></div><div class="hk-now"><span class="hk-pt">Dawson Pass, 7,598 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>-2°C</strong> <span class="muted-cell">feels -10°C &middot; wind 21 mph &middot; 11 in snow down</span></div></div><div><div class="section-label hk-label">Trip days at Dawson Pass</div><div class="hk-days"><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>3°/-6°<br><span class="muted-cell">0%</span></div><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>8°/-5°<br><span class="muted-cell">0%</span></div><div title="Drizzle, 7% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌦️</span>10°/-3°<br><span class="muted-cell">7%</span></div><div title="Overcast, 7% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>4°/-6°<br><span class="muted-cell">7%</span></div><div title="Overcast, 20% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>8°/-4°<br><span class="muted-cell">20%</span></div></div></div></td>
       </tr>
       <tr>
-        <td class="hk-name"><strong>Avalanche Lake + Trail of the Cedars</strong></td>
-        <td class="hk-from">42 mi · ~1 hr 10 min</td>
-        <td><strong>4.6 mi round trip &middot; ~3 hrs</strong><br>Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls<br><span class="muted-cell">~500 ft</span></td>
-        <td><strong>~1 mi loop &middot; ~30 min</strong><br>Trail of the Cedars loop only, past Avalanche Gorge<br><span class="muted-cell">Flat, boardwalk</span></td>
-        <td>West Glacier, then the Sun Road to Avalanche Creek<br><span class="muted-cell hk-status">Open: the Sun Road is open to Avalanche Creek, where both start.</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" target="_blank" rel="noopener">Lake McDonald area &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Avalanche Creek &middot; 3,350 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>5°C</strong> <span class="muted-cell">feels 0°C &middot; wind 11 mph</span></div><div class="hk-now"><span class="muted-cell">Avalanche Lake &middot; 3,905 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>4°C</strong> <span class="muted-cell">feels -1°C &middot; wind 11 mph</span></div><div class="section-label hk-label" title="Avalanche Lake">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 14°C/3°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 15°C/4°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 17°C/5°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 10°C/2°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 13°C/3°C <span class="muted-cell">18%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Avalanche Lake + Trail of the Cedars</strong>
+          <div class="hk-sub">&#128663; From Whitefish: 42 mi · ~1 hr 10 min</div>
+          <p class="hk-status">Open: the Sun Road is open to Avalanche Creek, where both start.</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" target="_blank" rel="noopener">Lake McDonald area &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>4.6 mi round trip &middot; ~3 hrs</strong> <span class="muted-cell">&middot; ~500 ft</span><br>Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls</div><div class="hk-opt"><span class="section-label">Short</span> <strong>~1 mi loop &middot; ~30 min</strong> <span class="muted-cell">&middot; Flat, boardwalk</span><br>Trail of the Cedars loop only, past Avalanche Gorge</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Avalanche Creek, 3,350 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>5°C</strong> <span class="muted-cell">feels 0°C &middot; wind 11 mph</span></div><div class="hk-now"><span class="hk-pt">Avalanche Lake, 3,905 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>4°C</strong> <span class="muted-cell">feels -1°C &middot; wind 11 mph</span></div></div><div><div class="section-label hk-label">Trip days at Avalanche Lake</div><div class="hk-days"><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>14°/3°<br><span class="muted-cell">0%</span></div><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>15°/4°<br><span class="muted-cell">0%</span></div><div title="Drizzle, 9% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌦️</span>17°/5°<br><span class="muted-cell">9%</span></div><div title="Overcast, 9% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>10°/2°<br><span class="muted-cell">9%</span></div><div title="Overcast, 18% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>13°/3°<br><span class="muted-cell">18%</span></div></div></div></td>
       </tr>
       <tr>
-        <td class="hk-name"><strong>Lake McDonald</strong></td>
-        <td class="hk-from">29 mi · ~45 min to Apgar</td>
-        <td><strong>~3 mi loop &middot; ~1.5 hrs</strong><br>Johns Lake loop past McDonald Falls and Sacred Dancing Cascade<br><span class="muted-cell">~200 ft</span></td>
-        <td><strong>1.1 mi &middot; under 1 hr</strong><br>Rocky Point from Fish Creek, a lakeshore viewpoint (good at sunrise)<br><span class="muted-cell">~200 ft</span></td>
-        <td>West Glacier, then along the lake<br><span class="muted-cell hk-status">Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" target="_blank" rel="noopener">Lake McDonald area &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Apgar, lake level &middot; 3,160 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>2°C</strong> <span class="muted-cell">feels -1°C &middot; wind 4 mph</span></div><div class="hk-now"><span class="muted-cell">Johns Lake &middot; 3,300 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>3°C</strong> <span class="muted-cell">feels -1°C &middot; wind 5 mph</span></div><div class="section-label hk-label" title="Johns Lake">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 15°C/5°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 16°C/4°C <span class="muted-cell">0%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 19°C/5°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 12°C/2°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 14°C/4°C <span class="muted-cell">17%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Lake McDonald</strong>
+          <div class="hk-sub">&#128663; From Whitefish: 29 mi · ~45 min to Apgar</div>
+          <p class="hk-status">Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" target="_blank" rel="noopener">Lake McDonald area &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" target="_blank" rel="noopener">Trail status &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>~3 mi loop &middot; ~1.5 hrs</strong> <span class="muted-cell">&middot; ~200 ft</span><br>Johns Lake loop past McDonald Falls and Sacred Dancing Cascade</div><div class="hk-opt"><span class="section-label">Short</span> <strong>1.1 mi &middot; under 1 hr</strong> <span class="muted-cell">&middot; ~200 ft</span><br>Rocky Point from Fish Creek, a lakeshore viewpoint (good at sunrise)</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Apgar, lake level, 3,160 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>2°C</strong> <span class="muted-cell">feels -1°C &middot; wind 4 mph</span></div><div class="hk-now"><span class="hk-pt">Johns Lake, 3,300 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>3°C</strong> <span class="muted-cell">feels -1°C &middot; wind 5 mph</span></div></div><div><div class="section-label hk-label">Trip days at Johns Lake</div><div class="hk-days"><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>15°/5°<br><span class="muted-cell">0%</span></div><div title="Overcast, 0% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>16°/4°<br><span class="muted-cell">0%</span></div><div title="Drizzle, 9% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌦️</span>19°/5°<br><span class="muted-cell">9%</span></div><div title="Overcast, 9% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>12°/2°<br><span class="muted-cell">9%</span></div><div title="Overcast, 17% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>14°/4°<br><span class="muted-cell">17%</span></div></div></div></td>
       </tr>
       <tr class="hk-no">
-        <td class="hk-name"><strong>Drive Going-to-the-Sun Road to Logan Pass</strong><br><span class="pill gone">Not doable</span></td>
-        <td class="hk-from">58 mi · ~1 hr 50 min</td>
-        <td><strong>~32 mi each way &middot; ~1.5 hrs each way, 4 to 5 hrs with stops</strong><br>West Glacier up Lake McDonald and the Garden Wall to Logan Pass and back, with stops<br><span class="muted-cell">~3,400 ft climb by car</span></td>
-        <td><strong>~16 mi each way &middot; ~30 min each way</strong><br>West Glacier along Lake McDonald to Avalanche Creek, the open stretch<br><span class="muted-cell">Flat, along the lake</span></td>
-        <td>~40 min to West Glacier<br><span class="muted-cell hk-status">Not doable to the top: snow closed the road from Avalanche Creek to Logan Pass on Oct 9. The lake stretch to Avalanche Creek is still open.</span></td>
-        <td class="hk-nps"><a href="https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" target="_blank" rel="noopener">Sun Road status &rarr;</a><br><a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">Road conditions &rarr;</a></td>
-        <td class="hk-cond"><div class="section-label hk-label">Now</div><div class="hk-now"><span class="muted-cell">Avalanche Creek &middot; 3,350 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>5°C</strong> <span class="muted-cell">feels 0°C &middot; wind 11 mph</span></div><div class="hk-now"><span class="muted-cell">Logan Pass &middot; 6,646 ft</span><br><span class="wx-icon" title="Clear">🌙</span> <strong>-3°C</strong> <span class="muted-cell">feels -8°C &middot; wind 11 mph &middot; 5 in snow on the ground</span></div><div class="section-label hk-label" title="Logan Pass">Trip days up top</div><ul class="hk-days"><li><span class="hk-day">Thu</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-4°C <span class="muted-cell">1%</span></li><li><span class="hk-day">Fri</span> <span class="wx-icon" title="Overcast">☁️</span> 9°C/-1°C <span class="muted-cell">1%</span></li><li><span class="hk-day">Sat</span> <span class="wx-icon" title="Drizzle">🌦️</span> 11°C/-1°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Sun</span> <span class="wx-icon" title="Overcast">☁️</span> 4°C/-3°C <span class="muted-cell">9%</span></li><li><span class="hk-day">Mon</span> <span class="wx-icon" title="Overcast">☁️</span> 7°C/-1°C <span class="muted-cell">18%</span></li></ul></td>
+        <td class="hk-name">
+          <strong class="hk-title">Drive Going-to-the-Sun Road to Logan Pass</strong> <span class="pill gone">Not doable</span>
+          <div class="hk-sub">&#128663; From Whitefish: 58 mi · ~1 hr 50 min</div>
+          <p class="hk-status">Not doable to the top: snow closed the road from Avalanche Creek to Logan Pass on Oct 9. The lake stretch to Avalanche Creek is still open.</p>
+          <div class="hk-foot"><a href="https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" target="_blank" rel="noopener">Sun Road status &rarr;</a><a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">Road conditions &rarr;</a></div>
+        </td>
+        <td class="hk-routes"><div class="hk-opt"><span class="section-label">Full</span> <strong>~32 mi each way &middot; ~1.5 hrs each way, 4 to 5 hrs with stops</strong> <span class="muted-cell">&middot; ~3,400 ft climb by car</span><br>West Glacier up Lake McDonald and the Garden Wall to Logan Pass and back, with stops</div><div class="hk-opt"><span class="section-label">Short</span> <strong>~16 mi each way &middot; ~30 min each way</strong> <span class="muted-cell">&middot; Flat, along the lake</span><br>West Glacier along Lake McDonald to Avalanche Creek, the open stretch</div></td>
+        <td class="hk-cond"><div><div class="section-label hk-label">Now</div><div class="hk-now"><span class="hk-pt">Avalanche Creek, 3,350 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>5°C</strong> <span class="muted-cell">feels 0°C &middot; wind 11 mph</span></div><div class="hk-now"><span class="hk-pt">Logan Pass, 6,646 ft</span> <span class="wx-icon" title="Clear">🌙</span> <strong>-3°C</strong> <span class="muted-cell">feels -8°C &middot; wind 11 mph &middot; 5 in snow down</span></div></div><div><div class="section-label hk-label">Trip days at Logan Pass</div><div class="hk-days"><div title="Overcast, 1% chance of rain/snow"><span class="hk-day">Thu</span><span class="wx-icon">☁️</span>7°/-4°<br><span class="muted-cell">1%</span></div><div title="Overcast, 1% chance of rain/snow"><span class="hk-day">Fri</span><span class="wx-icon">☁️</span>9°/-1°<br><span class="muted-cell">1%</span></div><div title="Drizzle, 9% chance of rain/snow"><span class="hk-day">Sat</span><span class="wx-icon">🌦️</span>11°/-1°<br><span class="muted-cell">9%</span></div><div title="Overcast, 9% chance of rain/snow"><span class="hk-day">Sun</span><span class="wx-icon">☁️</span>4°/-3°<br><span class="muted-cell">9%</span></div><div title="Overcast, 18% chance of rain/snow"><span class="hk-day">Mon</span><span class="wx-icon">☁️</span>7°/-1°<br><span class="muted-cell">18%</span></div></div></div></td>
       </tr>
     </table>
     </div>
@@ -895,9 +910,9 @@
         <div class="detail">Back in Whitefish around 10:15, or eat in West Glacier.</div>
       </li>
       <li>
-        <span class="when">Afternoon</span>
+        <span class="when">12:00 to 4:00 PM</span>
         <div class="what"><strong>Fly fishing on the Flathead</strong></div>
-        <div class="detail">Everyone fishing needs a Montana licence (nonresident, buy online at fwp.mt.gov). Fish until the light goes, ~6:45 PM.</div>
+        <div class="detail">Everyone fishing needs a Montana licence (nonresident, buy online at fwp.mt.gov).</div>
       </li>
       <li>
         <span class="when">Evening</span>
@@ -913,14 +928,14 @@
   </section>
 
   <section class="card">
-    <h2>Day 4 · Sun 10/18</h2>
-    <div class="subtitle">Float the Middle Fork.</div>
+    <h2>Day 4 · Sun 10/18 (Hike day)</h2>
+    <div class="subtitle">A day hike in the park.</div>
     
     <ol class="timeline">
       <li>
         <span class="when">Day</span>
-        <div class="what"><strong>Float the Middle Fork, four boats</strong></div>
-        <div class="detail">Alternative: Bison Range or breweries in town.</div>
+        <div class="what"><strong>Hike day: pick one from Hikes and the Sun Road above</strong></div>
+        <div class="detail">Open right now: Grinnell Glacier (the big one, ~3 hrs&#39; drive each way), Lake McDonald, or Avalanche Lake if we skip it Friday. Dawson Pass needs a road walk. Start by 9 AM to be off the trail before the ~6:45 PM sunset.</div>
       </li>
       <li>
         <span class="when">Evening</span>
@@ -932,7 +947,7 @@
     <ul class="ideas-list">
       <li class="idea-empty">No ideas yet &mdash; add the first one below.</li>
     </ul>
-    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+4+%C2%B7+Sun+10%2F18&amp;body=**Day%3A**+Day+4+%C2%B7+Sun+10%2F18%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
+    <a class="add-idea-link" href="https://github.com/danielluzhu/trip-oct-2026/issues/new?labels=idea&amp;title=Idea%3A+Day+4+%C2%B7+Sun+10%2F18+%28Hike+day%29&amp;body=**Day%3A**+Day+4+%C2%B7+Sun+10%2F18+%28Hike+day%29%0A%0A**Idea%3A**%0A%3C%21--+what+do+you+want+to+do%3F+--%3E%0A" target="_blank" rel="noopener">+ Suggest an idea on GitHub &rarr;</a>
   </section>
 
   <section class="card">
