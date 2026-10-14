@@ -514,6 +514,13 @@
   table.hikes td:first-child { width: 11%; }
   table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
   table.hikes td.hk-cond { width: 24%; }
+  /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
+  table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
+  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
+  table.hikes tr.hk-check td:first-child { box-shadow: inset 3px 0 0 #b8842a; }
+  table.hikes tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
+  .hk-name .pill { margin-top: .3rem; }
+  .hk-warn { margin: .35rem 0 0; padding: .45rem .7rem; border-radius: 10px; background: rgba(190,60,60,.1); color: #c25555; font-size: .9rem; }
   .hk-label { margin: 0 0 .2rem; }
   .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
   ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }

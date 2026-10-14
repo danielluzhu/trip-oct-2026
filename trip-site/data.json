@@ -566,7 +566,8 @@
           "gain": "~1,000 ft",
           "time": "3.5 to 4 hrs"
         },
-        "drive": "~1 hr to West Glacier, then the Sun Road",
+        "doable": "no",
+      "drive": "~1 hr to West Glacier, then the Sun Road",
         "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.",
         "points": [
           {
@@ -628,7 +629,8 @@
           "gain": "~700 ft",
           "time": "~4 hrs"
         },
-        "drive": "~1 hr 45 min to Two Medicine",
+        "doable": "check",
+      "drive": "~1 hr 45 min to Two Medicine",
         "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).",
         "points": [
           {
@@ -695,22 +697,32 @@
         ]
       },
       {
-        "day": "Day 3 · Sat 10/17 (The big hike)",
-        "headline": "Apgar Lookout, then Lake McDonald.",
+        "day": "Day 3 · Sat 10/17 (Sunrise hike, fly fishing)",
+        "headline": "Sunrise from Apgar Lookout, then an afternoon fly fishing.",
         "blocks": [
           {
-            "when": "7:30 AM",
-            "what": "Leave for West Glacier",
-            "detail": "39 min."
+            "when": "5:15 AM",
+            "what": "Leave for the Apgar Lookout trailhead",
+            "detail": "39 min to West Glacier. Headlamps: it's dark until ~7:30."
           },
           {
-            "when": "Day",
-            "what": "Apgar Lookout, 7.2 mi, 1,800 ft",
-            "detail": "Easier option: Johns Lake loop (3 mi) or Rocky Point (1.1 mi)."
+            "when": "6:00 to 9:30 AM",
+            "what": "Sunrise hike: Apgar Lookout, 7.2 mi, 1,800 ft",
+            "detail": "~2 hrs up in the dark to reach the lookout for sunrise (~8 AM) over Lake McDonald, then down by 9:30. Cold at dawn: warm layers, gloves, bear spray. Easier option: Rocky Point (1.1 mi) on the lakeshore for sunrise."
+          },
+          {
+            "when": "Late morning",
+            "what": "Breakfast and a rest",
+            "detail": "Back in Whitefish around 10:15, or eat in West Glacier."
+          },
+          {
+            "when": "Afternoon",
+            "what": "Fly fishing on the Flathead",
+            "detail": "Everyone fishing needs a Montana licence (nonresident, buy online at fwp.mt.gov). Fish until the light goes, ~6:45 PM."
           },
           {
             "when": "Evening",
-            "what": "Lake McDonald, then dinner in Whitefish",
+            "what": "Dinner in Whitefish, early night",
             "detail": ""
           }
         ]

@@ -11,7 +11,7 @@ const PARTY = { nyc: 3, sf: 2, seattle: 1 };
 const DAYS = [
   "Day 1 · Thu 10/15 (Arrival)",
   "Day 2 · Fri 10/16",
-  "Day 3 · Sat 10/17 (The big hike)",
+  "Day 3 · Sat 10/17 (Sunrise hike, fly fishing)",
   "Day 4 · Sun 10/18",
   "Day 5 · Mon 10/19 (Exit)",
 ];
@@ -610,6 +610,13 @@ const sharedStyle = /* css */ `
   table.hikes td:first-child { width: 11%; }
   table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
   table.hikes td.hk-cond { width: 24%; }
+  /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
+  table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
+  table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
+  table.hikes tr.hk-check td:first-child { box-shadow: inset 3px 0 0 #b8842a; }
+  table.hikes tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
+  .hk-name .pill { margin-top: .3rem; }
+  .hk-warn { margin: .35rem 0 0; padding: .45rem .7rem; border-radius: 10px; background: rgba(190,60,60,.1); color: #c25555; font-size: .9rem; }
   .hk-label { margin: 0 0 .2rem; }
   .hk-label + .hk-now, .hk-now + .hk-now { margin-bottom: .35rem; }
   ul.hk-days { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
@@ -1195,17 +1202,22 @@ async function itineraryPage() {
       <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.${wxAsOf ? ` Conditions updated ${escapeHtml(wxAsOf)}.` : ""}</div>
       ${STATIC ? "" : `<form method="POST" action="/hikes/refresh"><button type="submit" class="calc-btn">&#8635; Refresh conditions</button></form>`}
     </div>
+    ${(() => {
+      const no = plan.hikes.filter((h: any) => h.doable === "no").map((h: any) => h.name);
+      return no.length ? `<div class="hk-warn">&#9888; Not doable right now: <strong>${no.map(escapeHtml).join(", ")}</strong>. See the red row${no.length > 1 ? "s" : ""} below.</div>` : "";
+    })()}
     <div class="table-scroll">
     <table class="hikes">
       <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
-          return `<tr>
-        <td><strong>${escapeHtml(h.name)}</strong></td>
+          const flag = h.doable === "no" ? `<span class="pill gone">Not doable</span>` : h.doable === "check" ? `<span class="pill partial">Check first</span>` : "";
+          return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""}>
+        <td class="hk-name"><strong>${escapeHtml(h.name)}</strong>${flag ? `<br>${flag}` : ""}</td>
         <td>${opt(h.full)}</td>
         <td>${opt(h.short)}</td>
-        <td>${escapeHtml(h.drive)}<br><span class="muted-cell">${escapeHtml(h.status)}</span></td>
+        <td>${escapeHtml(h.drive)}<br><span class="muted-cell hk-status">${escapeHtml(h.status)}</span></td>
         <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })
