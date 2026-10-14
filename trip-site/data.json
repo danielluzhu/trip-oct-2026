@@ -646,6 +646,38 @@
             "ft": 7598
           }
         ]
+      },
+      {
+        "name": "Drive Going-to-the-Sun Road to Logan Pass",
+        "doable": "no",
+        "full": {
+          "route": "West Glacier up Lake McDonald and the Garden Wall to Logan Pass and back, with stops",
+          "length": "~32 mi each way",
+          "gain": "~3,400 ft climb by car",
+          "time": "~1.5 hrs each way, 4 to 5 hrs with stops"
+        },
+        "short": {
+          "route": "West Glacier along Lake McDonald to Avalanche Creek, the open stretch",
+          "length": "~16 mi each way",
+          "gain": "Flat, along the lake",
+          "time": "~30 min each way"
+        },
+        "drive": "~40 min to West Glacier",
+        "status": "Not doable to the top: snow closed the road from Avalanche Creek to Logan Pass on Oct 9. The lake stretch to Avalanche Creek is still open.",
+        "points": [
+          {
+            "name": "Avalanche Creek",
+            "lat": 48.6797,
+            "lon": -113.8196,
+            "ft": 3350
+          },
+          {
+            "name": "Logan Pass",
+            "lat": 48.6966,
+            "lon": -113.7183,
+            "ft": 6646
+          }
+        ]
       }
     ],
     "days": [

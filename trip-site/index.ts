@@ -1197,7 +1197,7 @@ async function itineraryPage() {
   const hikesBlock = plan.hikes?.length
     ? `
   <section class="card" id="hikes">
-    <h2>The three big hikes</h2>
+    <h2>The big hikes and the Sun Road</h2>
     <div class="wx-head">
       <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.${wxAsOf ? ` Conditions updated ${escapeHtml(wxAsOf)}.` : ""}</div>
       ${STATIC ? "" : `<form method="POST" action="/hikes/refresh"><button type="submit" class="calc-btn">&#8635; Refresh conditions</button></form>`}
@@ -1208,7 +1208,7 @@ async function itineraryPage() {
     })()}
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike</th><th>Full hike</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
