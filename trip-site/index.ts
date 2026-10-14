@@ -604,12 +604,13 @@ const sharedStyle = /* css */ `
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 820px; }
+  table.hikes { min-width: 940px; }
   #hikes { scroll-margin-top: 4.5rem; }
   table.hikes td { vertical-align: top; }
   table.hikes td:first-child { width: 11%; }
   table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
   table.hikes td.hk-cond { width: 24%; }
+  table.hikes td.hk-nps { white-space: nowrap; font-size: .9rem; }
   /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
   table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
   table.hikes tr.hk-no td:first-child { box-shadow: inset 3px 0 0 #c25555; color: var(--text); }
@@ -1197,7 +1198,7 @@ async function itineraryPage() {
   const hikesBlock = plan.hikes?.length
     ? `
   <section class="card" id="hikes">
-    <h2>The big hikes and the Sun Road</h2>
+    <h2>Hikes and the Sun Road</h2>
     <div class="wx-head">
       <div class="subtitle">Not yet on a day. Check the park's road and trail status before committing to one.${wxAsOf ? ` Conditions updated ${escapeHtml(wxAsOf)}.` : ""}</div>
       ${STATIC ? "" : `<form method="POST" action="/hikes/refresh"><button type="submit" class="calc-btn">&#8635; Refresh conditions</button></form>`}
@@ -1208,7 +1209,7 @@ async function itineraryPage() {
     })()}
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike or drive</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>nps.gov/glac</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
@@ -1218,6 +1219,7 @@ async function itineraryPage() {
         <td>${opt(h.full)}</td>
         <td>${opt(h.short)}</td>
         <td>${escapeHtml(h.drive)}<br><span class="muted-cell hk-status">${escapeHtml(h.status)}</span></td>
+        <td class="hk-nps">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("<br>")}</td>
         <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })

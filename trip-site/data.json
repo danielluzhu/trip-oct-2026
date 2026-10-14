@@ -554,6 +554,10 @@
     "hikes": [
       {
         "name": "Highline Trail",
+        "nps": [
+          { "label": "Sun Road status", "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" },
+          { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
+        ],
         "full": {
           "route": "Logan Pass to The Loop, one way (needs a car at each end)",
           "length": "11.8 mi",
@@ -586,6 +590,10 @@
       },
       {
         "name": "Grinnell Glacier",
+        "nps": [
+          { "label": "Many Glacier", "url": "https://www.nps.gov/glac/planyourvisit/manyglacier.htm" },
+          { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
+        ],
         "full": {
           "route": "Swiftcurrent to the Grinnell Glacier overlook and back",
           "length": "~11 mi round trip",
@@ -617,6 +625,10 @@
       },
       {
         "name": "Dawson Pass",
+        "nps": [
+          { "label": "Two Medicine", "url": "https://www.nps.gov/glac/planyourvisit/twomedicine.htm" },
+          { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
+        ],
         "full": {
           "route": "Two Medicine Lake to Dawson Pass and back",
           "length": "~13 mi round trip",
@@ -648,7 +660,61 @@
         ]
       },
       {
+        "name": "Avalanche Lake + Trail of the Cedars",
+        "nps": [
+          { "label": "Lake McDonald area", "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" },
+          { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
+        ],
+        "full": {
+          "route": "Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls",
+          "length": "4.6 mi round trip",
+          "gain": "~500 ft",
+          "time": "~3 hrs"
+        },
+        "short": {
+          "route": "Trail of the Cedars loop only, past Avalanche Gorge",
+          "length": "~1 mi loop",
+          "gain": "Flat, boardwalk",
+          "time": "~30 min"
+        },
+        "drive": "~1 hr: West Glacier, then the Sun Road to Avalanche Creek",
+        "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
+        "points": [
+          { "name": "Avalanche Creek", "lat": 48.6797, "lon": -113.8196, "ft": 3350 },
+          { "name": "Avalanche Lake", "lat": 48.6563, "lon": -113.7866, "ft": 3905 }
+        ]
+      },
+      {
+        "name": "Lake McDonald",
+        "nps": [
+          { "label": "Lake McDonald area", "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" },
+          { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
+        ],
+        "full": {
+          "route": "Johns Lake loop past McDonald Falls and Sacred Dancing Cascade",
+          "length": "~3 mi loop",
+          "gain": "~200 ft",
+          "time": "~1.5 hrs"
+        },
+        "short": {
+          "route": "Rocky Point from Fish Creek, a lakeshore viewpoint (good at sunrise)",
+          "length": "1.1 mi",
+          "gain": "~200 ft",
+          "time": "under 1 hr"
+        },
+        "drive": "~45 min: West Glacier, then along the lake",
+        "status": "Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.",
+        "points": [
+          { "name": "Apgar, lake level", "lat": 48.5285, "lon": -113.987, "ft": 3160 },
+          { "name": "Johns Lake", "lat": 48.6265, "lon": -113.8595, "ft": 3300 }
+        ]
+      },
+      {
         "name": "Drive Going-to-the-Sun Road to Logan Pass",
+        "nps": [
+          { "label": "Sun Road status", "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" },
+          { "label": "Road conditions", "url": "https://www.nps.gov/glac/planyourvisit/conditions.htm" }
+        ],
         "doable": "no",
         "full": {
           "route": "West Glacier up Lake McDonald and the Garden Wall to Logan Pass and back, with stops",
