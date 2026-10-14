@@ -554,6 +554,7 @@
     "hikes": [
       {
         "name": "Highline Trail",
+        "fromWhitefish": "58 mi · ~1 hr 50 min to Logan Pass",
         "nps": [
           { "label": "Sun Road status", "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" },
           { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
@@ -590,6 +591,7 @@
       },
       {
         "name": "Grinnell Glacier",
+        "fromWhitefish": "133 mi · ~3 hrs, via US-2 around the park",
         "nps": [
           { "label": "Many Glacier", "url": "https://www.nps.gov/glac/planyourvisit/manyglacier.htm" },
           { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
@@ -625,6 +627,7 @@
       },
       {
         "name": "Dawson Pass",
+        "fromWhitefish": "93 mi · ~2 hrs to Two Medicine",
         "nps": [
           { "label": "Two Medicine", "url": "https://www.nps.gov/glac/planyourvisit/twomedicine.htm" },
           { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
@@ -642,7 +645,7 @@
           "time": "~4 hrs"
         },
         "doable": "check",
-      "drive": "~1 hr 45 min to Two Medicine",
+      "drive": "~2 hrs to Two Medicine",
         "status": "The Two Medicine Road is closed at Running Eagle Falls for construction (since Sept 8), so either version needs a road walk to the trailhead. Check with the park (406-888-7800).",
         "points": [
           {
@@ -661,6 +664,7 @@
       },
       {
         "name": "Avalanche Lake + Trail of the Cedars",
+        "fromWhitefish": "42 mi · ~1 hr 10 min",
         "nps": [
           { "label": "Lake McDonald area", "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" },
           { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
@@ -677,7 +681,7 @@
           "gain": "Flat, boardwalk",
           "time": "~30 min"
         },
-        "drive": "~1 hr: West Glacier, then the Sun Road to Avalanche Creek",
+        "drive": "West Glacier, then the Sun Road to Avalanche Creek",
         "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
         "points": [
           { "name": "Avalanche Creek", "lat": 48.6797, "lon": -113.8196, "ft": 3350 },
@@ -686,6 +690,7 @@
       },
       {
         "name": "Lake McDonald",
+        "fromWhitefish": "29 mi · ~45 min to Apgar",
         "nps": [
           { "label": "Lake McDonald area", "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm" },
           { "label": "Trail status", "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm" }
@@ -702,7 +707,7 @@
           "gain": "~200 ft",
           "time": "under 1 hr"
         },
-        "drive": "~45 min: West Glacier, then along the lake",
+        "drive": "West Glacier, then along the lake",
         "status": "Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.",
         "points": [
           { "name": "Apgar, lake level", "lat": 48.5285, "lon": -113.987, "ft": 3160 },
@@ -711,6 +716,7 @@
       },
       {
         "name": "Drive Going-to-the-Sun Road to Logan Pass",
+        "fromWhitefish": "58 mi · ~1 hr 50 min",
         "nps": [
           { "label": "Sun Road status", "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm" },
           { "label": "Road conditions", "url": "https://www.nps.gov/glac/planyourvisit/conditions.htm" }

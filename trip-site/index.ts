@@ -604,12 +604,13 @@ const sharedStyle = /* css */ `
   .hc-key.hc-wind { border-color: var(--viz-wind); }
   .wx-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: .6rem 0 1rem; padding-top: .4rem; border-top: 0; gap: 1rem 2rem; }
   .wx-summary .total-big { font-size: clamp(1.4rem, 3.6vw, 1.9rem); }
-  table.hikes { min-width: 940px; }
+  table.hikes { min-width: 1040px; }
   #hikes { scroll-margin-top: 4.5rem; }
   table.hikes td { vertical-align: top; }
   table.hikes td:first-child { width: 11%; }
   table.hikes td:nth-child(2), table.hikes td:nth-child(3) { width: 20%; }
   table.hikes td.hk-cond { width: 24%; }
+  table.hikes td.hk-from { width: 10%; }
   table.hikes td.hk-nps { white-space: nowrap; font-size: .9rem; }
   /* A hike that can't happen right now: red rail and muted text; a maybe gets amber. */
   table.hikes tr.hk-no td { background: rgba(190,60,60,.07); color: var(--muted); }
@@ -1209,13 +1210,14 @@ async function itineraryPage() {
     })()}
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike or drive</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>nps.gov/glac</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>From Whitefish</th><th>Full version</th><th>Short option</th><th>Getting there</th><th>nps.gov/glac</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (o: any) => `<strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong><br>${escapeHtml(o.route)}<br><span class="muted-cell">${escapeHtml(o.gain)}</span>`;
           const flag = h.doable === "no" ? `<span class="pill gone">Not doable</span>` : h.doable === "check" ? `<span class="pill partial">Check first</span>` : "";
           return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""}>
         <td class="hk-name"><strong>${escapeHtml(h.name)}</strong>${flag ? `<br>${flag}` : ""}</td>
+        <td class="hk-from">${escapeHtml(h.fromWhitefish ?? "")}</td>
         <td>${opt(h.full)}</td>
         <td>${opt(h.short)}</td>
         <td>${escapeHtml(h.drive)}<br><span class="muted-cell hk-status">${escapeHtml(h.status)}</span></td>
@@ -1226,7 +1228,7 @@ async function itineraryPage() {
         .join("\n      ")}
     </table>
     </div>
-    <div class="calc-note">Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
+    <div class="calc-note">Distances are by road from the house in Whitefish (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>`
     : "";
 
