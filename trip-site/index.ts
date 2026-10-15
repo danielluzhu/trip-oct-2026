@@ -641,6 +641,15 @@ const sharedStyle = /* css */ `
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
+  /* ---------- house guide ---------- */
+  .hg-codes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: .2rem 0 .6rem; }
+  .hg-code { background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 10px; padding: .55rem .75rem; }
+  .hg-code .section-label { display: block; margin: 0 0 .1rem; }
+  .hg-code strong { font-size: 1.6rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+  .hg-hidden { display: block; background: var(--bg-alt); border-radius: 10px; padding: .6rem .8rem; color: var(--muted); }
+  .hg-list { margin: 0 0 .9rem; padding-left: 1.2rem; }
+  .hg-list li { margin: .15rem 0; }
+  #house-guide .hk-label { margin-top: .9rem; }
   /* ---------- housing areas ---------- */
   .area {
     display: grid;
@@ -1288,6 +1297,47 @@ function stayTotal(a: any, nights = housing.nights, nightly = a.nightly.typical)
   return sub * (1 + costs.feePct + a.taxPct);
 }
 
+// The property manager's house guide. Door codes live in access.json, which is
+// git-ignored, and only the trip server shows them: the repo and the Pages
+// build are public.
+const ACCESS_PATH = `${import.meta.dir}/access.json`;
+
+function loadAccess(): { garage: string; interior: string; lockbox: string; guideUrl: string } | null {
+  if (STATIC) return null;
+  try {
+    return JSON.parse(require("fs").readFileSync(ACCESS_PATH, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function guideBlock() {
+  const g = housing.guide;
+  if (!g) return "";
+  const a = loadAccess();
+  const code = (label: string, v: string) => `<div class="hg-code"><span class="section-label">${label}</span><strong>${escapeHtml(v)}</strong></div>`;
+  const codes = a
+    ? `<div class="hg-codes">${code("Garage keypad, then Enter", a.garage)}${code("Inside door", a.interior)}${code("Backup lockbox", a.lockbox)}</div>`
+    : `<div class="hg-codes hg-hidden">Door codes aren't on the public site. Get them from Dan or the guide link Vacay texted him.</div>`;
+  return `
+  <section class="card" id="house-guide">
+    <h2>House guide</h2>
+    <div class="subtitle">${escapeHtml(g.name)}, managed by ${escapeHtml(g.manager)}. From their guest guide${a ? `: <a href="${escapeHtml(a.guideUrl)}" target="_blank" rel="noopener">open it</a>` : ""}.</div>
+    <div class="section-label hk-label">Getting in</div>
+    ${codes}
+    <ul class="hg-list">${g.access.map((x: string) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+    <table>
+      ${g.rows.map((r: string[]) => `<tr><td>${escapeHtml(r[0])}</td><td>${escapeHtml(r[1])}</td></tr>`).join("\n      ")}
+    </table>
+    <div class="section-label hk-label">Checkout, Mon 10/19</div>
+    <ul class="hg-list">${g.checkout.map((x: string) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+    <div class="section-label hk-label">Vacay recommends</div>
+    <table>
+      ${g.recs.map((r: any) => `<tr><td>${escapeHtml(r[0])}</td><td>${r[1].map((x: string) => escapeHtml(x)).join(" &middot; ")}</td></tr>`).join("\n      ")}
+    </table>
+  </section>`;
+}
+
 function housingPage() {
   const wide = airbnbSearch({
     adults: housing.defaultAdults,
@@ -1347,6 +1397,8 @@ function housingPage() {
     </div>
     <div class="caveat">${escapeHtml(b.caveat)}</div>
   </section>
+
+${guideBlock()}
 
   <section class="card">
     <h2>Backups</h2>

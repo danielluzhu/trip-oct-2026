@@ -545,6 +545,15 @@
   .fare { font-weight: 600; white-space: nowrap; display: block; margin-bottom: .3rem; }
   .cmp-name { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 
+  /* ---------- house guide ---------- */
+  .hg-codes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: .2rem 0 .6rem; }
+  .hg-code { background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 10px; padding: .55rem .75rem; }
+  .hg-code .section-label { display: block; margin: 0 0 .1rem; }
+  .hg-code strong { font-size: 1.6rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+  .hg-hidden { display: block; background: var(--bg-alt); border-radius: 10px; padding: .6rem .8rem; color: var(--muted); }
+  .hg-list { margin: 0 0 .9rem; padding-left: 1.2rem; }
+  .hg-list li { margin: .15rem 0; }
+  #house-guide .hk-label { margin-top: .9rem; }
   /* ---------- housing areas ---------- */
   .area {
     display: grid;
@@ -751,7 +760,7 @@
             <td><span class="stay-total">$1,830</span>
               <span class="muted-cell">&nbsp;&middot;&nbsp;$229 each at 8</span></td></tr>
           <tr><td>Address</td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=138%20Jasper%20Loop%2C%20Whitefish%2C%20MT%2059937" target="_blank" rel="noopener">138 Jasper Loop, Whitefish, MT 59937</a></td></tr>
-          <tr><td>Check-in / out</td><td>Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock<div class="muted-cell">You received a text message with the link to your online guidebook this morning. The access code for the garage door and the interior door will populate the day before your arrival.</div></td></tr>
+          <tr><td>Check-in / out</td><td>Check in after 4:00 PM, check out before 10:00 AM. Self check-in with a smart lock<div class="muted-cell">Enter through the garage with a keypad code; codes, wifi and house notes are in the House guide below.</div></td></tr>
           <tr><td>Host</td><td>Matthew, <a href="tel:+14066099595">(406) 609-9595</a></td></tr>
           <tr><td>Sleeps</td><td>10</td></tr>
           <tr><td>Bedrooms / baths</td><td>3 / 3.5</td></tr>
@@ -762,6 +771,37 @@
       </div>
     </div>
     <div class="caveat">3 bedrooms. Sleeping 10 depends on the bunks.</div>
+  </section>
+
+
+  <section class="card" id="house-guide">
+    <h2>House guide</h2>
+    <div class="subtitle">Spring Creek at the Quarry, managed by Vacay Whitefish. From their guest guide.</div>
+    <div class="section-label hk-label">Getting in</div>
+    <div class="hg-codes hg-hidden">Door codes aren't on the public site. Get them from Dan or the guide link Vacay texted him.</div>
+    <ul class="hg-list"><li>Enter through the garage: type the garage keypad code and press Enter.</li><li>The inside door from the garage unlocks with its own code on its keypad.</li><li>If the garage won&#39;t open (power outage, emergency), a lockbox just right of the garage and around the corner holds backup keys for the front door.</li></ul>
+    <table>
+      <tr><td>Wifi</td><td>Network &quot;Vacay Whitefish Guest&quot;. No password: enter your name and email on the welcome page. The router is on the dresser in the main-floor bedroom.</td></tr>
+      <tr><td>Guest services</td><td>Vacay Whitefish, based in town: (406) 609-9595 (call or text), guest@vacaywhitefish.com, vacaywhitefish.com. No mid-stay cleaning.</td></tr>
+      <tr><td>Emergencies</td><td>Call 911 first, then Vacay. Fire extinguisher is under the kitchen sink. Power out in part of the house: check the breaker panel in the garage.</td></tr>
+      <tr><td>Parking</td><td>Two vehicles max, and the garage counts. No street parking. Extra spots may be free at the clubhouse.</td></tr>
+      <tr><td>Clubhouse</td><td>Hot tub, pool and fire pit, open until 11 PM. The key fob hangs on the fridge ($225 if lost). Spa towels are in the basket in the entry closet; don&#39;t take the white bath towels, and bring the spa towels back.</td></tr>
+      <tr><td>Heat and fire</td><td>Nest thermostat by the front door runs heat and AC. Gas fireplace remote is on the wall left of the fireplace; only run it when someone&#39;s home.</td></tr>
+      <tr><td>Kitchen and grill</td><td>Keurig (pods). Gas grill on the patio: turn the propane off after each use and scrape it clean when we leave. A backup tank is by the grill; text Vacay if both are empty.</td></tr>
+      <tr><td>Beds</td><td>The living-room sofa pulls out. Sheets and extra bedding are in the master bedroom closet.</td></tr>
+      <tr><td>TV and laundry</td><td>Smart TVs with cable in the living room and every bedroom; log out of streaming before we leave. Washer and dryer: only run them while someone&#39;s home.</td></tr>
+      <tr><td>House rules</td><td>No smoking ($500 minimum), no parties, quiet hours 10 PM to 8 AM, no music outside, no fireworks. Snow shovel provided; ski gear and snowshoes stay in the garage.</td></tr>
+      <tr><td>Trash</td><td>Everything bagged, out to the community dumpster just north of the main entrance (first right as you enter the Quarry). $50 charge if trash is left behind.</td></tr>
+      <tr><td>Packages</td><td>Don&#39;t ship anything to the house.</td></tr>
+    </table>
+    <div class="section-label hk-label">Checkout, Mon 10/19</div>
+    <ul class="hg-list"><li>Out by 10 AM Monday (late checkout gets charged).</li><li>Fill and start the dishwasher.</li><li>Used towels, sheets and pillowcases on the bathroom floors. Leave mattress protectors, blankets and comforters on; don&#39;t make the beds.</li><li>Check closets and drawers (earbuds, chargers, sunglasses).</li><li>Log out of streaming on every TV.</li><li>Bag the trash and take it to the dumpster.</li><li>Tell Vacay about any damage.</li></ul>
+    <div class="section-label hk-label">Vacay recommends</div>
+    <table>
+      <tr><td>Dinner in town</td><td>Tupelo Grille &middot; Abruzzo Italian Kitchen &middot; Ciao Mambo &middot; Latitude 48 Bistro &middot; Indah Sushi &middot; Jalisco Cantina &middot; Boat Club Restaurant &middot; Last Chair Kitchen &amp; Bar &middot; The Bierstube (on the mountain) &middot; Jersey Boys Pizzeria</td></tr>
+      <tr><td>Breakfast</td><td>Buffalo Cafe &middot; Loula&#39;s Cafe &middot; Swift Creek Cafe</td></tr>
+      <tr><td>Outdoors</td><td>Lakestream Fly Shop &middot; Whitefish Outfitters &amp; Tours &middot; Glacier Raft Company (West Glacier) &middot; Cloud 9 River Rentals (Columbia Falls)</td></tr>
+    </table>
   </section>
 
   <section class="card">
