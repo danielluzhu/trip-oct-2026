@@ -626,7 +626,7 @@
   "plan": {
     "title": "Four nights in Whitefish",
     "base": "Whitefish",
-    "intro": "Thu: arrive. Fri: Avalanche Lake. Sat: sunrise hike up Apgar Lookout, fly fishing 12 to 4. Sun: hike day. Mon: last day out, flights home. Nothing in the park is open.",
+    "intro": "Thu: arrive. Fri: Lion Mountain in the morning, Avalanche Lake in the afternoon. Sat: sunrise hike up Apgar Lookout, fly fishing 12 to 4. Sun: hike day. Mon: last day out, flights home. Nothing in the park is open.",
     "facts": [
       [
         "Stay",
@@ -1164,12 +1164,12 @@
       },
       {
         "day": "Day 2 · Fri 10/16",
-        "headline": "Avalanche Lake, then a sunset walk.",
+        "headline": "Lion Mountain to Holbrook Overlook, then Avalanche Lake.",
         "blocks": [
           {
-            "when": "8:30 AM",
-            "what": "SUV 1 to Glacier: Trail of the Cedars and Avalanche Lake",
-            "detail": "4.6 mi round trip, ~500 ft, to a lake under waterfalls. ~3 hours."
+            "when": "8:30 to 11:00 AM",
+            "what": "Everyone: Lion Mountain → Holbrook Overlook",
+            "detail": "~5 mi round trip, ~800 ft, 2 to 2.5 hrs on the Whitefish Trail. Trailhead is 8 min from town. Back by 11 so SUV 2 makes the noon airport run. Hunting is allowed here: wear bright colors."
           },
           {
             "when": "Midday",
@@ -1177,14 +1177,14 @@
             "detail": "Sean lands 12:00, his friend 3:00."
           },
           {
-            "when": "Late afternoon",
-            "what": "Everyone: Lion Mountain loop",
-            "detail": "~3 flat miles, 5 min from town. Sunset ~6:45 PM."
+            "when": "12:30 PM",
+            "what": "SUV 1 to Glacier: Trail of the Cedars and Avalanche Lake",
+            "detail": "5.9 mi round trip, ~730 ft, to a lake under waterfalls. ~5 hrs with the drive, back before the ~6:45 PM sunset."
           },
           {
             "when": "Evening",
             "what": "Dinner and movie night: Brokeback Mountain",
-            "detail": "Out by 7:30 tomorrow."
+            "detail": "Early night: the sunrise hike leaves at 5:15 AM."
           }
         ]
       },
