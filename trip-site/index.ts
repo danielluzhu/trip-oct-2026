@@ -1273,7 +1273,7 @@ async function itineraryPage() {
       }));
     })();
     </script>
-    <div class="calc-note">Total time is the drive there and back plus the hike, without stops. Distances are by road from the house in Whitefish (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
+    <div class="calc-note">Total time is the drive there and back plus the hike, without stops. Distances are by road from downtown Whitefish, about a mile from the house (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>`
     : "";
 
