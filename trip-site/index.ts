@@ -608,8 +608,10 @@ const sharedStyle = /* css */ `
   /* Hikes: one row each, three wide columns so cells don't stack up tall. */
   table.hikes { min-width: 760px; font-size: .9rem; line-height: 1.45; }
   table.hikes td { vertical-align: top; padding-top: .75rem; padding-bottom: .75rem; }
-  table.hikes td.hk-name { width: 29%; }
-  table.hikes td.hk-routes { width: 29%; }
+  table.hikes td.hk-name { width: 26%; }
+  table.hikes td.hk-routes { width: 26%; }
+  table.hikes td.hk-e2e { width: 11%; white-space: nowrap; }
+  .hk-e2e strong { display: block; font-size: 1.15rem; margin-bottom: .15rem; }
   table.hikes td:first-child { padding-left: .7rem; }
   table.hikes td:last-child { padding-right: .6rem; }
   table.hikes tr.hk-no td { background: rgba(190,60,60,.06); }
@@ -1233,26 +1235,27 @@ async function itineraryPage() {
       <span class="section-label">Sort by</span>
       <button type="button" class="calc-btn active" data-sort="drive" aria-pressed="true">Driving distance</button>
       <button type="button" class="calc-btn" data-sort="miles" aria-pressed="false">Hiking distance</button>
-      <button type="button" class="calc-btn" data-sort="total" aria-pressed="false">Total time</button>
+      <button type="button" class="calc-btn" data-sort="total" aria-pressed="false">End-to-end time</button>
     </div>
     <div class="table-scroll">
     <table class="hikes">
-      <tr><th>Hike or drive</th><th>Routes</th><th>Conditions</th></tr>
+      <tr><th>Hike or drive</th><th>Routes</th><th>End to end</th><th>Conditions</th></tr>
       ${plan.hikes
         .map((h: any) => {
           const opt = (label: string, o: any) => `<div class="hk-opt"><span class="section-label">${label}</span> <strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong> <span class="muted-cell">&middot; ${escapeHtml(o.gain)}</span><br>${escapeHtml(o.route)}</div>`;
           const flag = h.doable === "no" ? `<span class="pill gone">Not doable</span>` : h.doable === "check" ? `<span class="pill partial">Check first</span>` : "";
           const s = h.sort ?? {};
           const total = s.driveMin != null ? (2 * s.driveMin) / 60 + s.hikeHrs : null;
+          const drv = (m: number) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} hr${m % 60 ? ` ${m % 60} min` : ""}`);
           return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""} data-drive="${s.driveMin ?? 999}" data-miles="${s.hikeMi ?? 999}" data-total="${total ?? 999}" data-closed="${h.doable === "no" ? 1 : 0}">
         <td class="hk-name">
           <strong class="hk-title">${escapeHtml(h.name)}</strong>${flag ? ` ${flag}` : ""}
           <div class="hk-sub">${h.difficulty ? `${escapeHtml(h.difficulty)} &middot; ` : ""}&#128663; From Whitefish: ${escapeHtml(h.fromWhitefish ?? h.drive)}</div>
-          ${total != null ? `<div class="hk-sub">&#9201; ~${fmtHrs(total)} total, door to door</div>` : ""}
           <p class="hk-status">${escapeHtml(h.status)}</p>
           <div class="hk-foot">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("")}</div>
         </td>
         <td class="hk-routes">${opt(h.short ? "Full" : "Route", h.full)}${h.short ? opt("Short", h.short) : ""}</td>
+        <td class="hk-e2e">${total != null ? `<strong>~${fmtHrs(total)}</strong><span class="muted-cell">${drv(s.driveMin)} there<br>${s.hikeMi ? `${fmtHrs(s.hikeHrs)} hiking` : `${fmtHrs(s.hikeHrs)} of stops`}<br>${drv(s.driveMin)} back</span>` : ""}</td>
         <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })
@@ -1273,7 +1276,7 @@ async function itineraryPage() {
       }));
     })();
     </script>
-    <div class="calc-note">Total time is the drive there and back plus the hike, without stops. Distances are by road from downtown Whitefish, about a mile from the house (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
+    <div class="calc-note">End to end is the drive there, the hike and the drive back, without stops. Distances are by road from downtown Whitefish, about a mile from the house (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>`
     : "";
 
