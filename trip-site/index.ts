@@ -1236,11 +1236,11 @@ async function itineraryPage() {
           return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""}>
         <td class="hk-name">
           <strong class="hk-title">${escapeHtml(h.name)}</strong>${flag ? ` ${flag}` : ""}
-          <div class="hk-sub">&#128663; From Whitefish: ${escapeHtml(h.fromWhitefish ?? h.drive)}</div>
+          <div class="hk-sub">${h.difficulty ? `${escapeHtml(h.difficulty)} &middot; ` : ""}&#128663; From Whitefish: ${escapeHtml(h.fromWhitefish ?? h.drive)}</div>
           <p class="hk-status">${escapeHtml(h.status)}</p>
           <div class="hk-foot">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("")}</div>
         </td>
-        <td class="hk-routes">${opt("Full", h.full)}${opt("Short", h.short)}</td>
+        <td class="hk-routes">${opt(h.short ? "Full" : "Route", h.full)}${h.short ? opt("Short", h.short) : ""}</td>
         <td class="hk-cond">${conditions(h)}</td>
       </tr>`;
         })

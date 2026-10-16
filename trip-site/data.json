@@ -655,12 +655,111 @@
     ],
     "hikes": [
       {
-        "name": "Highline Trail",
-        "fromWhitefish": "58 mi · ~1 hr 50 min to Logan Pass",
+        "name": "Lion Mountain → Holbrook Overlook",
+        "difficulty": "Easy–moderate",
+        "fromWhitefish": "3 mi · ~8 min",
         "nps": [
           {
-            "label": "Sun Road status",
-            "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm"
+            "label": "Whitefish Trail conditions",
+            "url": "https://www.whitefishlegacy.org/trail-conditions"
+          }
+        ],
+        "full": {
+          "route": "Whitefish Trail from the Lion Mountain trailhead up to the Holbrook Overlook and back",
+          "length": "~5 mi round trip",
+          "gain": "~800 ft",
+          "time": "2 to 2.5 hrs"
+        },
+        "drive": "Lion Mountain trailhead, just west of town off US-93",
+        "status": "Open. Recent reports: dry and well maintained. Closest hike to the house. Hunting is allowed on Whitefish Trail lands: wear bright colors. Skip it if it's muddy.",
+        "points": [
+          {
+            "name": "Lion Mountain trailhead",
+            "lat": 48.418,
+            "lon": -114.3637,
+            "ft": 3050
+          },
+          {
+            "name": "Holbrook Overlook",
+            "lat": 48.425,
+            "lon": -114.385,
+            "ft": 3850
+          }
+        ]
+      },
+      {
+        "name": "Beaver Lakes Loop",
+        "difficulty": "Easy",
+        "fromWhitefish": "11 mi · ~25 min",
+        "nps": [
+          {
+            "label": "Whitefish Trail conditions",
+            "url": "https://www.whitefishlegacy.org/trail-conditions"
+          }
+        ],
+        "full": {
+          "route": "Whitefish Trail loop past the Beaver Lakes",
+          "length": "~5.5 mi loop",
+          "gain": "~600 ft",
+          "time": "2 to 2.5 hrs"
+        },
+        "drive": "Beaver Lakes trailhead, northwest of Whitefish Lake",
+        "status": "Open. An Oct 1 report says good conditions and clearly marked. Hunting is allowed: wear bright colors. Loons nest here; stay 150 yards away.",
+        "points": [
+          {
+            "name": "Beaver Lakes",
+            "lat": 48.4373,
+            "lon": -114.4365,
+            "ft": 3700
+          }
+        ]
+      },
+      {
+        "name": "Danny On Trail (Big Mountain summit)",
+        "difficulty": "Moderate",
+        "doable": "check",
+        "fromWhitefish": "7 mi · ~18 min",
+        "nps": [
+          {
+            "label": "Resort hiking page",
+            "url": "https://skiwhitefish.com/hiking/"
+          },
+          {
+            "label": "Fuels reduction updates",
+            "url": "https://skiwhitefish.com/fuelsreduction"
+          }
+        ],
+        "full": {
+          "route": "Whitefish Mountain Resort village up to the Big Mountain summit and back down",
+          "length": "7.6 mi round trip",
+          "gain": "~2,000 ft",
+          "time": "3.5 to 4 hrs"
+        },
+        "drive": "Up Big Mountain Road to the resort village",
+        "status": "Check first: the lower third was rerouted or closed for the Big Mountain fuels reduction project this summer; follow posted signs. The gondola is likely shut between seasons, so plan to walk both ways. The 6,800 ft summit can have snow by mid-October.",
+        "points": [
+          {
+            "name": "Resort village",
+            "lat": 48.4844,
+            "lon": -114.3557,
+            "ft": 4500
+          },
+          {
+            "name": "Big Mountain summit",
+            "lat": 48.505,
+            "lon": -114.35,
+            "ft": 6817
+          }
+        ]
+      },
+      {
+        "name": "Apgar Lookout",
+        "difficulty": "Moderate",
+        "fromWhitefish": "28 mi · ~45 min",
+        "nps": [
+          {
+            "label": "Apgar Lookout trailhead",
+            "url": "https://www.nps.gov/places/apgar-lookout-trailhead.htm"
           },
           {
             "label": "Trail status",
@@ -668,34 +767,113 @@
           }
         ],
         "full": {
-          "route": "Logan Pass to The Loop, one way (needs a car at each end)",
-          "length": "11.8 mi",
-          "gain": "~800 ft up, ~2,800 ft down",
-          "time": "6 to 8 hrs"
-        },
-        "short": {
-          "route": "Logan Pass to Haystack Butte saddle and back",
+          "route": "Switchbacks up to the old fire lookout over Lake McDonald and back",
           "length": "7.2 mi round trip",
-          "gain": "~1,000 ft",
+          "gain": "~1,850 ft",
           "time": "3.5 to 4 hrs"
         },
-        "doable": "no",
-        "drive": "~1 hr to West Glacier, then the Sun Road",
-        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.",
+        "drive": "Turnoff 0.5 mi north of the West Entrance (park pass needed)",
+        "status": "Open, no closures posted. Saturday's sunrise hike. Expect frost or a little snow on the upper switchbacks early in the day.",
         "points": [
           {
-            "name": "Logan Pass",
-            "lat": 48.6966,
-            "lon": -113.7183,
-            "ft": 6646
+            "name": "Apgar Lookout trailhead",
+            "lat": 48.5185,
+            "lon": -114.0048,
+            "ft": 3440
           },
           {
-            "name": "Haystack Butte saddle",
-            "lat": 48.7255,
-            "lon": -113.7475,
-            "ft": 7024
+            "name": "Apgar Lookout",
+            "lat": 48.5073,
+            "lon": -114.0344,
+            "ft": 5236
           }
         ]
+      },
+      {
+        "name": "Avalanche Lake + Trail of the Cedars",
+        "fromWhitefish": "42 mi · ~1 hr 10 min",
+        "nps": [
+          {
+            "label": "Lake McDonald area",
+            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
+          },
+          {
+            "label": "Trail status",
+            "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm"
+          }
+        ],
+        "full": {
+          "route": "Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls",
+          "length": "5.9 mi round trip",
+          "gain": "~730 ft",
+          "time": "2.5 to 3 hrs"
+        },
+        "short": {
+          "route": "Trail of the Cedars loop only, past Avalanche Gorge",
+          "length": "~1 mi loop",
+          "gain": "Flat, boardwalk",
+          "time": "~30 min"
+        },
+        "drive": "West Glacier, then the Sun Road to Avalanche Creek",
+        "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
+        "points": [
+          {
+            "name": "Avalanche Creek",
+            "lat": 48.6797,
+            "lon": -113.8196,
+            "ft": 3350
+          },
+          {
+            "name": "Avalanche Lake",
+            "lat": 48.6563,
+            "lon": -113.7866,
+            "ft": 3905
+          }
+        ],
+        "difficulty": "Easy–moderate"
+      },
+      {
+        "name": "Lake McDonald",
+        "fromWhitefish": "29 mi · ~45 min to Apgar",
+        "nps": [
+          {
+            "label": "Lake McDonald area",
+            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
+          },
+          {
+            "label": "Trail status",
+            "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm"
+          }
+        ],
+        "full": {
+          "route": "Johns Lake loop past McDonald Falls and Sacred Dancing Cascade",
+          "length": "~3 mi loop",
+          "gain": "~200 ft",
+          "time": "~1.5 hrs"
+        },
+        "short": {
+          "route": "Rocky Point from Fish Creek, a lakeshore viewpoint (good at sunrise)",
+          "length": "1.1 mi",
+          "gain": "~200 ft",
+          "time": "under 1 hr"
+        },
+        "drive": "West Glacier, then along the lake",
+        "status": "Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.",
+        "points": [
+          {
+            "name": "Apgar, lake level",
+            "lat": 48.5285,
+            "lon": -113.987,
+            "ft": 3160
+          },
+          {
+            "name": "Johns Lake",
+            "lat": 48.6265,
+            "lon": -113.8595,
+            "ft": 3300
+          }
+        ],
+        "difficulty": "Easy"
       },
       {
         "name": "Grinnell Glacier",
@@ -737,7 +915,8 @@
             "lon": -113.7192,
             "ft": 6500
           }
-        ]
+        ],
+        "difficulty": "Moderate–hard"
       },
       {
         "name": "Dawson Pass",
@@ -780,15 +959,16 @@
             "lon": -113.4386,
             "ft": 7598
           }
-        ]
+        ],
+        "difficulty": "Hard"
       },
       {
-        "name": "Avalanche Lake + Trail of the Cedars",
-        "fromWhitefish": "42 mi · ~1 hr 10 min",
+        "name": "Highline Trail",
+        "fromWhitefish": "58 mi · ~1 hr 50 min to Logan Pass",
         "nps": [
           {
-            "label": "Lake McDonald area",
-            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
+            "label": "Sun Road status",
+            "url": "https://www.nps.gov/glac/planyourvisit/gtsrinfo.htm"
           },
           {
             "label": "Trail status",
@@ -796,75 +976,35 @@
           }
         ],
         "full": {
-          "route": "Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls",
-          "length": "4.6 mi round trip",
-          "gain": "~500 ft",
-          "time": "~3 hrs"
+          "route": "Logan Pass to The Loop, one way (needs a car at each end)",
+          "length": "11.8 mi",
+          "gain": "~800 ft up, ~2,800 ft down",
+          "time": "6 to 8 hrs"
         },
         "short": {
-          "route": "Trail of the Cedars loop only, past Avalanche Gorge",
-          "length": "~1 mi loop",
-          "gain": "Flat, boardwalk",
-          "time": "~30 min"
+          "route": "Logan Pass to Haystack Butte saddle and back",
+          "length": "7.2 mi round trip",
+          "gain": "~1,000 ft",
+          "time": "3.5 to 4 hrs"
         },
-        "drive": "West Glacier, then the Sun Road to Avalanche Creek",
-        "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
+        "doable": "no",
+        "drive": "~1 hr to West Glacier, then the Sun Road",
+        "status": "Likely not doable: snow closed the Sun Road from Avalanche Creek to Logan Pass on Oct 9, which usually starts the winter closure. Both versions start at Logan Pass.",
         "points": [
           {
-            "name": "Avalanche Creek",
-            "lat": 48.6797,
-            "lon": -113.8196,
-            "ft": 3350
+            "name": "Logan Pass",
+            "lat": 48.6966,
+            "lon": -113.7183,
+            "ft": 6646
           },
           {
-            "name": "Avalanche Lake",
-            "lat": 48.6563,
-            "lon": -113.7866,
-            "ft": 3905
-          }
-        ]
-      },
-      {
-        "name": "Lake McDonald",
-        "fromWhitefish": "29 mi · ~45 min to Apgar",
-        "nps": [
-          {
-            "label": "Lake McDonald area",
-            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
-          },
-          {
-            "label": "Trail status",
-            "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm"
+            "name": "Haystack Butte saddle",
+            "lat": 48.7255,
+            "lon": -113.7475,
+            "ft": 7024
           }
         ],
-        "full": {
-          "route": "Johns Lake loop past McDonald Falls and Sacred Dancing Cascade",
-          "length": "~3 mi loop",
-          "gain": "~200 ft",
-          "time": "~1.5 hrs"
-        },
-        "short": {
-          "route": "Rocky Point from Fish Creek, a lakeshore viewpoint (good at sunrise)",
-          "length": "1.1 mi",
-          "gain": "~200 ft",
-          "time": "under 1 hr"
-        },
-        "drive": "West Glacier, then along the lake",
-        "status": "Open: the Sun Road is open along the lake to Avalanche Creek. Easy add-on to any west-side day.",
-        "points": [
-          {
-            "name": "Apgar, lake level",
-            "lat": 48.5285,
-            "lon": -113.987,
-            "ft": 3160
-          },
-          {
-            "name": "Johns Lake",
-            "lat": 48.6265,
-            "lon": -113.8595,
-            "ft": 3300
-          }
-        ]
+        "difficulty": "Moderate–hard"
       },
       {
         "name": "Drive Going-to-the-Sun Road to Logan Pass",
