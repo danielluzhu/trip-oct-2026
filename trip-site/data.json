@@ -690,6 +690,10 @@
           "driveMin": 8,
           "hikeMi": 5,
           "hikeHrs": 2.25
+        },
+        "photo": {
+          "file": "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
+          "alt": "Stand-in: Whitefish Lake in autumn, the lake the overlook looks over (no free photo of the trail)"
         }
       },
       {
@@ -733,6 +737,10 @@
           "driveMin": 18,
           "hikeMi": 7.6,
           "hikeHrs": 3.75
+        },
+        "photo": {
+          "file": "Whitefish Lake from Big Mountain (48050090152).jpg",
+          "alt": "Whitefish Lake from up on Big Mountain"
         }
       },
       {
@@ -765,6 +773,10 @@
           "driveMin": 25,
           "hikeMi": 5.5,
           "hikeHrs": 2.25
+        },
+        "photo": {
+          "file": "An alpine larch along a trail, observed between Nasukoin and Lake Mountain in the Whitefish Range, on the Glacier View Ranger District (51769861291).jpg",
+          "alt": "Stand-in: a larch-lined trail in the Whitefish Range (no free photo of Beaver Lakes)"
         }
       },
       {
@@ -807,6 +819,10 @@
           "driveMin": 45,
           "hikeMi": 7.2,
           "hikeHrs": 3.75
+        },
+        "photo": {
+          "file": "Sunset from Apgar Fire Lookout (23301165385).jpg",
+          "alt": "Lake McDonald at alpenglow, from Apgar Lookout"
         }
       },
       {
@@ -855,6 +871,10 @@
           "driveMin": 45,
           "hikeMi": 3,
           "hikeHrs": 1.5
+        },
+        "photo": {
+          "file": "Lake MacDonald....ROCKS (28884892473).jpg",
+          "alt": "Lake McDonald's colored stones"
         }
       },
       {
@@ -903,6 +923,10 @@
           "driveMin": 70,
           "hikeMi": 5.9,
           "hikeHrs": 2.75
+        },
+        "photo": {
+          "file": "Avalanche Lake, Monument Falls.jpg",
+          "alt": "Avalanche Lake under Monument Falls"
         }
       },
       {
@@ -952,6 +976,10 @@
           "driveMin": 120,
           "hikeMi": 13,
           "hikeHrs": 7.5
+        },
+        "photo": {
+          "file": "Dawson Pass to the North - panoramio.jpg",
+          "alt": "Looking north from Dawson Pass"
         }
       },
       {
@@ -1000,6 +1028,10 @@
           "driveMin": 180,
           "hikeMi": 11,
           "hikeHrs": 6.5
+        },
+        "photo": {
+          "file": "Grinnell Glacier with Lake and Salamander Glacier.jpg",
+          "alt": "Grinnell Glacier, Upper Grinnell Lake and the Salamander"
         }
       },
       {
@@ -1049,6 +1081,10 @@
           "driveMin": 110,
           "hikeMi": 11.8,
           "hikeHrs": 7
+        },
+        "photo": {
+          "file": "Highline Trail (4169004303).jpg",
+          "alt": "The Highline's ledge along the Garden Wall"
         }
       },
       {
@@ -1097,6 +1133,10 @@
           "driveMin": 110,
           "hikeMi": 0,
           "hikeHrs": 1
+        },
+        "photo": {
+          "file": "Going to the Sun Road with Going to the Sun Mountain.jpg",
+          "alt": "Going-to-the-Sun Road under Going-to-the-Sun Mountain"
         }
       }
     ],
