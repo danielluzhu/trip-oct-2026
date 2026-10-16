@@ -618,6 +618,9 @@ const sharedStyle = /* css */ `
   table.hikes tr.hk-no .hk-routes { opacity: .7; }
   .hk-title { font-size: 1rem; }
   .hk-name .pill { white-space: nowrap; }
+  .hk-sort { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: .7rem 0 .2rem; }
+  .hk-sort .section-label { margin: 0 .2rem 0 0; }
+  .hk-sort .calc-btn.active { background: var(--accent); color: var(--on-dark); border-color: var(--accent); }
   .hk-sub { color: var(--muted); font-size: .85rem; margin-top: .15rem; }
   .hk-status { color: var(--muted); font-size: .85rem; margin: .35rem 0; }
   tr.hk-no .hk-status { color: #c25555; font-weight: 600; }
@@ -1226,6 +1229,12 @@ async function itineraryPage() {
       const no = plan.hikes.filter((h: any) => h.doable === "no").map((h: any) => h.name);
       return no.length ? `<div class="hk-warn">&#9888; Not doable right now: <strong>${no.map(escapeHtml).join(", ")}</strong>. Marked in red below.</div>` : "";
     })()}
+    <div class="hk-sort" role="group" aria-label="Sort hikes">
+      <span class="section-label">Sort by</span>
+      <button type="button" class="calc-btn active" data-sort="drive" aria-pressed="true">Driving distance</button>
+      <button type="button" class="calc-btn" data-sort="miles" aria-pressed="false">Hiking distance</button>
+      <button type="button" class="calc-btn" data-sort="total" aria-pressed="false">Total time</button>
+    </div>
     <div class="table-scroll">
     <table class="hikes">
       <tr><th>Hike or drive</th><th>Routes</th><th>Conditions</th></tr>
@@ -1233,10 +1242,13 @@ async function itineraryPage() {
         .map((h: any) => {
           const opt = (label: string, o: any) => `<div class="hk-opt"><span class="section-label">${label}</span> <strong>${escapeHtml(o.length)} &middot; ${escapeHtml(o.time)}</strong> <span class="muted-cell">&middot; ${escapeHtml(o.gain)}</span><br>${escapeHtml(o.route)}</div>`;
           const flag = h.doable === "no" ? `<span class="pill gone">Not doable</span>` : h.doable === "check" ? `<span class="pill partial">Check first</span>` : "";
-          return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""}>
+          const s = h.sort ?? {};
+          const total = s.driveMin != null ? (2 * s.driveMin) / 60 + s.hikeHrs : null;
+          return `<tr${h.doable ? ` class="hk-${h.doable === "no" ? "no" : "check"}"` : ""} data-drive="${s.driveMin ?? 999}" data-miles="${s.hikeMi ?? 999}" data-total="${total ?? 999}" data-closed="${h.doable === "no" ? 1 : 0}">
         <td class="hk-name">
           <strong class="hk-title">${escapeHtml(h.name)}</strong>${flag ? ` ${flag}` : ""}
           <div class="hk-sub">${h.difficulty ? `${escapeHtml(h.difficulty)} &middot; ` : ""}&#128663; From Whitefish: ${escapeHtml(h.fromWhitefish ?? h.drive)}</div>
+          ${total != null ? `<div class="hk-sub">&#9201; ~${fmtHrs(total)} total, door to door</div>` : ""}
           <p class="hk-status">${escapeHtml(h.status)}</p>
           <div class="hk-foot">${(h.nps ?? []).map((l: any) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)} &rarr;</a>`).join("")}</div>
         </td>
@@ -1247,7 +1259,21 @@ async function itineraryPage() {
         .join("\n      ")}
     </table>
     </div>
-    <div class="calc-note">Distances are by road from the house in Whitefish (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
+    <script>
+    // Shortest first; routes that aren't doable stay at the bottom.
+    (() => {
+      const table = document.querySelector("table.hikes");
+      const btns = document.querySelectorAll(".hk-sort button");
+      btns.forEach((b) => b.addEventListener("click", () => {
+        const key = b.dataset.sort;
+        const rows = [...table.querySelectorAll("tr[data-drive]")];
+        rows.sort((x, y) => x.dataset.closed - y.dataset.closed || x.dataset[key] - y.dataset[key]);
+        rows.forEach((r) => r.parentNode.appendChild(r));
+        btns.forEach((o) => { o.classList.toggle("active", o === b); o.setAttribute("aria-pressed", o === b); });
+      }));
+    })();
+    </script>
+    <div class="calc-note">Total time is the drive there and back plus the hike, without stops. Distances are by road from the house in Whitefish (<a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> routing), without stops. Weather from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, adjusted for each spot's elevation. Rain/snow % is the day's highest chance. It doesn't know about road or trail closures; see the park's <a href="https://www.nps.gov/glac/planyourvisit/conditions.htm" target="_blank" rel="noopener">current conditions</a> for those.</div>
   </section>`
     : "";
 
@@ -2028,6 +2054,7 @@ function uvLabel(uv: number) {
 
 const clock = (iso: string) => fmtTime(iso.slice(11, 16));
 const hrs = (sec: number) => `${Math.floor(sec / 3600)}h ${String(Math.round((sec % 3600) / 60)).padStart(2, "0")}m`;
+const fmtHrs = (h: number) => `${Math.round(h * 2) / 2} hrs`; // nearest half hour
 const deg = (n: number) => `${Math.round(n)}°C`;
 
 // Moon phase for stargazing, from the mean synodic month (good to a day).

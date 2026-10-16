@@ -685,34 +685,12 @@
             "lon": -114.385,
             "ft": 3850
           }
-        ]
-      },
-      {
-        "name": "Beaver Lakes Loop",
-        "difficulty": "Easy",
-        "fromWhitefish": "11 mi · ~25 min",
-        "nps": [
-          {
-            "label": "Whitefish Trail conditions",
-            "url": "https://www.whitefishlegacy.org/trail-conditions"
-          }
         ],
-        "full": {
-          "route": "Whitefish Trail loop past the Beaver Lakes",
-          "length": "~5.5 mi loop",
-          "gain": "~600 ft",
-          "time": "2 to 2.5 hrs"
-        },
-        "drive": "Beaver Lakes trailhead, northwest of Whitefish Lake",
-        "status": "Open. An Oct 1 report says good conditions and clearly marked. Hunting is allowed: wear bright colors. Loons nest here; stay 150 yards away.",
-        "points": [
-          {
-            "name": "Beaver Lakes",
-            "lat": 48.4373,
-            "lon": -114.4365,
-            "ft": 3700
-          }
-        ]
+        "sort": {
+          "driveMin": 8,
+          "hikeMi": 5,
+          "hikeHrs": 2.25
+        }
       },
       {
         "name": "Danny On Trail (Big Mountain summit)",
@@ -750,7 +728,44 @@
             "lon": -114.35,
             "ft": 6817
           }
-        ]
+        ],
+        "sort": {
+          "driveMin": 18,
+          "hikeMi": 7.6,
+          "hikeHrs": 3.75
+        }
+      },
+      {
+        "name": "Beaver Lakes Loop",
+        "difficulty": "Easy",
+        "fromWhitefish": "11 mi · ~25 min",
+        "nps": [
+          {
+            "label": "Whitefish Trail conditions",
+            "url": "https://www.whitefishlegacy.org/trail-conditions"
+          }
+        ],
+        "full": {
+          "route": "Whitefish Trail loop past the Beaver Lakes",
+          "length": "~5.5 mi loop",
+          "gain": "~600 ft",
+          "time": "2 to 2.5 hrs"
+        },
+        "drive": "Beaver Lakes trailhead, northwest of Whitefish Lake",
+        "status": "Open. An Oct 1 report says good conditions and clearly marked. Hunting is allowed: wear bright colors. Loons nest here; stay 150 yards away.",
+        "points": [
+          {
+            "name": "Beaver Lakes",
+            "lat": 48.4373,
+            "lon": -114.4365,
+            "ft": 3700
+          }
+        ],
+        "sort": {
+          "driveMin": 25,
+          "hikeMi": 5.5,
+          "hikeHrs": 2.25
+        }
       },
       {
         "name": "Apgar Lookout",
@@ -787,50 +802,12 @@
             "lon": -114.0344,
             "ft": 5236
           }
-        ]
-      },
-      {
-        "name": "Avalanche Lake + Trail of the Cedars",
-        "fromWhitefish": "42 mi · ~1 hr 10 min",
-        "nps": [
-          {
-            "label": "Lake McDonald area",
-            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
-          },
-          {
-            "label": "Trail status",
-            "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm"
-          }
         ],
-        "full": {
-          "route": "Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls",
-          "length": "5.9 mi round trip",
-          "gain": "~730 ft",
-          "time": "2.5 to 3 hrs"
-        },
-        "short": {
-          "route": "Trail of the Cedars loop only, past Avalanche Gorge",
-          "length": "~1 mi loop",
-          "gain": "Flat, boardwalk",
-          "time": "~30 min"
-        },
-        "drive": "West Glacier, then the Sun Road to Avalanche Creek",
-        "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
-        "points": [
-          {
-            "name": "Avalanche Creek",
-            "lat": 48.6797,
-            "lon": -113.8196,
-            "ft": 3350
-          },
-          {
-            "name": "Avalanche Lake",
-            "lat": 48.6563,
-            "lon": -113.7866,
-            "ft": 3905
-          }
-        ],
-        "difficulty": "Easy–moderate"
+        "sort": {
+          "driveMin": 45,
+          "hikeMi": 7.2,
+          "hikeHrs": 3.75
+        }
       },
       {
         "name": "Lake McDonald",
@@ -873,15 +850,20 @@
             "ft": 3300
           }
         ],
-        "difficulty": "Easy"
+        "difficulty": "Easy",
+        "sort": {
+          "driveMin": 45,
+          "hikeMi": 3,
+          "hikeHrs": 1.5
+        }
       },
       {
-        "name": "Grinnell Glacier",
-        "fromWhitefish": "133 mi · ~3 hrs, via US-2 around the park",
+        "name": "Avalanche Lake + Trail of the Cedars",
+        "fromWhitefish": "42 mi · ~1 hr 10 min",
         "nps": [
           {
-            "label": "Many Glacier",
-            "url": "https://www.nps.gov/glac/planyourvisit/manyglacier.htm"
+            "label": "Lake McDonald area",
+            "url": "https://www.nps.gov/glac/planyourvisit/lakemcdonald.htm"
           },
           {
             "label": "Trail status",
@@ -889,34 +871,39 @@
           }
         ],
         "full": {
-          "route": "Swiftcurrent to the Grinnell Glacier overlook and back",
-          "length": "~11 mi round trip",
-          "gain": "~1,800 ft",
-          "time": "6 to 7 hrs"
-        },
-        "short": {
-          "route": "Swiftcurrent to Grinnell Lake and back, along the lakeshores",
-          "length": "~7 mi round trip",
-          "gain": "~200 ft",
+          "route": "Trail of the Cedars boardwalk to Avalanche Lake and back, a lake under waterfalls",
+          "length": "5.9 mi round trip",
+          "gain": "~730 ft",
           "time": "2.5 to 3 hrs"
         },
-        "drive": "~3 hrs each way via US-2 around the park, with the Sun Road closed",
-        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.",
+        "short": {
+          "route": "Trail of the Cedars loop only, past Avalanche Gorge",
+          "length": "~1 mi loop",
+          "gain": "Flat, boardwalk",
+          "time": "~30 min"
+        },
+        "drive": "West Glacier, then the Sun Road to Avalanche Creek",
+        "status": "Open: the Sun Road is open to Avalanche Creek, where both start.",
         "points": [
           {
-            "name": "Swiftcurrent trailhead",
-            "lat": 48.7976,
-            "lon": -113.6563,
-            "ft": 4900
+            "name": "Avalanche Creek",
+            "lat": 48.6797,
+            "lon": -113.8196,
+            "ft": 3350
           },
           {
-            "name": "Glacier overlook",
-            "lat": 48.7553,
-            "lon": -113.7192,
-            "ft": 6500
+            "name": "Avalanche Lake",
+            "lat": 48.6563,
+            "lon": -113.7866,
+            "ft": 3905
           }
         ],
-        "difficulty": "Moderate–hard"
+        "difficulty": "Easy–moderate",
+        "sort": {
+          "driveMin": 70,
+          "hikeMi": 5.9,
+          "hikeHrs": 2.75
+        }
       },
       {
         "name": "Dawson Pass",
@@ -960,7 +947,60 @@
             "ft": 7598
           }
         ],
-        "difficulty": "Hard"
+        "difficulty": "Hard",
+        "sort": {
+          "driveMin": 120,
+          "hikeMi": 13,
+          "hikeHrs": 7.5
+        }
+      },
+      {
+        "name": "Grinnell Glacier",
+        "fromWhitefish": "133 mi · ~3 hrs, via US-2 around the park",
+        "nps": [
+          {
+            "label": "Many Glacier",
+            "url": "https://www.nps.gov/glac/planyourvisit/manyglacier.htm"
+          },
+          {
+            "label": "Trail status",
+            "url": "https://www.nps.gov/glac/planyourvisit/trailstatusreports.htm"
+          }
+        ],
+        "full": {
+          "route": "Swiftcurrent to the Grinnell Glacier overlook and back",
+          "length": "~11 mi round trip",
+          "gain": "~1,800 ft",
+          "time": "6 to 7 hrs"
+        },
+        "short": {
+          "route": "Swiftcurrent to Grinnell Lake and back, along the lakeshores",
+          "length": "~7 mi round trip",
+          "gain": "~200 ft",
+          "time": "2.5 to 3 hrs"
+        },
+        "drive": "~3 hrs each way via US-2 around the park, with the Sun Road closed",
+        "status": "Many Glacier is open, but the boats that cut 3.4 mi stopped in September. The upper trail can be icy in October. With ~11 hours of daylight, the full hike is a very long day.",
+        "points": [
+          {
+            "name": "Swiftcurrent trailhead",
+            "lat": 48.7976,
+            "lon": -113.6563,
+            "ft": 4900
+          },
+          {
+            "name": "Glacier overlook",
+            "lat": 48.7553,
+            "lon": -113.7192,
+            "ft": 6500
+          }
+        ],
+        "difficulty": "Moderate–hard",
+        "sort": {
+          "driveMin": 180,
+          "hikeMi": 11,
+          "hikeHrs": 6.5
+        }
       },
       {
         "name": "Highline Trail",
@@ -1004,7 +1044,12 @@
             "ft": 7024
           }
         ],
-        "difficulty": "Moderate–hard"
+        "difficulty": "Moderate–hard",
+        "sort": {
+          "driveMin": 110,
+          "hikeMi": 11.8,
+          "hikeHrs": 7
+        }
       },
       {
         "name": "Drive Going-to-the-Sun Road to Logan Pass",
@@ -1047,7 +1092,12 @@
             "lon": -113.7183,
             "ft": 6646
           }
-        ]
+        ],
+        "sort": {
+          "driveMin": 110,
+          "hikeMi": 0,
+          "hikeHrs": 1
+        }
       }
     ],
     "days": [
