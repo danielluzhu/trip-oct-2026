@@ -5,7 +5,7 @@
       "label": "Housing",
       "amount": 1830,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 1
     },
     {
@@ -13,7 +13,7 @@
       "label": "Car rental 1",
       "amount": 250,
       "note": "",
-      "paidBy": "",
+      "paidBy": "JWu",
       "createdAt": 2
     },
     {
@@ -21,7 +21,7 @@
       "label": "Car rental 2",
       "amount": 250,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 3
     },
     {
@@ -29,7 +29,7 @@
       "label": "Fishing",
       "amount": 2000,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 4
     },
     {
@@ -37,7 +37,7 @@
       "label": "Tips",
       "amount": 400,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 5
     },
     {
@@ -45,7 +45,7 @@
       "label": "Gas",
       "amount": 300,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 6
     },
     {
@@ -53,7 +53,7 @@
       "label": "Parks pass",
       "amount": 35,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 7
     },
     {
@@ -61,7 +61,7 @@
       "label": "Groceries and alcohol",
       "amount": 700,
       "note": "",
-      "paidBy": "",
+      "paidBy": "Dan",
       "createdAt": 8
     }
   ]

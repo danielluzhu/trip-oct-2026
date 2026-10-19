@@ -553,6 +553,27 @@ const sharedStyle = /* css */ `
   form.task-edit .cost-amount::placeholder { color: var(--muted); font-style: italic; font-weight: 500; }
   form.task-edit .cost-note { flex: 1 1 10rem; min-width: 0; font-size: .82rem; color: var(--muted); }
   form.task-edit .cost-note::placeholder { color: var(--muted); opacity: .6; }
+  /* Cost rows: one line each, divided by rules instead of boxed cards. */
+  ul.tasks.costs { gap: 0; margin-top: .2rem; }
+  ul.tasks.costs li.task { border: 0; border-bottom: 1px solid var(--border); border-radius: 0; padding: .12rem .1rem; gap: .3rem; }
+  ul.tasks.costs li.task:last-child { border-bottom: 0; }
+  ul.tasks.costs form.task-edit { flex-wrap: nowrap; gap: .3rem; }
+  ul.tasks.costs form.task-edit input, ul.tasks.costs form.task-edit textarea { padding: .12rem .35rem; }
+  ul.tasks.costs form.task-edit .task-text { flex: 1 1 11rem; }
+  ul.tasks.costs form.task-edit .task-who { flex: 0 0 8.5rem; width: 8.5rem; padding: .1rem .6rem; font-size: .85rem; }
+  ul.tasks.costs .task-saved { min-width: 0; width: 0; overflow: visible; white-space: nowrap; }
+  ul.tasks.costs .task-delete { padding: 0 .3rem; }
+  ul.ledger-settle { flex-direction: row; flex-wrap: wrap; gap: .35rem 1.2rem; }
+  @media (max-width: 640px) {
+    ul.tasks.costs li.task { padding: .25rem .1rem; }
+    ul.tasks.costs form.task-edit { flex-wrap: wrap; row-gap: .1rem; }
+    ul.tasks.costs form.task-edit .task-text { order: 1; flex: 1 1 55%; }
+    ul.tasks.costs form.task-edit .cost-amount { order: 2; flex: 0 0 5.5rem; width: 5.5rem; }
+    ul.tasks.costs form.task-edit .task-who { order: 3; flex: 0 0 6.5rem; width: 6.5rem; }
+    ul.tasks.costs form.task-edit .cost-note { order: 4; flex: 1 1 0; }
+    table.ledger .ledger-items { display: none; }
+  }
+  table.ledger.compact th, table.ledger.compact td { padding-top: .3rem; padding-bottom: .3rem; }
   table.ledger td { vertical-align: top; }
   table.ledger .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   .ledger-get { color: #2a9d8f; font-weight: 700; }
@@ -2018,11 +2039,11 @@ function ledger(costs: Cost[], people: string[]) {
     <div class="subtitle">${costMoney(total)} paid so far, split ${names.size} ways: ${costMoney(Math.round(share * 100) / 100)} each${
       unpaid.length ? ` &middot; not in the ledger until someone's marked as paying: ${unpaid.map((c) => escapeHtml(c.label)).join(", ")}` : ""
     }</div>
-    <div class="table-scroll"><table class="ledger">
-      <thead><tr><th>Person</th><th>Paid for</th><th class="num">Paid</th><th class="num">Balance</th></tr></thead>
+    <div class="table-scroll"><table class="ledger compact">
+      <thead><tr><th>Person</th><th class="ledger-items">Paid for</th><th class="num">Paid</th><th class="num">Balance</th></tr></thead>
       <tbody>${rows
         .map(
-          (r) => `<tr><td>${payerPill(r.name)}</td><td class="muted-cell">${
+          (r) => `<tr><td>${payerPill(r.name)}</td><td class="muted-cell ledger-items">${
             r.items.length ? r.items.map((c) => `${escapeHtml(c.label)} (${costMoney(c.amount!)})`).join(", ") : "&mdash;"
           }</td><td class="num">${costMoney(r.paid)}</td><td class="num">${bal(r.balance)}</td></tr>`,
         )
@@ -2053,7 +2074,7 @@ async function costsPage() {
     <div class="subtitle">${costs.length} item${costs.length === 1 ? "" : "s"}${
       STATIC ? " &middot; add and edit costs on the trip server" : " &middot; click a name, note or amount to change it; leave the amount blank if it isn't known yet"
     }</div>
-    <ul class="tasks" id="cost-list">${costs.length ? costs.map(costItem).join("\n") : `<li class="idea-empty">No costs yet.</li>`}</ul>
+    <ul class="tasks costs" id="cost-list">${costs.length ? costs.map(costItem).join("\n") : `<li class="idea-empty">No costs yet.</li>`}</ul>
     <div class="total-row">
       <div><span class="total-label">Total so far</span><span class="total-big" id="cost-total">${costMoney(total)}</span></div>
       <div><span class="total-label">Per person (${heads})</span><span class="total-big accent" id="cost-each">${costMoney(Math.round((total / heads) * 100) / 100)}</span></div>
@@ -2070,7 +2091,7 @@ async function costsPage() {
       <div class="calc-grid">
         <label>What <input type="text" name="label" required maxlength="120" placeholder="e.g. Firewood"></label>
         <label>Amount <input type="text" name="amount" inputmode="decimal" maxlength="20" placeholder="Blank if unknown"></label>
-        <label>Paid by <input type="text" name="paidBy" maxlength="60" list="people" placeholder="Nobody yet"></label>
+        <label>Paid by <input type="text" name="paidBy" maxlength="60" list="people" placeholder="Nobody yet" value="Dan"></label>
         <label class="wide">Note <input type="text" name="note" maxlength="280" placeholder="Optional"></label>
       </div>
       <button type="submit" class="calc-btn primary">Add cost</button>
