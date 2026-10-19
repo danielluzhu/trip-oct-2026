@@ -43,7 +43,7 @@
     {
       "id": "seed-gas",
       "label": "Gas",
-      "amount": 300,
+      "amount": 150,
       "note": "",
       "paidBy": "Dan",
       "createdAt": 6
@@ -63,6 +63,52 @@
       "note": "",
       "paidBy": "Dan",
       "createdAt": 8
+    },
+    {
+      "id": "c2bf6098-ae6b-47db-bde7-2723f912b73e",
+      "label": "Gas",
+      "amount": 200,
+      "note": "",
+      "paidBy": "JWu",
+      "createdAt": 1792395019909
+    },
+    {
+      "id": "b9f23510-5581-484c-b217-f182278945a0",
+      "label": "Drinks",
+      "amount": null,
+      "note": "",
+      "paidBy": "Youssef",
+      "createdAt": 1792395047523
+    }
+  ],
+  "payments": [
+    {
+      "id": "ba6b5e28-6481-4b69-a518-66649d84a079",
+      "from": "JWu",
+      "to": "Dan",
+      "amount": 500,
+      "createdAt": 1792395039561
+    },
+    {
+      "id": "8c6c97dc-c3ae-45c4-8127-043141b9fd88",
+      "from": "Youssef",
+      "to": "Dan",
+      "amount": 500,
+      "createdAt": 1792395039580
+    },
+    {
+      "id": "00902579-a048-4385-831e-28bc05c8b3cc",
+      "from": "Vinnie",
+      "to": "Dan",
+      "amount": 500,
+      "createdAt": 1792395039599
+    },
+    {
+      "id": "6a82110e-0e07-4e9a-b2a4-b6c9dc8fd70c",
+      "from": "Kevin Jeyakumar",
+      "to": "Dan",
+      "amount": 500,
+      "createdAt": 1792395039618
     }
   ]
 }

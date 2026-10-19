@@ -563,6 +563,9 @@ const sharedStyle = /* css */ `
   ul.tasks.costs form.task-edit .task-who { flex: 0 0 8.5rem; width: 8.5rem; padding: .1rem .6rem; font-size: .85rem; }
   ul.tasks.costs .task-saved { min-width: 0; width: 0; overflow: visible; white-space: nowrap; }
   ul.tasks.costs .task-delete { padding: 0 .3rem; }
+  ul.ledger-payments li { display: inline-flex; align-items: center; gap: .3rem; }
+  ul.ledger-payments form { margin: 0; }
+  .payment-form { margin-top: .6rem; }
   ul.ledger-settle { flex-direction: row; flex-wrap: wrap; gap: .35rem 1.2rem; }
   @media (max-width: 640px) {
     ul.tasks.costs li.task { padding: .25rem .1rem; }
@@ -1923,6 +1926,8 @@ async function tasksPage() {
 // means "not known yet" (gas, until it's paid). The ledger works like
 // Splitwise: every cost with an amount and a payer is split evenly across
 // everyone in the flight log, and the settle-up list says who pays whom.
+// Payments (someone paying someone back) live alongside the costs and count
+// toward balances but not the trip total.
 const COSTS_PATH = `${import.meta.dir}/costs.json`;
 
 type Cost = {
@@ -1934,17 +1939,47 @@ type Cost = {
   createdAt: number;
 };
 
-async function loadCosts(): Promise<Cost[]> {
+type Payment = {
+  id: string;
+  from: string;
+  to: string;
+  amount: number;
+  createdAt: number;
+};
+
+async function loadBook(): Promise<{ costs: Cost[]; payments: Payment[] }> {
   try {
     const raw = await Bun.file(COSTS_PATH).json();
-    return raw.costs ?? [];
+    return { costs: raw.costs ?? [], payments: raw.payments ?? [] };
   } catch {
-    return [];
+    return { costs: [], payments: [] };
   }
 }
 
+async function loadCosts(): Promise<Cost[]> {
+  return (await loadBook()).costs;
+}
+
 async function saveCosts(costs: Cost[]) {
-  await Bun.write(COSTS_PATH, JSON.stringify({ costs }, null, 2) + "\n");
+  const { payments } = await loadBook();
+  await Bun.write(COSTS_PATH, JSON.stringify({ costs, payments }, null, 2) + "\n");
+}
+
+async function savePayments(payments: Payment[]) {
+  const { costs } = await loadBook();
+  await Bun.write(COSTS_PATH, JSON.stringify({ costs, payments }, null, 2) + "\n");
+}
+
+function paymentFromForm(form: FormData): Payment | null {
+  const str = (k: string, max: number) => String(form.get(k) ?? "").trim().slice(0, max);
+  const p: Payment = {
+    id: crypto.randomUUID(),
+    from: str("from", 60),
+    to: str("to", 60),
+    amount: parseAmount(str("amount", 20)) ?? 0,
+    createdAt: Date.now(),
+  };
+  return p.from && p.to && p.amount > 0 && p.from.toLowerCase() !== p.to.toLowerCase() ? p : null;
 }
 
 // "$1,830", "1830.50" and "" (unknown) are all fine.
@@ -2002,16 +2037,20 @@ function payerPill(who: string) {
 // Splitwise-style balances: each person's paid total minus an even share of
 // everything that has both a payer and an amount, then the fewest transfers
 // that zero everyone out (biggest debtor pays biggest creditor, repeat).
-function ledger(costs: Cost[], people: string[]) {
+function ledger(costs: Cost[], payments: Payment[], people: string[]) {
   const names = new Map(people.map((n) => [n.toLowerCase(), n]));
   const paid = costs.filter((c) => c.amount !== null && c.paidBy);
-  for (const c of paid) if (!names.has(c.paidBy.toLowerCase())) names.set(c.paidBy.toLowerCase(), c.paidBy);
+  for (const who of [...paid.map((c) => c.paidBy), ...payments.flatMap((p) => [p.from, p.to])])
+    if (!names.has(who.toLowerCase())) names.set(who.toLowerCase(), who);
   const total = paid.reduce((s, c) => s + c.amount!, 0);
   const share = names.size ? total / names.size : 0;
   const rows = [...names.entries()].map(([k, name]) => {
     const items = paid.filter((c) => c.paidBy.toLowerCase() === k);
     const p = items.reduce((s, c) => s + c.amount!, 0);
-    return { name, items, paid: p, balance: Math.round((p - share) * 100) / 100 };
+    // Paying someone back raises your balance and lowers theirs.
+    const sent = payments.filter((x) => x.from.toLowerCase() === k).reduce((s, x) => s + x.amount, 0);
+    const got = payments.filter((x) => x.to.toLowerCase() === k).reduce((s, x) => s + x.amount, 0);
+    return { name, items, paid: p, net: sent - got, balance: Math.round((p + sent - got - share) * 100) / 100 };
   });
   rows.sort((a, b) => b.balance - a.balance || a.name.localeCompare(b.name));
 
@@ -2040,12 +2079,14 @@ function ledger(costs: Cost[], people: string[]) {
       unpaid.length ? ` &middot; not in the ledger until someone's marked as paying: ${unpaid.map((c) => escapeHtml(c.label)).join(", ")}` : ""
     }</div>
     <div class="table-scroll"><table class="ledger compact">
-      <thead><tr><th>Person</th><th class="ledger-items">Paid for</th><th class="num">Paid</th><th class="num">Balance</th></tr></thead>
+      <thead><tr><th>Person</th><th class="ledger-items">Paid for</th><th class="num">Paid</th><th class="num">Paid back</th><th class="num">Balance</th></tr></thead>
       <tbody>${rows
         .map(
           (r) => `<tr><td>${payerPill(r.name)}</td><td class="muted-cell ledger-items">${
             r.items.length ? r.items.map((c) => `${escapeHtml(c.label)} (${costMoney(c.amount!)})`).join(", ") : "&mdash;"
-          }</td><td class="num">${costMoney(r.paid)}</td><td class="num">${bal(r.balance)}</td></tr>`,
+          }</td><td class="num">${costMoney(r.paid)}</td><td class="num muted-cell">${
+            r.net > 0.005 ? `+${costMoney(r.net)}` : r.net < -0.005 ? `&minus;${costMoney(-r.net)}` : "&mdash;"
+          }</td><td class="num">${bal(r.balance)}</td></tr>`,
         )
         .join("")}</tbody>
     </table></div>
@@ -2056,11 +2097,39 @@ function ledger(costs: Cost[], people: string[]) {
             .map((t) => `<li>${payerPill(t.from)} pays ${payerPill(t.to)} <strong>${costMoney(t.amt)}</strong></li>`)
             .join("")}</ul>`
         : `<p class="muted-cell">Nothing to settle yet.</p>`
+    }
+    <h3>Payments</h3>
+    ${
+      payments.length
+        ? `<ul class="ledger-settle ledger-payments">${[...payments]
+            .sort((a, b) => a.createdAt - b.createdAt)
+            .map(
+              (p) => `<li>${payerPill(p.from)} paid ${payerPill(p.to)} <strong>${costMoney(p.amount)}</strong>${
+                STATIC
+                  ? ""
+                  : ` <form method="POST" action="/costs/payment/delete"><input type="hidden" name="id" value="${escapeHtml(p.id)}"><button type="submit" class="task-delete" title="Delete this payment" aria-label="Delete this payment">&times;</button></form>`
+              }</li>`,
+            )
+            .join("")}</ul>`
+        : `<p class="muted-cell">No payments recorded yet.</p>`
+    }
+    ${
+      STATIC
+        ? ""
+        : `<form class="flight-form payment-form" method="POST" action="/costs/payment">
+      <div class="calc-grid">
+        <label>From <input type="text" name="from" required maxlength="60" list="people" placeholder="Who paid"></label>
+        <label>To <input type="text" name="to" required maxlength="60" list="people" value="Dan"></label>
+        <label>Amount <input type="text" name="amount" required inputmode="decimal" maxlength="20" placeholder="$0"></label>
+      </div>
+      <button type="submit" class="calc-btn primary">Record payment</button>
+    </form>`
     }`;
 }
 
 async function costsPage() {
-  const costs = [...(await loadCosts())].sort((a, b) => a.createdAt - b.createdAt);
+  const book = await loadBook();
+  const costs = [...book.costs].sort((a, b) => a.createdAt - b.createdAt);
   const people = await peopleNames();
   taskColors = personColors(people);
   const flyers = people.filter((n) => n !== "Everyone");
@@ -2081,7 +2150,7 @@ async function costsPage() {
     </div>
     <p class="muted-cell" id="cost-unknown">${unknown.length ? `Not counted yet: ${unknown.map(escapeHtml).join(", ")}.` : ""}</p>
   </section>
-  <section class="card" id="ledger">${ledger(costs, flyers)}</section>
+  <section class="card" id="ledger">${ledger(costs, book.payments, flyers)}</section>
   ${
     STATIC
       ? ""
@@ -2790,6 +2859,18 @@ Bun.serve({
       }
       if (req.headers.get("x-inline")) return new Response(null, { status: c ? 204 : 400 });
       return Response.redirect("/costs", 303);
+    }
+
+    if (url.pathname === "/costs/payment" && req.method === "POST") {
+      const p = paymentFromForm(await req.formData());
+      if (p) await savePayments([...(await loadBook()).payments, p]);
+      return Response.redirect("/costs#ledger", 303);
+    }
+
+    if (url.pathname === "/costs/payment/delete" && req.method === "POST") {
+      const id = String((await req.formData()).get("id") ?? "");
+      await savePayments((await loadBook()).payments.filter((p) => p.id !== id));
+      return Response.redirect("/costs#ledger", 303);
     }
 
     if (url.pathname === "/costs/delete" && req.method === "POST") {
