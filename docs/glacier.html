@@ -452,6 +452,18 @@
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount::placeholder { color: var(--muted); font-style: italic; font-weight: 500; }
+  form.task-edit .cost-note { flex: 1 1 10rem; min-width: 0; font-size: .82rem; color: var(--muted); }
+  form.task-edit .cost-note::placeholder { color: var(--muted); opacity: .6; }
+  table.ledger td { vertical-align: top; }
+  table.ledger .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ledger-get { color: #2a9d8f; font-weight: 700; }
+  .ledger-owe { color: #c25555; font-weight: 700; }
+  ul.ledger-settle { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .4rem; font-size: .9rem; }
+  .cost-unknown { color: var(--muted); font-style: italic; font-weight: 500; }
+
   table.forecast { min-width: 760px; }
   table.forecast td { vertical-align: top; }
   table.forecast.spots td:first-child { width: 17%; }
@@ -745,6 +757,7 @@
   <a href="./flights.html" class="">Flights</a>
   <a href="./housing.html" class="">Housing</a>
   <a href="./tasks.html" class="">Tasks</a>
+  <a href="./costs.html" class="">Costs</a>
   <a href="./forecast.html" class="">Forecast</a>
 </nav>
 <main>

@@ -1,0 +1,68 @@
+{
+  "costs": [
+    {
+      "id": "seed-housing",
+      "label": "Housing",
+      "amount": 1830,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 1
+    },
+    {
+      "id": "seed-car-1",
+      "label": "Car rental 1",
+      "amount": 250,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 2
+    },
+    {
+      "id": "seed-car-2",
+      "label": "Car rental 2",
+      "amount": 250,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 3
+    },
+    {
+      "id": "seed-fishing",
+      "label": "Fishing",
+      "amount": 2000,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 4
+    },
+    {
+      "id": "seed-tips",
+      "label": "Tips",
+      "amount": 400,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 5
+    },
+    {
+      "id": "seed-gas",
+      "label": "Gas",
+      "amount": 300,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 6
+    },
+    {
+      "id": "seed-parks",
+      "label": "Parks pass",
+      "amount": 35,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 7
+    },
+    {
+      "id": "seed-groceries",
+      "label": "Groceries and alcohol",
+      "amount": 700,
+      "note": "",
+      "paidBy": "",
+      "createdAt": 8
+    }
+  ]
+}

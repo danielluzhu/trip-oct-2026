@@ -5,7 +5,7 @@
       "text": "Pickup Car Rental 1",
       "who": "JWu",
       "due": "2026-10-15",
-      "done": false,
+      "done": true,
       "createdAt": 1
     },
     {
@@ -13,7 +13,7 @@
       "text": "Pickup Car Rental 2",
       "who": "Dan",
       "due": "2026-10-15",
-      "done": false,
+      "done": true,
       "createdAt": 2
     },
     {
@@ -21,7 +21,7 @@
       "text": "Bear spray: one can per hiking group (2)",
       "who": "JWu",
       "due": "2026-10-16",
-      "done": false,
+      "done": true,
       "createdAt": 6
     },
     {
@@ -37,7 +37,7 @@
       "text": "Glacier entry: buy a park pass online, or pay per car at the gate",
       "who": "Dan",
       "due": "2026-10-17",
-      "done": false,
+      "done": true,
       "createdAt": 9
     },
     {
@@ -45,7 +45,7 @@
       "text": "Check road status before the Sat drive: text GNPROADS to 333111",
       "who": "",
       "due": "2026-10-17",
-      "done": false,
+      "done": true,
       "createdAt": 10
     },
     {
@@ -53,7 +53,7 @@
       "text": "Montana fishing licences for the float: ols.fwp.mt.gov",
       "who": "Everyone",
       "due": "2026-10-17",
-      "done": false,
+      "done": true,
       "createdAt": 11
     },
     {
@@ -101,7 +101,7 @@
       "text": "Groceries (food + alc)",
       "who": "Dan",
       "due": "2026-10-15",
-      "done": false,
+      "done": true,
       "createdAt": 1791920936012
     },
     {
@@ -117,7 +117,7 @@
       "text": "Park pass 1 (car 1), get when picking up the cars",
       "who": "JWu",
       "due": "2026-10-15",
-      "done": false,
+      "done": true,
       "createdAt": 1791965849217
     },
     {
@@ -125,7 +125,7 @@
       "text": "Park pass 2 (car 2), get when picking up the cars",
       "who": "Dan",
       "due": "2026-10-15",
-      "done": false,
+      "done": true,
       "createdAt": 1791965849232
     },
     {
@@ -133,7 +133,7 @@
       "text": "Cash for tips (fishing guide, etc.)",
       "who": "Dan",
       "due": "2026-10-17",
-      "done": false,
+      "done": true,
       "createdAt": 1791965849242
     },
     {

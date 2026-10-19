@@ -548,6 +548,18 @@ const sharedStyle = /* css */ `
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount::placeholder { color: var(--muted); font-style: italic; font-weight: 500; }
+  form.task-edit .cost-note { flex: 1 1 10rem; min-width: 0; font-size: .82rem; color: var(--muted); }
+  form.task-edit .cost-note::placeholder { color: var(--muted); opacity: .6; }
+  table.ledger td { vertical-align: top; }
+  table.ledger .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ledger-get { color: #2a9d8f; font-weight: 700; }
+  .ledger-owe { color: #c25555; font-weight: 700; }
+  ul.ledger-settle { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .4rem; font-size: .9rem; }
+  .cost-unknown { color: var(--muted); font-style: italic; font-weight: 500; }
+
   table.forecast { min-width: 760px; }
   table.forecast td { vertical-align: top; }
   table.forecast.spots td:first-child { width: 17%; }
@@ -833,8 +845,8 @@ const sharedStyle = /* css */ `
 const STATIC = process.env.STATIC === "1";
 const REPO = "danielluzhu/trip-oct-2026";
 
-type Route = "/" | "/glacier" | "/flights" | "/housing" | "/tasks" | "/forecast" | "/shortlist";
-type Nav = "home" | "flights" | "housing" | "tasks" | "forecast" | "itinerary" | "shortlist";
+type Route = "/" | "/glacier" | "/flights" | "/housing" | "/tasks" | "/costs" | "/forecast" | "/shortlist";
+type Nav = "home" | "flights" | "housing" | "tasks" | "costs" | "forecast" | "itinerary" | "shortlist";
 
 function href(path: Route) {
   if (!STATIC) return path;
@@ -905,6 +917,13 @@ const HEROES: Record<Nav, { file: string; credit: string; heading: string; tagli
     tagline:
       "Everything the group needs to get done, and who's on it.",
   },
+  costs: {
+    file: "Whitefish Lake from State Beach to Whitefish Mountain Resort Autumn Courtesy of Mike Koopal.jpg",
+    credit: "Whitefish Lake in autumn",
+    heading: "What it costs",
+    tagline:
+      "The shared bills for the trip, and each person's share.",
+  },
   forecast: {
     file: "Lake McDonald Panorama - Montana - Glacier National Park (29788703722).jpg",
     credit: "Lake McDonald panorama",
@@ -957,6 +976,7 @@ function layout(activeNav: Nav, title: string, body: string) {
   <a href="${href("/flights")}" class="${activeNav === "flights" ? "active" : ""}">Flights</a>
   <a href="${href("/housing")}" class="${activeNav === "housing" ? "active" : ""}">Housing</a>
   <a href="${href("/tasks")}" class="${activeNav === "tasks" ? "active" : ""}">Tasks</a>
+  <a href="${href("/costs")}" class="${activeNav === "costs" ? "active" : ""}">Costs</a>
   <a href="${href("/forecast")}" class="${activeNav === "forecast" ? "active" : ""}">Forecast</a>
 </nav>
 <main>
@@ -1875,6 +1895,272 @@ async function tasksPage() {
   return layout("tasks", `Tasks — ${trip.title}`, body);
 }
 
+
+// ---------------------------------------------------------------- costs
+
+// Shared trip costs, kept in costs.json like the task list. A blank amount
+// means "not known yet" (gas, until it's paid). The ledger works like
+// Splitwise: every cost with an amount and a payer is split evenly across
+// everyone in the flight log, and the settle-up list says who pays whom.
+const COSTS_PATH = `${import.meta.dir}/costs.json`;
+
+type Cost = {
+  id: string;
+  label: string;
+  amount: number | null; // null = unknown
+  note: string;
+  paidBy: string; // "" = nobody yet
+  createdAt: number;
+};
+
+async function loadCosts(): Promise<Cost[]> {
+  try {
+    const raw = await Bun.file(COSTS_PATH).json();
+    return raw.costs ?? [];
+  } catch {
+    return [];
+  }
+}
+
+async function saveCosts(costs: Cost[]) {
+  await Bun.write(COSTS_PATH, JSON.stringify({ costs }, null, 2) + "\n");
+}
+
+// "$1,830", "1830.50" and "" (unknown) are all fine.
+function parseAmount(raw: string): number | null {
+  const n = parseFloat(raw.replace(/[$,\s]/g, ""));
+  return Number.isFinite(n) && n >= 0 ? Math.round(n * 100) / 100 : null;
+}
+
+function costFromForm(form: FormData, prev?: Cost): Cost | null {
+  const str = (k: string, max: number) => String(form.get(k) ?? "").trim().slice(0, max);
+  const c: Cost = {
+    id: prev?.id ?? crypto.randomUUID(),
+    label: str("label", 120),
+    amount: parseAmount(str("amount", 20)),
+    note: str("note", 280),
+    paidBy: str("paidBy", 60),
+    createdAt: prev?.createdAt ?? Date.now(),
+  };
+  return c.label ? c : null;
+}
+
+function costMoney(n: number) {
+  return `$${n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
+}
+
+function costItem(c: Cost) {
+  if (STATIC) {
+    return `<li class="task"><div class="task-body"><span class="task-text">${escapeHtml(c.label)}</span>${
+      c.note ? ` <span class="muted-cell">${escapeHtml(c.note)}</span>` : ""
+    }</div>${payerPill(c.paidBy)}<span class="cost-amount${c.amount === null ? " cost-unknown" : ""}">${c.amount === null ? "unknown" : costMoney(c.amount)}</span></li>`;
+  }
+  const v = (x: string) => escapeHtml(x);
+  return `<li class="task">
+      <form method="POST" action="/costs/save" class="task-edit">
+        <input type="hidden" name="id" value="${v(c.id)}">
+        <textarea name="label" class="task-text" required maxlength="120" rows="1" aria-label="Cost">${v(c.label)}</textarea>
+        <input type="text" name="note" class="cost-note" maxlength="280" placeholder="Add a note" value="${v(c.note)}" aria-label="Note">
+        <input type="text" name="paidBy" class="task-who${c.paidBy ? "" : " empty"}" maxlength="60" list="people" placeholder="Who paid?" value="${v(c.paidBy)}" aria-label="Paid by"${colorFor(c.paidBy) ? ` style="--p:${colorFor(c.paidBy)}"` : ""}>
+        <input type="text" name="amount" class="cost-amount" inputmode="decimal" maxlength="20" placeholder="unknown" value="${c.amount === null ? "" : v(costMoney(c.amount))}" aria-label="Amount">
+        <span class="task-saved" aria-live="polite"></span>
+      </form>
+      <form method="POST" action="/costs/delete">
+        <input type="hidden" name="id" value="${v(c.id)}">
+        <button type="submit" class="task-delete" title="Delete this cost" aria-label="Delete this cost">&times;</button>
+      </form>
+    </li>`;
+}
+
+function payerPill(who: string) {
+  return who
+    ? `<span class="pill person"${colorFor(who) ? ` style="--p:${colorFor(who)}"` : ""}>${escapeHtml(who)}</span>`
+    : `<span class="pill partial">no payer</span>`;
+}
+
+// Splitwise-style balances: each person's paid total minus an even share of
+// everything that has both a payer and an amount, then the fewest transfers
+// that zero everyone out (biggest debtor pays biggest creditor, repeat).
+function ledger(costs: Cost[], people: string[]) {
+  const names = new Map(people.map((n) => [n.toLowerCase(), n]));
+  const paid = costs.filter((c) => c.amount !== null && c.paidBy);
+  for (const c of paid) if (!names.has(c.paidBy.toLowerCase())) names.set(c.paidBy.toLowerCase(), c.paidBy);
+  const total = paid.reduce((s, c) => s + c.amount!, 0);
+  const share = names.size ? total / names.size : 0;
+  const rows = [...names.entries()].map(([k, name]) => {
+    const items = paid.filter((c) => c.paidBy.toLowerCase() === k);
+    const p = items.reduce((s, c) => s + c.amount!, 0);
+    return { name, items, paid: p, balance: Math.round((p - share) * 100) / 100 };
+  });
+  rows.sort((a, b) => b.balance - a.balance || a.name.localeCompare(b.name));
+
+  const owe = rows.filter((r) => r.balance < -0.005).map((r) => ({ name: r.name, amt: -r.balance }));
+  const get = rows.filter((r) => r.balance > 0.005).map((r) => ({ name: r.name, amt: r.balance }));
+  const transfers: Array<{ from: string; to: string; amt: number }> = [];
+  while (owe.length && get.length) {
+    owe.sort((a, b) => b.amt - a.amt);
+    get.sort((a, b) => b.amt - a.amt);
+    const amt = Math.min(owe[0].amt, get[0].amt);
+    transfers.push({ from: owe[0].name, to: get[0].name, amt: Math.round(amt * 100) / 100 });
+    owe[0].amt -= amt;
+    get[0].amt -= amt;
+    if (owe[0].amt < 0.005) owe.shift();
+    if (get[0].amt < 0.005) get.shift();
+  }
+
+  const unpaid = costs.filter((c) => c.amount !== null && !c.paidBy);
+  const bal = (b: number) =>
+    b > 0.005 ? `<span class="ledger-get">gets back ${costMoney(b)}</span>`
+    : b < -0.005 ? `<span class="ledger-owe">owes ${costMoney(-b)}</span>`
+    : `<span class="muted-cell">settled</span>`;
+  return `
+    <h2>Ledger</h2>
+    <div class="subtitle">${costMoney(total)} paid so far, split ${names.size} ways: ${costMoney(Math.round(share * 100) / 100)} each${
+      unpaid.length ? ` &middot; not in the ledger until someone's marked as paying: ${unpaid.map((c) => escapeHtml(c.label)).join(", ")}` : ""
+    }</div>
+    <div class="table-scroll"><table class="ledger">
+      <thead><tr><th>Person</th><th>Paid for</th><th class="num">Paid</th><th class="num">Balance</th></tr></thead>
+      <tbody>${rows
+        .map(
+          (r) => `<tr><td>${payerPill(r.name)}</td><td class="muted-cell">${
+            r.items.length ? r.items.map((c) => `${escapeHtml(c.label)} (${costMoney(c.amount!)})`).join(", ") : "&mdash;"
+          }</td><td class="num">${costMoney(r.paid)}</td><td class="num">${bal(r.balance)}</td></tr>`,
+        )
+        .join("")}</tbody>
+    </table></div>
+    <h3>Settle up</h3>
+    ${
+      transfers.length
+        ? `<ul class="ledger-settle">${transfers
+            .map((t) => `<li>${payerPill(t.from)} pays ${payerPill(t.to)} <strong>${costMoney(t.amt)}</strong></li>`)
+            .join("")}</ul>`
+        : `<p class="muted-cell">Nothing to settle yet.</p>`
+    }`;
+}
+
+async function costsPage() {
+  const costs = [...(await loadCosts())].sort((a, b) => a.createdAt - b.createdAt);
+  const people = await peopleNames();
+  taskColors = personColors(people);
+  const flyers = people.filter((n) => n !== "Everyone");
+  const heads = flyers.length || 1;
+  const total = costs.reduce((s, c) => s + (c.amount ?? 0), 0);
+  const unknown = costs.filter((c) => c.amount === null).map((c) => c.label);
+
+  const body = `
+  <section class="card">
+    <h2>Shared costs</h2>
+    <div class="subtitle">${costs.length} item${costs.length === 1 ? "" : "s"}${
+      STATIC ? " &middot; add and edit costs on the trip server" : " &middot; click a name, note or amount to change it; leave the amount blank if it isn't known yet"
+    }</div>
+    <ul class="tasks" id="cost-list">${costs.length ? costs.map(costItem).join("\n") : `<li class="idea-empty">No costs yet.</li>`}</ul>
+    <div class="total-row">
+      <div><span class="total-label">Total so far</span><span class="total-big" id="cost-total">${costMoney(total)}</span></div>
+      <div><span class="total-label">Per person (${heads})</span><span class="total-big accent" id="cost-each">${costMoney(Math.round((total / heads) * 100) / 100)}</span></div>
+    </div>
+    <p class="muted-cell" id="cost-unknown">${unknown.length ? `Not counted yet: ${unknown.map(escapeHtml).join(", ")}.` : ""}</p>
+  </section>
+  <section class="card" id="ledger">${ledger(costs, flyers)}</section>
+  ${
+    STATIC
+      ? ""
+      : `<section class="card">
+    <h2>Add a cost</h2>
+    <form class="flight-form" method="POST" action="/costs/save">
+      <div class="calc-grid">
+        <label>What <input type="text" name="label" required maxlength="120" placeholder="e.g. Firewood"></label>
+        <label>Amount <input type="text" name="amount" inputmode="decimal" maxlength="20" placeholder="Blank if unknown"></label>
+        <label>Paid by <input type="text" name="paidBy" maxlength="60" list="people" placeholder="Nobody yet"></label>
+        <label class="wide">Note <input type="text" name="note" maxlength="280" placeholder="Optional"></label>
+      </div>
+      <button type="submit" class="calc-btn primary">Add cost</button>
+    </form>
+    <datalist id="people">${flyers.map((n) => `<option value="${escapeHtml(n)}">`).join("")}</datalist>
+  </section>
+  <script>
+  (function () {
+    var HEADS = ${heads}, COLORS = ${JSON.stringify(PERSON_COLORS)}, KNOWN = ${JSON.stringify(taskColors)};
+    function colorFor(who) {
+      var k = who.trim().toLowerCase();
+      if (!k || k === "everyone") return "";
+      if (KNOWN[k]) return KNOWN[k];
+      var h = 0;
+      for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) >>> 0;
+      return COLORS[h % COLORS.length];
+    }
+    // The ledger is rendered on the server; re-fetch it after each save.
+    function refreshLedger() {
+      fetch("/costs").then(function (r) { return r.text(); }).then(function (html) {
+        var fresh = new DOMParser().parseFromString(html, "text/html").getElementById("ledger");
+        if (fresh) document.getElementById("ledger").innerHTML = fresh.innerHTML;
+      });
+    }
+    function parse(raw) {
+      var n = parseFloat(String(raw).replace(/[$,\\s]/g, ""));
+      return isFinite(n) && n >= 0 ? Math.round(n * 100) / 100 : null;
+    }
+    function money(n) {
+      return "$" + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    }
+    // Keep the total, split and "not counted" line in step with the inputs.
+    function retotal() {
+      var total = 0, unknown = [];
+      document.querySelectorAll("#cost-list form.task-edit").forEach(function (f) {
+        var a = parse(f.elements.amount.value);
+        if (a === null) unknown.push(f.elements.label.value.trim());
+        else total += a;
+      });
+      document.getElementById("cost-total").textContent = money(total);
+      document.getElementById("cost-each").textContent = money(Math.round((total / HEADS) * 100) / 100);
+      document.getElementById("cost-unknown").textContent = unknown.length ? "Not counted yet: " + unknown.join(", ") + "." : "";
+    }
+    // Inline edits: save a row whenever one of its fields changes, no reload.
+    document.querySelectorAll("#cost-list form.task-edit").forEach(function (form) {
+      var saved = form.querySelector(".task-saved");
+      form.querySelectorAll("input:not([type=hidden]), textarea").forEach(function (input) {
+        input.dataset.orig = input.value;
+        if (input.tagName === "TEXTAREA") {
+          var fit = function () { input.style.height = "auto"; input.style.height = input.scrollHeight + 2 + "px"; };
+          fit();
+          input.addEventListener("input", fit);
+          window.addEventListener("resize", fit);
+        }
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") { e.preventDefault(); input.blur(); }
+          if (e.key === "Escape") { input.value = input.dataset.orig; input.blur(); }
+        });
+        input.addEventListener("change", function () {
+          if (input.name === "label" && !input.value.trim()) { input.value = input.dataset.orig; return; }
+          if (input.name === "amount") {
+            var a = parse(input.value);
+            input.value = a === null ? "" : money(a);
+          }
+          if (input.name === "paidBy") {
+            input.classList.toggle("empty", !input.value.trim());
+            input.style.setProperty("--p", colorFor(input.value));
+          }
+          retotal();
+          saved.textContent = "saving…";
+          fetch(form.action, { method: "POST", body: new FormData(form), headers: { "x-inline": "1" } })
+            .then(function (r) {
+              if (!r.ok) throw r;
+              input.dataset.orig = input.value;
+              saved.textContent = "saved";
+              setTimeout(function () { saved.textContent = ""; }, 1500);
+              refreshLedger();
+            })
+            .catch(function () { saved.textContent = "not saved, try again"; });
+        });
+      });
+      form.addEventListener("submit", function (e) { e.preventDefault(); });
+    });
+  })();
+  </script>`
+  }`;
+
+  return layout("costs", `Costs — ${trip.title}`, body);
+}
+
 // ---------------------------------------------------------------- forecast
 
 // Live trip-dates forecast from Open-Meteo (free, no key). The server caches
@@ -2330,7 +2616,7 @@ async function forecastPage() {
 
 const costs = (data as any).costs;
 
-export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, forecastPage, shortlistPage };
+export { homePage, itineraryPage, flightsPage, housingPage, tasksPage, costsPage, forecastPage, shortlistPage };
 
 // Only start the server when run directly, so build.ts can import the renderers.
 if (import.meta.main) {
@@ -2470,9 +2756,33 @@ Bun.serve({
       });
     }
 
-    // The cost calculator was removed; old links land on the front page.
+    if (url.pathname === "/costs/save" && req.method === "POST") {
+      const form = await req.formData();
+      const costs = await loadCosts();
+      const id = String(form.get("id") ?? "");
+      const i = id ? costs.findIndex((c) => c.id === id) : -1;
+      const c = costFromForm(form, i >= 0 ? costs[i] : undefined);
+      if (c) {
+        if (i >= 0) costs[i] = c;
+        else costs.push(c);
+        await saveCosts(costs);
+      }
+      if (req.headers.get("x-inline")) return new Response(null, { status: c ? 204 : 400 });
+      return Response.redirect("/costs", 303);
+    }
+
+    if (url.pathname === "/costs/delete" && req.method === "POST") {
+      const form = await req.formData();
+      const id = String(form.get("id") ?? "");
+      const costs = await loadCosts();
+      await saveCosts(costs.filter((c) => c.id !== id));
+      return Response.redirect("/costs", 303);
+    }
+
     if (url.pathname === "/costs") {
-      return Response.redirect("/", 301);
+      return new Response(await costsPage(), {
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
     }
 
     // The itinerary used to live here before it became the front page.

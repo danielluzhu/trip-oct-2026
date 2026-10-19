@@ -452,6 +452,18 @@
   .task-body > summary:hover .task-text { text-decoration: underline; }
   .task-text { margin-right: .3rem; }
 
+  .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount { flex: 0 0 7rem; width: 7rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  form.task-edit .cost-amount::placeholder { color: var(--muted); font-style: italic; font-weight: 500; }
+  form.task-edit .cost-note { flex: 1 1 10rem; min-width: 0; font-size: .82rem; color: var(--muted); }
+  form.task-edit .cost-note::placeholder { color: var(--muted); opacity: .6; }
+  table.ledger td { vertical-align: top; }
+  table.ledger .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ledger-get { color: #2a9d8f; font-weight: 700; }
+  .ledger-owe { color: #c25555; font-weight: 700; }
+  ul.ledger-settle { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-direction: column; gap: .4rem; font-size: .9rem; }
+  .cost-unknown { color: var(--muted); font-style: italic; font-weight: 500; }
+
   table.forecast { min-width: 760px; }
   table.forecast td { vertical-align: top; }
   table.forecast.spots td:first-child { width: 17%; }
@@ -745,6 +757,7 @@
   <a href="./flights.html" class="">Flights</a>
   <a href="./housing.html" class="">Housing</a>
   <a href="./tasks.html" class="active">Tasks</a>
+  <a href="./costs.html" class="">Costs</a>
   <a href="./forecast.html" class="">Forecast</a>
 </nav>
 <main>
@@ -752,36 +765,36 @@
   <section class="card">
     <div class="task-head">
       <h2>To do</h2>
-      <label class="task-filter"><input type="checkbox" id="hide-done"> Hide completed (1)</label>
+      <label class="task-filter"><input type="checkbox" id="hide-done"> Hide completed (11)</label>
     </div>
-    <div class="subtitle">17 open &middot; 1 done &middot; 2 unassigned &middot; add and assign tasks on the trip server</div>
+    <div class="subtitle">7 open &middot; 11 done &middot; 1 unassigned &middot; add and assign tasks on the trip server</div>
     <ul class="tasks" id="task-list"><li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Airbnb</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Wed, Oct 14</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Pickup Car Rental 1</span> <span class="pill person" style="--p:#2a9d8f">JWu</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Pickup Car Rental 2</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Groceries (food + alc)</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Park pass 1 (car 1), get when picking up the cars</span> <span class="pill person" style="--p:#2a9d8f">JWu</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Park pass 2 (car 2), get when picking up the cars</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
 <li class="task"><span class="task-check"></span>
       <div class="task-body"><span class="task-text">Mahjong</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Thu, Oct 15</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Bear spray: one can per hiking group (2)</span> <span class="pill person" style="--p:#2a9d8f">JWu</span> <span class="muted-cell">due Fri, Oct 16</span></div></li>
 <li class="task"><span class="task-check"></span>
       <div class="task-body"><span class="task-text">Movie Night: Brokeback Mountain</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Fri, Oct 16</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Glacier entry: buy a park pass online, or pay per car at the gate</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Sat, Oct 17</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Check road status before the Sat drive: text GNPROADS to 333111</span> <span class="pill partial">unassigned</span> <span class="muted-cell">due Sat, Oct 17</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Montana fishing licences for the float: ols.fwp.mt.gov</span> <span class="pill person">Everyone</span> <span class="muted-cell">due Sat, Oct 17</span></div></li>
 <li class="task"><span class="task-check"></span>
       <div class="task-body"><span class="task-text">Tickets for the theatre in Bigfork, Sun evening</span> <span class="pill partial">unassigned</span> <span class="muted-cell">due Sat, Oct 17</span></div></li>
-<li class="task"><span class="task-check"></span>
+<li class="task done"><span class="task-check">&#10003;</span>
       <div class="task-body"><span class="task-text">Cash for tips (fishing guide, etc.)</span> <span class="pill person" style="--p:#3a86ff">Dan</span> <span class="muted-cell">due Sat, Oct 17</span></div></li>
 <li class="task"><span class="task-check"></span>
       <div class="task-body"><span class="task-text">Check out by 10 AM Mon: tidy up and lock the smart lock</span> <span class="pill person">Everyone</span> <span class="muted-cell">due Mon, Oct 19</span></div></li>
