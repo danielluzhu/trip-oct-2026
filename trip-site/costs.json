@@ -73,12 +73,20 @@
       "createdAt": 1792395019909
     },
     {
-      "id": "b9f23510-5581-484c-b217-f182278945a0",
-      "label": "Drinks",
-      "amount": null,
+      "id": "6803031a-6f79-4d75-b593-ca4c924fad54",
+      "label": "bear spray",
+      "amount": 30,
       "note": "",
-      "paidBy": "Youssef",
-      "createdAt": 1792395047523
+      "paidBy": "Jwu",
+      "createdAt": 1792395113705
+    },
+    {
+      "id": "e607a912-5bf7-4b59-93a8-f27c469703c3",
+      "label": "Bear spray",
+      "amount": 66,
+      "note": "",
+      "paidBy": "Dan",
+      "createdAt": 1792395122462
     }
   ],
   "payments": [

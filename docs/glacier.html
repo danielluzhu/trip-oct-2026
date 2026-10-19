@@ -467,6 +467,17 @@
   ul.tasks.costs form.task-edit .task-who { flex: 0 0 8.5rem; width: 8.5rem; padding: .1rem .6rem; font-size: .85rem; }
   ul.tasks.costs .task-saved { min-width: 0; width: 0; overflow: visible; white-space: nowrap; }
   ul.tasks.costs .task-delete { padding: 0 .3rem; }
+  details.cost-split { position: relative; flex: 0 0 auto; }
+  .cost-split-sum { cursor: pointer; list-style: none; font-size: .78rem; color: var(--muted); border: 1px dashed var(--border); border-radius: 999px; padding: .1rem .55rem; white-space: nowrap; display: inline-block; min-width: 5.5rem; text-align: center; }
+  .cost-split-sum::-webkit-details-marker { display: none; }
+  .cost-split-sum:hover, details.cost-split[open] .cost-split-sum { border-color: var(--accent); color: var(--text); }
+  .cost-split-sum.static { flex: none; margin-right: .3rem; }
+  .cost-split-menu { position: absolute; right: 0; top: calc(100% + .3rem); z-index: 20; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.15); padding: .4rem .6rem; display: flex; flex-direction: column; gap: .15rem; min-width: 12rem; }
+  .cost-split-opt { display: flex; align-items: center; gap: .4rem; font-size: .85rem; cursor: pointer; white-space: nowrap; }
+  .cost-split-opt input { accent-color: var(--accent); width: 1rem; height: 1rem; }
+  ul.tasks.costs form.task-edit .cost-split-opt input { padding: 0; }
+  fieldset.cost-split-add { border: 0; padding: 0; margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .3rem 1rem; }
+  fieldset.cost-split-add legend { font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; padding: 0; }
   ul.ledger-payments li { display: inline-flex; align-items: center; gap: .3rem; }
   ul.ledger-payments form { margin: 0; }
   .payment-form { margin-top: .6rem; }
@@ -477,7 +488,8 @@
     ul.tasks.costs form.task-edit .task-text { order: 1; flex: 1 1 55%; }
     ul.tasks.costs form.task-edit .cost-amount { order: 2; flex: 0 0 5.5rem; width: 5.5rem; }
     ul.tasks.costs form.task-edit .task-who { order: 3; flex: 0 0 6.5rem; width: 6.5rem; }
-    ul.tasks.costs form.task-edit .cost-note { order: 4; flex: 1 1 0; }
+    ul.tasks.costs form.task-edit .cost-split { order: 4; }
+    ul.tasks.costs form.task-edit .cost-note { order: 5; flex: 1 1 0; }
     table.ledger .ledger-items { display: none; }
   }
   table.ledger.compact th, table.ledger.compact td { padding-top: .3rem; padding-bottom: .3rem; }
