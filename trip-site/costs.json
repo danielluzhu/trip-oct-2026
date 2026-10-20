@@ -11,7 +11,7 @@
     {
       "id": "seed-car-1",
       "label": "Car rental 1",
-      "amount": 250,
+      "amount": 236,
       "note": "",
       "paidBy": "JWu",
       "createdAt": 2
@@ -19,7 +19,7 @@
     {
       "id": "seed-car-2",
       "label": "Car rental 2",
-      "amount": 250,
+      "amount": 251,
       "note": "",
       "paidBy": "Dan",
       "createdAt": 3
@@ -42,15 +42,15 @@
     },
     {
       "id": "seed-gas",
-      "label": "Gas",
-      "amount": 150,
+      "label": "Gas 1",
+      "amount": 45,
       "note": "",
       "paidBy": "Dan",
       "createdAt": 6
     },
     {
       "id": "seed-parks",
-      "label": "Parks pass",
+      "label": "Trump Card",
       "amount": 35,
       "note": "",
       "paidBy": "Dan",
@@ -58,16 +58,16 @@
     },
     {
       "id": "seed-groceries",
-      "label": "Groceries and alcohol",
-      "amount": 700,
+      "label": "costco",
+      "amount": 600,
       "note": "",
       "paidBy": "Dan",
       "createdAt": 8
     },
     {
       "id": "c2bf6098-ae6b-47db-bde7-2723f912b73e",
-      "label": "Gas",
-      "amount": 200,
+      "label": "Gas 1",
+      "amount": 69,
       "note": "",
       "paidBy": "JWu",
       "createdAt": 1792395019909
@@ -83,10 +83,87 @@
     {
       "id": "e607a912-5bf7-4b59-93a8-f27c469703c3",
       "label": "Bear spray",
-      "amount": 66,
+      "amount": 60,
       "note": "",
       "paidBy": "Dan",
       "createdAt": 1792395122462
+    },
+    {
+      "id": "37798400-ae1f-423f-a349-531238720a45",
+      "label": "cover",
+      "amount": 60,
+      "note": "",
+      "paidBy": "Dan",
+      "createdAt": 1792434719366,
+      "splitWith": [
+        "Dan",
+        "Henry",
+        "James Ly",
+        "Kevin Jeyakumar",
+        "Vinnie",
+        "Youssef"
+      ]
+    },
+    {
+      "id": "9e4f99e5-d33c-4a47-a235-e18ae942560c",
+      "label": "park pass",
+      "amount": 35,
+      "note": "",
+      "paidBy": "JWu",
+      "createdAt": 1792434805050
+    },
+    {
+      "id": "6aef3737-4ae1-4d43-96ef-6efb2cb3ad03",
+      "label": "Thursday Dinner",
+      "amount": 174.17,
+      "note": "",
+      "paidBy": "Youssef",
+      "createdAt": 1792435187092,
+      "splitWith": [
+        "JWu",
+        "James Ly",
+        "Vinnie",
+        "Youssef"
+      ]
+    },
+    {
+      "id": "68344284-ea71-4752-a389-0e8219293ff2",
+      "label": "safeway",
+      "amount": 48,
+      "note": "",
+      "paidBy": "Dan",
+      "createdAt": 1792435386685
+    },
+    {
+      "id": "48eea412-4180-4587-a4b5-213fe34dbcac",
+      "label": "alcohol",
+      "amount": 55,
+      "note": "",
+      "paidBy": "Dan",
+      "createdAt": 1792435413717
+    },
+    {
+      "id": "3aded232-0583-4a44-bbac-4d25c8ab52c5",
+      "label": "Gas 2",
+      "amount": 61,
+      "note": "",
+      "paidBy": "Dan",
+      "createdAt": 1792435708662
+    },
+    {
+      "id": "686f1603-e126-4bc0-a6ef-d79f63edec9a",
+      "label": "Drinks",
+      "amount": 50,
+      "note": "",
+      "paidBy": "Youssef",
+      "createdAt": 1792526611255,
+      "splitWith": [
+        "Dan",
+        "James Ly",
+        "Kevin Jeyakumar",
+        "Vinnie",
+        "Youssef"
+      ]
     }
   ],
   "payments": [
