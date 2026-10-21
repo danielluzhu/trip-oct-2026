@@ -574,8 +574,8 @@ const sharedStyle = /* css */ `
   ul.tasks.costs form.task-edit .cost-split-opt input { padding: 0; }
   fieldset.cost-split-add { border: 0; padding: 0; margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .3rem 1rem; }
   fieldset.cost-split-add legend { font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; padding: 0; }
-  ul.ledger-payments li { display: inline-flex; align-items: center; gap: .3rem; }
-  ul.ledger-payments form { margin: 0; }
+  ul.ledger-settle li { display: inline-flex; align-items: center; gap: .3rem; }
+  ul.ledger-settle form { margin: 0; }
   .payment-form { margin-top: .6rem; }
   ul.ledger-settle { flex-direction: row; flex-wrap: wrap; gap: .35rem 1.2rem; }
   @media (max-width: 640px) {
@@ -2148,7 +2148,13 @@ function ledger(costs: Cost[], payments: Payment[], people: string[]) {
     ${
       transfers.length
         ? `<ul class="ledger-settle">${transfers
-            .map((t) => `<li>${payerPill(t.from)} pays ${payerPill(t.to)} <strong>${costMoney(t.amt)}</strong></li>`)
+            .map(
+              (t) => `<li>${payerPill(t.from)} pays ${payerPill(t.to)} <strong>${costMoney(t.amt)}</strong>${
+                STATIC
+                  ? ""
+                  : ` <form method="POST" action="/costs/payment"><input type="hidden" name="from" value="${escapeHtml(t.from)}"><input type="hidden" name="to" value="${escapeHtml(t.to)}"><input type="hidden" name="amount" value="${t.amt}"><button type="submit" class="calc-btn small" title="Record this as paid">Paid</button></form>`
+              }</li>`,
+            )
             .join("")}</ul>`
         : `<p class="muted-cell">Nothing to settle yet.</p>`
     }
